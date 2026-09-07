@@ -17,7 +17,7 @@ void main() {
     expect(find.bySemanticsLabel('الإشعارات'), findsOneWidget);
     expect(find.text('الرئيسية'), findsOneWidget);
     expect(
-      find.bySemanticsLabel('كل خدماتك ومتابعاتك في مكان واحد'),
+      find.bySemanticsLabel('الصورة الرئيسية'),
       findsOneWidget,
     );
     expect(find.text('الخدمات السريعة'), findsNothing);

@@ -14,9 +14,10 @@ class HomeScreen extends StatelessWidget {
       children: [
         Semantics(
           image: true,
+          label: 'الصورة الرئيسية',
           child: Image.asset(
-            AppAssets.fullLogo,
-           // key: const Key('home-services-banner'),
+            AppAssets.appBanner,
+            key: const Key('home-main-image'),
             width: double.infinity,
             fit: BoxFit.fitWidth,
             excludeFromSemantics: true,
