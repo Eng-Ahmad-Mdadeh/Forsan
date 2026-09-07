@@ -18,11 +18,11 @@ class QuickActionsSection extends StatelessWidget {
         SectionTitle(
           text: 'إجراءات سريعة',
           color: AppColors.primaryDark,
-          fontSize: AppFontSize.s20,
+          fontSize: AppFontSize.s14,
           fontWeight: AppFontWeight.bold,
           textAlign: TextAlign.start,
         ),
-        SizedBox(height: AppHeight.h16),
+        SizedBox(height: AppHeight.h4),
         Row(
           children: [
             Expanded(
@@ -31,11 +31,11 @@ class QuickActionsSection extends StatelessWidget {
                 label: 'طلب جديد',
                 semanticLabel: 'إنشاء طلب جديد',
                 icon: Icons.add_rounded,
-                color: AppColors.primary,
+                color: AppColors.primaryDark,
                 onPressed: () {},
               ),
             ),
-            SizedBox(width: AppWidth.w8),
+            SizedBox(width: AppWidth.w4),
             Expanded(
               child: _QuickActionButton(
                 key: const Key('support-action'),
@@ -74,24 +74,24 @@ class _QuickActionButton extends StatelessWidget {
     button: true,
     label: semanticLabel,
     child: CustomElevatedButton(
-      height: AppHeight.h62,
+      height: AppHeight.h55,
       width: double.infinity,
       elevation: AppSize.s2,
       color: color,
-      borderRadius: AppRadius.r16,
+      borderRadius: AppRadius.r8,
       padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p12),
       onPressed: onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: AppColors.white, size: AppSize.s24),
-          SizedBox(width: AppWidth.w8),
+          Icon(icon, color: AppColors.white, size: AppSize.s20),
+          SizedBox(width: AppWidth.w4),
           Flexible(
             child: SectionTitle(
               text: label,
               color: AppColors.white,
-              fontSize: AppFontSize.s16,
+              fontSize: AppFontSize.s14,
               fontWeight: AppFontWeight.medium,
               maxLines: 1,
             ),

@@ -162,7 +162,7 @@ class _OrderProgressAndAction extends StatelessWidget {
                   child: CircularProgressIndicator(
                     value: .5,
                     strokeWidth: AppWidth.w7,
-                    strokeCap: StrokeCap.butt,
+                    strokeCap: StrokeCap.round,
                     backgroundColor: AppColors.lightActive,
                     valueColor: const AlwaysStoppedAnimation<Color>(
                       AppColors.primary,
