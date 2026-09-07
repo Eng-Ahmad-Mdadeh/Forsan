@@ -24,6 +24,12 @@ void main() {
     expect(find.textContaining('FR-2026-001259'), findsOneWidget);
     expect(find.text('استكمال المتطلبات'), findsOneWidget);
     expect(find.bySemanticsLabel('شعار فرسان'), findsOneWidget);
+    expect(find.text('الطلبات النشطة'), findsOneWidget);
+    expect(find.text('إجراءات مطلوبة'), findsOneWidget);
+    expect(find.text('إجمالي المدفوع'), findsOneWidget);
+    expect(find.text('المبالغ المستحقة'), findsOneWidget);
+    expect(find.text('01'), findsNWidgets(2));
+    expect(find.text('2,522 ر.س'), findsNWidgets(2));
 
     await tester.tap(find.text('طلباتي'));
     await tester.pumpAndSettle();
