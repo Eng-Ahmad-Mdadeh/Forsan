@@ -34,37 +34,45 @@ class CustomBottomNavBar extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => ColoredBox(
-    color: AppColors.backGround,
-    child: Container(
+  Widget build(BuildContext context) => Padding(
+    padding: EdgeInsets.fromLTRB(
+      AppPaddingWidth.p16,
+      0,
+      AppPaddingWidth.p16,
+      AppPaddingHeight.p20,
+    ),
+    child: SizedBox(
       height: AppHeight.h70,
-      margin: EdgeInsets.fromLTRB(AppPaddingWidth.p16, 0, AppPaddingWidth.p16, AppPaddingHeight.p20),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppRadius.r16),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: AppColors.homeSoftShadow,
-            blurRadius: AppRadius.r18,
-            offset: Offset(0, AppHeight.h5),
-          ),
-        ],
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: List<Widget>.generate(_destinations.length, (index) {
-          final destination = _destinations[index];
-          return Expanded(
-            child: CustomNavItem(
-              label: destination.label,
-              icon: destination.icon,
-              selectedIcon: destination.selectedIcon,
-              selected: navigationShell.currentIndex == index,
-              onPressed: () => _selectDestination(index),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(AppRadius.r16),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: AppColors.homeSoftShadow,
+              blurRadius: AppRadius.r18,
+              offset: Offset(0, AppHeight.h5),
             ),
-          );
-        }),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(AppRadius.r16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: List<Widget>.generate(_destinations.length, (index) {
+              final destination = _destinations[index];
+              return Expanded(
+                child: CustomNavItem(
+                  label: destination.label,
+                  icon: destination.icon,
+                  selectedIcon: destination.selectedIcon,
+                  selected: navigationShell.currentIndex == index,
+                  onPressed: () => _selectDestination(index),
+                ),
+              );
+            }),
+          ),
+        ),
       ),
     ),
   );

@@ -10,6 +10,7 @@ class AppShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    extendBody: true,
     body: navigationShell,
     bottomNavigationBar: CustomBottomNavBar(navigationShell: navigationShell),
   );
