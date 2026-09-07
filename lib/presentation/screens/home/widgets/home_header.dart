@@ -4,6 +4,8 @@ import '../../../../core/resources/app_assets.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
+import '../../../widgets/text/body_title.dart';
+import '../../../widgets/text/section_title.dart';
 
 class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
   const HomeHeader({super.key});
@@ -48,26 +50,22 @@ class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    'مرحباً سيد محمد',
+                  SectionTitle(
+                    text: 'مرحباً سيد محمد',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: AppColors.mainText,
-                      fontSize: AppFontSize.s16,
-                      fontWeight: AppFontWeight.bold,
-                    ),
+                    color: AppColors.mainText,
+                    fontSize: AppFontSize.s16,
+                    fontWeight: AppFontWeight.bold,
                   ),
                   SizedBox(height: AppHeight.h4),
-                  Text(
-                    'كيف يمكننا مساعدتك اليوم ؟',
+                  BodyTitle(
+                    text: 'كيف يمكننا مساعدتك اليوم ؟',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: AppColors.blackCow,
-                      fontSize: AppFontSize.s12,
-                      fontWeight: AppFontWeight.regular,
-                    ),
+                    color: AppColors.blackCow,
+                    fontSize: AppFontSize.s12,
+                    fontWeight: AppFontWeight.regular,
                   ),
                 ],
               ),
