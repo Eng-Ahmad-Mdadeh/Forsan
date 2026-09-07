@@ -18,18 +18,12 @@ class CustomBottomNavBar extends StatelessWidget {
           icon: Icons.home_outlined,
           selectedIcon: Icons.home_outlined,
         ),
-        BottomNavDestination(
-          label: 'طلباتي',
-          icon: Icons.schema_outlined,
-        ),
+        BottomNavDestination(label: 'طلباتي', icon: Icons.schema_outlined),
         BottomNavDestination(
           label: 'المستندات',
           icon: Icons.work_outline_rounded,
         ),
-        BottomNavDestination(
-          label: 'المزيد',
-          icon: Icons.more_horiz_rounded,
-        ),
+        BottomNavDestination(label: 'المزيد', icon: Icons.more_horiz_rounded),
       ];
 
   void _selectDestination(int index) {
@@ -42,43 +36,35 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ColoredBox(
     color: AppColors.backGround,
-    child: SafeArea(
-      top: false,
-      minimum: EdgeInsets.fromLTRB(
-        AppPaddingWidth.p12,
-        0,
-        AppPaddingWidth.p12,
-        AppPaddingHeight.p10,
+    child: Container(
+      height: AppHeight.h70,
+      margin: EdgeInsets.fromLTRB(AppPaddingWidth.p16, 0, AppPaddingWidth.p16, AppPaddingHeight.p20),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppRadius.r30),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: AppColors.homeSoftShadow,
+            blurRadius: AppRadius.r18,
+            offset: Offset(0, AppHeight.h5),
+          ),
+        ],
       ),
-      child: Container(
-        height: AppHeight.h98,
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(AppRadius.r30),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: AppColors.homeSoftShadow,
-              blurRadius: AppRadius.r18,
-              offset: Offset(0, AppHeight.h5),
+      clipBehavior: Clip.antiAlias,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: List<Widget>.generate(_destinations.length, (index) {
+          final destination = _destinations[index];
+          return Expanded(
+            child: CustomNavItem(
+              label: destination.label,
+              icon: destination.icon,
+              selectedIcon: destination.selectedIcon,
+              selected: navigationShell.currentIndex == index,
+              onPressed: () => _selectDestination(index),
             ),
-          ],
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: List<Widget>.generate(_destinations.length, (index) {
-            final destination = _destinations[index];
-            return Expanded(
-              child: CustomNavItem(
-                label: destination.label,
-                icon: destination.icon,
-                selectedIcon: destination.selectedIcon,
-                selected: navigationShell.currentIndex == index,
-                onPressed: () => _selectDestination(index),
-              ),
-            );
-          }),
-        ),
+          );
+        }),
       ),
     ),
   );

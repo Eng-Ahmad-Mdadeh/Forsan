@@ -35,7 +35,7 @@ class CustomNavItem extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.fromLTRB(
             AppPaddingWidth.p4,
-            AppPaddingHeight.p14,
+            AppPaddingHeight.p8,
             AppPaddingWidth.p4,
             AppPaddingHeight.p8,
           ),
@@ -45,9 +45,9 @@ class CustomNavItem extends StatelessWidget {
               Icon(
                 selected ? selectedIcon ?? icon : icon,
                 color: selected ? AppColors.secondary : foregroundColor,
-                size: AppSize.s30,
+                size: AppSize.s24,
               ),
-              SizedBox(height: AppHeight.h7),
+              SizedBox(height: AppHeight.h4),
               Text(
                 label,
                 maxLines: 1,
@@ -56,14 +56,14 @@ class CustomNavItem extends StatelessWidget {
                 style: TextStyle(
                   color: foregroundColor,
                   fontFamily: AppFontFamily.tajawal,
-                  fontSize: AppFontSize.s16,
+                  fontSize: AppFontSize.s12,
                   height: 1,
                   fontWeight: selected
-                      ? AppFontWeight.bold
+                      ? AppFontWeight.medium
                       : AppFontWeight.regular,
                 ),
               ),
-              SizedBox(height: AppHeight.h8),
+              SizedBox(height: AppHeight.h4),
               AnimatedContainer(
                 duration: AppDurations.navigationSelection,
                 width: selected ? AppWidth.w8 : 0,
