@@ -4,6 +4,11 @@ import 'package:forsan/main.dart';
 void main() {
   testWidgets('AppShell navigates between the four main pages', (tester) async {
     await tester.pumpWidget(const ForsanApp());
+    await tester.pump();
+
+    expect(find.bySemanticsLabel('شعار فرسان للخدمات'), findsOneWidget);
+
+    await tester.pump(const Duration(seconds: 2));
     await tester.pumpAndSettle();
 
     expect(find.text('فُرسان'), findsOneWidget);

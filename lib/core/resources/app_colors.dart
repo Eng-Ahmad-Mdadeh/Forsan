@@ -66,6 +66,10 @@ class AppColors {
   static const Color blue = Color(0xFF34A4B0);
   static const Color shadowPrimary = Color(0x8E0D3D35);
 
+  /// Splash screen
+  static const Color splashBackground = normal;
+  static const Color splashPattern = Color(0xFF28564E);
+
   static const Color darkPrimary = primaryDark;
 
   static const Color blueText = Color(0xFFDCEBF6);

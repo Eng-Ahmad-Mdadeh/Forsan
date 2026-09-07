@@ -7,11 +7,13 @@ import '../../presentation/screens/documents/documents_screen.dart';
 import '../../presentation/screens/home/home_screen.dart';
 import '../../presentation/screens/more/more_screen.dart';
 import '../../presentation/screens/orders/orders_screen.dart';
+import '../../presentation/screens/splash/splash_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'shell');
 
 abstract final class AppRoutes {
+  static const splash = '/';
   static const home = '/home';
   static const orders = '/orders';
   static const documents = '/documents';
@@ -21,8 +23,14 @@ abstract final class AppRoutes {
 final appRouter = GoRouter(
   navigatorKey: rootNavigatorKey,
   debugLogDiagnostics: kDebugMode,
-  initialLocation: AppRoutes.home,
+  initialLocation: AppRoutes.splash,
   routes: [
+    GoRoute(
+      path: AppRoutes.splash,
+      builder: (context, _) => SplashScreen(
+        onFinished: () => context.go(AppRoutes.home),
+      ),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
           AppShell(navigationShell: navigationShell),

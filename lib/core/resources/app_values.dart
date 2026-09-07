@@ -1,5 +1,11 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+class AppDurations {
+  AppDurations._();
+
+  static const Duration splash = Duration(seconds: 2);
+}
+
 class AppMarginHeight {
   static double m3 = 3.0.h;
   static double m4 = 4.0.h;

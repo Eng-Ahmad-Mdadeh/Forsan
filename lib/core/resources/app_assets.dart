@@ -24,8 +24,9 @@ class AppAssets {
   //#endregion
 
   //#region Logo
-  static String fullLogo = '$imagePath/full_logo.svg';
+  static String fullLogo = '$imagePath/full_logo.png';
   static String logo = '$imagePath/logo.svg';
+  static String appBackground = '$imagePath/app_background.png';
   static String authBackground = '$imagePath/auth_background.png';
   static String verificationCode = '$imagePath/verification_code.png';
   static String verification = '$imagePath/verification.png';
