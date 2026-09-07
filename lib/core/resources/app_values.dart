@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppDurations {
   AppDurations._();
 
-  static const Duration splash = Duration(seconds: 2);
+  static const Duration splash = Duration(seconds: 7);
   static const Duration navigationSelection = Duration(milliseconds: 200);
 }
 

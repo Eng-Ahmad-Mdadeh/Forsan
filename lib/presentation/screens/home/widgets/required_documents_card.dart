@@ -14,8 +14,8 @@ class RequiredDocumentsCard extends StatelessWidget {
     textDirection: TextDirection.rtl,
     child: Container(
       padding: EdgeInsets.symmetric(
-        horizontal: AppPaddingWidth.p16,
-        vertical: AppPaddingHeight.p20,
+        horizontal: AppPaddingWidth.p12,
+        vertical: AppPaddingHeight.p12,
       ),
       decoration: BoxDecoration(
         color: AppColors.secondaryLightHover,
@@ -42,7 +42,7 @@ class RequiredDocumentsCard extends StatelessWidget {
                       color: AppColors.secondaryNormal,
                       size: AppSize.s24,
                     ),
-                    SizedBox(width: AppWidth.w8),
+                    SizedBox(width: AppWidth.w4),
                     Expanded(
                       child: BodyTitle(
                         textSpan: TextSpan(
@@ -53,27 +53,28 @@ class RequiredDocumentsCard extends StatelessWidget {
                               style: TextStyle(
                                 color: AppColors.mainText,
                                 fontWeight: AppFontWeight.bold,
+                                fontSize: AppFontSize.s12,
                               ),
                             ),
                           ],
                         ),
                         color: AppColors.mainText,
-                        fontSize: AppFontSize.s14,
+                        fontSize: AppFontSize.s12,
                         fontWeight: AppFontWeight.regular,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: AppHeight.h16),
+                SizedBox(height: AppHeight.h4),
                 BodyTitle(
-                  text:
-                      'يرجى إرفاق المستندات المطلوبة لاستكمال\nمراجعة طلب تأسيس الشركة.',
+                  text: 'يرجى إرفاق المستندات المطلوبة لاستكمال \n مراجعة طلب تأسيس الشركة.',
                   color: AppColors.blackCow,
-                  fontSize: AppFontSize.s14,
+                  maxLines: 2,
+                  fontSize: AppFontSize.s12,
                   fontWeight: AppFontWeight.regular,
                   height: 1.6,
                 ),
-                SizedBox(height: AppHeight.h16),
+                SizedBox(height: AppHeight.h10),
                 SizedBox(
                   height: AppHeight.h48,
                   child: FilledButton.icon(
@@ -108,14 +109,14 @@ class RequiredDocumentsCard extends StatelessWidget {
             image: true,
             label: 'شعار فرسان',
             child: SizedBox(
-              width: AppWidth.w85,
+              width: AppWidth.w65,
               child: ColorFiltered(
                 colorFilter: const ColorFilter.mode(
                   AppColors.secondaryNormal,
                   BlendMode.srcIn,
                 ),
                 child: Image.asset(
-                  AppAssets.fullLogo,
+                  AppAssets.addFile,
                   fit: BoxFit.contain,
                   excludeFromSemantics: true,
                 ),
