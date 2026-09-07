@@ -27,6 +27,7 @@ class AppAssets {
   static String fullLogo = '$imagePath/full_logo.png';
   static String logo = '$imagePath/logo.svg';
   static String appBackground = '$imagePath/app_background.png';
+  static String appBanner = '$imagePath/app_banner.png';
   static String authBackground = '$imagePath/auth_background.png';
   static String verificationCode = '$imagePath/verification_code.png';
   static String verification = '$imagePath/verification.png';
@@ -53,9 +54,6 @@ class AppAssets {
 
   //#endregion
 
-  //#region Tmp Image
-  static String banner = '$imageTmpPath/banner.png';
-  //#endregion
   //#region Sounds
   static String bidHoursSound = '$soundPath/bid.m4a';
   static String bidCamlSound = '$soundPath/playback.m4a';
