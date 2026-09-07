@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/resources/app_colors.dart';
+import '../../../core/resources/app_fonts.dart';
+import '../../../core/resources/app_values.dart';
 
 class CustomNavItem extends StatelessWidget {
   const CustomNavItem({
@@ -31,16 +33,21 @@ class CustomNavItem extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(4, 14, 4, 8),
+          padding: EdgeInsets.fromLTRB(
+            AppPaddingWidth.p4,
+            AppPaddingHeight.p14,
+            AppPaddingWidth.p4,
+            AppPaddingHeight.p8,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(
                 selected ? selectedIcon ?? icon : icon,
                 color: selected ? AppColors.secondary : foregroundColor,
-                size: 31,
+                size: AppSize.s30,
               ),
-              const SizedBox(height: 7),
+              SizedBox(height: AppHeight.h7),
               Text(
                 label,
                 maxLines: 1,
@@ -48,16 +55,19 @@ class CustomNavItem extends StatelessWidget {
                 softWrap: false,
                 style: TextStyle(
                   color: foregroundColor,
-                  fontSize: 16,
+                  fontFamily: AppFontFamily.tajawal,
+                  fontSize: AppFontSize.s16,
                   height: 1,
-                  fontWeight: selected ? FontWeight.w700 : FontWeight.w400,
+                  fontWeight: selected
+                      ? AppFontWeight.bold
+                      : AppFontWeight.regular,
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: AppHeight.h8),
               AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                width: selected ? 8 : 0,
-                height: selected ? 8 : 0,
+                duration: AppDurations.navigationSelection,
+                width: selected ? AppWidth.w8 : 0,
+                height: selected ? AppHeight.h8 : 0,
                 decoration: const BoxDecoration(
                   color: AppColors.primary,
                   shape: BoxShape.circle,

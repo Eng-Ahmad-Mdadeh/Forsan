@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/resources/app_colors.dart';
+import '../../../core/resources/app_values.dart';
 import 'bottom_nav_destination.dart';
 import 'custom_nav_item.dart';
 
@@ -43,17 +44,22 @@ class CustomBottomNavBar extends StatelessWidget {
     color: AppColors.backGround,
     child: SafeArea(
       top: false,
-      minimum: const EdgeInsets.fromLTRB(12, 0, 12, 10),
+      minimum: EdgeInsets.fromLTRB(
+        AppPaddingWidth.p12,
+        0,
+        AppPaddingWidth.p12,
+        AppPaddingHeight.p10,
+      ),
       child: Container(
-        height: 96,
+        height: AppHeight.h98,
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: const <BoxShadow>[
+          borderRadius: BorderRadius.circular(AppRadius.r30),
+          boxShadow: <BoxShadow>[
             BoxShadow(
-              color: Color(0x17000000),
-              blurRadius: 18,
-              offset: Offset(0, 5),
+              color: AppColors.homeSoftShadow,
+              blurRadius: AppRadius.r18,
+              offset: Offset(0, AppHeight.h5),
             ),
           ],
         ),
