@@ -4,6 +4,7 @@ import '../../../../core/resources/app_assets.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
+import '../../../widgets/text/body_title.dart';
 
 class RequiredDocumentsCard extends StatelessWidget {
   const RequiredDocumentsCard({super.key});
@@ -43,8 +44,8 @@ class RequiredDocumentsCard extends StatelessWidget {
                     ),
                     SizedBox(width: AppWidth.w8),
                     Expanded(
-                      child: Text.rich(
-                        TextSpan(
+                      child: BodyTitle(
+                        textSpan: TextSpan(
                           children: [
                             const TextSpan(text: 'إجراء مطلوب على الطلب '),
                             TextSpan(
@@ -56,24 +57,21 @@ class RequiredDocumentsCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        style: TextStyle(
-                          color: AppColors.mainText,
-                          fontSize: AppFontSize.s14,
-                          fontWeight: AppFontWeight.regular,
-                        ),
+                        color: AppColors.mainText,
+                        fontSize: AppFontSize.s14,
+                        fontWeight: AppFontWeight.regular,
                       ),
                     ),
                   ],
                 ),
                 SizedBox(height: AppHeight.h16),
-                Text(
-                  'يرجى إرفاق المستندات المطلوبة لاستكمال\nمراجعة طلب تأسيس الشركة.',
-                  style: TextStyle(
-                    color: AppColors.blackCow,
-                    fontSize: AppFontSize.s14,
-                    fontWeight: AppFontWeight.regular,
-                    height: 1.6,
-                  ),
+                BodyTitle(
+                  text:
+                      'يرجى إرفاق المستندات المطلوبة لاستكمال\nمراجعة طلب تأسيس الشركة.',
+                  color: AppColors.blackCow,
+                  fontSize: AppFontSize.s14,
+                  fontWeight: AppFontWeight.regular,
+                  height: 1.6,
                 ),
                 SizedBox(height: AppHeight.h16),
                 SizedBox(
@@ -94,12 +92,11 @@ class RequiredDocumentsCard extends StatelessWidget {
                       Icons.file_upload_outlined,
                       size: AppSize.s22,
                     ),
-                    label: Text(
-                      'استكمال المتطلبات',
-                      style: TextStyle(
-                        fontSize: AppFontSize.s14,
-                        fontWeight: AppFontWeight.medium,
-                      ),
+                    label: BodyTitle(
+                      text: 'استكمال المتطلبات',
+                      color: AppColors.white,
+                      fontSize: AppFontSize.s14,
+                      fontWeight: AppFontWeight.medium,
                     ),
                   ),
                 ),
