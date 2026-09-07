@@ -5,10 +5,10 @@ class BottomNavDestination {
   const BottomNavDestination({
     required this.label,
     required this.icon,
-    this.isPrimary = false,
+    this.selectedIcon,
   });
 
   final String label;
   final IconData icon;
-  final bool isPrimary;
+  final IconData? selectedIcon;
 }
