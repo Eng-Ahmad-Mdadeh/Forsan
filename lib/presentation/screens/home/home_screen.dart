@@ -1,24 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'widgets/home_header.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('مرحباً بك', style: TextStyle(fontSize: 14, color: Color(0xFF77727F))),
-            Text('فُرسان', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800)),
-          ],
-        ),
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.notifications_none_rounded)),
-          const SizedBox(width: 8),
-        ],
-      ),
+      appBar: const HomeHeader(),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [

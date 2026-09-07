@@ -11,7 +11,10 @@ void main() {
     await tester.pump(const Duration(seconds: 2));
     await tester.pumpAndSettle();
 
-    expect(find.text('فُرسان'), findsOneWidget);
+    expect(find.text('مرحباً سيد محمد'), findsOneWidget);
+    expect(find.text('كيف يمكننا مساعدتك اليوم ؟'), findsOneWidget);
+    expect(find.bySemanticsLabel('الملف الشخصي'), findsOneWidget);
+    expect(find.bySemanticsLabel('الإشعارات'), findsOneWidget);
     expect(find.text('الرئيسية'), findsOneWidget);
 
     await tester.tap(find.text('طلباتي'));
