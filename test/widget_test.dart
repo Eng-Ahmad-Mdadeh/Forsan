@@ -39,6 +39,12 @@ void main() {
     expect(find.text('50%'), findsOneWidget);
     expect(find.text('نسبة الإنجاز'), findsOneWidget);
     expect(find.text('تفاصيل الطلب'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('إجراءات سريعة'), 200);
+    expect(find.text('إجراءات سريعة'), findsOneWidget);
+    expect(find.text('طلب جديد'), findsOneWidget);
+    expect(find.text('الدعم'), findsOneWidget);
+    expect(find.bySemanticsLabel('إنشاء طلب جديد'), findsOneWidget);
+    expect(find.bySemanticsLabel('التواصل مع الدعم'), findsOneWidget);
 
     await tester.tap(find.text('طلباتي'));
     await tester.pumpAndSettle();

@@ -115,6 +115,7 @@ class AppColors {
   static const Color homeCardShadow = Color(0x26000000);
   static const Color homeSoftShadow = Color(0x18000000);
   static const Color homeIconShadow = Color(0x08000000);
+  static const Color homeSupportAction = Color(0xFF167565);
   static const Color homeHeroDark = Color(0xFF132238);
   static const Color homeBuildingSky = Color(0xFF0D3440);
   static const Color homeBuildingSide = Color(0xFF59606A);
