@@ -75,7 +75,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       if (context.canPop()) {
                         context.pop();
                       } else {
-                        HomeRoute().go(context);
+                        context.go(AppRoutes.home);
                       }
                     }
                   },
