@@ -16,6 +16,11 @@ void main() {
     expect(find.bySemanticsLabel('الملف الشخصي'), findsOneWidget);
     expect(find.bySemanticsLabel('الإشعارات'), findsOneWidget);
     expect(find.text('الرئيسية'), findsOneWidget);
+    expect(
+      find.bySemanticsLabel('كل خدماتك ومتابعاتك في مكان واحد'),
+      findsOneWidget,
+    );
+    expect(find.text('الخدمات السريعة'), findsNothing);
 
     await tester.tap(find.text('طلباتي'));
     await tester.pumpAndSettle();
