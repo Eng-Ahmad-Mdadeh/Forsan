@@ -55,6 +55,7 @@ class AppAssets {
 
   //#region Tmp Image
   static String banner = '$imageTmpPath/banner.png';
+  static String appBanner = '$imageTmpPath/app_banner.png';
   //#endregion
   //#region Sounds
   static String bidHoursSound = '$soundPath/bid.m4a';
