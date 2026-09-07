@@ -19,8 +19,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? onTapBackButton;
   final String title;
   final String? subTitle;
+  final Widget? titleWidget;
   final Color? backgroundColor;
   final VoidCallback? onBack;
+  final double? toolbarHeight;
+  final Widget? flexibleSpace;
+  final double? titleSpacing;
 
   final List<Widget>? customActions;
 
@@ -34,9 +38,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onBack,
     this.title = '',
     this.subTitle,
+    this.titleWidget,
     this.onTapSkipButton,
     this.onTapBackButton,
-    this.customActions, // ✅ إضافة البراميتر
+    this.customActions,
+    this.toolbarHeight,
+    this.flexibleSpace,
+    this.titleSpacing,
   }) : assert(
          (showSkipButton && onTapSkipButton != null) || (!showSkipButton && onTapSkipButton == null),
          'When showSkipButton is true, onTapSkipButton must not be null. When showSkipButton is false, onTapSkipButton must be null.',
@@ -48,6 +56,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: centerTitle,
       automaticallyImplyLeading: false,
       backgroundColor: backgroundColor,
+      toolbarHeight: toolbarHeight,
+      flexibleSpace: flexibleSpace,
+      titleSpacing: titleSpacing,
       scrolledUnderElevation: showScrolledUnderElevation ? 2 : 0,
       surfaceTintColor: AppColors.backGround,
       shadowColor: AppColors.lightGrey,
@@ -70,19 +81,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   },
             )
           : null,
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SectionTitle(text: title, fontSize: AppFontSize.s18),
-          if (subTitle != null)
-            BodyTitle(
-              text: subTitle,
-              color: AppColors.greyText,
-              fontSize: AppFontSize.s14,
-              fontWeight: AppFontWeight.regular,
-            ),
-        ],
-      ),
+      title:
+          titleWidget ??
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SectionTitle(text: title, fontSize: AppFontSize.s18),
+              if (subTitle != null)
+                BodyTitle(
+                  text: subTitle,
+                  color: AppColors.greyText,
+                  fontSize: AppFontSize.s14,
+                  fontWeight: AppFontWeight.regular,
+                ),
+            ],
+          ),
 
       actions:
           customActions ??
@@ -98,7 +111,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(AppHeight.h60);
+  Size get preferredSize => Size.fromHeight(toolbarHeight ?? AppHeight.h60);
 }
 
 class HeaderIconButton extends StatelessWidget {

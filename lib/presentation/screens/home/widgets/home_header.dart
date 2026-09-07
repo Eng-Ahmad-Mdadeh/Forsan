@@ -4,6 +4,7 @@ import '../../../../core/resources/app_assets.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
+import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
 
@@ -14,8 +15,9 @@ class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(AppHeight.h98);
 
   @override
-  Widget build(BuildContext context) => AppBar(
-    automaticallyImplyLeading: false,
+  Widget build(BuildContext context) => CustomAppBar(
+    backgroundColor: AppColors.white,
+    showScrolledUnderElevation: false,
     toolbarHeight: preferredSize.height,
     flexibleSpace: DecoratedBox(
       decoration: BoxDecoration(
@@ -28,7 +30,7 @@ class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
       ),
     ),
     titleSpacing: 0,
-    title: Padding(
+    titleWidget: Padding(
       padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
       child: Directionality(
         textDirection: TextDirection.rtl,
@@ -70,32 +72,33 @@ class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
             ),
-            SizedBox(width: AppWidth.w12),
-            Semantics(
-              button: true,
-              label: 'الإشعارات',
-              child: InkWell(
-                onTap: () {},
-                borderRadius: BorderRadius.circular(AppRadius.r8),
-                child: Container(
-                  width: AppWidth.w40,
-                  height: AppHeight.h40,
-                  decoration: BoxDecoration(
-                    color: AppColors.backGround,
-                    border: Border.all(color: AppColors.greyDivider),
-                    borderRadius: BorderRadius.circular(AppRadius.r8),
-                  ),
-                  child: Icon(
-                    Icons.notifications_none_rounded,
-                    color: AppColors.lightBlack,
-                    size: AppSize.s24,
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
     ),
+    customActions: [
+      Semantics(
+        button: true,
+        label: 'الإشعارات',
+        child: InkWell(
+          onTap: () {},
+          borderRadius: BorderRadius.circular(AppRadius.r8),
+          child: Container(
+            width: AppWidth.w40,
+            height: AppHeight.h40,
+            decoration: BoxDecoration(
+              color: AppColors.backGround,
+              border: Border.all(color: AppColors.greyDivider),
+              borderRadius: BorderRadius.circular(AppRadius.r8),
+            ),
+            child: Icon(
+              Icons.notifications_none_rounded,
+              color: AppColors.lightBlack,
+              size: AppSize.s24,
+            ),
+          ),
+        ),
+      ),
+    ],
   );
 }
