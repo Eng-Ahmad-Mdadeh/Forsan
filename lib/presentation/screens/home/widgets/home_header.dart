@@ -38,7 +38,7 @@ class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
               child: Icon(
                 Icons.person_outline_rounded,
                 color: AppColors.white,
-                size: AppFontSize.s32,
+                size: AppSize.s24,
                 semanticLabel: 'الملف الشخصي',
               ),
             ),
@@ -54,18 +54,18 @@ class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: AppColors.mainText,
-                      fontSize: AppFontSize.s20,
+                      fontSize: AppFontSize.s16,
                       fontWeight: AppFontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: AppHeight.h2),
+                  SizedBox(height: AppHeight.h4),
                   Text(
                     'كيف يمكننا مساعدتك اليوم ؟',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: AppColors.blackCow,
-                      fontSize: AppFontSize.s14,
+                      fontSize: AppFontSize.s12,
                       fontWeight: AppFontWeight.regular,
                     ),
                   ),
@@ -78,19 +78,19 @@ class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
               label: 'الإشعارات',
               child: InkWell(
                 onTap: () {},
-                borderRadius: BorderRadius.circular(AppRadius.r12),
+                borderRadius: BorderRadius.circular(AppRadius.r8),
                 child: Container(
-                  width: AppWidth.w48,
-                  height: AppHeight.h48,
+                  width: AppWidth.w40,
+                  height: AppHeight.h40,
                   decoration: BoxDecoration(
-                    color: AppColors.white,
-                    border: Border.all(color: AppColors.mainTextLightActive),
-                    borderRadius: BorderRadius.circular(AppRadius.r12),
+                    color: AppColors.backGround,
+                    border: Border.all(color: AppColors.greyDivider),
+                    borderRadius: BorderRadius.circular(AppRadius.r8),
                   ),
                   child: Icon(
                     Icons.notifications_none_rounded,
                     color: AppColors.lightBlack,
-                    size: AppFontSize.s28,
+                    size: AppSize.s24,
                   ),
                 ),
               ),

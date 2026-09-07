@@ -41,7 +41,7 @@ class CustomBottomNavBar extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(AppPaddingWidth.p16, 0, AppPaddingWidth.p16, AppPaddingHeight.p20),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppRadius.r30),
+        borderRadius: BorderRadius.circular(AppRadius.r16),
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: AppColors.homeSoftShadow,
