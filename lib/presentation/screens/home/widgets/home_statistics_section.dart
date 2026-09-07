@@ -36,16 +36,16 @@ class HomeStatisticsSection extends StatelessWidget {
     textDirection: TextDirection.rtl,
     child: LayoutBuilder(
       builder: (context, constraints) {
-        final cardWidth = (constraints.maxWidth - AppWidth.w12) / 2;
+        final cardWidth = (constraints.maxWidth - AppWidth.w8) / 2;
 
         return Wrap(
-          spacing: AppWidth.w12,
-          runSpacing: AppHeight.h12,
+          spacing: AppWidth.w8,
+          runSpacing: AppHeight.h8,
           children: _items
               .map(
                 (item) => SizedBox(
                   width: cardWidth,
-                  height: AppHeight.h112,
+                  height: AppHeight.h90,
                   child: _StatisticCard(item: item),
                 ),
               )
@@ -68,7 +68,7 @@ class _StatisticCard extends StatelessWidget {
     child: DecoratedBox(
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(AppRadius.r20),
+        borderRadius: BorderRadius.circular(AppRadius.r16),
         boxShadow: [
           BoxShadow(
             color: AppColors.homeSoftShadow,
@@ -78,15 +78,15 @@ class _StatisticCard extends StatelessWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppRadius.r20),
+        borderRadius: BorderRadius.circular(AppRadius.r16),
         child: Stack(
           children: [
             PositionedDirectional(
               top: -AppHeight.h42,
               start: -AppWidth.w38,
               child: Container(
-                width: AppWidth.w90,
-                height: AppHeight.h90,
+                width: AppWidth.w75,
+                height: AppHeight.h75,
                 decoration: const BoxDecoration(
                   color: AppColors.lightGreySec,
                   shape: BoxShape.circle,
@@ -94,42 +94,45 @@ class _StatisticCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(AppPaddingWidth.p12),
+              padding:  EdgeInsetsDirectional.only(start: AppPaddingWidth.p20,end: AppPaddingWidth.p8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: BodyTitle(
-                          text: item.title,
-                          color: AppColors.mainText,
-                          fontSize: AppFontSize.s14,
-                          fontWeight: AppFontWeight.regular,
-                          maxLines: 1,
+                  Padding(
+                    padding:  EdgeInsetsDirectional.only(top: AppPaddingHeight.p16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: BodyTitle(
+                            text: item.title,
+                            color: AppColors.mainText,
+                            fontSize: AppFontSize.s12,
+                            fontWeight: AppFontWeight.regular,
+                            maxLines: 1,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: AppWidth.w8),
-                      Container(
-                        width: AppWidth.w40,
-                        height: AppHeight.h40,
-                        decoration: BoxDecoration(
-                          color: AppColors.light,
-                          borderRadius: BorderRadius.circular(AppRadius.r12),
+                        SizedBox(width: AppWidth.w8),
+                        Container(
+                          width: AppWidth.w30,
+                          height: AppHeight.h30,
+                          decoration: BoxDecoration(
+                            color: AppColors.light,
+                            borderRadius: BorderRadius.circular(AppRadius.r8),
+                          ),
+                          child: Icon(
+                            item.icon,
+                            color: AppColors.primary,
+                            size: AppSize.s20,
+                          ),
                         ),
-                        child: Icon(
-                          item.icon,
-                          color: AppColors.primary,
-                          size: AppSize.s24,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  const Spacer(),
+                  SizedBox(height: AppHeight.h8),
                   BodyTitle(
                     text: item.value,
                     color: AppColors.mainText,
-                    fontSize: AppFontSize.s22,
+                    fontSize: AppFontSize.s18,
                     fontWeight: AppFontWeight.bold,
                     maxLines: 1,
                   ),
