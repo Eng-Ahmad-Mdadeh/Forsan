@@ -21,6 +21,9 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('الخدمات السريعة'), findsNothing);
+    expect(find.textContaining('FR-2026-001259'), findsOneWidget);
+    expect(find.text('استكمال المتطلبات'), findsOneWidget);
+    expect(find.bySemanticsLabel('شعار فرسان'), findsOneWidget);
 
     await tester.tap(find.text('طلباتي'));
     await tester.pumpAndSettle();
