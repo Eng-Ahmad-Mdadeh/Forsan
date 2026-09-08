@@ -30,7 +30,7 @@ Future<void> main() async {
   final initialLocale = await _loadInitialLocale();
   final languageCubit = LanguageCubit(initialLocale: initialLocale);
 
-  runApp(MultiBlocProvider(providers: [], child: const App()));
+  runApp(MultiBlocProvider(providers: [BlocProvider.value(value: languageCubit)], child: const App()));
 }
 
 class App extends StatelessWidget {
