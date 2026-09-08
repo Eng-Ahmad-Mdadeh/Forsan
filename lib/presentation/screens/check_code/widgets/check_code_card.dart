@@ -81,7 +81,9 @@ class CheckCodeCard extends StatelessWidget {
             const CheckCodeActions(),
             SizedBox(height: AppHeight.h22),
             ConfirmCodeButton(
-              onPressed: (){},
+              onPressed: (){
+                SignupRoute().go(context);
+              },
               // onPressed: () => VerificationCodeField.submit(
               //   context,
               //   formKey: formKey,

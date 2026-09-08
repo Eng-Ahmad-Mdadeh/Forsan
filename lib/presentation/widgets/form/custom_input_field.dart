@@ -93,7 +93,7 @@ class CustomInputField extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontSize: AppFontSize.s15,
                     fontWeight: AppFontWeight.bold,
-                    color: AppColors.secondary,
+                    color: AppColors.primaryDark,
                   ),
                 ),
                 if (req)

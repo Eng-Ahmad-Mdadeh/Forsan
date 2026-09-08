@@ -29,7 +29,7 @@ class SignupDropdownField extends StatelessWidget {
           textAlign: TextAlign.start,
           fontSize: AppFontSize.s15,
           fontWeight: AppFontWeight.bold,
-          color: AppColors.secondary,
+          color: AppColors.primaryDark,
         ),
         SizedBox(height: AppHeight.h4),
         CustomDropDownWidget(

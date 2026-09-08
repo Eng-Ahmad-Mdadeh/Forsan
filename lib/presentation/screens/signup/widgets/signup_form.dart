@@ -82,7 +82,6 @@ class _SignupFormState extends State<SignupForm> {
                     hintText: context.loc.signup_enter_email,
                     textInputType: TextInputType.emailAddress,
                     textDirection: TextDirection.ltr,
-                    textAlign: TextAlign.end,
                     validator: _emailValidator,
                   ),
                 ],

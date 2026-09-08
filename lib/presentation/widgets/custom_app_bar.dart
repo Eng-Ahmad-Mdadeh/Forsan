@@ -4,7 +4,6 @@ import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../core/resources/app_colors.dart';
 import '../../core/resources/app_values.dart';
 import 'text/body_title.dart';
@@ -135,7 +134,7 @@ class HeaderIconButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppRadius.r9),
               border: Border.all(color: AppColors.lightGrey),
             ),
-            child: Icon(icon, color: AppColors.secondary, size: AppSize.s24),
+            child: Icon(icon, color: AppColors.primaryDark, size: AppSize.s24),
           ),
         ),
       ),
