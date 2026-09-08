@@ -421,6 +421,33 @@ class AppLocalizationsAr extends AppLocalizations {
   String get email => 'البريد الإلكتروني';
 
   @override
+  String get signup_account_information => 'معلومات الحساب';
+
+  @override
+  String get signup_enter_full_name => 'يرجى إدخال الاسم الكامل';
+
+  @override
+  String get signup_nationality => 'الجنسية';
+
+  @override
+  String get signup_select_hint => 'يرجى الاختيار';
+
+  @override
+  String get signup_enter_email => 'يرجى إدخال البريد الإلكتروني';
+
+  @override
+  String get signup_saudi_arabia => 'المملكة العربية السعودية';
+
+  @override
+  String get signup_kuwait => 'الكويت';
+
+  @override
+  String get signup_saudi => 'سعودي';
+
+  @override
+  String get signup_kuwaiti => 'كويتي';
+
+  @override
   String get gender => 'الجنس';
 
   @override

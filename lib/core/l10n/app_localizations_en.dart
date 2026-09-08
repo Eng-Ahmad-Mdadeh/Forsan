@@ -423,6 +423,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get email => 'Email';
 
   @override
+  String get signup_account_information => 'Account information';
+
+  @override
+  String get signup_enter_full_name => 'Please enter your full name';
+
+  @override
+  String get signup_nationality => 'Nationality';
+
+  @override
+  String get signup_select_hint => 'Please select';
+
+  @override
+  String get signup_enter_email => 'Please enter your email';
+
+  @override
+  String get signup_saudi_arabia => 'Saudi Arabia';
+
+  @override
+  String get signup_kuwait => 'Kuwait';
+
+  @override
+  String get signup_saudi => 'Saudi';
+
+  @override
+  String get signup_kuwaiti => 'Kuwaiti';
+
+  @override
   String get gender => 'Gender';
 
   @override
