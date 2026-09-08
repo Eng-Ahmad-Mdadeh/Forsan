@@ -30,7 +30,7 @@ final appRouter = GoRouter(
   debugLogDiagnostics: kDebugMode,
   initialLocation: const SplashRoute().location,
   routes: $appRoutes,
-  redirect: _authGuard,
+  //redirect: _authGuard,
 );
 
 Future<String?> _authGuard(BuildContext context, GoRouterState state) async {
@@ -41,10 +41,11 @@ Future<String?> _authGuard(BuildContext context, GoRouterState state) async {
   }, (value) => value);
 
   final publicLocations = <String>{
-    const SplashRoute().location,
+     const SplashRoute().location,
     const LoginRoute().location,
     const SignupRoute().location,
     const CheckCodeRoute().location,
+
   };
 
   if (token == null && !publicLocations.contains(state.matchedLocation)) {
