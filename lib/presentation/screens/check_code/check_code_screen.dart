@@ -51,7 +51,13 @@ class _CheckCodeBodyState extends State<_CheckCodeBody> {
         body: Stack(
           fit: StackFit.expand,
           children: [
-            ImageView(imagePath: AppAssets.authBackground, fit: BoxFit.fill),
+            Opacity(
+              opacity: .12,
+              child: ImageView(
+                imagePath: AppAssets.appBackground,
+                fit: BoxFit.cover,
+              ),
+            ),
             LayoutBuilder(
               builder: (context, constraints) => SingleChildScrollView(
                 padding: EdgeInsets.fromLTRB(
