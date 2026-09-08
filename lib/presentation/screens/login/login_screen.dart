@@ -48,18 +48,36 @@ class _LoginBodyState extends State<_LoginBody> {
         body: Stack(
           fit: StackFit.expand,
           children: [
-            ImageView(imagePath: AppAssets.authBackground, fit: BoxFit.fill),
+            Opacity(
+              opacity: .12,
+              child: ImageView(
+                imagePath: AppAssets.appBackground,
+                fit: BoxFit.cover,
+              ),
+            ),
             LayoutBuilder(
               builder: (context, constraints) => SingleChildScrollView(
                 padding: EdgeInsets.fromLTRB(
                   16,
-                  constraints.maxHeight * .275,
+                  constraints.maxHeight * .08,
                   16,
                   MediaQuery.viewInsetsOf(context).bottom + 24,
                 ),
                 child: Form(
                   key: _loginFormKey,
-                  child: LoginCard(loginFormKey: _loginFormKey),
+                  child: Column(
+                    children: [
+                      ImageView(
+                        imagePath: AppAssets.fullLogo,
+                        width: 270,
+                        height: 140,
+                        fit: BoxFit.contain,
+                        color: AppColors.primary,
+                      ),
+                      const SizedBox(height: 16),
+                      LoginCard(loginFormKey: _loginFormKey),
+                    ],
+                  ),
                 ),
               ),
             ),
