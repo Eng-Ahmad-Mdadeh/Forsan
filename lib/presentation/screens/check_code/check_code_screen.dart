@@ -8,13 +8,17 @@ import 'package:forsan/presentation/cubit/code_check/code_check_cubit.dart';
 import 'package:forsan/presentation/screens/check_code/widgets/check_code_card.dart';
 import 'package:forsan/presentation/widgets/image_view.dart';
 
+import '../../../core/resources/app_values.dart';
+
 class CheckCodeScreen extends StatelessWidget {
   const CheckCodeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<CheckCodeBloc>(create: (context) => CheckCodeBloc())],
+      providers: [
+        BlocProvider<CheckCodeBloc>(create: (context) => CheckCodeBloc()),
+      ],
       child: const _CheckCodeBody(),
     );
   }
@@ -51,18 +55,38 @@ class _CheckCodeBodyState extends State<_CheckCodeBody> {
         body: Stack(
           fit: StackFit.expand,
           children: [
-            ImageView(imagePath: AppAssets.authBackground, fit: BoxFit.fill),
+            Opacity(
+              opacity: .12,
+              child: ImageView(
+                imagePath: AppAssets.appBackground,
+                fit: BoxFit.cover,
+              ),
+            ),
             LayoutBuilder(
               builder: (context, constraints) => SingleChildScrollView(
                 padding: EdgeInsets.fromLTRB(
                   16,
-                  constraints.maxHeight * .295,
+                  constraints.maxHeight * .15,
                   16,
                   MediaQuery.viewInsetsOf(context).bottom + 24,
                 ),
                 child: Form(
                   key: _formKey,
-                  child: CheckCodeCard(formKey: _formKey, codeController: _codeController),
+                  child: Column(
+                    children: [
+                      ImageView(
+                        imagePath: AppAssets.appLogo,
+                        width: AppWidth.w325,
+                        height: AppHeight.h135,
+                        fit: BoxFit.contain,
+                      ),
+                      SizedBox(height: AppHeight.h35),
+                      CheckCodeCard(
+                        formKey: _formKey,
+                        codeController: _codeController,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
