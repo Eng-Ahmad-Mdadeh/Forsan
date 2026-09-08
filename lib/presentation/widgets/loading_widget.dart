@@ -124,7 +124,7 @@ class LoadingWidget extends StatelessWidget {
             ),
 
             BodyTitle(
-              text: 'Tamalok',
+              text: 'forsan',
               fontSize: AppFontSize.s16,
               fontWeight: FontWeight.w600,
               color: AppColors.secondary,

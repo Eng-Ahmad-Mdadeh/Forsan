@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get app_name => 'tamalok Platform';
+  String get app_name => 'forsan Platform';
 
   @override
   String get home => 'Return to Home';
@@ -150,7 +150,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mass_auction_badge => 'Mass Auction';
 
   @override
-  String get mass_auction_title => 'Horse Auction — Managed by tamalok';
+  String get mass_auction_title => 'Horse Auction — Managed by forsan';
 
   @override
   String get countdown_label => 'Countdown';
@@ -1762,7 +1762,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get review_text =>
-      'Your request will be sent to the tamalok administration for review before publishing.';
+      'Your request will be sent to the forsan administration for review before publishing.';
 
   @override
   String get support_title => 'Support & Help';
@@ -2387,11 +2387,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paddle_type_label => 'Paddle Type';
 
   @override
-  String get share_app_title => 'Share tamalok App';
+  String get share_app_title => 'Share forsan App';
 
   @override
   String get share_app_description =>
-      'Invite someone you love to try tamalok and enjoy unique auctions and services together.';
+      'Invite someone you love to try forsan and enjoy unique auctions and services together.';
 
   @override
   String get share_tag_friends => 'Share with friends';
@@ -2404,11 +2404,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get share_message_no_link =>
-      'Try the tamalok app and share our exclusive auctions with someone you love.';
+      'Try the forsan app and share our exclusive auctions with someone you love.';
 
   @override
   String share_message_with_link(Object url) {
-    return 'Try the tamalok app and share our exclusive auctions with someone you love.\nDownload the app now: $url';
+    return 'Try the forsan app and share our exclusive auctions with someone you love.\nDownload the app now: $url';
   }
 
   @override
@@ -3688,7 +3688,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get advertiser_star_rating => 'star rating';
   @override
-  String advertiser_membership_duration(int count) => '$count months\non Tamalok';
+  String advertiser_membership_duration(int count) => '$count months\non forsan';
   @override
   String get advertiser_preview_reviewer_name => 'Mohammed Saeed';
   @override

@@ -148,13 +148,13 @@
   "more_desc_contact_us": "Reach out for inquiries and support",
   "more_desc_faqs": "Quick answers to the most common questions",
   "more_desc_logout": "Sign out from your current account",
-  "share_app_title": "Share tamalok App",
-  "share_app_description": "Invite someone you love to try tamalok and enjoy unique auctions and services together.",
+  "share_app_title": "Share forsan App",
+  "share_app_description": "Invite someone you love to try forsan and enjoy unique auctions and services together.",
   "share_tag_friends": "Share with friends",
   "share_tag_discover": "Discover new auctions",
   "share_now": "Share Now",
-  "share_message_no_link": "Try the tamalok app and share our exclusive auctions with someone you love.",
-  "share_message_with_link": "Try the tamalok app and share our exclusive auctions with someone you love.\nDownload the app now: {url}",
+  "share_message_no_link": "Try the forsan app and share our exclusive auctions with someone you love.",
+  "share_message_with_link": "Try the forsan app and share our exclusive auctions with someone you love.\nDownload the app now: {url}",
   "@share_message_with_link": {
     "placeholders": {
       "url": {}
@@ -249,7 +249,7 @@
   },
   "advertiser_reviews_label": "reviews",
   "advertiser_star_rating": "star rating",
-  "advertiser_membership_duration": "{count} months\non Tamalok",
+  "advertiser_membership_duration": "{count} months\non forsan",
   "@advertiser_membership_duration": {
     "placeholders": {"count": {"type": "int"}}
   },

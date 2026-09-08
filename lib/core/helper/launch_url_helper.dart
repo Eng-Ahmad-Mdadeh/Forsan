@@ -37,7 +37,7 @@ class LaunchUrlHelper {
     if (!(uri.scheme == 'https' || uri.scheme == 'http')) return false;
 
     final String host = uri.host.toLowerCase();
-    if (host != 'tamalok.sa' && host != 'www.tamalok.sa') return false;
+    if (host != 'forsan.sa' && host != 'www.forsan.sa') return false;
 
     final context = rootNavigatorKey.currentContext;
     if (context == null) return false;

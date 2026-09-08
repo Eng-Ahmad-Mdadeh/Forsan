@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/presentation/widgets/image_view.dart';
 
 import '../../../core/resources/app_assets.dart';
 import '../../../core/resources/app_values.dart';
@@ -25,12 +26,11 @@ class HomeScreen extends StatelessWidget {
         Semantics(
           image: true,
           label: 'الصورة الرئيسية',
-          child: Image.asset(
-            AppAssets.appBanner,
+          child: ImageView(
+            imagePath: AppAssets.appBanner,
             key: const Key('home-main-image'),
             width: double.infinity,
             fit: BoxFit.fitWidth,
-            excludeFromSemantics: true,
           ),
         ),
         SizedBox(height: AppHeight.h16),
