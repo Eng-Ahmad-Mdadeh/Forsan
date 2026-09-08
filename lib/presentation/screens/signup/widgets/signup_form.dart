@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_values.dart';
-import 'package:forsan/core/routes/app_routes.dart';
+import 'package:forsan/presentation/screens/home/home_screen.dart';
 import 'package:forsan/presentation/screens/signup/widgets/signup_dropdown_field.dart';
 import 'package:forsan/presentation/widgets/custom_submit_button.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
@@ -127,6 +127,9 @@ class _SignupFormState extends State<SignupForm> {
       return;
     }
 
-    const HomeRoute().go(context);
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute<void>(builder: (_) => const HomeScreen()),
+      (route) => false,
+    );
   }
 }
