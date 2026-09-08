@@ -48,7 +48,7 @@ class _LoginBodyState extends State<_LoginBody> {
         body: Stack(
           fit: StackFit.expand,
           children: [
-            ImageView(imagePath: AppAssets.authBackground, fit: BoxFit.fill),
+            ImageView(imagePath: AppAssets.appBackground, fit: BoxFit.fill),
             LayoutBuilder(
               builder: (context, constraints) => SingleChildScrollView(
                 padding: EdgeInsets.fromLTRB(
