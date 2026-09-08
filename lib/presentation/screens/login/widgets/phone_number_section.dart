@@ -12,6 +12,7 @@ import 'package:forsan/presentation/cubit/code_check/code_check_cubit.dart';
 import 'package:forsan/presentation/widgets/custom_text_from_field.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
+import 'package:iconamoon/iconamoon.dart';
 
 class PhoneNumberSection extends StatefulWidget {
   const PhoneNumberSection({super.key});
@@ -62,6 +63,7 @@ class _PhoneNumberSectionState extends State<PhoneNumberSection> {
             contentPaddingStart: AppPaddingWidth.p12,
             contentPaddingEnd: AppPaddingWidth.p12,
             prefixIcon: CountryDialCodePicker(country: _selectedCountry, onTap: _showCountryPicker),
+            suffixIcon: Icon(IconaMoon.phone, size: AppFontSize.s20),
             filled: true,
             validator: (value) {
               if (value == null || value == '') {

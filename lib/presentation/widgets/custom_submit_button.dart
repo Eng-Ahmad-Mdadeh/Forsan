@@ -15,6 +15,7 @@ class CustomSubmitButton extends StatelessWidget {
     this.marginStart,
     this.marginEnd,
     this.verification = true,
+    this.useGradient = true,
   });
 
   final String text;
@@ -24,6 +25,7 @@ class CustomSubmitButton extends StatelessWidget {
   final double? marginStart;
   final double? marginEnd;
   final bool verification;
+  final bool useGradient;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +38,16 @@ class CustomSubmitButton extends StatelessWidget {
       marginStart: marginStart,
       marginEnd: marginEnd,
       borderRadius: AppRadius.r7,
-      gradient: LinearGradient(
-        begin: Alignment.centerRight,
-        end: Alignment.centerLeft,
-        colors: verification ? [AppColors.primary, AppColors.primaryDarkHover] : [AppColors.greyText, AppColors.greyText],
-      ),
+      color: useGradient ? null : (verification ? AppColors.primary : AppColors.greyText),
+      gradient: useGradient
+          ? LinearGradient(
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft,
+              colors: verification
+                  ? [AppColors.primary, AppColors.primaryDarkHover]
+                  : [AppColors.greyText, AppColors.greyText],
+            )
+          : null,
       onPressed: onPressed ?? () {},
       child: SectionTitle(text: text, color: AppColors.white, textAlign: TextAlign.center)
           .animate(key: ValueKey('$text-$verification'))
