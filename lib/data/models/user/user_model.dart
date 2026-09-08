@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:tamalok/data/model/media_files/media_files_model.dart';
 
 part 'user_model.g.dart';
 
@@ -42,7 +41,7 @@ class UserModel extends Equatable {
   final bool? emailVerified;
 
   @JsonKey(name: 'media_files')
-  final MediaFilesModel? mediaFiles;
+  final Map<String, dynamic>? mediaFiles;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 

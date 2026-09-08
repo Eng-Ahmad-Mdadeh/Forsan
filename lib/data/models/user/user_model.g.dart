@@ -16,7 +16,5 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
   email: json['email'],
   profileCompleted: json['profile_completed'] as bool?,
   emailVerified: json['email_verified'] as bool?,
-  mediaFiles: json['media_files'] == null
-      ? null
-      : MediaFilesModel.fromJson(json['media_files'] as Map<String, dynamic>),
+  mediaFiles: json['media_files'] as Map<String, dynamic>?,
 );
