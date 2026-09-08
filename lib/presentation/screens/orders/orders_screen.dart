@@ -1,11 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/presentation/widgets/custom_app_bar.dart';
+
+import '../../../core/resources/app_colors.dart';
+import '../../../core/resources/app_values.dart';
 
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('طلباتي', style: TextStyle(fontWeight: FontWeight.w800))),
+    appBar: CustomAppBar(
+      title: 'طلباتي',
+      customActions: [
+        Semantics(
+          button: true,
+          label: 'الإشعارات',
+          child: InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.circular(AppRadius.r8),
+            child: Container(
+              width: AppWidth.w40,
+              height: AppHeight.h40,
+              decoration: BoxDecoration(
+                color: AppColors.backGround,
+                border: Border.all(color: AppColors.greyDivider),
+                borderRadius: BorderRadius.circular(AppRadius.r8),
+              ),
+              child: Icon(
+                Icons.notifications_none_rounded,
+                color: AppColors.lightBlack,
+                size: AppSize.s24,
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
     body: const _EmptyState(
       icon: Icons.receipt_long_outlined,
       title: 'لا توجد طلبات بعد',
