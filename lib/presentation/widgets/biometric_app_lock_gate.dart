@@ -45,7 +45,7 @@ class _BiometricAppLockGateState extends State<BiometricAppLockGate> with Widget
     }
 
     if (state == AppLifecycleState.resumed && biometricState.isLocked) {
-      _biometricLockCubit.unlock(reason: 'استخدم بصمة الإصبع لفتح تطبيق Tamalok');
+      _biometricLockCubit.unlock(reason: 'استخدم بصمة الإصبع لفتح تطبيق forsan');
       return;
     }
 
@@ -89,7 +89,7 @@ class _BiometricAppLockGateState extends State<BiometricAppLockGate> with Widget
                             _FingerprintUnlockButton(
                               isAuthenticating: state.isAuthenticating,
                               onTap: () => context.read<BiometricLockCubit>().unlock(
-                                reason: 'استخدم بصمة الإصبع لفتح تطبيق Tamalok',
+                                reason: 'استخدم بصمة الإصبع لفتح تطبيق forsan',
                               ),
                             ),
                           ],

@@ -95,7 +95,7 @@ abstract class AppLocalizations {
   /// No description provided for @app_name.
   ///
   /// In en, this message translates to:
-  /// **'tamalok Platform'**
+  /// **'forsan Platform'**
   String get app_name;
 
   /// No description provided for @home.
@@ -365,7 +365,7 @@ abstract class AppLocalizations {
   /// No description provided for @mass_auction_title.
   ///
   /// In en, this message translates to:
-  /// **'Horse Auction — Managed by tamalok'**
+  /// **'Horse Auction — Managed by forsan'**
   String get mass_auction_title;
 
   /// No description provided for @countdown_label.
@@ -3449,7 +3449,7 @@ abstract class AppLocalizations {
   /// No description provided for @review_text.
   ///
   /// In en, this message translates to:
-  /// **'Your request will be sent to the tamalok administration for review before publishing.'**
+  /// **'Your request will be sent to the forsan administration for review before publishing.'**
   String get review_text;
 
   /// No description provided for @support_title.
@@ -4631,13 +4631,13 @@ abstract class AppLocalizations {
   /// No description provided for @share_app_title.
   ///
   /// In en, this message translates to:
-  /// **'Share tamalok App'**
+  /// **'Share forsan App'**
   String get share_app_title;
 
   /// No description provided for @share_app_description.
   ///
   /// In en, this message translates to:
-  /// **'Invite someone you love to try tamalok and enjoy unique auctions and services together.'**
+  /// **'Invite someone you love to try forsan and enjoy unique auctions and services together.'**
   String get share_app_description;
 
   /// No description provided for @share_tag_friends.
@@ -4661,13 +4661,13 @@ abstract class AppLocalizations {
   /// No description provided for @share_message_no_link.
   ///
   /// In en, this message translates to:
-  /// **'Try the tamalok app and share our exclusive auctions with someone you love.'**
+  /// **'Try the forsan app and share our exclusive auctions with someone you love.'**
   String get share_message_no_link;
 
   /// No description provided for @share_message_with_link.
   ///
   /// In en, this message translates to:
-  /// **'Try the tamalok app and share our exclusive auctions with someone you love.\nDownload the app now: {url}'**
+  /// **'Try the forsan app and share our exclusive auctions with someone you love.\nDownload the app now: {url}'**
   String share_message_with_link(Object url);
 
   /// No description provided for @add_ad_created_success.
