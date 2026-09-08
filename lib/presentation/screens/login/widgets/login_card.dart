@@ -44,7 +44,10 @@ class LoginCard extends StatelessWidget {
             AppPaddingWidth.p16,
             AppPaddingHeight.p18,
           ),
-          decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(AppRadius.r18)),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(AppRadius.r18),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -53,9 +56,14 @@ class LoginCard extends StatelessWidget {
               const PhoneNumberSection(),
               SizedBox(height: AppHeight.h40),
               ContinueLoginButton(loginFormKey: loginFormKey),
-              SizedBox(height: AppHeight.h15),
-              SectionTitle(text: "متابعة كزائر", fontWeight: AppFontWeight.medium),
-              SizedBox(height: AppHeight.h40),
+              SizedBox(height: AppHeight.h50),
+              SectionTitle(
+                text: "بتسجيل الدخول انت توافق على",
+                fontWeight: AppFontWeight.medium,
+                fontSize: AppFontSize.s12,
+                color: AppColors.mainText,
+              ),
+              SizedBox(height: AppHeight.h6),
               const AuthTermsFooter(),
             ],
           ),

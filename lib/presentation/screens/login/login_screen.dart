@@ -7,6 +7,7 @@ import 'package:forsan/presentation/bloc/auth/login/login_bloc.dart';
 import 'package:forsan/presentation/cubit/auth/login/login_cubit.dart';
 import 'package:forsan/presentation/widgets/image_view.dart';
 
+import '../../../core/resources/app_values.dart';
 import 'widgets/login_card.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -48,18 +49,35 @@ class _LoginBodyState extends State<_LoginBody> {
         body: Stack(
           fit: StackFit.expand,
           children: [
-            ImageView(imagePath: AppAssets.appBackground, fit: BoxFit.fill),
+            Opacity(
+              opacity: .12,
+              child: ImageView(
+                imagePath: AppAssets.appBackground,
+                fit: BoxFit.cover,
+              ),
+            ),
             LayoutBuilder(
               builder: (context, constraints) => SingleChildScrollView(
                 padding: EdgeInsets.fromLTRB(
                   16,
-                  constraints.maxHeight * .275,
+                  constraints.maxHeight * .08,
                   16,
                   MediaQuery.viewInsetsOf(context).bottom + 24,
                 ),
                 child: Form(
                   key: _loginFormKey,
-                  child: LoginCard(loginFormKey: _loginFormKey),
+                  child: Column(
+                    children: [
+                      ImageView(
+                        imagePath: AppAssets.appLogo,
+                        width:AppWidth.w325,
+                        height:AppHeight.h135,
+                        fit: BoxFit.contain,
+                      ),
+                       SizedBox(height: AppHeight.h35),
+                      LoginCard(loginFormKey: _loginFormKey),
+                    ],
+                  ),
                 ),
               ),
             ),

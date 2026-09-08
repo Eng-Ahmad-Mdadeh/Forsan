@@ -26,6 +26,7 @@ class AppAssets {
   //#region Logo
   static String fullLogo = '$imagePath/full_logo.png';
   static String logo = '$imagePath/logo.svg';
+  static String appLogo = '$imagePath/app_logo.png';
   static String appBackground = '$imagePath/app_background.png';
   static String appBanner = '$imagePath/app_banner.png';
   static String addFile = '$imagePath/add_file.png';

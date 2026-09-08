@@ -38,7 +38,7 @@ class _PhoneNumberSectionState extends State<PhoneNumberSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        BodyTitle(text: 'رقم الهاتف'),
+        BodyTitle(text: 'رقم الجوال'),
         SizedBox(height: AppHeight.h8),
         Directionality(
           textDirection: TextDirection.ltr,

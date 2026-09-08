@@ -11,14 +11,17 @@ import 'package:forsan/core/services/app_lifecycle_tracker.dart';
 import 'package:forsan/core/services/app_services.dart';
 import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/core/utils/connection_network_service.dart';
-
+import 'package:forsan/presentation/cubit/code_check/code_check_cubit.dart';
 
 import 'presentation/cubit/language/language_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(statusBarColor: AppColors.primary, statusBarIconBrightness: Brightness.light),
+    const SystemUiOverlayStyle(
+      statusBarColor: AppColors.primary,
+      statusBarIconBrightness: Brightness.light,
+    ),
   );
 
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -30,7 +33,15 @@ Future<void> main() async {
   final initialLocale = await _loadInitialLocale();
   final languageCubit = LanguageCubit(initialLocale: initialLocale);
 
-  runApp(MultiBlocProvider(providers: [BlocProvider.value(value: languageCubit)], child: const App()));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: languageCubit),
+        BlocProvider<CodeCheckCubit>(create: (_) => CodeCheckCubit()),
+      ],
+      child: const App(),
+    ),
+  );
 }
 
 class App extends StatelessWidget {
@@ -62,7 +73,10 @@ class App extends StatelessWidget {
               builder: (context, child) {
                 return ColoredBox(
                   color: AppColors.backGround,
-                  child: SafeArea(top: false, child: child ?? const SizedBox.shrink()),
+                  child: SafeArea(
+                    top: false,
+                    child: child ?? const SizedBox.shrink(),
+                  ),
                 );
               },
             );
@@ -75,11 +89,15 @@ class App extends StatelessWidget {
 
 Future<Locale> _loadInitialLocale() async {
   const fallback = Locale('ar');
-  final response = await locator<LocalStorageHelper>().getValue(LanguageCubit.boxName, LanguageCubit.localeKey);
+  final response = await locator<LocalStorageHelper>().getValue(
+    LanguageCubit.boxName,
+    LanguageCubit.localeKey,
+  );
 
   return response.fold((_) => fallback, (value) {
     final languageCode = value?.toString();
-    if (languageCode != null && LanguageCubit.supportedLocales.contains(languageCode)) {
+    if (languageCode != null &&
+        LanguageCubit.supportedLocales.contains(languageCode)) {
       return Locale(languageCode);
     }
     return fallback;
