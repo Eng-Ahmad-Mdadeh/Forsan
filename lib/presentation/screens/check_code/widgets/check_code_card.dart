@@ -81,11 +81,12 @@ class CheckCodeCard extends StatelessWidget {
             const CheckCodeActions(),
             SizedBox(height: AppHeight.h22),
             ConfirmCodeButton(
-              onPressed: () => VerificationCodeField.submit(
-                context,
-                formKey: formKey,
-                code: codeController.text,
-              ),
+              onPressed: (){},
+              // onPressed: () => VerificationCodeField.submit(
+              //   context,
+              //   formKey: formKey,
+              //   code: codeController.text,
+              // ),
             ),
           ],
         ),

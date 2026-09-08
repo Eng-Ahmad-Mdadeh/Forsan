@@ -21,6 +21,7 @@ class ContinueLoginButton extends StatelessWidget {
           text: 'متابعة',
           marginTop: 0,
           marginBottom: 0,
+          useGradient: false,
           onPressed: () async {
             CheckCodeRoute().push(context);
             // if (!(loginFormKey.currentState?.validate() ?? false)) return;
