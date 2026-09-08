@@ -1,4 +1,4 @@
-import 'package:forsan/data/model/user/user_model.dart';
+import 'package:forsan/data/models/user/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 

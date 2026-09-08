@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
-import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 
 class AuthTermsFooter extends StatelessWidget {
@@ -15,7 +14,7 @@ class AuthTermsFooter extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _FooterLink(text: 'الشروط والأحكام', onTap: () => const TermsAndConditionsRoute().push(context)),
+          const _FooterLink(text: 'الشروط والأحكام'),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p8),
             child: BodyTitle(
@@ -25,7 +24,7 @@ class AuthTermsFooter extends StatelessWidget {
               fontWeight: AppFontWeight.regular,
             ),
           ),
-          _FooterLink(text: 'سياسة الخصوصية', onTap: () => const PrivacyPolicyRoute().push(context)),
+          const _FooterLink(text: 'سياسة الخصوصية'),
         ],
       ),
     );
@@ -33,21 +32,17 @@ class AuthTermsFooter extends StatelessWidget {
 }
 
 class _FooterLink extends StatelessWidget {
-  const _FooterLink({required this.text, required this.onTap});
+  const _FooterLink({required this.text});
 
   final String text;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: BodyTitle(
-        text: text,
-        color: AppColors.greyText,
-        fontSize: AppFontSize.s12,
-        fontWeight: AppFontWeight.regular,
-      ),
+    return BodyTitle(
+      text: text,
+      color: AppColors.greyText,
+      fontSize: AppFontSize.s12,
+      fontWeight: AppFontWeight.regular,
     );
   }
 }

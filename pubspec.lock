@@ -527,7 +527,7 @@ packages:
     source: hosted
     version: "3.4.2"
   flutter_google_maps_webservices:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_google_maps_webservices
       sha256: "0a1ad0619d5a8ec37b4a8a47776c26fe7491f5a3b8031a5191607ea1a4996ead"
@@ -981,6 +981,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
+  iconamoon:
+    dependency: "direct main"
+    description:
+      name: iconamoon
+      sha256: f3de914381adbde53623d5270beb9a816643674e2d7a458ddc29d6c98495b834
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   icons_plus:
     dependency: "direct main"
     description:
