@@ -36,7 +36,7 @@ class SignupDropdownField extends StatelessWidget {
           items: items,
           isStringList: true,
           hintText: hint,
-          color: AppColors.backGround,
+          color: AppColors.white,
           height: AppHeight.h50,
           borderRadius: AppRadius.r7,
           closedBorder: const Border.fromBorderSide(

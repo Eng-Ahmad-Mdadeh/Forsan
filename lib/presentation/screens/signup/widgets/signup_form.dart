@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
+import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/presentation/screens/signup/widgets/signup_dropdown_field.dart';
 import 'package:forsan/presentation/widgets/custom_submit_button.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
@@ -55,6 +57,7 @@ class _SignupFormState extends State<SignupForm> {
                     title: context.loc.full_name,
                     hintText: context.loc.signup_enter_full_name,
                     textInputType: TextInputType.name,
+                    backgroundColor: AppColors.white,
                     validator: _requiredValidator,
                   ),
                   SizedBox(height: AppHeight.h12),
@@ -82,6 +85,7 @@ class _SignupFormState extends State<SignupForm> {
                     hintText: context.loc.signup_enter_email,
                     textInputType: TextInputType.emailAddress,
                     textDirection: TextDirection.ltr,
+                    backgroundColor: AppColors.white,
                     validator: _emailValidator,
                   ),
                 ],
@@ -125,5 +129,6 @@ class _SignupFormState extends State<SignupForm> {
         _selectedNationality == null) {
       return;
     }
+    const HomeRoute().go(context);
   }
 }
