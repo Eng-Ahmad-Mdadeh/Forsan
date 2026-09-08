@@ -7,6 +7,7 @@ import '../../../core/resources/app_values.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/orders_search_bar.dart';
 import '../../widgets/text/section_title.dart';
+import 'widgets/orders_status_tabs.dart';
 
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
@@ -44,6 +45,11 @@ class OrdersScreen extends StatelessWidget {
             onSearchChanged: (_) {},
             onFilterPressed: () {},
           ),
+        ),
+        SizedBox(height: AppHeight.h16),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
+          child: const OrdersStatusTabs(),
         ),
         Expanded(
           child: _EmptyState(
