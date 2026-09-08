@@ -1,12 +1,12 @@
-import 'package:forsan/domain/entity/auth/auth_entity.dart';
-import 'package:forsan/domain/repository/auth/i_auth_repository.dart';
+import 'package:forsan/domain/entities/auth/auth_entity.dart';
+import 'package:forsan/domain/repositories/auth/i_auth_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:forsan/core/exceptions/app_exception.dart';
 import 'package:forsan/data/data_sources/auth/auth_remote_data_source.dart';
 import 'package:forsan/data/data_sources/auth/auth_storage_data_source.dart';
-import 'package:forsan/data/model/auth/auth_model.dart';
-import 'package:forsan/data/model/base/base_model.dart';
+import 'package:forsan/data/models/auth/auth_model.dart';
+import 'package:forsan/data/models/base/base_model.dart';
 
 @Injectable(as: IAuthRepository)
 class AuthRepository implements IAuthRepository {

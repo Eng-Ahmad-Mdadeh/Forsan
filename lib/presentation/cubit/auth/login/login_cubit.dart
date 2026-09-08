@@ -1,4 +1,4 @@
-import 'package:forsan/domain/entity/auth/auth_entity.dart';
+import 'package:forsan/domain/entities/auth/auth_entity.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

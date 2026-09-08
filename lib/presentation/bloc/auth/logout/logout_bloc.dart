@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:forsan/domain/usecase/i_use_case.dart';
+import 'package:forsan/domain/usecases/i_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/services/locator/locator.dart';

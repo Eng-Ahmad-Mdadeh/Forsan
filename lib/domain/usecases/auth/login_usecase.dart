@@ -1,10 +1,10 @@
-import 'package:forsan/domain/entity/auth/auth_entity.dart';
-import 'package:forsan/domain/repository/auth/i_auth_repository.dart';
-import 'package:forsan/domain/usecase/i_use_case.dart';
+import 'package:forsan/domain/entities/auth/auth_entity.dart';
+import 'package:forsan/domain/repositories/auth/i_auth_repository.dart';
+import 'package:forsan/domain/usecases/i_use_case.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:forsan/data/model/auth/auth_model.dart';
-import 'package:forsan/data/model/base/base_model.dart';
+import 'package:forsan/data/models/auth/auth_model.dart';
+import 'package:forsan/data/models/base/base_model.dart';
 
 import '../../../core/exceptions/app_exception.dart';
 

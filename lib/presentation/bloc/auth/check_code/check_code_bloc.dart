@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:forsan/domain/entity/auth/auth_entity.dart';
-import 'package:forsan/domain/usecase/i_use_case.dart';
+import 'package:forsan/domain/entities/auth/auth_entity.dart';
+import 'package:forsan/domain/usecases/i_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/services/locator/locator.dart';
-import 'package:forsan/data/model/auth/auth_model.dart';
-import 'package:forsan/data/model/base/base_model.dart';
+import 'package:forsan/data/models/auth/auth_model.dart';
+import 'package:forsan/data/models/base/base_model.dart';
 
 part 'check_code_event.dart';
 
