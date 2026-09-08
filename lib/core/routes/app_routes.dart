@@ -45,6 +45,7 @@ Future<String?> _authGuard(BuildContext context, GoRouterState state) async {
     const LoginRoute().location,
     const SignupRoute().location,
     const CheckCodeRoute().location,
+    const HomeRoute().location,
   };
 
   if (token == null && !publicLocations.contains(state.matchedLocation)) {
