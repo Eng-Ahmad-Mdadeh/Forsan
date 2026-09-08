@@ -13,6 +13,7 @@ import 'package:forsan/presentation/screens/home/home_screen.dart';
 import 'package:forsan/presentation/screens/login/login_screen.dart';
 import 'package:forsan/presentation/screens/more/more_screen.dart';
 import 'package:forsan/presentation/screens/orders/orders_screen.dart';
+import 'package:forsan/presentation/screens/signup/signup_screen.dart';
 import 'package:forsan/presentation/screens/splash/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -42,6 +43,7 @@ Future<String?> _authGuard(BuildContext context, GoRouterState state) async {
   final publicLocations = <String>{
     const SplashRoute().location,
     const LoginRoute().location,
+    const SignupRoute().location,
     const CheckCodeRoute().location,
   };
 
@@ -82,6 +84,19 @@ class CheckCodeRoute extends GoRouteData with $CheckCodeRoute {
   @override
   CustomTransitionPage<void> buildPage(BuildContext context, GoRouterState state) {
     return const CheckCodeScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
+@TypedGoRoute<SignupRoute>(path: '/signup')
+class SignupRoute extends GoRouteData with $SignupRoute {
+  const SignupRoute();
+
+  @override
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return const SignupScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
 
