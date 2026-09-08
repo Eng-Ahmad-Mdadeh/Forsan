@@ -35,6 +35,7 @@ class CustomInputField extends StatelessWidget {
   final double? height;
   final double? borderRadius;
   final double? fontSize;
+  final Color? backgroundColor;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
 
@@ -65,6 +66,7 @@ class CustomInputField extends StatelessWidget {
     this.height,
     this.borderRadius,
     this.fontSize,
+    this.backgroundColor,
     this.inputFormatters,
     this.isExpanded,
   }) : assert(
@@ -132,8 +134,7 @@ class CustomInputField extends StatelessWidget {
       controller: controller,
       readOnly: readOnly,
       onTap: onTap,
-      // color: AppColors.grey.withAlpha(40),
-      color: AppColors.backGround,
+      color: backgroundColor ?? AppColors.backGround,
       contentPaddingTop: AppPaddingHeight.p10,
       contentPaddingStart: AppPaddingWidth.p10,
       contentPaddingEnd: AppPaddingWidth.p10,

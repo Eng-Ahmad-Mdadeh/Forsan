@@ -36,7 +36,7 @@ class CheckCodeCard extends StatelessWidget {
         if (state is CheckCodeLoaded) {
           context.pop();
           if (context.mounted) {
-            HomeRoute().go(context);
+            SignupRoute().go(context);
           }
         }
         if (state is CheckCodeFailed && context.mounted) {
@@ -81,14 +81,11 @@ class CheckCodeCard extends StatelessWidget {
             const CheckCodeActions(),
             SizedBox(height: AppHeight.h22),
             ConfirmCodeButton(
-              onPressed: (){
-                SignupRoute().go(context);
-              },
-              // onPressed: () => VerificationCodeField.submit(
-              //   context,
-              //   formKey: formKey,
-              //   code: codeController.text,
-              // ),
+              onPressed: () => VerificationCodeField.submit(
+                context,
+                formKey: formKey,
+                code: codeController.text,
+              ),
             ),
           ],
         ),
