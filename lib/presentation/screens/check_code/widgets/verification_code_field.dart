@@ -6,7 +6,7 @@ import 'package:forsan/core/extension/remove_zero_from_number.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
-import 'package:forsan/domain/entity/auth/auth_entity.dart';
+import 'package:forsan/domain/entities/auth/auth_entity.dart';
 import 'package:forsan/presentation/bloc/auth/check_code/check_code_bloc.dart';
 import 'package:forsan/presentation/cubit/code_check/code_check_cubit.dart';
 

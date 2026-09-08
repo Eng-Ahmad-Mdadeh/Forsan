@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/extension/remove_zero_from_number.dart';
 import 'package:forsan/core/routes/app_routes.dart';
-import 'package:forsan/domain/entity/auth/auth_entity.dart';
+import 'package:forsan/domain/entities/auth/auth_entity.dart';
 import 'package:forsan/presentation/bloc/auth/login/login_bloc.dart';
 import 'package:forsan/presentation/cubit/auth/login/login_cubit.dart';
 import 'package:forsan/presentation/cubit/code_check/code_check_cubit.dart';

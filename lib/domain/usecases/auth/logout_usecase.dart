@@ -1,5 +1,5 @@
-import 'package:forsan/domain/repository/auth/i_auth_repository.dart';
-import 'package:forsan/domain/usecase/i_use_case.dart';
+import 'package:forsan/domain/repositories/auth/i_auth_repository.dart';
+import 'package:forsan/domain/usecases/i_use_case.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import '../../../core/exceptions/app_exception.dart';

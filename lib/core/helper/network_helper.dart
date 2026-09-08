@@ -7,8 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/data/data_sources/auth/auth_storage_data_source.dart';
-import 'package:forsan/data/model/base/base_model.dart';
-import 'package:forsan/data/model/pagination/pagination_model.dart';
+import 'package:forsan/data/models/base/base_model.dart';
+import 'package:forsan/data/models/pagination/pagination_model.dart';
 
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';

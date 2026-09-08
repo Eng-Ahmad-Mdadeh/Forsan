@@ -1,4 +1,4 @@
-import 'package:forsan/data/model/pagination/pagination_model.dart';
+import 'package:forsan/data/models/pagination/pagination_model.dart';
 
 /// A reusable controller that manages cursor-based pagination for any type [T].
 ///
