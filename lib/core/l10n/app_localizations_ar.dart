@@ -4232,6 +4232,36 @@ class AppLocalizationsAr extends AppLocalizations {
   String get order_stages => 'مراحل الطلب';
 
   @override
+  String get order_documents => 'مستندات الطلب';
+
+  @override
+  String get order_document_passport => 'جواز السفر';
+
+  @override
+  String get order_document_commercial_record => 'السجل التجاري';
+
+  @override
+  String get order_document_identity => 'الهوية';
+
+  @override
+  String get order_document_company_address => 'مستند مقر الشركة';
+
+  @override
+  String get order_document_status_approved => 'معتمد';
+
+  @override
+  String get order_document_status_rejected => 'مرفوض';
+
+  @override
+  String get order_document_status_under_review => 'قيد المراجعة';
+
+  @override
+  String get order_document_status_required => 'مطلوب';
+
+  @override
+  String get order_document_status_not_required => 'غير مطلوب حالياً';
+
+  @override
   String get order_stage_received_title => 'استلام الطلب';
 
   @override

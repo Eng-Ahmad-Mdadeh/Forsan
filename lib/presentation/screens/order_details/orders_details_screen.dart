@@ -9,6 +9,7 @@ import '../../widgets/text/section_title.dart';
 import '../orders/models/order_item.dart';
 import '../orders/widgets/order_card.dart';
 import 'widgets/order_stages_card.dart';
+import 'widgets/order_documents_card.dart';
 import 'widgets/order_summary_card.dart';
 
 class OrdersDetailsScreen extends StatelessWidget {
@@ -51,6 +52,8 @@ class OrdersDetailsScreen extends StatelessWidget {
             ),
             SizedBox(height: AppHeight.h16),
             const OrderStagesCard(),
+            SizedBox(height: AppHeight.h16),
+            const OrderDocumentsCard(),
           ],
         ),
       ),

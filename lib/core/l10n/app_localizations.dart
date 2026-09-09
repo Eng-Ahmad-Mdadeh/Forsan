@@ -7705,6 +7705,26 @@ abstract class AppLocalizations {
 
   String get order_stages;
 
+  String get order_documents;
+
+  String get order_document_passport;
+
+  String get order_document_commercial_record;
+
+  String get order_document_identity;
+
+  String get order_document_company_address;
+
+  String get order_document_status_approved;
+
+  String get order_document_status_rejected;
+
+  String get order_document_status_under_review;
+
+  String get order_document_status_required;
+
+  String get order_document_status_not_required;
+
   String get order_stage_received_title;
 
   String get order_stage_received_description;
