@@ -10,10 +10,18 @@ import 'order_status_badge.dart';
 import 'order_status_icon.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({super.key, required this.order, this.onDetailsPressed});
+  const OrderCard({
+    super.key,
+    required this.order,
+    this.onDetailsPressed,
+    this.showFooter = true,
+    this.showDateLabel = false,
+  });
 
   final OrderItem order;
   final VoidCallback? onDetailsPressed;
+  final bool showFooter;
+  final bool showDateLabel;
 
   @override
   Widget build(BuildContext context) => Directionality(
@@ -22,7 +30,7 @@ class OrderCard extends StatelessWidget {
       container: true,
       label: '${order.title}، ${order.number}، ${order.status.label}',
       child: Container(
-        height: AppHeight.h150,
+        height: showFooter ? AppHeight.h150 : AppHeight.h120,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: AppColors.white,
@@ -54,32 +62,38 @@ class OrderCard extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(child: _OrderInformation(order: order)),
+                          Expanded(
+                            child: _OrderInformation(
+                              order: order,
+                              showDateLabel: showDateLabel,
+                            ),
+                          ),
                           SizedBox(width: AppWidth.w10),
                           _OrderState(status: order.status),
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.person_outline_rounded,
-                          color: AppColors.secondaryText,
-                          size: AppSize.s18,
-                        ),
-                        SizedBox(width: AppWidth.w4),
-                        Expanded(
-                          child: BodyTitle(
-                            text: 'المستشار: ${order.consultant}',
+                    if (showFooter)
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.person_outline_rounded,
                             color: AppColors.secondaryText,
-                            fontSize: AppFontSize.s11,
-                            fontWeight: AppFontWeight.regular,
-                            maxLines: 1,
+                            size: AppSize.s18,
                           ),
-                        ),
-                        _DetailsButton(onPressed: onDetailsPressed),
-                      ],
-                    ),
+                          SizedBox(width: AppWidth.w4),
+                          Expanded(
+                            child: BodyTitle(
+                              text: 'المستشار: ${order.consultant}',
+                              color: AppColors.secondaryText,
+                              fontSize: AppFontSize.s11,
+                              fontWeight: AppFontWeight.regular,
+                              maxLines: 1,
+                            ),
+                          ),
+                          _DetailsButton(onPressed: onDetailsPressed),
+                        ],
+                      ),
                   ],
                 ),
               ),
@@ -92,9 +106,13 @@ class OrderCard extends StatelessWidget {
 }
 
 class _OrderInformation extends StatelessWidget {
-  const _OrderInformation({required this.order});
+  const _OrderInformation({
+    required this.order,
+    required this.showDateLabel,
+  });
 
   final OrderItem order;
+  final bool showDateLabel;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -124,7 +142,9 @@ class _OrderInformation extends StatelessWidget {
           ),
           SizedBox(width: AppWidth.w4),
           BodyTitle(
-            text: order.date,
+            text: showDateLabel
+                ? 'تاريخ الطلب : ${order.date}'
+                : order.date,
             color: AppColors.primaryDark,
             fontSize: AppFontSize.s10,
             fontWeight: AppFontWeight.medium,
