@@ -80,8 +80,10 @@ class _OrdersViewState extends State<_OrdersView> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    backgroundColor: AppColors.white,
     appBar: CustomAppBar(
       title: 'طلباتي',
+      backgroundColor: AppColors.white,
       toolbarHeight: AppHeight.h70,
       showScrolledUnderElevation: false,
       titleSpacing: AppPaddingWidth.p16,

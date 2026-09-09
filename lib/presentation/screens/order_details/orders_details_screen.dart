@@ -15,11 +15,13 @@ class OrdersDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    backgroundColor: AppColors.white,
     appBar: CustomAppBar(
       title: 'تفاصيل الطلب',
       showBackButton: true,
       toolbarHeight: AppHeight.h70,
       showScrolledUnderElevation: false,
+      backgroundColor: AppColors.white,
       titleSpacing: AppPaddingWidth.p16,
       titleWidget: SectionTitle(
         text: 'تفاصيل الطلب',
