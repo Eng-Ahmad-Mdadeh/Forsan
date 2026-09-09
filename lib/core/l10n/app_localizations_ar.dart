@@ -4197,4 +4197,34 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get account_verification_resubmit => 'إعادة تقديم الطلب';
+
+  @override
+  String get order_details => 'تفاصيل الطلب';
+
+  @override
+  String get order_summary => 'ملخص الطلب';
+
+  @override
+  String get order_submitter => 'مقدم الطلب';
+
+  @override
+  String get order_date => 'تاريخ الطلب';
+
+  @override
+  String get order_service => 'الخدمة';
+
+  @override
+  String get order_service_type => 'نوع الخدمة';
+
+  @override
+  String get order_fees => 'الرسوم';
+
+  @override
+  String get order_submitter_abroad => 'مغترب / خارج سوريا';
+
+  @override
+  String get order_business_establishment => 'تأسيس الأعمال';
+
+  @override
+  String get order_fees_after_review => 'تحدد بعد المراجعة';
 }

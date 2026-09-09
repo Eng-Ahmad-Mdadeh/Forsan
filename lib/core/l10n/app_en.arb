@@ -510,5 +510,15 @@
   "account_verification_submission_date": "Request date",
   "account_verification_approval_date": "Approval date",
   "account_verification_rejection_date": "Rejection date",
-  "account_verification_resubmit": "Resubmit request"
+  "account_verification_resubmit": "Resubmit request",
+  "order_details": "Order details",
+  "order_summary": "Order summary",
+  "order_submitter": "Submitted by",
+  "order_date": "Order date",
+  "order_service": "Service",
+  "order_service_type": "Service type",
+  "order_fees": "Fees",
+  "order_submitter_abroad": "Expatriate / Outside Syria",
+  "order_business_establishment": "Business establishment",
+  "order_fees_after_review": "Determined after review"
 }

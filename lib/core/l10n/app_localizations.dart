@@ -7682,6 +7682,26 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Resubmit request'**
   String get account_verification_resubmit;
+
+  String get order_details;
+
+  String get order_summary;
+
+  String get order_submitter;
+
+  String get order_date;
+
+  String get order_service;
+
+  String get order_service_type;
+
+  String get order_fees;
+
+  String get order_submitter_abroad;
+
+  String get order_business_establishment;
+
+  String get order_fees_after_review;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

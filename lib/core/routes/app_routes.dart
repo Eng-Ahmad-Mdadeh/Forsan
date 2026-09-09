@@ -13,6 +13,8 @@ import 'package:forsan/presentation/screens/home/home_screen.dart';
 import 'package:forsan/presentation/screens/login/login_screen.dart';
 import 'package:forsan/presentation/screens/more/more_screen.dart';
 import 'package:forsan/presentation/screens/orders/orders_screen.dart';
+import 'package:forsan/presentation/screens/order_details/orders_details_screen.dart';
+import 'package:forsan/presentation/screens/orders/models/order_item.dart';
 import 'package:forsan/presentation/screens/signup/signup_screen.dart';
 import 'package:forsan/presentation/screens/splash/splash_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -107,7 +109,12 @@ class SignupRoute extends GoRouteData with $SignupRoute {
       routes: [TypedGoRoute<HomeRoute>(path: '/home')],
     ),
     TypedStatefulShellBranch<OrdersBranch>(
-      routes: [TypedGoRoute<OrdersRoute>(path: '/orders')],
+      routes: [
+        TypedGoRoute<OrdersRoute>(
+          path: '/orders',
+          routes: [TypedGoRoute<OrdersDetailsRoute>(path: 'details')],
+        ),
+      ],
     ),
     TypedStatefulShellBranch<DocumentsBranch>(
       routes: [TypedGoRoute<DocumentsRoute>(path: '/documents')],
@@ -163,6 +170,22 @@ class OrdersRoute extends GoRouteData with $OrdersRoute {
   @override
   CustomTransitionPage<void> buildPage(BuildContext context, GoRouterState state) {
     return const OrdersScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
+class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
+  const OrdersDetailsRoute(this.$extra);
+
+  final OrderItem $extra;
+
+  @override
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return OrdersDetailsScreen(order: $extra).buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
   }
 }
 
