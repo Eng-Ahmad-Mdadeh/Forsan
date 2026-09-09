@@ -19,6 +19,8 @@ import 'package:forsan/presentation/screens/signup/signup_screen.dart';
 import 'package:forsan/presentation/screens/splash/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../presentation/screens/complete_requirements/complete_requirements_screen.dart';
+
 part 'app_routes.g.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -43,11 +45,10 @@ Future<String?> _authGuard(BuildContext context, GoRouterState state) async {
   }, (value) => value);
 
   final publicLocations = <String>{
-     const SplashRoute().location,
+    const SplashRoute().location,
     const LoginRoute().location,
     const SignupRoute().location,
     const CheckCodeRoute().location,
-
   };
 
   if (token == null && !publicLocations.contains(state.matchedLocation)) {
@@ -61,7 +62,10 @@ class SplashRoute extends GoRouteData with $SplashRoute {
   const SplashRoute();
 
   @override
-  CustomTransitionPage<void> buildPage(BuildContext context, GoRouterState state) {
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
     return SplashScreen(
       onFinished: () => const HomeRoute().go(context),
     ).buildPage(pageAnimation: PageAnimation.fade);
@@ -76,7 +80,10 @@ class LoginRoute extends GoRouteData with $LoginRoute {
   const LoginRoute();
 
   @override
-  CustomTransitionPage<void> buildPage(BuildContext context, GoRouterState state) {
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
     return const LoginScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
@@ -85,7 +92,10 @@ class CheckCodeRoute extends GoRouteData with $CheckCodeRoute {
   const CheckCodeRoute();
 
   @override
-  CustomTransitionPage<void> buildPage(BuildContext context, GoRouterState state) {
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
     return const CheckCodeScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
@@ -102,7 +112,13 @@ class SignupRoute extends GoRouteData with $SignupRoute {
     return const SignupScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
-@TypedGoRoute<OrdersDetailsRoute>(path: '/order-details')
+
+@TypedGoRoute<OrdersDetailsRoute>(
+  path: '/order-details',
+  routes: [
+    TypedGoRoute<CompleteRequirementsRoute>(path: 'complete-requirements'),
+  ],
+)
 class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
   const OrdersDetailsRoute(this.$extra);
 
@@ -110,10 +126,25 @@ class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
 
   @override
   CustomTransitionPage<void> buildPage(
-      BuildContext context,
-      GoRouterState state,
-      ) {
-    return OrdersDetailsScreen(order: $extra).buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return OrdersDetailsScreen(
+      order: $extra,
+    ).buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
+class CompleteRequirementsRoute extends GoRouteData
+    with $CompleteRequirementsRoute {
+  const CompleteRequirementsRoute();
+
+  @override
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return const CompleteRequirementsScreen().buildPage(
       pageAnimation: PageAnimation.fade,
     );
   }
@@ -170,7 +201,10 @@ class HomeRoute extends GoRouteData with $HomeRoute {
   const HomeRoute();
 
   @override
-  CustomTransitionPage<void> buildPage(BuildContext context, GoRouterState state) {
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
     return const HomeScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
@@ -179,7 +213,10 @@ class OrdersRoute extends GoRouteData with $OrdersRoute {
   const OrdersRoute();
 
   @override
-  CustomTransitionPage<void> buildPage(BuildContext context, GoRouterState state) {
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
     return const OrdersScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
@@ -188,7 +225,10 @@ class DocumentsRoute extends GoRouteData with $DocumentsRoute {
   const DocumentsRoute();
 
   @override
-  CustomTransitionPage<void> buildPage(BuildContext context, GoRouterState state) {
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
     return const DocumentsScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
@@ -197,7 +237,10 @@ class MoreRoute extends GoRouteData with $MoreRoute {
   const MoreRoute();
 
   @override
-  CustomTransitionPage<void> buildPage(BuildContext context, GoRouterState state) {
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
     return const MoreScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }

@@ -10,8 +10,8 @@ List<RouteBase> get $appRoutes => [
   $splashRoute,
   $loginRoute,
   $signupRoute,
-  $appShellRoute,
   $ordersDetailsRoute,
+  $appShellRoute,
 ];
 
 RouteBase get $splashRoute => GoRouteData.$route(
@@ -105,6 +105,66 @@ mixin $SignupRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/signup');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $ordersDetailsRoute => GoRouteData.$route(
+  path: '/order-details',
+  hasOverriddenOnExit: false,
+  factory: $OrdersDetailsRoute._fromState,
+  routes: [
+    GoRouteData.$route(
+      path: 'complete-requirements',
+      hasOverriddenOnExit: false,
+      factory: $CompleteRequirementsRoute._fromState,
+    ),
+  ],
+);
+
+mixin $OrdersDetailsRoute on GoRouteData {
+  static OrdersDetailsRoute _fromState(GoRouterState state) =>
+      OrdersDetailsRoute(state.extra as OrderItem);
+
+  OrdersDetailsRoute get _self => this as OrdersDetailsRoute;
+
+  @override
+  String get location => GoRouteData.$location('/order-details');
+
+  @override
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+
+  @override
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: _self.$extra);
+
+  @override
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
+}
+
+mixin $CompleteRequirementsRoute on GoRouteData {
+  static CompleteRequirementsRoute _fromState(GoRouterState state) =>
+      const CompleteRequirementsRoute();
+
+  @override
+  String get location =>
+      GoRouteData.$location('/order-details/complete-requirements');
 
   @override
   void go(BuildContext context) => context.go(location);
@@ -245,35 +305,4 @@ mixin $MoreRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
-}
-
-RouteBase get $ordersDetailsRoute => GoRouteData.$route(
-  path: '/order-details',
-  hasOverriddenOnExit: false,
-  factory: $OrdersDetailsRoute._fromState,
-);
-
-mixin $OrdersDetailsRoute on GoRouteData {
-  static OrdersDetailsRoute _fromState(GoRouterState state) =>
-      OrdersDetailsRoute(state.extra as OrderItem);
-
-  OrdersDetailsRoute get _self => this as OrdersDetailsRoute;
-
-  @override
-  String get location => GoRouteData.$location('/order-details');
-
-  @override
-  void go(BuildContext context) => context.go(location, extra: _self.$extra);
-
-  @override
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: _self.$extra);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: _self.$extra);
-
-  @override
-  void replace(BuildContext context) =>
-      context.replace(location, extra: _self.$extra);
 }
