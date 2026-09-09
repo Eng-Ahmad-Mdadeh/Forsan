@@ -109,12 +109,7 @@ class SignupRoute extends GoRouteData with $SignupRoute {
       routes: [TypedGoRoute<HomeRoute>(path: '/home')],
     ),
     TypedStatefulShellBranch<OrdersBranch>(
-      routes: [
-        TypedGoRoute<OrdersRoute>(
-          path: '/orders',
-          routes: [TypedGoRoute<OrdersDetailsRoute>(path: 'details')],
-        ),
-      ],
+      routes: [TypedGoRoute<OrdersRoute>(path: '/orders')],
     ),
     TypedStatefulShellBranch<DocumentsBranch>(
       routes: [TypedGoRoute<DocumentsRoute>(path: '/documents')],
@@ -173,6 +168,7 @@ class OrdersRoute extends GoRouteData with $OrdersRoute {
   }
 }
 
+@TypedGoRoute<OrdersDetailsRoute>(path: '/order-details')
 class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
   const OrdersDetailsRoute(this.$extra);
 

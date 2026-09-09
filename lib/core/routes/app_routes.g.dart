@@ -10,6 +10,7 @@ List<RouteBase> get $appRoutes => [
   $splashRoute,
   $loginRoute,
   $signupRoute,
+  $ordersDetailsRoute,
   $appShellRoute,
 ];
 
@@ -119,6 +120,12 @@ mixin $SignupRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
+RouteBase get $ordersDetailsRoute => GoRouteData.$route(
+  path: '/order-details',
+  hasOverriddenOnExit: false,
+  factory: $OrdersDetailsRoute._fromState,
+);
+
 RouteBase get $appShellRoute => StatefulShellRouteData.$route(
   factory: $AppShellRouteExtension._fromState,
   branches: [
@@ -137,13 +144,6 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
           path: '/orders',
           hasOverriddenOnExit: false,
           factory: $OrdersRoute._fromState,
-          routes: [
-            GoRouteData.$route(
-              path: 'details',
-              hasOverriddenOnExit: false,
-              factory: $OrdersDetailsRoute._fromState,
-            ),
-          ],
         ),
       ],
     ),
@@ -219,7 +219,7 @@ mixin $OrdersDetailsRoute on GoRouteData {
   OrdersDetailsRoute get _self => this as OrdersDetailsRoute;
 
   @override
-  String get location => GoRouteData.$location('/orders/details');
+  String get location => GoRouteData.$location('/order-details');
 
   @override
   void go(BuildContext context) => context.go(location, extra: _self.$extra);
