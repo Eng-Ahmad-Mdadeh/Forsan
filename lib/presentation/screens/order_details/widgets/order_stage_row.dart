@@ -36,7 +36,28 @@ class OrderStageRow extends StatelessWidget {
                   color: AppColors.mainTextLight,
                 ),
               ),
-              _StageMarker(stage: stage),
+              SizedBox(
+                width: AppWidth.w20,
+                height: AppHeight.h20,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: stage.isCurrent ? AppColors.light : AppColors.none,
+                  ),
+                  child: Center(
+                    child: Container(
+                      width: AppWidth.w15,
+                      height: AppHeight.h15,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: stage.isCompleted
+                            ? AppColors.homeSupportAction
+                            : AppColors.mainTextLightActive,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -95,32 +116,4 @@ class OrderStageRow extends StatelessWidget {
   );
 }
 
-class _StageMarker extends StatelessWidget {
-  const _StageMarker({required this.stage});
 
-  final OrderStageItem stage;
-
-  @override
-  Widget build(BuildContext context) => SizedBox(
-    width: AppWidth.w46,
-    height: AppHeight.h46,
-    child: DecoratedBox(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: stage.isCurrent ? AppColors.light : AppColors.none,
-      ),
-      child: Center(
-        child: Container(
-          width: AppWidth.w28,
-          height: AppHeight.h28,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: stage.isCompleted
-                ? AppColors.homeSupportAction
-                : AppColors.mainTextLightActive,
-          ),
-        ),
-      ),
-    ),
-  );
-}
