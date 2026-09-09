@@ -49,9 +49,7 @@ class OrdersDetailsScreen extends StatelessWidget {
           children: [
             OrderCard(order: order, showFooter: false),
             SizedBox(height: AppHeight.h16),
-            OrderRequiredActionCard(
-              onPressed: () => const CompleteRequirementsRoute().push(context),
-            ),
+            OrderRequiredActionCard(),
             SizedBox(height: AppHeight.h16),
             OrderSummaryCard(
               order: order,
@@ -66,28 +64,59 @@ class OrdersDetailsScreen extends StatelessWidget {
             SizedBox(height: AppHeight.h16),
             const OrderAttachedDocumentsCard(),
             SizedBox(height: AppHeight.h20),
-            CustomElevatedButton(
-              width: double.infinity,
-              height: AppHeight.h52,
-              color: AppColors.primary,
-              borderRadius: AppRadius.r12,
-              onPressed: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.chat_bubble_outline_rounded,
-                    color: AppColors.white,
-                    size: AppSize.s22,
+            Row(
+              children: [
+                Expanded(
+                  child: CustomElevatedButton(
+                    height: AppHeight.h52,
+                    color: AppColors.homeSupportAction,
+                    borderRadius: AppRadius.r12,
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.check_rounded,
+                          color: AppColors.white,
+                          size: AppSize.s15,
+                        ),
+                        SizedBox(width: AppWidth.w5),
+                        BodyTitle(
+                          text: context.loc.order_approve_and_pay,
+                          color: AppColors.white,
+                          fontSize: AppFontSize.s12,
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(width: AppWidth.w8),
-                  BodyTitle(
-                    text: context.loc.order_contact_consultant,
-                    color: AppColors.white,
-                    fontSize: AppFontSize.s16,
+                ),
+                SizedBox(width: AppWidth.w7),
+                Expanded(
+                  child: CustomElevatedButton(
+                    height: AppHeight.h52,
+                    color: AppColors.primary,
+                    borderRadius: AppRadius.r12,
+                    onPressed: () {},
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.chat_bubble_outline_rounded,
+                          color: AppColors.white,
+                          size: AppSize.s15,
+                        ),
+                        SizedBox(width: AppWidth.w5),
+                        Flexible(
+                          child: BodyTitle(
+                            text: context.loc.order_contact_consultant,
+                            color: AppColors.white,
+                            fontSize: AppFontSize.s12,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

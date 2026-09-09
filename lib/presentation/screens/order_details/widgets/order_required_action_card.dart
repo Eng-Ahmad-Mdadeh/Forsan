@@ -9,9 +9,9 @@ import '../../../widgets/custom_elevated_button.dart';
 import '../../../widgets/text/body_title.dart';
 
 class OrderRequiredActionCard extends StatelessWidget {
-  final VoidCallback? onPressed;
 
-  const OrderRequiredActionCard({super.key, this.onPressed});
+
+  const OrderRequiredActionCard({super.key});
 
 
 
@@ -73,7 +73,9 @@ class OrderRequiredActionCard extends StatelessWidget {
               alignment: AlignmentDirectional.centerEnd,
               child: CustomElevatedButton(
                 height: AppHeight.h48,
-                onPressed: onPressed ?? () {},
+                onPressed:  () {
+                  CompleteRequirementsRoute().push(context);
+                },
                 color: AppColors.secondaryNormal,
                 borderRadius: AppRadius.r12,
                 padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p20),

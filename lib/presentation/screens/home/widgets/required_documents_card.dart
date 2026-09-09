@@ -4,6 +4,8 @@ import '../../../../core/resources/app_assets.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
+import '../../../../core/routes/app_routes.dart';
+import '../../../widgets/custom_elevated_button.dart';
 import '../../../widgets/text/body_title.dart';
 
 class RequiredDocumentsCard extends StatelessWidget {
@@ -75,29 +77,32 @@ class RequiredDocumentsCard extends StatelessWidget {
                   height: 1.6,
                 ),
                 SizedBox(height: AppHeight.h10),
-                SizedBox(
-                  height: AppHeight.h48,
-                  child: FilledButton.icon(
-                    onPressed: () {},
-                    style: FilledButton.styleFrom(
-                      foregroundColor: AppColors.white,
-                      backgroundColor: AppColors.primary,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppPaddingWidth.p20,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.r12),
-                      ),
-                    ),
-                    icon: Icon(
-                      Icons.file_upload_outlined,
-                      size: AppSize.s22,
-                    ),
-                    label: BodyTitle(
-                      text: 'استكمال المتطلبات',
-                      color: AppColors.white,
-                      fontSize: AppFontSize.s14,
-                      fontWeight: AppFontWeight.medium,
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: CustomElevatedButton(
+                    height: AppHeight.h35,
+                    onPressed: () {
+                      CompleteRequirementsRoute().push(context);
+                    },
+                    color: AppColors.primary,
+                    borderRadius: AppRadius.r8,
+                    padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p10),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.file_upload_outlined,
+                          size: AppSize.s16,
+                          color: AppColors.white,
+                        ),
+                        SizedBox(width: AppWidth.w8),
+                        BodyTitle(
+                          text:'استكمال المتطلبات',
+                          color: AppColors.white,
+                          fontSize: AppFontSize.s12,
+                          fontWeight: AppFontWeight.medium,
+                        ),
+                      ],
                     ),
                   ),
                 ),

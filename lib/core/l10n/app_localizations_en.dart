@@ -4303,6 +4303,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
 
   @override
+  String get order_approve_and_pay => 'Approve and pay';
+
+
+  @override
   String get order_document_passport => 'Passport';
 
   @override
