@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 import '../../../core/resources/app_colors.dart';
+import '../../../core/resources/app_fonts.dart';
 import '../../../core/resources/app_values.dart';
 import '../image_view.dart';
+import '../text/body_title.dart';
 import '../text/section_title.dart';
 
 class DocumentUploadPlaceholder extends StatelessWidget {
@@ -11,6 +13,8 @@ class DocumentUploadPlaceholder extends StatelessWidget {
   final bool isExpanded;
   final bool isVideo;
   final VoidCallback? onRemove;
+  final String? uploadLabel;
+  final String? uploadHint;
 
   const DocumentUploadPlaceholder({
     super.key,
@@ -18,6 +22,8 @@ class DocumentUploadPlaceholder extends StatelessWidget {
     required this.isExpanded,
     this.isVideo = false,
     this.onRemove,
+    this.uploadLabel,
+    this.uploadHint,
   });
 
   @override
@@ -60,16 +66,28 @@ class DocumentUploadPlaceholder extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  isVideo ? Iconsax.video_vertical_outline : Iconsax.camera_outline,
-                  color: AppColors.grey,
-                  size: AppSize.s42,
+                  isVideo
+                      ? Iconsax.video_vertical_outline
+                      : Icons.file_upload_outlined,
+                  color: AppColors.mainText,
+                  size: AppSize.s38,
                 ),
                 SizedBox(height: AppHeight.h7),
                 SectionTitle(
-                  text: isVideo ? "أضف فيديو" : "أضف صورة",
-                  color: AppColors.greyText,
+                  text: uploadLabel ?? (isVideo ? "أضف فيديو" : "أضف صورة"),
+                  color: AppColors.mainText,
+                  fontWeight: AppFontWeight.regular,
                 ),
-                SizedBox(height: AppHeight.h18),
+                if (uploadHint != null) ...[
+                  SizedBox(height: AppHeight.h7),
+                  BodyTitle(
+                    text: uploadHint,
+                    color: AppColors.grey,
+                    fontWeight: AppFontWeight.regular,
+                    overflow: TextOverflow.visible,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ],
             ),
     );
