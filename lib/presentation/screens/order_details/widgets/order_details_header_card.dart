@@ -1,0 +1,84 @@
+import 'package:flutter/material.dart';
+
+import '../../../../core/resources/app_colors.dart';
+import '../../../../core/resources/app_fonts.dart';
+import '../../../../core/resources/app_values.dart';
+import '../../../widgets/section_card.dart';
+import '../../../widgets/text/body_title.dart';
+import '../../../widgets/text/section_title.dart';
+import '../../orders/models/order_item.dart';
+import '../../orders/widgets/order_status_badge.dart';
+import '../../orders/widgets/order_status_icon.dart';
+
+class OrderDetailsHeaderCard extends StatelessWidget {
+  const OrderDetailsHeaderCard({super.key, required this.order});
+
+  final OrderItem order;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    container: true,
+    label: '${order.title}، ${order.number}، ${order.status.label}',
+    child: SectionCard(
+      borderRadius:BorderRadius.circular(AppRadius.r10),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppPaddingWidth.p16,
+        vertical: AppPaddingHeight.p16,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SectionTitle(
+                  text: order.title,
+                  color: AppColors.primaryDark,
+                  fontSize: AppFontSize.s15,
+                  fontWeight: AppFontWeight.bold,
+                  maxLines: 1,
+                ),
+                SizedBox(height: AppHeight.h6),
+                BodyTitle(
+                  text: order.number,
+                  color: AppColors.secondaryText,
+                  fontSize: AppFontSize.s11,
+                  fontWeight: AppFontWeight.regular,
+                ),
+                SizedBox(height: AppHeight.h14),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.calendar_today_outlined,
+                      color: AppColors.secondaryText,
+                      size: AppSize.s14,
+                    ),
+                    SizedBox(width: AppWidth.w4),
+                    Flexible(
+                      child: BodyTitle(
+                        text: 'تاريخ الطلب : ${order.date}',
+                        color: AppColors.primaryDark,
+                        fontSize: AppFontSize.s10,
+                        fontWeight: AppFontWeight.medium,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: AppWidth.w10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              OrderStatusBadge(status: order.status),
+              SizedBox(height: AppHeight.h14),
+              OrderStatusIcon(status: order.status),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}

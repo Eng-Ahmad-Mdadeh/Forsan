@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/presentation/screens/order_details/widgets/order_details_header_card.dart';
 
 import '../../../core/extension/localization_extension.dart';
 import '../../../core/resources/app_colors.dart';
@@ -47,7 +48,7 @@ class OrdersDetailsScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            OrderCard(order: order, showFooter: false),
+            OrderDetailsHeaderCard(order: order),
             SizedBox(height: AppHeight.h16),
             OrderRequiredActionCard(),
             SizedBox(height: AppHeight.h16),
