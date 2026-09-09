@@ -7702,6 +7702,38 @@ abstract class AppLocalizations {
   String get order_business_establishment;
 
   String get order_fees_after_review;
+
+  String get order_stages;
+
+  String get order_stage_received_title;
+
+  String get order_stage_received_description;
+
+  String get order_stage_review_title;
+
+  String get order_stage_review_description;
+
+  String get order_stage_documents_title;
+
+  String get order_stage_documents_description;
+
+  String get order_stage_quote_title;
+
+  String get order_stage_quote_description;
+
+  String get order_stage_payment_title;
+
+  String get order_stage_payment_description;
+
+  String get order_stage_execution_title;
+
+  String get order_stage_execution_description;
+
+  String get order_stage_completion_title;
+
+  String get order_stage_completion_description;
+
+  String get order_stage_sample_date;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

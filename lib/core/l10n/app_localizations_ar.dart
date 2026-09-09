@@ -4227,4 +4227,52 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get order_fees_after_review => 'تحدد بعد المراجعة';
+
+  @override
+  String get order_stages => 'مراحل الطلب';
+
+  @override
+  String get order_stage_received_title => 'استلام الطلب';
+
+  @override
+  String get order_stage_received_description => 'تم استلام ملف المعاملة وإرسال البيانات لفريق خدمات تأسيس الأعمال.';
+
+  @override
+  String get order_stage_review_title => 'مراجعة الطلب';
+
+  @override
+  String get order_stage_review_description => 'تمت مراجعة الطلب والبيانات الأساسية وتعيين مستشار للطلب.';
+
+  @override
+  String get order_stage_documents_title => 'المستندات';
+
+  @override
+  String get order_stage_documents_description => 'سيتم مراجعة المستندات وفي حال وجود أي نقص سيقوم الفريق بإرسال طلب لك لاستكمال المستندات.';
+
+  @override
+  String get order_stage_quote_title => 'إعداد عرض السعر والخطة';
+
+  @override
+  String get order_stage_quote_description => 'بعد اكتمال المستندات سيظهر عرض الخدمة شاملاً الرسوم والمدة وخطوات التنفيذ بالاعتماد.';
+
+  @override
+  String get order_stage_payment_title => 'اعتماد العرض والدفع';
+
+  @override
+  String get order_stage_payment_description => 'يمكنك اعتماد العرض واختيار طريقة الدفع وتحميل الفاتورة والإيصال من لوحة التحكم.';
+
+  @override
+  String get order_stage_execution_title => 'التنفيذ والمتابعة';
+
+  @override
+  String get order_stage_execution_description => 'يتولى فريق فرسان إجراءات المعاملة مع تحديثك بكل خطوة أو متطلب جديد.';
+
+  @override
+  String get order_stage_completion_title => 'الإنجاز والتسليم';
+
+  @override
+  String get order_stage_completion_description => 'عند اكتمال الخدمة سيتم رفع المستندات النهائية وإغلاق الطلب مع إمكانية تقييم الخدمة.';
+
+  @override
+  String get order_stage_sample_date => '26 يناير 2026';
 }

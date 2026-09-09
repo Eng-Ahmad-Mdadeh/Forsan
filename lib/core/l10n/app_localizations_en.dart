@@ -4253,4 +4253,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get order_fees_after_review => 'Determined after review';
+
+  @override
+  String get order_stages => 'Order stages';
+
+  @override
+  String get order_stage_received_title => 'Order received';
+
+  @override
+  String get order_stage_received_description => 'The transaction file was received and its details were sent to the business setup services team.';
+
+  @override
+  String get order_stage_review_title => 'Order review';
+
+  @override
+  String get order_stage_review_description => 'The order and its basic information were reviewed, and an advisor was assigned.';
+
+  @override
+  String get order_stage_documents_title => 'Documents';
+
+  @override
+  String get order_stage_documents_description => 'The documents will be reviewed. If anything is missing, the team will send you a request to complete them.';
+
+  @override
+  String get order_stage_quote_title => 'Quote and plan preparation';
+
+  @override
+  String get order_stage_quote_description => 'Once the documents are complete, the service quote will appear with the fees, duration, and approved implementation steps.';
+
+  @override
+  String get order_stage_payment_title => 'Quote approval and payment';
+
+  @override
+  String get order_stage_payment_description => 'You can approve the quote, choose a payment method, and download the invoice and receipt from the dashboard.';
+
+  @override
+  String get order_stage_execution_title => 'Execution and follow-up';
+
+  @override
+  String get order_stage_execution_description => 'The Forsan team will handle the transaction and keep you updated about every step or new requirement.';
+
+  @override
+  String get order_stage_completion_title => 'Completion and delivery';
+
+  @override
+  String get order_stage_completion_description => 'When the service is complete, the final documents will be uploaded and the order closed, with the option to rate the service.';
+
+  @override
+  String get order_stage_sample_date => '26 January 2026';
 }

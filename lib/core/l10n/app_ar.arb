@@ -254,13 +254,21 @@
   "advertiser_send_rating": "ارسال",
   "advertiser_reviews_count": "تقييم ({count})",
   "@advertiser_reviews_count": {
-    "placeholders": {"count": {"type": "int"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "advertiser_reviews_label": "تقييماً",
   "advertiser_star_rating": "التقييم بالنجوم",
   "advertiser_membership_duration": "{count} شهر\nفي تملك",
   "@advertiser_membership_duration": {
-    "placeholders": {"count": {"type": "int"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "advertiser_preview_reviewer_name": "محمد سعيد",
   "advertiser_preview_review_comment": "هذا المكان مخصص لوضع نص التقييم هذا المكان مخصص لوضع نص التقييم هذا المكان مخصص لوضع نص التقييم",
@@ -520,5 +528,21 @@
   "order_fees": "الرسوم",
   "order_submitter_abroad": "مغترب / خارج سوريا",
   "order_business_establishment": "تأسيس الأعمال",
-  "order_fees_after_review": "تحدد بعد المراجعة"
+  "order_fees_after_review": "تحدد بعد المراجعة",
+  "order_stages": "مراحل الطلب",
+  "order_stage_received_title": "استلام الطلب",
+  "order_stage_received_description": "تم استلام ملف المعاملة وإرسال البيانات لفريق خدمات تأسيس الأعمال.",
+  "order_stage_review_title": "مراجعة الطلب",
+  "order_stage_review_description": "تمت مراجعة الطلب والبيانات الأساسية وتعيين مستشار للطلب.",
+  "order_stage_documents_title": "المستندات",
+  "order_stage_documents_description": "سيتم مراجعة المستندات وفي حال وجود أي نقص سيقوم الفريق بإرسال طلب لك لاستكمال المستندات.",
+  "order_stage_quote_title": "إعداد عرض السعر والخطة",
+  "order_stage_quote_description": "بعد اكتمال المستندات سيظهر عرض الخدمة شاملاً الرسوم والمدة وخطوات التنفيذ بالاعتماد.",
+  "order_stage_payment_title": "اعتماد العرض والدفع",
+  "order_stage_payment_description": "يمكنك اعتماد العرض واختيار طريقة الدفع وتحميل الفاتورة والإيصال من لوحة التحكم.",
+  "order_stage_execution_title": "التنفيذ والمتابعة",
+  "order_stage_execution_description": "يتولى فريق فرسان إجراءات المعاملة مع تحديثك بكل خطوة أو متطلب جديد.",
+  "order_stage_completion_title": "الإنجاز والتسليم",
+  "order_stage_completion_description": "عند اكتمال الخدمة سيتم رفع المستندات النهائية وإغلاق الطلب مع إمكانية تقييم الخدمة.",
+  "order_stage_sample_date": "26 يناير 2026"
 }

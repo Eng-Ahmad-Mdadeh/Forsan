@@ -254,13 +254,21 @@
   "advertiser_send_rating": "Send",
   "advertiser_reviews_count": "{count} reviews",
   "@advertiser_reviews_count": {
-    "placeholders": {"count": {"type": "int"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "advertiser_reviews_label": "reviews",
   "advertiser_star_rating": "star rating",
   "advertiser_membership_duration": "{count} months\non forsan",
   "@advertiser_membership_duration": {
-    "placeholders": {"count": {"type": "int"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "advertiser_preview_reviewer_name": "Mohammed Saeed",
   "advertiser_preview_review_comment": "This space is reserved for the review text. This space is reserved for the review text.",
@@ -520,5 +528,21 @@
   "order_fees": "Fees",
   "order_submitter_abroad": "Expatriate / Outside Syria",
   "order_business_establishment": "Business establishment",
-  "order_fees_after_review": "Determined after review"
+  "order_fees_after_review": "Determined after review",
+  "order_stages": "Order stages",
+  "order_stage_received_title": "Order received",
+  "order_stage_received_description": "The transaction file was received and its details were sent to the business setup services team.",
+  "order_stage_review_title": "Order review",
+  "order_stage_review_description": "The order and its basic information were reviewed, and an advisor was assigned.",
+  "order_stage_documents_title": "Documents",
+  "order_stage_documents_description": "The documents will be reviewed. If anything is missing, the team will send you a request to complete them.",
+  "order_stage_quote_title": "Quote and plan preparation",
+  "order_stage_quote_description": "Once the documents are complete, the service quote will appear with the fees, duration, and approved implementation steps.",
+  "order_stage_payment_title": "Quote approval and payment",
+  "order_stage_payment_description": "You can approve the quote, choose a payment method, and download the invoice and receipt from the dashboard.",
+  "order_stage_execution_title": "Execution and follow-up",
+  "order_stage_execution_description": "The Forsan team will handle the transaction and keep you updated about every step or new requirement.",
+  "order_stage_completion_title": "Completion and delivery",
+  "order_stage_completion_description": "When the service is complete, the final documents will be uploaded and the order closed, with the option to rate the service.",
+  "order_stage_sample_date": "26 January 2026"
 }
