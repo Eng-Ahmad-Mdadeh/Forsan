@@ -137,6 +137,13 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
           path: '/orders',
           hasOverriddenOnExit: false,
           factory: $OrdersRoute._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'details',
+              hasOverriddenOnExit: false,
+              factory: $OrdersDetailsRoute._fromState,
+            ),
+          ],
         ),
       ],
     ),
@@ -203,6 +210,31 @@ mixin $OrdersRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $OrdersDetailsRoute on GoRouteData {
+  static OrdersDetailsRoute _fromState(GoRouterState state) =>
+      OrdersDetailsRoute(state.extra as OrderItem);
+
+  OrdersDetailsRoute get _self => this as OrdersDetailsRoute;
+
+  @override
+  String get location => GoRouteData.$location('/orders/details');
+
+  @override
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+
+  @override
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: _self.$extra);
+
+  @override
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 mixin $DocumentsRoute on GoRouteData {

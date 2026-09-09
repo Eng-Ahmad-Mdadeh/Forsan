@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/routes/app_routes.dart';
 import '../../../../core/resources/app_values.dart';
-import '../../order_details/orders_details_screen.dart';
 import '../models/order_item.dart';
 import 'order_card.dart';
 
@@ -20,13 +20,12 @@ class OrdersList extends StatelessWidget {
     ),
     itemCount: orders.length,
     separatorBuilder: (_, _) => SizedBox(height: AppHeight.h10),
-    itemBuilder: (context, index) => OrderCard(
-      order: orders[index],
-      onDetailsPressed: () => Navigator.of(context).push<void>(
-        MaterialPageRoute<void>(
-          builder: (_) => OrdersDetailsScreen(order: orders[index]),
-        ),
-      ),
-    ),
+    itemBuilder: (context, index) {
+      final order = orders[index];
+      return OrderCard(
+        order: order,
+        onDetailsPressed: () => OrdersDetailsRoute(order).push(context),
+      );
+    },
   );
 }

@@ -4223,4 +4223,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get account_verification_resubmit => 'Resubmit request';
+
+  @override
+  String get order_details => 'Order details';
+
+  @override
+  String get order_summary => 'Order summary';
+
+  @override
+  String get order_submitter => 'Submitted by';
+
+  @override
+  String get order_date => 'Order date';
+
+  @override
+  String get order_service => 'Service';
+
+  @override
+  String get order_service_type => 'Service type';
+
+  @override
+  String get order_fees => 'Fees';
+
+  @override
+  String get order_submitter_abroad => 'Expatriate / Outside Syria';
+
+  @override
+  String get order_business_establishment => 'Business establishment';
+
+  @override
+  String get order_fees_after_review => 'Determined after review';
 }
