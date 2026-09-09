@@ -4296,6 +4296,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
 
   @override
+  String get order_attached_documents => 'Attached documents';
+
+  @override
+  String get order_price_quote => 'Price quote';
+
+
+  @override
   String get order_document_passport => 'Passport';
 
   @override

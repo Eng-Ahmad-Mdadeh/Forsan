@@ -4269,6 +4269,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
 
   @override
+  String get order_attached_documents => 'المستندات المرفقة';
+
+  @override
+  String get order_price_quote => 'عرض السعر';
+
+
+  @override
   String get order_document_passport => 'جواز السفر';
 
   @override
