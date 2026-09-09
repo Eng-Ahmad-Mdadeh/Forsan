@@ -160,24 +160,29 @@ mixin $OrdersDetailsRoute on GoRouteData {
 
 mixin $CompleteRequirementsRoute on GoRouteData {
   static CompleteRequirementsRoute _fromState(GoRouterState state) =>
-      const CompleteRequirementsRoute();
+      CompleteRequirementsRoute(state.extra as OrderItem);
+
+  CompleteRequirementsRoute get _self =>
+      this as CompleteRequirementsRoute;
 
   @override
   String get location =>
       GoRouteData.$location('/order-details/complete-requirements');
 
   @override
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
 
   @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
 
   @override
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+      context.pushReplacement(location, extra: _self.$extra);
 
   @override
-  void replace(BuildContext context) => context.replace(location);
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 RouteBase get $appShellRoute => StatefulShellRouteData.$route(

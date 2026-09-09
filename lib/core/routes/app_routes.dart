@@ -137,7 +137,9 @@ class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
 
 class CompleteRequirementsRoute extends GoRouteData
     with $CompleteRequirementsRoute {
-  const CompleteRequirementsRoute();
+  const CompleteRequirementsRoute(this.$extra);
+
+  final OrderItem $extra;
 
   @override
   CustomTransitionPage<void> buildPage(
