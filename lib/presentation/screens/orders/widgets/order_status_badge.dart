@@ -25,17 +25,30 @@ class OrderStatusBadge extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Container(
+          width: AppWidth.w16,
+          height: AppWidth.w16,
+          alignment: Alignment.center,
+          decoration:  BoxDecoration(
+            color: status.color,
+            shape: BoxShape.circle,
+          ),
+          child: Container(
+            width: AppWidth.w10,
+            height: AppWidth.w10,
+            decoration: BoxDecoration(
+              color: status.color,
+              shape: BoxShape.circle,
+            ),
+          ),
+        ),
+        SizedBox(width: AppWidth.w7),
+
         BodyTitle(
           text: status.label,
           color: status.color,
           fontSize: AppFontSize.s12,
           fontWeight: AppFontWeight.medium,
-        ),
-        SizedBox(width: AppWidth.w7),
-        Container(
-          width: AppWidth.w6,
-          height: AppWidth.w6,
-          decoration: BoxDecoration(color: status.color, shape: BoxShape.circle),
         ),
       ],
     ),

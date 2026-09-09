@@ -15,33 +15,35 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: const HomeHeader(),
-    body: ListView(
-      padding: EdgeInsets.fromLTRB(
-        AppPaddingWidth.p16,
-        AppPaddingHeight.p20,
-        AppPaddingWidth.p16,
-        AppPaddingHeight.p24,
-      ),
-      children: [
-        Semantics(
-          image: true,
-          label: 'الصورة الرئيسية',
-          child: ImageView(
-            imagePath: AppAssets.appBanner,
-            key: const Key('home-main-image'),
-            width: double.infinity,
-            fit: BoxFit.fitWidth,
-          ),
+    body: SafeArea(
+      child: ListView(
+        padding: EdgeInsets.fromLTRB(
+          AppPaddingWidth.p16,
+          AppPaddingHeight.p20,
+          AppPaddingWidth.p16,
+          AppPaddingHeight.p24,
         ),
-        SizedBox(height: AppHeight.h16),
-        const RequiredDocumentsCard(),
-        SizedBox(height: AppHeight.h16),
-        const HomeStatisticsSection(),
-        SizedBox(height: AppHeight.h16),
-        const LatestOrderCard(),
-        SizedBox(height: AppHeight.h20),
-        const QuickActionsSection(),
-      ],
+        children: [
+          Semantics(
+            image: true,
+            label: 'الصورة الرئيسية',
+            child: ImageView(
+              imagePath: AppAssets.appBanner,
+              key: const Key('home-main-image'),
+              width: double.infinity,
+              fit: BoxFit.fitWidth,
+            ),
+          ),
+          SizedBox(height: AppHeight.h16),
+          const RequiredDocumentsCard(),
+          SizedBox(height: AppHeight.h16),
+          const HomeStatisticsSection(),
+          SizedBox(height: AppHeight.h16),
+          const LatestOrderCard(),
+          SizedBox(height: AppHeight.h20),
+          const QuickActionsSection(),
+        ],
+      ),
     ),
   );
 }
