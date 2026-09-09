@@ -7738,6 +7738,9 @@ abstract class AppLocalizations {
 
   String get order_price_quote;
 
+
+  String get order_approve_and_pay;
+
   String get order_document_passport;
 
   String get order_document_commercial_record;

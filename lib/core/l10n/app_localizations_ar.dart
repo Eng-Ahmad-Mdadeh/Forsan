@@ -4276,6 +4276,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
 
   @override
+  String get order_approve_and_pay => 'الاعتماد والدفع';
+
+
+  @override
   String get order_document_passport => 'جواز السفر';
 
   @override
