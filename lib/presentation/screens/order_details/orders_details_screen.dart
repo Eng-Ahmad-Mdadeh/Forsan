@@ -8,8 +8,8 @@ import '../../../core/routes/app_routes.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/text/section_title.dart';
 import '../orders/models/order_item.dart';
-import '../orders/widgets/order_card.dart';
 import 'widgets/order_documents_card.dart';
+import 'widgets/order_details_header_card.dart';
 import 'widgets/order_required_action_card.dart';
 import 'widgets/order_stages_card.dart';
 import 'widgets/order_summary_card.dart';
@@ -44,7 +44,7 @@ class OrdersDetailsScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            OrderCard(order: order, showFooter: false),
+            OrderDetailsHeaderCard(order: order),
             SizedBox(height: AppHeight.h16),
             OrderRequiredActionCard(
               onPressed: () => CompleteRequirementsRoute(order).push(context),
