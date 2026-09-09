@@ -4258,6 +4258,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get order_stages => 'Order stages';
 
   @override
+  String get order_documents => 'Order documents';
+
+  @override
+  String get order_document_passport => 'Passport';
+
+  @override
+  String get order_document_commercial_record => 'Commercial registration';
+
+  @override
+  String get order_document_identity => 'Identity document';
+
+  @override
+  String get order_document_company_address => 'Company address document';
+
+  @override
+  String get order_document_status_approved => 'Approved';
+
+  @override
+  String get order_document_status_rejected => 'Rejected';
+
+  @override
+  String get order_document_status_under_review => 'Under review';
+
+  @override
+  String get order_document_status_required => 'Required';
+
+  @override
+  String get order_document_status_not_required => 'Not currently required';
+
+  @override
   String get order_stage_received_title => 'Order received';
 
   @override
