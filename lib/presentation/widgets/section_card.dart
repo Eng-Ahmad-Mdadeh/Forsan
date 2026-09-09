@@ -1,6 +1,10 @@
 import 'package:forsan/core/routes/app_routes_imports.dart';
 import 'package:forsan/presentation/widgets/marquee_widget.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
+import 'package:forsan/presentation/widgets/text/section_title.dart';
+import '../../../../core/resources/app_colors.dart';
+import '../../../../core/resources/app_values.dart';
+
 import 'package:icons_plus/icons_plus.dart';
 
 class SectionCard extends StatelessWidget {

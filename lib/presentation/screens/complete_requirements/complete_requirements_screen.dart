@@ -14,9 +14,10 @@ class CompleteRequirementsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: AppColors.white,
       appBar: CustomAppBar(
         title: context.loc.order_complete_requirements,
+        backgroundColor: AppColors.white,
         showBackButton: true,
         centerTitle: true,
         showScrolledUnderElevation: false,
