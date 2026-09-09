@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/app_fonts.dart';
 import '../../../core/resources/app_values.dart';
+import '../../cubit/orders/orders_cubit.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/orders_search_bar.dart';
 import '../../widgets/text/section_title.dart';
@@ -11,14 +13,24 @@ import 'models/order_item.dart';
 import 'widgets/orders_list.dart';
 import 'widgets/orders_status_tabs.dart';
 
-class OrdersScreen extends StatefulWidget {
+class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
 
   @override
-  State<OrdersScreen> createState() => _OrdersScreenState();
+  Widget build(BuildContext context) => BlocProvider(
+    create: (_) => OrdersCubit(),
+    child: const _OrdersView(),
+  );
 }
 
-class _OrdersScreenState extends State<OrdersScreen> {
+class _OrdersView extends StatefulWidget {
+  const _OrdersView();
+
+  @override
+  State<_OrdersView> createState() => _OrdersViewState();
+}
+
+class _OrdersViewState extends State<_OrdersView> {
   static const _orders = [
     OrderItem(
       title: 'تأسيس شركة لشخص واحد',
@@ -50,11 +62,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
     ),
   ];
 
-  int _selectedStatus = 0;
   String _query = '';
 
-  List<OrderItem> get _visibleOrders => _orders.where((order) {
-    final matchesStatus = switch (_selectedStatus) {
+  List<OrderItem> _visibleOrders(int selectedStatus) => _orders.where((order) {
+    final matchesStatus = switch (selectedStatus) {
       1 => order.status == OrderStatus.underReview,
       2 => order.status == OrderStatus.waitingDocuments,
       _ => true,
@@ -104,18 +115,22 @@ class _OrdersScreenState extends State<OrdersScreen> {
         SizedBox(height: AppHeight.h16),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
-          child: OrdersStatusTabs(
-            onSelected: (index) => setState(() => _selectedStatus = index),
-          ),
+          child: const OrdersStatusTabs(),
         ),
         Expanded(
-          child: _visibleOrders.isNotEmpty
-              ? OrdersList(orders: _visibleOrders)
-              : const _EmptyState(
-                  icon: Icons.receipt_long_outlined,
-                  title: 'لا توجد طلبات بعد',
-                  message: 'ستظهر هنا جميع طلباتك وحالتها عند إضافتها.',
-                ),
+          child: BlocBuilder<OrdersCubit, int>(
+            builder: (context, selectedStatus) {
+              final visibleOrders = _visibleOrders(selectedStatus);
+
+              return visibleOrders.isNotEmpty
+                  ? OrdersList(orders: visibleOrders)
+                  : const _EmptyState(
+                      icon: Icons.receipt_long_outlined,
+                      title: 'لا توجد طلبات بعد',
+                      message: 'ستظهر هنا جميع طلباتك وحالتها عند إضافتها.',
+                    );
+            },
+          ),
         ),
       ],
     ),
