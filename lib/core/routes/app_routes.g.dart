@@ -162,8 +162,7 @@ mixin $CompleteRequirementsRoute on GoRouteData {
   static CompleteRequirementsRoute _fromState(GoRouterState state) =>
       CompleteRequirementsRoute(state.extra as OrderItem);
 
-  CompleteRequirementsRoute get _self =>
-      this as CompleteRequirementsRoute;
+  CompleteRequirementsRoute get _self => this as CompleteRequirementsRoute;
 
   @override
   String get location =>

@@ -4,13 +4,16 @@ import '../../../../core/extension/localization_extension.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../widgets/custom_elevated_button.dart';
 import '../../../widgets/text/body_title.dart';
 
 class OrderRequiredActionCard extends StatelessWidget {
+  final VoidCallback? onPressed;
+
   const OrderRequiredActionCard({super.key, this.onPressed});
 
-  final VoidCallback? onPressed;
+
 
   @override
   Widget build(BuildContext context) => Directionality(
