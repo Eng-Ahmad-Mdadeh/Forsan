@@ -4244,6 +4244,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get order_complete_requirements => 'استكمال المتطلبات';
 
   @override
+  String get complete_requirements_notice =>
+      'المستندات التالية مطلوبة لاستكمال مراجعة طلبك\nبعد رفع جميع المستندات سيتم مراجعتها من قبل فريق فرسان';
+
+  @override
   String get order_document_passport => 'جواز السفر';
 
   @override

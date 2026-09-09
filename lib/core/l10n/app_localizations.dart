@@ -7713,6 +7713,12 @@ abstract class AppLocalizations {
 
   String get order_complete_requirements;
 
+  /// No description provided for @complete_requirements_notice.
+  ///
+  /// In en, this message translates to:
+  /// **'The following documents are required to complete your order review.\nAfter all documents are uploaded, they will be reviewed by the Forsan team.'**
+  String get complete_requirements_notice;
+
   String get order_document_passport;
 
   String get order_document_commercial_record;

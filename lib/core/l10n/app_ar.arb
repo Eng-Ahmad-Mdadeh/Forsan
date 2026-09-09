@@ -534,6 +534,7 @@
   "order_required_action": "إجراء مطلوب",
   "order_required_documents_message": "يرجى إرفاق المستندات المطلوبة لاستكمال الطلب",
   "order_complete_requirements": "استكمال المتطلبات",
+  "complete_requirements_notice": "المستندات التالية مطلوبة لاستكمال مراجعة طلبك\nبعد رفع جميع المستندات سيتم مراجعتها من قبل فريق فرسان",
   "order_document_passport": "جواز السفر",
   "order_document_commercial_record": "السجل التجاري",
   "order_document_identity": "الهوية",

@@ -534,6 +534,7 @@
   "order_required_action": "Action required",
   "order_required_documents_message": "Please attach the required documents to complete the order",
   "order_complete_requirements": "Complete requirements",
+  "complete_requirements_notice": "The following documents are required to complete your order review.\nAfter all documents are uploaded, they will be reviewed by the Forsan team.",
   "order_document_passport": "Passport",
   "order_document_commercial_record": "Commercial registration",
   "order_document_identity": "Identity document",
