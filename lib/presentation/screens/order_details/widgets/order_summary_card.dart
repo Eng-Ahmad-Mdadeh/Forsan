@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/extension/localization_extension.dart';
 import '../../../../core/resources/app_colors.dart';
-import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
-import '../../../widgets/text/body_title.dart';
-import '../../../widgets/text/section_title.dart';
 import '../../orders/models/order_item.dart';
 import '../../orders/widgets/order_status_badge.dart';
+import 'order_summary_header.dart';
+import 'order_summary_row.dart';
 
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
@@ -46,43 +45,43 @@ class OrderSummaryCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const _SummaryHeader(),
+              const OrderSummaryHeader(),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
                 child: Column(
                   children: [
-                    _SummaryRow(
+                    OrderSummaryRow(
                       icon: Icons.tag_rounded,
                       label: context.loc.order_number,
                       value: order.number,
                     ),
-                    _SummaryRow(
+                    OrderSummaryRow(
                       icon: Icons.person_outline_rounded,
                       label: context.loc.order_submitter,
                       value: submittedBy,
                     ),
-                    _SummaryRow(
+                    OrderSummaryRow(
                       icon: Icons.calendar_today_outlined,
                       label: context.loc.order_date,
                       value: order.date,
                     ),
-                    _SummaryRow(
+                    OrderSummaryRow(
                       icon: Icons.radio_button_checked_rounded,
                       label: context.loc.order_status,
                       valueWidget: OrderStatusBadge(status: order.status),
                     ),
-                    _SummaryRow(
+                    OrderSummaryRow(
                       icon: Icons.work_outline_rounded,
                       label: context.loc.order_service,
                       value: service,
                     ),
-                    _SummaryRow(
+                    OrderSummaryRow(
                       icon: Icons.grid_view_rounded,
                       label: context.loc.order_service_type,
                       value: order.title,
                       showDivider: false,
                     ),
-                    _SummaryRow(
+                    OrderSummaryRow(
                       icon: Icons.payments_outlined,
                       label: context.loc.order_fees,
                       value: fees,
@@ -96,87 +95,5 @@ class OrderSummaryCard extends StatelessWidget {
         ),
       ),
     ),
-  );
-}
-
-class _SummaryHeader extends StatelessWidget {
-  const _SummaryHeader();
-
-  @override
-  Widget build(BuildContext context) => Container(
-    height: AppHeight.h55,
-    color: AppColors.primary,
-    padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
-    child: Row(
-      children: [
-        SectionTitle(
-          text: context.loc.order_summary,
-          color: AppColors.white,
-          fontSize: AppFontSize.s18,
-          fontWeight: AppFontWeight.bold,
-        ),
-        const Spacer(),
-        Icon(
-          Icons.bookmark_rounded,
-          color: AppColors.white,
-          size: AppSize.s20,
-        ),
-      ],
-    ),
-  );
-}
-
-class _SummaryRow extends StatelessWidget {
-  const _SummaryRow({
-    required this.icon,
-    required this.label,
-    this.value,
-    this.valueWidget,
-    this.showDivider = true,
-  }) : assert(value != null || valueWidget != null);
-
-  final IconData icon;
-  final String label;
-  final String? value;
-  final Widget? valueWidget;
-  final bool showDivider;
-
-  @override
-  Widget build(BuildContext context) => Column(
-    children: [
-      SizedBox(
-        height: AppHeight.h55,
-        child: Row(
-          children: [
-            Icon(icon, color: AppColors.secondary, size: AppSize.s20),
-            SizedBox(width: AppWidth.w10),
-            BodyTitle(
-              text: label,
-              color: AppColors.blackCow,
-              fontSize: AppFontSize.s14,
-              fontWeight: AppFontWeight.regular,
-            ),
-            SizedBox(width: AppWidth.w10),
-            Expanded(
-              child: Align(
-                alignment: AlignmentDirectional.centerEnd,
-                child:
-                    valueWidget ??
-                    BodyTitle(
-                      text: value,
-                      textAlign: TextAlign.end,
-                      color: AppColors.blackCow,
-                      fontSize: AppFontSize.s13,
-                      fontWeight: AppFontWeight.bold,
-                      maxLines: 2,
-                    ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      if (showDivider)
-        Divider(height: AppHeight.h1, color: AppColors.secondaryLightActive),
-    ],
   );
 }
