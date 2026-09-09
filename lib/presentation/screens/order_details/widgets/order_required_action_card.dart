@@ -4,6 +4,7 @@ import '../../../../core/extension/localization_extension.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
+import '../../../widgets/custom_elevated_button.dart';
 import '../../../widgets/text/body_title.dart';
 
 class OrderRequiredActionCard extends StatelessWidget {
@@ -68,27 +69,30 @@ class OrderRequiredActionCard extends StatelessWidget {
             SizedBox(height: AppHeight.h12),
             Align(
               alignment: AlignmentDirectional.centerEnd,
-              child: SizedBox(
+              child: CustomElevatedButton(
                 height: AppHeight.h48,
-                child: FilledButton.icon(
-                  onPressed: onPressed ?? () {},
-                  style: FilledButton.styleFrom(
-                    foregroundColor: AppColors.white,
-                    backgroundColor: AppColors.secondaryNormal,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: AppPaddingWidth.p20,
+                onPressed: onPressed ?? () {},
+                color: AppColors.secondaryNormal,
+                borderRadius: AppRadius.r12,
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppPaddingWidth.p20,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.file_upload_outlined,
+                      size: AppSize.s22,
+                      color: AppColors.white,
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppRadius.r12),
+                    SizedBox(width: AppWidth.w8),
+                    BodyTitle(
+                      text: context.loc.order_complete_requirements,
+                      color: AppColors.white,
+                      fontSize: AppFontSize.s14,
+                      fontWeight: AppFontWeight.medium,
                     ),
-                  ),
-                  icon: Icon(Icons.file_upload_outlined, size: AppSize.s22),
-                  label: BodyTitle(
-                    text: context.loc.order_complete_requirements,
-                    color: AppColors.white,
-                    fontSize: AppFontSize.s14,
-                    fontWeight: AppFontWeight.medium,
-                  ),
+                  ],
                 ),
               ),
             ),
