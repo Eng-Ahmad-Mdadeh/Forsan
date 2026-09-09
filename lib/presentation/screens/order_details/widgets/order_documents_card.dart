@@ -14,11 +14,11 @@ class OrderDocumentsCard extends StatelessWidget {
     final documents = [
       OrderDocumentItem(
         title: context.loc.order_document_passport,
-        status: OrderDocumentStatus.approved,
+        status: OrderDocumentStatus.underReview,
       ),
       OrderDocumentItem(
         title: context.loc.order_document_commercial_record,
-        status: OrderDocumentStatus.rejected,
+        status: OrderDocumentStatus.notRequired,
       ),
       OrderDocumentItem(
         title: context.loc.order_document_identity,
@@ -111,7 +111,7 @@ class _DocumentRow extends StatelessWidget {
     height: AppHeight.h40,
     padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p8),
     decoration: BoxDecoration(
-      color: AppColors.lightGreySec,
+      color: AppColors.backGround,
       borderRadius: BorderRadius.circular(AppRadius.r8),
     ),
     child: Row(
@@ -166,21 +166,21 @@ class _DocumentStatusBadge extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          _label(context),
-          style: TextStyle(
-            color: status.foregroundColor,
-            fontSize: AppFontSize.s11,
-            fontWeight: AppFontWeight.regular,
-          ),
-        ),
-        SizedBox(width: AppWidth.w5),
         Container(
           width: AppWidth.w5,
           height: AppHeight.h5,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: status.foregroundColor,
+          ),
+        ),
+        SizedBox(width: AppWidth.w5),
+        Text(
+          _label(context),
+          style: TextStyle(
+            color: status.foregroundColor,
+            fontSize: AppFontSize.s11,
+            fontWeight: AppFontWeight.regular,
           ),
         ),
       ],
