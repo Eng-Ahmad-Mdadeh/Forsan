@@ -4235,6 +4235,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get order_documents => 'مستندات الطلب';
 
   @override
+  String get order_required_action => 'إجراء مطلوب';
+
+  @override
+  String get order_required_documents_message => 'يرجى إرفاق المستندات المطلوبة لاستكمال الطلب';
+
+  @override
+  String get order_complete_requirements => 'استكمال المتطلبات';
+
+  @override
   String get order_document_passport => 'جواز السفر';
 
   @override

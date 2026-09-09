@@ -4261,6 +4261,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get order_documents => 'Order documents';
 
   @override
+  String get order_required_action => 'Action required';
+
+  @override
+  String get order_required_documents_message => 'Please attach the required documents to complete the order';
+
+  @override
+  String get order_complete_requirements => 'Complete requirements';
+
+  @override
   String get order_document_passport => 'Passport';
 
   @override

@@ -7707,6 +7707,12 @@ abstract class AppLocalizations {
 
   String get order_documents;
 
+  String get order_required_action;
+
+  String get order_required_documents_message;
+
+  String get order_complete_requirements;
+
   String get order_document_passport;
 
   String get order_document_commercial_record;
