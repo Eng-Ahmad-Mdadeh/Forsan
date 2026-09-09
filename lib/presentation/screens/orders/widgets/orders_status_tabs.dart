@@ -34,6 +34,7 @@ class OrdersStatusTabs extends StatelessWidget {
       backgroundColor: Colors.transparent,
       minTabWidth: AppWidth.w98,
       showTabShadow: false,
+      showTapOverlay: false,
       contentPadding: EdgeInsets.zero,
       onSelected: context.read<OrdersCubit>().selectStatus,
     ),

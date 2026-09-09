@@ -15,6 +15,7 @@ class FilterTabs extends StatelessWidget {
     this.backgroundColor = AppColors.greyButton,
     this.minTabWidth,
     this.showTabShadow = false,
+    this.showTapOverlay = true,
     this.contentPadding,
   });
 
@@ -26,6 +27,7 @@ class FilterTabs extends StatelessWidget {
   final Color backgroundColor;
   final double? minTabWidth;
   final bool showTabShadow;
+  final bool showTapOverlay;
   final EdgeInsetsGeometry? contentPadding;
 
   @override
@@ -51,6 +53,7 @@ class FilterTabs extends StatelessWidget {
           fontWeight: fontWeight,
           minWidth: minTabWidth,
           showShadow: showTabShadow,
+          showTapOverlay: showTapOverlay,
           onTap: onSelected == null ? null : () => onSelected!(index),
         ),
       ),
@@ -81,6 +84,7 @@ class _FilterTab extends StatelessWidget {
     required this.fontWeight,
     required this.minWidth,
     required this.showShadow,
+    required this.showTapOverlay,
     this.onTap,
   });
 
@@ -90,6 +94,7 @@ class _FilterTab extends StatelessWidget {
   final FontWeight fontWeight;
   final double? minWidth;
   final bool showShadow;
+  final bool showTapOverlay;
   final VoidCallback? onTap;
 
   @override
@@ -122,6 +127,9 @@ class _FilterTab extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onTap,
+          overlayColor: showTapOverlay
+              ? null
+              : const WidgetStatePropertyAll(Colors.transparent),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             spacing: AppWidth.w7,
