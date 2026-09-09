@@ -18,9 +18,12 @@ class OrdersDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    backgroundColor: AppColors.white,
     appBar: CustomAppBar(
       title: context.loc.order_details,
+      backgroundColor: AppColors.white,
       toolbarHeight: AppHeight.h70,
+      showBackButton: true,
       titleWidget: SectionTitle(
         text: context.loc.order_details,
         color: AppColors.mainText,

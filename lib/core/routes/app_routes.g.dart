@@ -10,8 +10,8 @@ List<RouteBase> get $appRoutes => [
   $splashRoute,
   $loginRoute,
   $signupRoute,
-  $ordersDetailsRoute,
   $appShellRoute,
+  $ordersDetailsRoute,
 ];
 
 RouteBase get $splashRoute => GoRouteData.$route(
@@ -120,12 +120,6 @@ mixin $SignupRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $ordersDetailsRoute => GoRouteData.$route(
-  path: '/order-details',
-  hasOverriddenOnExit: false,
-  factory: $OrdersDetailsRoute._fromState,
-);
-
 RouteBase get $appShellRoute => StatefulShellRouteData.$route(
   factory: $AppShellRouteExtension._fromState,
   branches: [
@@ -212,31 +206,6 @@ mixin $OrdersRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin $OrdersDetailsRoute on GoRouteData {
-  static OrdersDetailsRoute _fromState(GoRouterState state) =>
-      OrdersDetailsRoute(state.extra as OrderItem);
-
-  OrdersDetailsRoute get _self => this as OrdersDetailsRoute;
-
-  @override
-  String get location => GoRouteData.$location('/order-details');
-
-  @override
-  void go(BuildContext context) => context.go(location, extra: _self.$extra);
-
-  @override
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: _self.$extra);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: _self.$extra);
-
-  @override
-  void replace(BuildContext context) =>
-      context.replace(location, extra: _self.$extra);
-}
-
 mixin $DocumentsRoute on GoRouteData {
   static DocumentsRoute _fromState(GoRouterState state) =>
       const DocumentsRoute();
@@ -276,4 +245,35 @@ mixin $MoreRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $ordersDetailsRoute => GoRouteData.$route(
+  path: '/order-details',
+  hasOverriddenOnExit: false,
+  factory: $OrdersDetailsRoute._fromState,
+);
+
+mixin $OrdersDetailsRoute on GoRouteData {
+  static OrdersDetailsRoute _fromState(GoRouterState state) =>
+      OrdersDetailsRoute(state.extra as OrderItem);
+
+  OrdersDetailsRoute get _self => this as OrdersDetailsRoute;
+
+  @override
+  String get location => GoRouteData.$location('/order-details');
+
+  @override
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+
+  @override
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: _self.$extra);
+
+  @override
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }

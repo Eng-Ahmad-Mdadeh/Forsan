@@ -102,6 +102,22 @@ class SignupRoute extends GoRouteData with $SignupRoute {
     return const SignupScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
+@TypedGoRoute<OrdersDetailsRoute>(path: '/order-details')
+class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
+  const OrdersDetailsRoute(this.$extra);
+
+  final OrderItem $extra;
+
+  @override
+  CustomTransitionPage<void> buildPage(
+      BuildContext context,
+      GoRouterState state,
+      ) {
+    return OrdersDetailsScreen(order: $extra).buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
+  }
+}
 
 @TypedStatefulShellRoute<AppShellRoute>(
   branches: [
@@ -165,23 +181,6 @@ class OrdersRoute extends GoRouteData with $OrdersRoute {
   @override
   CustomTransitionPage<void> buildPage(BuildContext context, GoRouterState state) {
     return const OrdersScreen().buildPage(pageAnimation: PageAnimation.fade);
-  }
-}
-
-@TypedGoRoute<OrdersDetailsRoute>(path: '/order-details')
-class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
-  const OrdersDetailsRoute(this.$extra);
-
-  final OrderItem $extra;
-
-  @override
-  CustomTransitionPage<void> buildPage(
-    BuildContext context,
-    GoRouterState state,
-  ) {
-    return OrdersDetailsScreen(order: $extra).buildPage(
-      pageAnimation: PageAnimation.fade,
-    );
   }
 }
 
