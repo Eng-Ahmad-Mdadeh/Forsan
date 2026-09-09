@@ -7728,6 +7728,11 @@ abstract class AppLocalizations {
 
   String get complete_requirements_upload_hint;
 
+
+  String get complete_requirements_confirm;
+
+  String get order_contact_consultant;
+
   String get order_document_passport;
 
   String get order_document_commercial_record;

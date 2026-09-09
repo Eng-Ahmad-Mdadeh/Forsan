@@ -539,6 +539,8 @@
   "complete_requirements_conviction_certificate": "Certificate of no conviction",
   "complete_requirements_upload": "Tap to upload",
   "complete_requirements_upload_hint": "Maximum file size is 5 MB (PNG-JPG-PDF)",
+  "complete_requirements_confirm": "Confirm",
+  "order_contact_consultant": "Contact a Forsan consultant",
   "order_document_passport": "Passport",
   "order_document_commercial_record": "Commercial registration",
   "order_document_identity": "Identity document",

@@ -4,6 +4,7 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
+import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
@@ -91,6 +92,37 @@ class CompleteRequirementsScreen extends StatelessWidget {
               paddingTop: AppPaddingHeight.p12,
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        minimum: EdgeInsets.fromLTRB(
+          AppPaddingWidth.p16,
+          AppPaddingHeight.p10,
+          AppPaddingWidth.p16,
+          AppPaddingHeight.p16,
+        ),
+        child: CustomElevatedButton(
+          width: double.infinity,
+          height: AppHeight.h52,
+          color: AppColors.primary,
+          borderRadius: AppRadius.r12,
+          onPressed: () {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.check_circle_outline_rounded,
+                color: AppColors.white,
+                size: AppSize.s22,
+              ),
+              SizedBox(width: AppWidth.w8),
+              BodyTitle(
+                text: context.loc.complete_requirements_confirm,
+                color: AppColors.white,
+                fontSize: AppFontSize.s16,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -4262,6 +4262,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
 
   @override
+  String get complete_requirements_confirm => 'تأكيد';
+
+  @override
+  String get order_contact_consultant => 'التواصل مع مستشار فرسان';
+
+
+  @override
   String get order_document_passport => 'جواز السفر';
 
   @override

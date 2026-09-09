@@ -11,6 +11,7 @@ List<RouteBase> get $appRoutes => [
   $loginRoute,
   $signupRoute,
   $ordersDetailsRoute,
+  $completeRequirementsRoute,
   $appShellRoute,
 ];
 
@@ -124,13 +125,6 @@ RouteBase get $ordersDetailsRoute => GoRouteData.$route(
   path: '/order-details',
   hasOverriddenOnExit: false,
   factory: $OrdersDetailsRoute._fromState,
-  routes: [
-    GoRouteData.$route(
-      path: 'complete-requirements',
-      hasOverriddenOnExit: false,
-      factory: $CompleteRequirementsRoute._fromState,
-    ),
-  ],
 );
 
 mixin $OrdersDetailsRoute on GoRouteData {
@@ -158,30 +152,31 @@ mixin $OrdersDetailsRoute on GoRouteData {
       context.replace(location, extra: _self.$extra);
 }
 
+RouteBase get $completeRequirementsRoute => GoRouteData.$route(
+  path: '/complete-requirements',
+  hasOverriddenOnExit: false,
+  factory: $CompleteRequirementsRoute._fromState,
+);
+
 mixin $CompleteRequirementsRoute on GoRouteData {
   static CompleteRequirementsRoute _fromState(GoRouterState state) =>
-      CompleteRequirementsRoute(state.extra as OrderItem);
-
-  CompleteRequirementsRoute get _self => this as CompleteRequirementsRoute;
+      const CompleteRequirementsRoute();
 
   @override
-  String get location =>
-      GoRouteData.$location('/order-details/complete-requirements');
+  String get location => GoRouteData.$location('/complete-requirements');
 
   @override
-  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+  void go(BuildContext context) => context.go(location);
 
   @override
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: _self.$extra);
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
   @override
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: _self.$extra);
+      context.pushReplacement(location);
 
   @override
-  void replace(BuildContext context) =>
-      context.replace(location, extra: _self.$extra);
+  void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $appShellRoute => StatefulShellRouteData.$route(

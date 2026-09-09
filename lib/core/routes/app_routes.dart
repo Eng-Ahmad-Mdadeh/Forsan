@@ -113,12 +113,7 @@ class SignupRoute extends GoRouteData with $SignupRoute {
   }
 }
 
-@TypedGoRoute<OrdersDetailsRoute>(
-  path: '/order-details',
-  routes: [
-    TypedGoRoute<CompleteRequirementsRoute>(path: 'complete-requirements'),
-  ],
-)
+@TypedGoRoute<OrdersDetailsRoute>(path: '/order-details')
 class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
   const OrdersDetailsRoute(this.$extra);
 
@@ -135,11 +130,10 @@ class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
   }
 }
 
+@TypedGoRoute<CompleteRequirementsRoute>(path: '/complete-requirements')
 class CompleteRequirementsRoute extends GoRouteData
     with $CompleteRequirementsRoute {
-  const CompleteRequirementsRoute(this.$extra);
-
-  final OrderItem $extra;
+  const CompleteRequirementsRoute();
 
   @override
   CustomTransitionPage<void> buildPage(
