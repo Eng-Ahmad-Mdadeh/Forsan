@@ -539,6 +539,8 @@
   "complete_requirements_conviction_certificate": "شهادة غير محكوم",
   "complete_requirements_upload": "اضغط للرفع",
   "complete_requirements_upload_hint": "الحد الأقصى لحجم الملف 5 ميغا بايت (PNG-JPG-PDF)",
+  "complete_requirements_confirm": "تأكيد",
+  "order_contact_consultant": "التواصل مع مستشار فرسان",
   "order_document_passport": "جواز السفر",
   "order_document_commercial_record": "السجل التجاري",
   "order_document_identity": "الهوية",

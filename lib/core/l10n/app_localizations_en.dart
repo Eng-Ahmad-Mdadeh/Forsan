@@ -4289,6 +4289,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
 
   @override
+  String get complete_requirements_confirm => 'Confirm';
+
+  @override
+  String get order_contact_consultant => 'Contact a Forsan consultant';
+
+
+  @override
   String get order_document_passport => 'Passport';
 
   @override
