@@ -4274,6 +4274,21 @@ class AppLocalizationsEn extends AppLocalizations {
       'The following documents are required to complete your order review.\nAfter all documents are uploaded, they will be reviewed by the Forsan team.';
 
   @override
+  String get complete_requirements_documents_title => 'Required documents';
+
+  @override
+  String get complete_requirements_conviction_certificate =>
+      'Certificate of no conviction';
+
+  @override
+  String get complete_requirements_upload => 'Tap to upload';
+
+  @override
+  String get complete_requirements_upload_hint =>
+      'Maximum file size is 5 MB (PNG-JPG-PDF)';
+
+
+  @override
   String get order_document_passport => 'Passport';
 
   @override

@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
@@ -18,6 +17,8 @@ class DocumentSection extends StatelessWidget {
   final bool isVideo;
   final bool isEnabled;
   final VoidCallback? onRemove;
+  final String? uploadLabel;
+  final String? uploadHint;
 
   const DocumentSection({
     super.key,
@@ -31,6 +32,8 @@ class DocumentSection extends StatelessWidget {
     this.isVideo = false,
     this.isEnabled = true,
     this.onRemove,
+    this.uploadLabel,
+    this.uploadHint,
   });
 
   @override
@@ -53,21 +56,15 @@ class DocumentSection extends StatelessWidget {
               fontSize: AppFontSize.s14,
             ),
           ],
-          DottedBorder(
-            borderPadding: EdgeInsets.only(
-              top: AppPaddingHeight.p17,
-              bottom: paddingBottom ?? AppPaddingHeight.p30,
+          SizedBox(height: AppHeight.h10),
+          Container(
+            decoration: BoxDecoration(
+              color: AppColors.backGround,
+              border: Border.all(color: AppColors.lightActive),
+              borderRadius: BorderRadius.circular(AppRadius.r16),
             ),
-            strokeCap: StrokeCap.butt,
-            dashPattern: [3],
-            color: AppColors.lightBlack,
-            borderType: BorderType.RRect,
-            radius: Radius.circular(AppRadius.r16),
-            padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p7, horizontal: AppPaddingWidth.p4),
             child: ClipRRect(
-              borderRadius: BorderRadius.all(
-                Radius.circular(AppRadius.r16),
-              ),
+              borderRadius: BorderRadius.circular(AppRadius.r16),
               child: InkWell(
                 splashColor: AppColors.none,
                 highlightColor: AppColors.none,
@@ -77,6 +74,8 @@ class DocumentSection extends StatelessWidget {
                   isExpanded: isExpanded,
                   isVideo: isVideo,
                   onRemove: onRemove,
+                  uploadLabel: uploadLabel,
+                  uploadHint: uploadHint,
                 ),
               ),
             ),

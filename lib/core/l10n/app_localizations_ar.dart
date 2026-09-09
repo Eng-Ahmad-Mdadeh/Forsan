@@ -4248,6 +4248,20 @@ class AppLocalizationsAr extends AppLocalizations {
       'المستندات التالية مطلوبة لاستكمال مراجعة طلبك\nبعد رفع جميع المستندات سيتم مراجعتها من قبل فريق فرسان';
 
   @override
+  String get complete_requirements_documents_title => 'المستندات المطلوبة';
+
+  @override
+  String get complete_requirements_conviction_certificate => 'شهادة غير محكوم';
+
+  @override
+  String get complete_requirements_upload => 'اضغط للرفع';
+
+  @override
+  String get complete_requirements_upload_hint =>
+      'الحد الأقصى لحجم الملف 5 ميغا بايت (PNG-JPG-PDF)';
+
+
+  @override
   String get order_document_passport => 'جواز السفر';
 
   @override

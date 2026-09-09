@@ -7719,6 +7719,15 @@ abstract class AppLocalizations {
   /// **'The following documents are required to complete your order review.\nAfter all documents are uploaded, they will be reviewed by the Forsan team.'**
   String get complete_requirements_notice;
 
+
+  String get complete_requirements_documents_title;
+
+  String get complete_requirements_conviction_certificate;
+
+  String get complete_requirements_upload;
+
+  String get complete_requirements_upload_hint;
+
   String get order_document_passport;
 
   String get order_document_commercial_record;

@@ -4,6 +4,7 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
+import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
@@ -68,6 +69,27 @@ class CompleteRequirementsScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            SizedBox(height: AppHeight.h24),
+            SectionTitle(
+              text: context.loc.complete_requirements_documents_title,
+              fontSize: AppFontSize.s18,
+            ),
+            DocumentSection(
+              title: context.loc.order_document_company_address,
+              image: null,
+              onTap: () {},
+              uploadLabel: context.loc.complete_requirements_upload,
+              uploadHint: context.loc.complete_requirements_upload_hint,
+              paddingTop: AppPaddingHeight.p12,
+            ),
+            DocumentSection(
+              title: context.loc.complete_requirements_conviction_certificate,
+              image: null,
+              onTap: () {},
+              uploadLabel: context.loc.complete_requirements_upload,
+              uploadHint: context.loc.complete_requirements_upload_hint,
+              paddingTop: AppPaddingHeight.p12,
             ),
           ],
         ),
