@@ -24,6 +24,7 @@ class OrderStagesCard extends StatelessWidget {
         description: context.loc.order_stage_review_description,
         date: context.loc.order_stage_sample_date,
         isCompleted: true,
+        isCurrent: true,
       ),
       OrderStageItem(
         title: context.loc.order_stage_documents_title,

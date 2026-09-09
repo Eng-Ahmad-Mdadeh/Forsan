@@ -23,39 +23,20 @@ class OrderStageRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SizedBox(
-          width: AppWidth.w16,
+          width: AppWidth.w46,
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
               Positioned(
-                top: isFirst ? AppHeight.h7 : 0,
+                top: isFirst ? AppHeight.h23 : 0,
                 bottom: isLast ? null : 0,
-                height: isLast ? AppHeight.h7 : null,
+                height: isLast ? AppHeight.h23 : null,
                 child: Container(
-                  width: AppWidth.w1,
-                  color: AppColors.mainTextLightActive,
+                  width: AppWidth.w2,
+                  color: AppColors.mainTextLight,
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: AppMarginHeight.m3),
-                width: AppWidth.w10,
-                height: AppHeight.h10,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: stage.isCompleted
-                      ? AppColors.homeSupportAction
-                      : AppColors.mainTextLightActive,
-                  boxShadow: stage.isCompleted
-                      ? [
-                          BoxShadow(
-                            color: AppColors.lightActive,
-                            blurRadius: AppRadius.r3,
-                            spreadRadius: AppRadius.r2,
-                          ),
-                        ]
-                      : null,
-                ),
-              ),
+              _StageMarker(stage: stage),
             ],
           ),
         ),
@@ -110,6 +91,36 @@ class OrderStageRow extends StatelessWidget {
           ),
         ),
       ],
+    ),
+  );
+}
+
+class _StageMarker extends StatelessWidget {
+  const _StageMarker({required this.stage});
+
+  final OrderStageItem stage;
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+    width: AppWidth.w46,
+    height: AppHeight.h46,
+    child: DecoratedBox(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: stage.isCurrent ? AppColors.light : AppColors.none,
+      ),
+      child: Center(
+        child: Container(
+          width: AppWidth.w28,
+          height: AppHeight.h28,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: stage.isCompleted
+                ? AppColors.homeSupportAction
+                : AppColors.mainTextLightActive,
+          ),
+        ),
+      ),
     ),
   );
 }

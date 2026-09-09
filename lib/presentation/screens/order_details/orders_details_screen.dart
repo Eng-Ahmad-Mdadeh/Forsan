@@ -41,7 +41,7 @@ class OrdersDetailsScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            OrderCard(order: order),
+            OrderCard(order: order, showFooter: false),
             SizedBox(height: AppHeight.h16),
             OrderSummaryCard(
               order: order,
