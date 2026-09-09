@@ -28,77 +28,82 @@ class OrderCard extends StatelessWidget {
     textDirection: TextDirection.rtl,
     child: Semantics(
       container: true,
+      button: onDetailsPressed != null,
       label: '${order.title}، ${order.number}، ${order.status.label}',
-      child: Container(
-        height: showFooter ? AppHeight.h150 : AppHeight.h120,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(AppRadius.r13),
-          border: Border.all(color: AppColors.lightGrey),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.homeSoftShadow,
-              blurRadius: AppRadius.r7,
-              offset: Offset(0, AppHeight.h2),
-            ),
-          ],
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(width: AppWidth.w6, color: order.status.color),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(
-                  AppPaddingWidth.p13,
-                  AppPaddingHeight.p13,
-                  AppPaddingWidth.p13,
-                  AppPaddingHeight.p10,
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: _OrderInformation(
-                              order: order,
-                              showDateLabel: showDateLabel,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onDetailsPressed,
+        child: Container(
+          height: showFooter ? AppHeight.h150 : AppHeight.h120,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(AppRadius.r13),
+            border: Border.all(color: AppColors.lightGrey),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.homeSoftShadow,
+                blurRadius: AppRadius.r7,
+                offset: Offset(0, AppHeight.h2),
+              ),
+            ],
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(width: AppWidth.w6, color: order.status.color),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                    AppPaddingWidth.p13,
+                    AppPaddingHeight.p13,
+                    AppPaddingWidth.p13,
+                    AppPaddingHeight.p10,
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: _OrderInformation(
+                                order: order,
+                                showDateLabel: showDateLabel,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: AppWidth.w10),
-                          _OrderState(status: order.status),
-                        ],
+                            SizedBox(width: AppWidth.w10),
+                            _OrderState(status: order.status),
+                          ],
+                        ),
                       ),
-                    ),
-                    if (showFooter)
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.person_outline_rounded,
-                            color: AppColors.secondaryText,
-                            size: AppSize.s18,
-                          ),
-                          SizedBox(width: AppWidth.w4),
-                          Expanded(
-                            child: BodyTitle(
-                              text: 'المستشار: ${order.consultant}',
+                      if (showFooter)
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.person_outline_rounded,
                               color: AppColors.secondaryText,
-                              fontSize: AppFontSize.s11,
-                              fontWeight: AppFontWeight.regular,
-                              maxLines: 1,
+                              size: AppSize.s18,
                             ),
-                          ),
-                          _DetailsButton(onPressed: onDetailsPressed),
-                        ],
-                      ),
-                  ],
+                            SizedBox(width: AppWidth.w4),
+                            Expanded(
+                              child: BodyTitle(
+                                text: 'المستشار: ${order.consultant}',
+                                color: AppColors.secondaryText,
+                                fontSize: AppFontSize.s11,
+                                fontWeight: AppFontWeight.regular,
+                                maxLines: 1,
+                              ),
+                            ),
+                            _DetailsButton(onPressed: onDetailsPressed),
+                          ],
+                        ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     ),
