@@ -98,41 +98,43 @@ class _OrdersViewState extends State<_OrdersView> {
         ),
       ],
     ),
-    body: Column(
-      children: [
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(
-            AppPaddingWidth.p16,
-            AppPaddingHeight.p20,
-            AppPaddingWidth.p16,
-            0,
+    body: SafeArea(
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(
+              AppPaddingWidth.p16,
+              AppPaddingHeight.p20,
+              AppPaddingWidth.p16,
+              0,
+            ),
+            child: OrdersSearchBar(
+              onSearchChanged: (query) => setState(() => _query = query),
+              onFilterPressed: () {},
+            ),
           ),
-          child: OrdersSearchBar(
-            onSearchChanged: (query) => setState(() => _query = query),
-            onFilterPressed: () {},
+          SizedBox(height: AppHeight.h16),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
+            child: const OrdersStatusTabs(),
           ),
-        ),
-        SizedBox(height: AppHeight.h16),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
-          child: const OrdersStatusTabs(),
-        ),
-        Expanded(
-          child: BlocBuilder<OrdersCubit, int>(
-            builder: (context, selectedStatus) {
-              final visibleOrders = _visibleOrders(selectedStatus);
-
-              return visibleOrders.isNotEmpty
-                  ? OrdersList(orders: visibleOrders)
-                  : const _EmptyState(
-                      icon: Icons.receipt_long_outlined,
-                      title: 'لا توجد طلبات بعد',
-                      message: 'ستظهر هنا جميع طلباتك وحالتها عند إضافتها.',
-                    );
-            },
+          Expanded(
+            child: BlocBuilder<OrdersCubit, int>(
+              builder: (context, selectedStatus) {
+                final visibleOrders = _visibleOrders(selectedStatus);
+      
+                return visibleOrders.isNotEmpty
+                    ? OrdersList(orders: visibleOrders)
+                    : const _EmptyState(
+                        icon: Icons.receipt_long_outlined,
+                        title: 'لا توجد طلبات بعد',
+                        message: 'ستظهر هنا جميع طلباتك وحالتها عند إضافتها.',
+                      );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
     // floatingActionButton: FloatingActionButton.extended(
     //   onPressed: () {},

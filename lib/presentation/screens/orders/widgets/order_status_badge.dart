@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
 import '../../../widgets/text/body_title.dart';
@@ -30,7 +31,7 @@ class OrderStatusBadge extends StatelessWidget {
           height: AppWidth.w16,
           alignment: Alignment.center,
           decoration:  BoxDecoration(
-            color: status.color,
+            color: AppColors.white,
             shape: BoxShape.circle,
           ),
           child: Container(
