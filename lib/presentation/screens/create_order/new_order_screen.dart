@@ -6,8 +6,8 @@ import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
-import 'package:forsan/presentation/screens/create_order/widgets/order_option_card.dart';
-import 'package:forsan/presentation/screens/create_order/widgets/order_step_indicator.dart';
+import 'package:forsan/presentation/screens/create_order/steps_widgets/order_option_card.dart';
+import 'package:forsan/presentation/screens/create_order/steps_widgets/order_step_indicator.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
@@ -54,11 +54,10 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
       _EstablishmentTypeStep(
         selectedValue: state.establishmentType,
         onChanged: context.read<NewOrderCubit>().selectEstablishmentType,
+        selectedApplicantValue: state.applicantType,
+        onApplicantChanged: context.read<NewOrderCubit>().selectApplicantType,
       ),
-      _ApplicantStep(
-        selectedValue: state.applicantType,
-        onChanged: context.read<NewOrderCubit>().selectApplicantType,
-      ),
+      const _ApplicantStep(),
       const _CompanyDataStep(),
     ];
 
@@ -82,7 +81,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            Divider(height: AppHeight.h1, color: AppColors.lightGrey),
+
             Padding(
               padding: EdgeInsets.fromLTRB(
                 AppPaddingWidth.p20,
@@ -175,10 +174,14 @@ class _EstablishmentTypeStep extends StatelessWidget {
   const _EstablishmentTypeStep({
     required this.selectedValue,
     required this.onChanged,
+    required this.selectedApplicantValue,
+    required this.onApplicantChanged,
   });
 
   final String selectedValue;
   final ValueChanged<String> onChanged;
+  final String selectedApplicantValue;
+  final ValueChanged<String> onApplicantChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -263,6 +266,11 @@ class _EstablishmentTypeStep extends StatelessWidget {
             ),
             SizedBox(height: AppHeight.h12),
           ],
+          SizedBox(height: AppHeight.h8),
+          _ApplicantRoleSection(
+            selectedValue: selectedApplicantValue,
+            onChanged: onApplicantChanged,
+          ),
         ],
       ),
     );
@@ -270,7 +278,33 @@ class _EstablishmentTypeStep extends StatelessWidget {
 }
 
 class _ApplicantStep extends StatelessWidget {
-  const _ApplicantStep({
+  const _ApplicantStep();
+
+  @override
+  Widget build(BuildContext context) {
+    return _StepBody(
+      title: context.loc.new_order_applicant_title,
+      description: context.loc.new_order_applicant_description,
+      children: [
+        CustomInputField(
+          title: context.loc.new_order_full_name,
+          hintText: context.loc.new_order_full_name,
+          req: true,
+        ),
+        SizedBox(height: AppHeight.h16),
+        CustomInputField(
+          title: context.loc.new_order_phone,
+          hintText: context.loc.new_order_phone,
+          textInputType: TextInputType.phone,
+          req: true,
+        ),
+      ],
+    );
+  }
+}
+
+class _ApplicantRoleSection extends StatelessWidget {
+  const _ApplicantRoleSection({
     required this.selectedValue,
     required this.onChanged,
   });
@@ -307,55 +341,47 @@ class _ApplicantStep extends StatelessWidget {
       ),
     ];
 
-    return SingleChildScrollView(
-      padding: EdgeInsets.fromLTRB(
-        AppPaddingWidth.p10,
-        AppPaddingHeight.p8,
-        AppPaddingWidth.p10,
-        AppPaddingHeight.p16,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.person_outline_rounded,
-                size: AppSize.s17,
-                color: AppColors.secondary,
-              ),
-              SizedBox(width: AppWidth.w6),
-              Expanded(
-                child: SectionTitle(
-                  text: context.loc.new_order_applicant_role_title,
-                  color: AppColors.primary,
-                  fontSize: AppFontSize.s18,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: AppHeight.h4),
-          BodyTitle(
-            text: context.loc.new_order_applicant_role_description,
-            color: AppColors.greyText,
-            fontSize: AppFontSize.s13,
-            fontWeight: AppFontWeight.regular,
-            maxLines: 2,
-          ),
-          SizedBox(height: AppHeight.h10),
-          for (final option in options) ...[
-            OrderOptionCard(
-              title: option.title,
-              description: option.description,
-              icon: option.icon,
-              height: AppHeight.h75,
-              selected: selectedValue == option.value,
-              onTap: () => onChanged(option.value),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.person_outline_rounded,
+              size: AppSize.s17,
+              color: AppColors.secondary,
             ),
-            SizedBox(height: AppHeight.h12),
+            SizedBox(width: AppWidth.w6),
+            Expanded(
+              child: SectionTitle(
+                text: context.loc.new_order_applicant_role_title,
+                color: AppColors.primary,
+                fontSize: AppFontSize.s18,
+              ),
+            ),
           ],
+        ),
+        SizedBox(height: AppHeight.h4),
+        BodyTitle(
+          text: context.loc.new_order_applicant_role_description,
+          color: AppColors.greyText,
+          fontSize: AppFontSize.s13,
+          fontWeight: AppFontWeight.regular,
+          maxLines: 2,
+        ),
+        SizedBox(height: AppHeight.h10),
+        for (final option in options) ...[
+          OrderOptionCard(
+            title: option.title,
+            description: option.description,
+            icon: option.icon,
+            height: AppHeight.h75,
+            selected: selectedValue == option.value,
+            onTap: () => onChanged(option.value),
+          ),
+          SizedBox(height: AppHeight.h12),
         ],
-      ),
+      ],
     );
   }
 }

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/create_order_app_bar.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/create_order_header.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/create_order_help_card.dart';
-import 'package:forsan/presentation/screens/create_order/widgets/create_order_notification_button.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/create_order_services_grid.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 
@@ -15,13 +15,7 @@ class CreateOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: CustomAppBar(
-        title: context.loc.create_order_title,
-        backgroundColor: AppColors.white,
-        showBackButton: true,
-        showScrolledUnderElevation: false,
-        customActions: const [CreateOrderNotificationButton()],
-      ),
+      appBar:CreateOrderAppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(
