@@ -4,6 +4,9 @@ import '../../../../core/extension/localization_extension.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
+import '../../../widgets/status_badge.dart';
+import '../../../widgets/text/body_title.dart';
+import '../../../widgets/text/section_title.dart';
 import 'order_document_item.dart';
 
 class OrderDocumentsCard extends StatelessWidget {
@@ -89,13 +92,11 @@ class _DocumentsHeader extends StatelessWidget {
         ),
       ),
       SizedBox(width: AppWidth.w8),
-      Text(
-        title,
-        style: TextStyle(
-          color: AppColors.mainText,
-          fontSize: AppFontSize.s15,
-          fontWeight: AppFontWeight.bold,
-        ),
+      SectionTitle(
+        text: title,
+        color: AppColors.mainText,
+        fontSize: AppFontSize.s15,
+        fontWeight: AppFontWeight.bold,
       ),
     ],
   );
@@ -123,27 +124,27 @@ class _DocumentRow extends StatelessWidget {
         ),
         SizedBox(width: AppWidth.w6),
         Expanded(
-          child: Text(
-            document.title,
-            style: TextStyle(
-              color: AppColors.blackCow,
-              fontSize: AppFontSize.s13,
-              fontWeight: AppFontWeight.regular,
-            ),
+          child: BodyTitle(
+            text: document.title,
+            color: AppColors.blackCow,
+            fontSize: AppFontSize.s13,
+            fontWeight: AppFontWeight.regular,
           ),
         ),
-        _DocumentStatusBadge(status: document.status),
+        StatusBadge.custom(
+          label: _documentStatusLabel(context, document.status),
+          color: document.status.foregroundColor,
+          backgroundColor: document.status.backgroundColor,
+        ),
       ],
     ),
   );
 }
 
-class _DocumentStatusBadge extends StatelessWidget {
-  const _DocumentStatusBadge({required this.status});
-
-  final OrderDocumentStatus status;
-
-  String _label(BuildContext context) => switch (status) {
+String _documentStatusLabel(
+  BuildContext context,
+  OrderDocumentStatus status,
+) => switch (status) {
     OrderDocumentStatus.approved => context.loc.order_document_status_approved,
     OrderDocumentStatus.rejected => context.loc.order_document_status_rejected,
     OrderDocumentStatus.underReview =>
@@ -152,38 +153,3 @@ class _DocumentStatusBadge extends StatelessWidget {
     OrderDocumentStatus.notRequired =>
       context.loc.order_document_status_not_required,
   };
-
-  @override
-  Widget build(BuildContext context) => Container(
-    constraints: BoxConstraints(minWidth: AppWidth.w90),
-    height: AppHeight.h24,
-    padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p10),
-    decoration: BoxDecoration(
-      color: status.backgroundColor,
-      borderRadius: BorderRadius.circular(AppRadius.r20),
-    ),
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: AppWidth.w5,
-          height: AppHeight.h5,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: status.foregroundColor,
-          ),
-        ),
-        SizedBox(width: AppWidth.w5),
-        Text(
-          _label(context),
-          style: TextStyle(
-            color: status.foregroundColor,
-            fontSize: AppFontSize.s11,
-            fontWeight: AppFontWeight.regular,
-          ),
-        ),
-      ],
-    ),
-  );
-}

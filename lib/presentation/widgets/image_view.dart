@@ -446,7 +446,11 @@ class ImageView extends StatelessWidget {
     this.width,
     this.color,
     this.fit,
+    this.repeat = ImageRepeat.noRepeat,
     this.alignment,
+    this.imageAlignment = Alignment.center,
+    this.semanticLabel,
+    this.excludeFromSemantics = false,
     this.onTap,
     this.radius,
     this.margin,
@@ -466,9 +470,13 @@ class ImageView extends StatelessWidget {
   final double? width;
   final Color? color;
   final BoxFit? fit;
+  final ImageRepeat repeat;
   final Icon placeHolder;
   final Widget? errorWidget;
   final Alignment? alignment;
+  final AlignmentGeometry imageAlignment;
+  final String? semanticLabel;
+  final bool excludeFromSemantics;
   final EdgeInsetsGeometry? margin;
   final BorderRadius? radius;
   final BoxBorder? border;
@@ -665,6 +673,10 @@ class ImageView extends StatelessWidget {
           width: width,
           fit: fit ?? BoxFit.cover,
           color: color,
+          repeat: repeat,
+          alignment: imageAlignment,
+          semanticLabel: semanticLabel,
+          excludeFromSemantics: excludeFromSemantics,
         );
     }
   }

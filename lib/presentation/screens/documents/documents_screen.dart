@@ -6,6 +6,7 @@ import '../../../core/resources/app_fonts.dart';
 import '../../../core/resources/app_values.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/text/section_title.dart';
+import '../document_details/document_details_screen.dart';
 import '../orders/models/order_item.dart';
 import 'widgets/document_order_card.dart';
 
@@ -56,7 +57,13 @@ class DocumentsScreen extends StatelessWidget {
         separatorBuilder: (_, _) => SizedBox(height: AppHeight.h12),
         itemBuilder: (context, index) => DocumentOrderCard(
           document: _documents[index],
-          onDetailsPressed: () {},
+          onDetailsPressed: () => Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) => const DocumentDetailsScreen(
+                state: DocumentDetailsState.waitingDocuments,
+              ),
+            ),
+          ),
         ),
       ),
     ),

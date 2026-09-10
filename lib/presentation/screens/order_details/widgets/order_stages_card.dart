@@ -4,6 +4,8 @@ import '../../../../core/extension/localization_extension.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
+import '../../../widgets/text/body_title.dart';
+import '../../../widgets/text/section_title.dart';
 
 class OrderStagesCard extends StatelessWidget {
   const OrderStagesCard({super.key});
@@ -115,13 +117,11 @@ class _OrderStagesHeader extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     children: [
       Expanded(
-        child: Text(
-          title,
-          style: TextStyle(
-            color: AppColors.mainText,
-            fontSize: AppFontSize.s16,
-            fontWeight: AppFontWeight.bold,
-          ),
+        child: SectionTitle(
+          text: title,
+          color: AppColors.mainText,
+          fontSize: AppFontSize.s16,
+          fontWeight: AppFontWeight.bold,
         ),
       ),
       Container(
@@ -206,40 +206,35 @@ class _OrderStageRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Text(
-                        stage.title,
-                        style: TextStyle(
-                          color: AppColors.mainText,
-                          fontSize: AppFontSize.s13,
-                          fontWeight: AppFontWeight.bold,
-                          height: 1.35,
-                        ),
+                      child: SectionTitle(
+                        text: stage.title,
+                        color: AppColors.mainText,
+                        fontSize: AppFontSize.s13,
+                        fontWeight: AppFontWeight.bold,
+                        height: 1.35,
                       ),
                     ),
                     if (stage.date != null) ...[
                       SizedBox(width: AppWidth.w8),
-                      Text(
-                        stage.date!,
-                        textDirection: TextDirection.rtl,
-                        style: TextStyle(
-                          color: AppColors.secondaryNormal,
-                          fontSize: AppFontSize.s11,
-                          fontWeight: AppFontWeight.regular,
-                          height: 1.35,
-                        ),
+                      BodyTitle(
+                        text: stage.date!,
+                        textAlign: TextAlign.right,
+                        color: AppColors.secondaryNormal,
+                        fontSize: AppFontSize.s11,
+                        fontWeight: AppFontWeight.regular,
+                        height: 1.35,
                       ),
                     ],
                   ],
                 ),
                 SizedBox(height: AppHeight.h4),
-                Text(
-                  stage.description,
-                  style: TextStyle(
-                    color: AppColors.greyText,
-                    fontSize: AppFontSize.s12,
-                    fontWeight: AppFontWeight.regular,
-                    height: 1.65,
-                  ),
+                BodyTitle(
+                  text: stage.description,
+                  color: AppColors.greyText,
+                  fontSize: AppFontSize.s12,
+                  fontWeight: AppFontWeight.regular,
+                  height: 1.65,
+                  overflow: TextOverflow.visible,
                 ),
               ],
             ),
