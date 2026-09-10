@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/app_fonts.dart';
 import '../../../core/resources/app_values.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/required_action_card.dart';
 import '../../widgets/text/section_title.dart';
@@ -67,7 +68,14 @@ class DocumentDetailsScreen extends StatelessWidget {
                     DocumentRequestHeaderCard(state: state),
                     if (state == DocumentDetailsState.waitingDocuments) ...[
                       SizedBox(height: AppHeight.h12),
-                      const RequiredActionCard(),
+                      RequiredActionCard(
+                        title: 'إجراء مطلوب',
+                        message: 'يرجى إرفاق المستندات المطلوبة لاستكمال الطلب',
+                        buttonText: 'استكمال المتطلبات',
+                        semanticsLabel: 'إجراء مطلوب',
+                        onPressed: () =>
+                            CompleteRequirementsRoute().push(context),
+                      ),
                     ],
                     SizedBox(height: AppHeight.h14),
                     DocumentListCard(

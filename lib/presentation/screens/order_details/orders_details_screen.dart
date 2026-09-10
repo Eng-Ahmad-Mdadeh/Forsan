@@ -47,7 +47,13 @@ class OrdersDetailsScreen extends StatelessWidget {
           children: [
             OrderDetailsHeaderCard(order: order),
             SizedBox(height: AppHeight.h16),
-            RequiredActionCard(),
+            RequiredActionCard(
+              title: context.loc.order_required_action,
+              message: context.loc.order_required_documents_message,
+              buttonText: context.loc.order_complete_requirements,
+              semanticsLabel: context.loc.order_required_action,
+              onPressed: () => CompleteRequirementsRoute().push(context),
+            ),
             SizedBox(height: AppHeight.h16),
             OrderSummaryCard(
               order: order,
