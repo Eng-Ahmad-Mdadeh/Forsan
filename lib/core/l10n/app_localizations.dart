@@ -7788,6 +7788,22 @@ abstract class AppLocalizations {
   String get order_stage_completion_description;
 
   String get order_stage_sample_date;
+
+  String get create_order_title;
+
+  String get create_order_choose_service;
+
+  String get create_order_licensing;
+
+  String get create_order_business_setup;
+
+  String get create_order_company_management;
+
+  String get create_order_property;
+
+  String get create_order_investment;
+
+  String get create_order_expatriate_services;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

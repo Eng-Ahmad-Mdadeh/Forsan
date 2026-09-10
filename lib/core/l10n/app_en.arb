@@ -567,5 +567,13 @@
   "order_stage_execution_description": "The Forsan team will handle the transaction and keep you updated about every step or new requirement.",
   "order_stage_completion_title": "Completion and delivery",
   "order_stage_completion_description": "When the service is complete, the final documents will be uploaded and the order closed, with the option to rate the service.",
-  "order_stage_sample_date": "26 January 2026"
+  "order_stage_sample_date": "26 January 2026",
+  "create_order_title": "Create order",
+  "create_order_choose_service": "Choose a service type",
+  "create_order_licensing": "Licensing",
+  "create_order_business_setup": "Business setup",
+  "create_order_company_management": "Company management",
+  "create_order_property": "Property and real estate",
+  "create_order_investment": "Investment (coming soon)",
+  "create_order_expatriate_services": "Expatriate services"
 }

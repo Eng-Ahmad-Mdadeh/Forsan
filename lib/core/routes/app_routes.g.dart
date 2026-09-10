@@ -12,6 +12,7 @@ List<RouteBase> get $appRoutes => [
   $signupRoute,
   $ordersDetailsRoute,
   $completeRequirementsRoute,
+  $createOrderRoute,
   $appShellRoute,
 ];
 
@@ -164,6 +165,33 @@ mixin $CompleteRequirementsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/complete-requirements');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $createOrderRoute => GoRouteData.$route(
+  path: '/create-order',
+  hasOverriddenOnExit: false,
+  factory: $CreateOrderRoute._fromState,
+);
+
+mixin $CreateOrderRoute on GoRouteData {
+  static CreateOrderRoute _fromState(GoRouterState state) =>
+      const CreateOrderRoute();
+
+  @override
+  String get location => GoRouteData.$location('/create-order');
 
   @override
   void go(BuildContext context) => context.go(location);

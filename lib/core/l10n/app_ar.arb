@@ -567,5 +567,13 @@
   "order_stage_execution_description": "يتولى فريق فرسان إجراءات المعاملة مع تحديثك بكل خطوة أو متطلب جديد.",
   "order_stage_completion_title": "الإنجاز والتسليم",
   "order_stage_completion_description": "عند اكتمال الخدمة سيتم رفع المستندات النهائية وإغلاق الطلب مع إمكانية تقييم الخدمة.",
-  "order_stage_sample_date": "26 يناير 2026"
+  "order_stage_sample_date": "26 يناير 2026",
+  "create_order_title": "إنشاء طلب",
+  "create_order_choose_service": "اختر نوع الخدمة",
+  "create_order_licensing": "التراخيص",
+  "create_order_business_setup": "تأسيس الأعمال",
+  "create_order_company_management": "إدارة الشركات",
+  "create_order_property": "الملكية والعقارات",
+  "create_order_investment": "الاستثمار (قريباً)",
+  "create_order_expatriate_services": "خدمات المغتربين"
 }

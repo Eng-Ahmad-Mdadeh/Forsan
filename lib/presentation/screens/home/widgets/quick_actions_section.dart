@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../widgets/custom_elevated_button.dart';
 import '../../../widgets/text/section_title.dart';
 
@@ -32,7 +33,7 @@ class QuickActionsSection extends StatelessWidget {
                 semanticLabel: 'إنشاء طلب جديد',
                 icon: Icons.add_rounded,
                 color: AppColors.primaryDark,
-                onPressed: () {},
+                onPressed: () => const CreateOrderRoute().push(context),
               ),
             ),
             SizedBox(width: AppWidth.w4),
