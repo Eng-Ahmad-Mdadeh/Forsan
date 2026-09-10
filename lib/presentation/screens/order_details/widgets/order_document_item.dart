@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/extension/localization_extension.dart';
 import '../../../../core/resources/app_colors.dart';
 
 enum OrderDocumentStatus {
@@ -31,6 +32,19 @@ enum OrderDocumentStatus {
 
   final Color backgroundColor;
   final Color foregroundColor;
+
+  String label(BuildContext context) => switch (this) {
+    OrderDocumentStatus.approved =>
+      context.loc.order_document_status_approved,
+    OrderDocumentStatus.rejected =>
+      context.loc.order_document_status_rejected,
+    OrderDocumentStatus.underReview =>
+      context.loc.order_document_status_under_review,
+    OrderDocumentStatus.required =>
+      context.loc.order_document_status_required,
+    OrderDocumentStatus.notRequired =>
+      context.loc.order_document_status_not_required,
+  };
 }
 
 class OrderDocumentItem {

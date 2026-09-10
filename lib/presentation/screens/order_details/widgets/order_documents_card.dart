@@ -132,7 +132,7 @@ class _DocumentRow extends StatelessWidget {
           ),
         ),
         StatusBadge.custom(
-          label: _documentStatusLabel(context, document.status),
+          label: document.status.label(context),
           fontSize: AppSize.s14,
           fontWeight: AppFontWeight.regular,
           color: document.status.foregroundColor,
@@ -142,14 +142,3 @@ class _DocumentRow extends StatelessWidget {
     ),
   );
 }
-
-String _documentStatusLabel(
-  BuildContext context,
-  OrderDocumentStatus status,
-) => switch (status) {
-    OrderDocumentStatus.approved => context.loc.order_document_status_approved,
-    OrderDocumentStatus.rejected => context.loc.order_document_status_rejected,
-    OrderDocumentStatus.underReview => context.loc.order_document_status_under_review,
-    OrderDocumentStatus.required => context.loc.order_document_status_required,
-    OrderDocumentStatus.notRequired => context.loc.order_document_status_not_required,
-  };
