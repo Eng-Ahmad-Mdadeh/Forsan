@@ -65,7 +65,7 @@ class RequiredActionCard extends StatelessWidget {
               ? AlignmentDirectional.centerStart
               : AlignmentDirectional.centerEnd,
           child: CustomElevatedButton(
-            height: compact ? AppHeight.h35 : AppHeight.h48,
+            height:  AppHeight.h35 ,
             onPressed: onPressed,
             color:
                 buttonColor ??

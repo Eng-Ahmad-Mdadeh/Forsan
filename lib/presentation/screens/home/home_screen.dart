@@ -62,11 +62,12 @@ class HomeScreen extends StatelessWidget {
                 'يرجى إرفاق المستندات المطلوبة لاستكمال\nمراجعة طلب تأسيس الشركة.',
             buttonText: 'استكمال المتطلبات',
             buttonColor: AppColors.primary,
+            compact: true,
             semanticsLabel:
                 'إجراء مطلوب على الطلب FR-2026-001259',
-            illustration: Image.asset(
-              AppAssets.addFile,
-              width: AppWidth.w85,
+            illustration: ImageView(
+              imagePath: AppAssets.addFile,
+              width: AppWidth.w65,
               fit: BoxFit.contain,
               excludeFromSemantics: true,
             ),

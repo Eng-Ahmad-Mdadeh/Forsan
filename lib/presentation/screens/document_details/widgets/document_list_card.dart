@@ -128,7 +128,7 @@ class _DocumentRow extends StatelessWidget {
           ),
         ),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+
           children: [
             if (status != null) ...[
               Pill(
