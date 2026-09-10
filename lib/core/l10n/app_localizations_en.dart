@@ -4421,10 +4421,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get new_order_step_company => 'Company details';
 
   @override
-  String get new_order_establishment_title => 'Choose the setup type';
+  String get new_order_establishment_title => 'Select the establishment type';
 
   @override
-  String get new_order_establishment_description => 'Select the type of entity you would like to establish.';
+  String get new_order_establishment_description => 'Choose the option closest to your situation. If you are unsure, you can ask the Forsan team for help.';
 
   @override
   String get new_order_new_company => 'Establish a new company';
@@ -4461,5 +4461,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get new_order_submit => 'Submit request';
+
+  @override
+  String get new_order_one_person_company => 'Single-person company';
+
+  @override
+  String get new_order_one_person_company_description => 'One owner manages and owns the company.';
+
+  @override
+  String get new_order_limited_liability_company => 'Limited liability company';
+
+  @override
+  String get new_order_limited_liability_company_description => 'A company formed by two or more partners.';
+
+  @override
+  String get new_order_foreign_partner_company => 'Company with a foreign partner';
+
+  @override
+  String get new_order_foreign_partner_company_description => 'One partner is abroad or is a foreign national.';
+
+  @override
+  String get new_order_individual_establishment => 'Sole proprietorship';
+
+  @override
+  String get new_order_individual_establishment_description => 'An individual business under the owner’s name.';
+
+  @override
+  String get new_order_joint_stock_company => 'General partnership';
+
+  @override
+  String get new_order_joint_stock_company_description => 'A partnership under the appropriate legal form.';
 
 }

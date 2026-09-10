@@ -582,8 +582,8 @@
   "new_order_step_establishment": "نوع التأسيس",
   "new_order_step_applicant": "مقدم الطلب",
   "new_order_step_company": "بيانات الشركة",
-  "new_order_establishment_title": "اختر نوع التأسيس",
-  "new_order_establishment_description": "حدد نوع المنشأة التي ترغب في تأسيسها.",
+  "new_order_establishment_title": "حدد نوع التأسيس",
+  "new_order_establishment_description": "اختر الشكل الأقرب لحالتك. إذا لم تكن متأكدًا يمكنك طلب مساعدة فريق فرسان.",
   "new_order_new_company": "تأسيس شركة جديدة",
   "new_order_company_branch": "فتح فرع لشركة قائمة",
   "new_order_applicant_title": "بيانات مقدم الطلب",
@@ -595,5 +595,15 @@
   "new_order_company_name": "اسم الشركة",
   "new_order_company_activity": "نشاط الشركة",
   "new_order_next": "التالي",
-  "new_order_submit": "إرسال الطلب"
+  "new_order_submit": "إرسال الطلب",
+  "new_order_one_person_company": "تأسيس شركة لشخص واحد",
+  "new_order_one_person_company_description": "مالك واحد يدير ويمتلك الشركة.",
+  "new_order_limited_liability_company": "شركة ذات مسؤولية محدودة",
+  "new_order_limited_liability_company_description": "شركة بين شريكين أو أكثر.",
+  "new_order_foreign_partner_company": "شركة مع شريك خارجي",
+  "new_order_foreign_partner_company_description": "أحد الشركاء خارج سوريا أو أجنبي.",
+  "new_order_individual_establishment": "مؤسسة فردية",
+  "new_order_individual_establishment_description": "نشاط فردي باسم المالك.",
+  "new_order_joint_stock_company": "شركة تضامنية",
+  "new_order_joint_stock_company_description": "شراكة وفق الشكل القانوني المناسب."
 }

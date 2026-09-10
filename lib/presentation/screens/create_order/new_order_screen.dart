@@ -3,11 +3,11 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/establishment_type_card.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_step_indicator.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
-import 'package:forsan/presentation/widgets/option_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
@@ -21,7 +21,7 @@ class NewOrderScreen extends StatefulWidget {
 class _NewOrderScreenState extends State<NewOrderScreen> {
   final PageController _pageController = PageController();
   int _currentStep = 0;
-  String _establishmentType = 'new';
+  String _establishmentType = 'one_person';
 
   @override
   void dispose() {
@@ -168,24 +168,89 @@ class _EstablishmentTypeStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _StepBody(
-      title: context.loc.new_order_establishment_title,
-      description: context.loc.new_order_establishment_description,
-      children: [
-        OptionCard(
-          title: context.loc.new_order_new_company,
-          option: 'new',
-          selectedOption: selectedValue,
-          onChanged: onChanged,
-        ),
-        SizedBox(height: AppHeight.h12),
-        OptionCard(
-          title: context.loc.new_order_company_branch,
-          option: 'branch',
-          selectedOption: selectedValue,
-          onChanged: onChanged,
-        ),
-      ],
+    final options = [
+      (
+        value: 'one_person',
+        title: context.loc.new_order_one_person_company,
+        description: context.loc.new_order_one_person_company_description,
+        icon: Icons.person_outline_rounded,
+      ),
+      (
+        value: 'limited_liability',
+        title: context.loc.new_order_limited_liability_company,
+        description:
+            context.loc.new_order_limited_liability_company_description,
+        icon: Icons.domain_outlined,
+      ),
+      (
+        value: 'foreign_partner',
+        title: context.loc.new_order_foreign_partner_company,
+        description: context.loc.new_order_foreign_partner_company_description,
+        icon: Icons.public_rounded,
+      ),
+      (
+        value: 'individual',
+        title: context.loc.new_order_individual_establishment,
+        description:
+            context.loc.new_order_individual_establishment_description,
+        icon: Icons.account_tree_outlined,
+      ),
+      (
+        value: 'joint_stock',
+        title: context.loc.new_order_joint_stock_company,
+        description: context.loc.new_order_joint_stock_company_description,
+        icon: Icons.groups_2_outlined,
+      ),
+    ];
+
+    return SingleChildScrollView(
+      padding: EdgeInsets.fromLTRB(
+        AppPaddingWidth.p10,
+        AppPaddingHeight.p8,
+        AppPaddingWidth.p10,
+        AppPaddingHeight.p16,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.grid_view_rounded,
+                size: AppSize.s17,
+                color: AppColors.secondary,
+              ),
+              SizedBox(width: AppWidth.w6),
+              Expanded(
+                child: SectionTitle(
+                  text: context.loc.new_order_establishment_title,
+                  color: AppColors.primary,
+                  fontSize: AppFontSize.s18,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: AppHeight.h4),
+          BodyTitle(
+            text: context.loc.new_order_establishment_description,
+            color: AppColors.greyText,
+            fontSize: AppFontSize.s13,
+            fontWeight: AppFontWeight.regular,
+            maxLines: 2,
+          ),
+          SizedBox(height: AppHeight.h10),
+          for (final option in options) ...[
+            EstablishmentTypeCard(
+              title: option.title,
+              description: option.description,
+              icon: option.icon,
+              selected: selectedValue == option.value,
+              onTap: () => onChanged(option.value),
+            ),
+            SizedBox(height: AppHeight.h12),
+          ],
+        ],
+      ),
     );
   }
 }

@@ -582,8 +582,8 @@
   "new_order_step_establishment": "Setup type",
   "new_order_step_applicant": "Applicant",
   "new_order_step_company": "Company details",
-  "new_order_establishment_title": "Choose the setup type",
-  "new_order_establishment_description": "Select the type of entity you would like to establish.",
+  "new_order_establishment_title": "Select the establishment type",
+  "new_order_establishment_description": "Choose the option closest to your situation. If you are unsure, you can ask the Forsan team for help.",
   "new_order_new_company": "Establish a new company",
   "new_order_company_branch": "Open a branch of an existing company",
   "new_order_applicant_title": "Applicant details",
@@ -595,5 +595,15 @@
   "new_order_company_name": "Company name",
   "new_order_company_activity": "Company activity",
   "new_order_next": "Next",
-  "new_order_submit": "Submit request"
+  "new_order_submit": "Submit request",
+  "new_order_one_person_company": "Single-person company",
+  "new_order_one_person_company_description": "One owner manages and owns the company.",
+  "new_order_limited_liability_company": "Limited liability company",
+  "new_order_limited_liability_company_description": "A company formed by two or more partners.",
+  "new_order_foreign_partner_company": "Company with a foreign partner",
+  "new_order_foreign_partner_company_description": "One partner is abroad or is a foreign national.",
+  "new_order_individual_establishment": "Sole proprietorship",
+  "new_order_individual_establishment_description": "An individual business under the owner’s name.",
+  "new_order_joint_stock_company": "General partnership",
+  "new_order_joint_stock_company_description": "A partnership under the appropriate legal form."
 }

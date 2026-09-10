@@ -4394,10 +4394,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get new_order_step_company => 'بيانات الشركة';
 
   @override
-  String get new_order_establishment_title => 'اختر نوع التأسيس';
+  String get new_order_establishment_title => 'حدد نوع التأسيس';
 
   @override
-  String get new_order_establishment_description => 'حدد نوع المنشأة التي ترغب في تأسيسها.';
+  String get new_order_establishment_description => 'اختر الشكل الأقرب لحالتك. إذا لم تكن متأكدًا يمكنك طلب مساعدة فريق فرسان.';
 
   @override
   String get new_order_new_company => 'تأسيس شركة جديدة';
@@ -4434,5 +4434,35 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get new_order_submit => 'إرسال الطلب';
+
+  @override
+  String get new_order_one_person_company => 'تأسيس شركة لشخص واحد';
+
+  @override
+  String get new_order_one_person_company_description => 'مالك واحد يدير ويمتلك الشركة.';
+
+  @override
+  String get new_order_limited_liability_company => 'شركة ذات مسؤولية محدودة';
+
+  @override
+  String get new_order_limited_liability_company_description => 'شركة بين شريكين أو أكثر.';
+
+  @override
+  String get new_order_foreign_partner_company => 'شركة مع شريك خارجي';
+
+  @override
+  String get new_order_foreign_partner_company_description => 'أحد الشركاء خارج سوريا أو أجنبي.';
+
+  @override
+  String get new_order_individual_establishment => 'مؤسسة فردية';
+
+  @override
+  String get new_order_individual_establishment_description => 'نشاط فردي باسم المالك.';
+
+  @override
+  String get new_order_joint_stock_company => 'شركة تضامنية';
+
+  @override
+  String get new_order_joint_stock_company_description => 'شراكة وفق الشكل القانوني المناسب.';
 
 }

@@ -7844,6 +7844,26 @@ abstract class AppLocalizations {
 
   String get new_order_submit;
 
+  String get new_order_one_person_company;
+
+  String get new_order_one_person_company_description;
+
+  String get new_order_limited_liability_company;
+
+  String get new_order_limited_liability_company_description;
+
+  String get new_order_foreign_partner_company;
+
+  String get new_order_foreign_partner_company_description;
+
+  String get new_order_individual_establishment;
+
+  String get new_order_individual_establishment_description;
+
+  String get new_order_joint_stock_company;
+
+  String get new_order_joint_stock_company_description;
+
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
