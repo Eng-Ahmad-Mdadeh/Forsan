@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/extension/localization_extension.dart';
-import '../../../../core/resources/app_colors.dart';
-import '../../../../core/resources/app_fonts.dart';
-import '../../../../core/resources/app_values.dart';
-import '../../../../core/routes/app_routes.dart';
-import '../../../widgets/custom_elevated_button.dart';
-import '../../../widgets/text/body_title.dart';
+import '../../core/extension/localization_extension.dart';
+import '../../core/resources/app_colors.dart';
+import '../../core/resources/app_fonts.dart';
+import '../../core/resources/app_values.dart';
+import '../../core/routes/app_routes.dart';
+import 'custom_elevated_button.dart';
+import 'text/body_title.dart';
 
-class OrderRequiredActionCard extends StatelessWidget {
+class RequiredActionCard extends StatelessWidget {
 
 
-  const OrderRequiredActionCard({super.key});
+  const RequiredActionCard({super.key});
 
 
 

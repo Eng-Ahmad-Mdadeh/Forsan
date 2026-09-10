@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:forsan/presentation/screens/order_details/widgets/order_details_header_card.dart';
-
 import '../../../core/extension/localization_extension.dart';
 import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/app_fonts.dart';
 import '../../../core/resources/app_values.dart';
-import '../../../core/routes/app_routes.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
+import '../../widgets/required_action_card.dart';
 import '../../widgets/text/body_title.dart';
 import '../../widgets/text/section_title.dart';
 import '../orders/models/order_item.dart';
-import '../../widgets/order_card.dart';
 import 'widgets/order_attached_documents_card.dart';
 import 'widgets/order_documents_card.dart';
-import 'widgets/order_required_action_card.dart';
 import 'widgets/order_stages_card.dart';
 import 'widgets/order_summary_card.dart';
 
@@ -50,7 +47,7 @@ class OrdersDetailsScreen extends StatelessWidget {
           children: [
             OrderDetailsHeaderCard(order: order),
             SizedBox(height: AppHeight.h16),
-            OrderRequiredActionCard(),
+            RequiredActionCard(),
             SizedBox(height: AppHeight.h16),
             OrderSummaryCard(
               order: order,

@@ -147,9 +147,7 @@ String _documentStatusLabel(
 ) => switch (status) {
     OrderDocumentStatus.approved => context.loc.order_document_status_approved,
     OrderDocumentStatus.rejected => context.loc.order_document_status_rejected,
-    OrderDocumentStatus.underReview =>
-      context.loc.order_document_status_under_review,
+    OrderDocumentStatus.underReview => context.loc.order_document_status_under_review,
     OrderDocumentStatus.required => context.loc.order_document_status_required,
-    OrderDocumentStatus.notRequired =>
-      context.loc.order_document_status_not_required,
+    OrderDocumentStatus.notRequired => context.loc.order_document_status_not_required,
   };
