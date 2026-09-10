@@ -7,6 +7,7 @@ import '../../widgets/custom_app_bar.dart';
 import '../../widgets/required_action_card.dart';
 import '../../widgets/text/section_title.dart';
 import 'models/document_details_models.dart';
+import 'widgets/attached_documents_card.dart';
 import 'widgets/document_complete_requirements_button.dart';
 import 'widgets/document_list_card.dart';
 import 'widgets/document_request_header_card.dart';
@@ -26,12 +27,6 @@ class DocumentDetailsScreen extends StatelessWidget {
     DocumentDetailsData(name: 'جواز السفر', size: '1.2 ميجا بايت'),
     DocumentDetailsData(name: 'جواز السفر', size: '1.2 ميجا بايت'),
     DocumentDetailsData(name: 'جواز السفر', size: '1.2 ميجا بايت'),
-  ];
-
-  static const _officialDocuments = [
-    DocumentDetailsData(name: 'عقد التأسيس', size: '1.2 ميجا بايت'),
-    DocumentDetailsData(name: 'وثيقة الرخصة', size: '1.2 ميجا بايت'),
-    DocumentDetailsData(name: 'السجل التجاري', size: '1.2 ميجا بايت'),
   ];
 
   @override
@@ -85,11 +80,7 @@ class DocumentDetailsScreen extends StatelessWidget {
                     ),
                     if (state == DocumentDetailsState.completed) ...[
                       SizedBox(height: AppHeight.h16),
-                      const DocumentListCard(
-                        title: 'المستندات الرسمية',
-                        documents: _officialDocuments,
-                        statuses: null,
-                      ),
+                      const AttachedDocumentsCard(),
                     ],
                   ],
                 ),
