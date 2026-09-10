@@ -188,7 +188,7 @@ RouteBase get $createOrderRoute => GoRouteData.$route(
 
 mixin $CreateOrderRoute on GoRouteData {
   static CreateOrderRoute _fromState(GoRouterState state) =>
-      const CreateOrderRoute();
+       CreateOrderRoute();
 
   @override
   String get location => GoRouteData.$location('/create_order');

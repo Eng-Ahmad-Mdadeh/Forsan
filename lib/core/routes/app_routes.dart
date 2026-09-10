@@ -150,7 +150,7 @@ class CompleteRequirementsRoute extends GoRouteData
 @TypedGoRoute<CreateOrderRoute>(path: '/create_order')
 class CreateOrderRoute extends GoRouteData
     with $CreateOrderRoute {
-  const CreateOrderRoute();
+   CreateOrderRoute();
 
   @override
   CustomTransitionPage<void> buildPage(

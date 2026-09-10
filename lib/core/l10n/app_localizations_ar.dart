@@ -4350,4 +4350,28 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get order_stage_sample_date => '26 يناير 2026';
+
+  @override
+  String get create_order_title => 'إنشاء طلب';
+
+  @override
+  String get create_order_choose_service => 'اختر نوع الخدمة';
+
+  @override
+  String get create_order_licensing => 'التراخيص';
+
+  @override
+  String get create_order_business_setup => 'تأسيس الأعمال';
+
+  @override
+  String get create_order_company_management => 'إدارة الشركات';
+
+  @override
+  String get create_order_property => 'الملكية والعقارات';
+
+  @override
+  String get create_order_investment => 'الاستثمار (قريباً)';
+
+  @override
+  String get create_order_expatriate_services => 'خدمات المغتربين';
 }

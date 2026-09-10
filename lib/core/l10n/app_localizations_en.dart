@@ -4377,4 +4377,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get order_stage_sample_date => '26 January 2026';
+
+  @override
+  String get create_order_title => 'Create order';
+
+  @override
+  String get create_order_choose_service => 'Choose a service type';
+
+  @override
+  String get create_order_licensing => 'Licensing';
+
+  @override
+  String get create_order_business_setup => 'Business setup';
+
+  @override
+  String get create_order_company_management => 'Company management';
+
+  @override
+  String get create_order_property => 'Property and real estate';
+
+  @override
+  String get create_order_investment => 'Investment (coming soon)';
+
+  @override
+  String get create_order_expatriate_services => 'Expatriate services';
 }
