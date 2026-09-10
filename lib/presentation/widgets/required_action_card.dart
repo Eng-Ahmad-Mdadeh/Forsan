@@ -17,6 +17,7 @@ class RequiredActionCard extends StatelessWidget {
     required this.onPressed,
     this.compact = false,
     this.illustration,
+    this.buttonColor,
   }) : assert(
          (title == null) != (titleSpan == null),
          'Provide either title or titleSpan.',
@@ -30,6 +31,7 @@ class RequiredActionCard extends StatelessWidget {
   final VoidCallback onPressed;
   final bool compact;
   final Widget? illustration;
+  final Color? buttonColor;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,9 @@ class RequiredActionCard extends StatelessWidget {
           child: CustomElevatedButton(
             height: compact ? AppHeight.h35 : AppHeight.h48,
             onPressed: onPressed,
-            color: compact ? AppColors.primary : AppColors.secondaryNormal,
+            color:
+                buttonColor ??
+                (compact ? AppColors.primary : AppColors.secondaryNormal),
             borderRadius: compact ? AppRadius.r8 : AppRadius.r12,
             padding: EdgeInsets.symmetric(
               horizontal:
