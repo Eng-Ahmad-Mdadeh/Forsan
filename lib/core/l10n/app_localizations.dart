@@ -7808,6 +7808,42 @@ abstract class AppLocalizations {
   String get create_order_help_title;
 
   String get create_order_help_description;
+  String get new_order_title;
+
+  String get new_order_step_establishment;
+
+  String get new_order_step_applicant;
+
+  String get new_order_step_company;
+
+  String get new_order_establishment_title;
+
+  String get new_order_establishment_description;
+
+  String get new_order_new_company;
+
+  String get new_order_company_branch;
+
+  String get new_order_applicant_title;
+
+  String get new_order_applicant_description;
+
+  String get new_order_full_name;
+
+  String get new_order_phone;
+
+  String get new_order_company_title;
+
+  String get new_order_company_description;
+
+  String get new_order_company_name;
+
+  String get new_order_company_activity;
+
+  String get new_order_next;
+
+  String get new_order_submit;
+
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

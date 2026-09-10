@@ -4408,4 +4408,58 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get create_order_help_description =>
       'Our team is available to help you choose the right service';
+  @override
+  String get new_order_title => 'New order';
+
+  @override
+  String get new_order_step_establishment => 'Setup type';
+
+  @override
+  String get new_order_step_applicant => 'Applicant';
+
+  @override
+  String get new_order_step_company => 'Company details';
+
+  @override
+  String get new_order_establishment_title => 'Choose the setup type';
+
+  @override
+  String get new_order_establishment_description => 'Select the type of entity you would like to establish.';
+
+  @override
+  String get new_order_new_company => 'Establish a new company';
+
+  @override
+  String get new_order_company_branch => 'Open a branch of an existing company';
+
+  @override
+  String get new_order_applicant_title => 'Applicant details';
+
+  @override
+  String get new_order_applicant_description => 'Enter the details of the person submitting the request.';
+
+  @override
+  String get new_order_full_name => 'Full name';
+
+  @override
+  String get new_order_phone => 'Phone number';
+
+  @override
+  String get new_order_company_title => 'Company details';
+
+  @override
+  String get new_order_company_description => 'Enter the company’s basic details.';
+
+  @override
+  String get new_order_company_name => 'Company name';
+
+  @override
+  String get new_order_company_activity => 'Company activity';
+
+  @override
+  String get new_order_next => 'Next';
+
+  @override
+  String get new_order_submit => 'Submit request';
+
 }

@@ -184,14 +184,42 @@ RouteBase get $createOrderRoute => GoRouteData.$route(
   path: '/create_order',
   hasOverriddenOnExit: false,
   factory: $CreateOrderRoute._fromState,
+  routes: [
+    GoRouteData.$route(
+      path: 'new',
+      hasOverriddenOnExit: false,
+      factory: $NewOrderRoute._fromState,
+    ),
+  ],
 );
 
 mixin $CreateOrderRoute on GoRouteData {
   static CreateOrderRoute _fromState(GoRouterState state) =>
-       CreateOrderRoute();
+      const CreateOrderRoute();
 
   @override
   String get location => GoRouteData.$location('/create_order');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $NewOrderRoute on GoRouteData {
+  static NewOrderRoute _fromState(GoRouterState state) =>
+      const NewOrderRoute();
+
+  @override
+  String get location => GoRouteData.$location('/create_order/new');
 
   @override
   void go(BuildContext context) => context.go(location);

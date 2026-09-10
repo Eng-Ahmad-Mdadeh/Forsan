@@ -3,6 +3,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/presentation/screens/create_order/models/service_type.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/service_card.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
@@ -57,7 +58,10 @@ class CreateOrderServicesGrid extends StatelessWidget {
             mainAxisSpacing: AppHeight.h10,
             childAspectRatio: 1.58,
           ),
-          itemBuilder: (context, index) => ServiceCard(service: services[index]),
+          itemBuilder: (context, index) => ServiceCard(
+            service: services[index],
+            onTap: () => const NewOrderRoute().push(context),
+          ),
         ),
         SizedBox(height: AppHeight.h16),
       ],

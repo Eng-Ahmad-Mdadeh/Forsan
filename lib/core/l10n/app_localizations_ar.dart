@@ -4381,4 +4381,58 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get create_order_help_description =>
       'فريقنا متاح لمساعدتك في اختيار نوع الخدمة المناسبة';
+  @override
+  String get new_order_title => 'طلب جديد';
+
+  @override
+  String get new_order_step_establishment => 'نوع التأسيس';
+
+  @override
+  String get new_order_step_applicant => 'مقدم الطلب';
+
+  @override
+  String get new_order_step_company => 'بيانات الشركة';
+
+  @override
+  String get new_order_establishment_title => 'اختر نوع التأسيس';
+
+  @override
+  String get new_order_establishment_description => 'حدد نوع المنشأة التي ترغب في تأسيسها.';
+
+  @override
+  String get new_order_new_company => 'تأسيس شركة جديدة';
+
+  @override
+  String get new_order_company_branch => 'فتح فرع لشركة قائمة';
+
+  @override
+  String get new_order_applicant_title => 'بيانات مقدم الطلب';
+
+  @override
+  String get new_order_applicant_description => 'أدخل بيانات الشخص مقدم الطلب.';
+
+  @override
+  String get new_order_full_name => 'الاسم الكامل';
+
+  @override
+  String get new_order_phone => 'رقم الهاتف';
+
+  @override
+  String get new_order_company_title => 'بيانات الشركة';
+
+  @override
+  String get new_order_company_description => 'أدخل البيانات الأساسية للشركة.';
+
+  @override
+  String get new_order_company_name => 'اسم الشركة';
+
+  @override
+  String get new_order_company_activity => 'نشاط الشركة';
+
+  @override
+  String get new_order_next => 'التالي';
+
+  @override
+  String get new_order_submit => 'إرسال الطلب';
+
 }
