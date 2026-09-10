@@ -17,12 +17,14 @@ class OrderCard extends StatelessWidget {
     this.onDetailsPressed,
     this.showFooter = true,
     this.showDateLabel = false,
+    this.detailsButtonText = 'تفاصيل الطلب',
   });
 
   final OrderItem order;
   final VoidCallback? onDetailsPressed;
   final bool showFooter;
   final bool showDateLabel;
+  final String detailsButtonText;
 
   @override
   Widget build(BuildContext context) => Directionality(
@@ -92,7 +94,10 @@ class OrderCard extends StatelessWidget {
                               maxLines: 1,
                             ),
                           ),
-                          _DetailsButton(onPressed: onDetailsPressed),
+                          _DetailsButton(
+                            text: detailsButtonText,
+                            onPressed: onDetailsPressed,
+                          ),
                         ],
                       ),
                   ],
@@ -176,14 +181,15 @@ class _OrderState extends StatelessWidget {
 }
 
 class _DetailsButton extends StatelessWidget {
-  const _DetailsButton({this.onPressed});
+  const _DetailsButton({required this.text, this.onPressed});
 
+  final String text;
   final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) => Semantics(
     button: true,
-    label: 'تفاصيل الطلب',
+    label: text,
     child: InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(AppRadius.r7),
@@ -193,7 +199,7 @@ class _DetailsButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             BodyTitle(
-              text: 'تفاصيل الطلب',
+              text: text,
               color: AppColors.primaryDark,
               fontSize: AppFontSize.s11,
               fontWeight: AppFontWeight.bold,
