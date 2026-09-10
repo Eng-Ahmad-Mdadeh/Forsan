@@ -30,6 +30,7 @@ class AppAssets {
   static String appBackground = '$imagePath/app_background.png';
   static String appBanner = '$imagePath/app_banner.png';
   static String addFile = '$imagePath/add_file.png';
+  static String newOrder = '$imagePath/newOrder.png';
   static String authBackground = '$imagePath/auth_background.png';
   static String verificationCode = '$imagePath/verification_code.png';
   static String verification = '$imagePath/verification.png';

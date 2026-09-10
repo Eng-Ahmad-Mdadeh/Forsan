@@ -8,6 +8,7 @@ import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/core/utils/enums/enum_utils.dart';
 import 'package:forsan/data/data_sources/auth/auth_storage_data_source.dart';
 import 'package:forsan/presentation/screens/check_code/check_code_screen.dart';
+import 'package:forsan/presentation/screens/create_order/create_order_screen.dart';
 import 'package:forsan/presentation/screens/documents/documents_screen.dart';
 import 'package:forsan/presentation/screens/home/home_screen.dart';
 import 'package:forsan/presentation/screens/login/login_screen.dart';
@@ -141,6 +142,22 @@ class CompleteRequirementsRoute extends GoRouteData
     GoRouterState state,
   ) {
     return const CompleteRequirementsScreen().buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
+  }
+}
+
+@TypedGoRoute<CreateOrderRoute>(path: '/create_order')
+class CreateOrderRoute extends GoRouteData
+    with $CreateOrderRoute {
+  const CreateOrderRoute();
+
+  @override
+  CustomTransitionPage<void> buildPage(
+      BuildContext context,
+      GoRouterState state,
+      ) {
+    return const CreateOrderScreen().buildPage(
       pageAnimation: PageAnimation.fade,
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/core/routes/app_routes.dart';
 
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
@@ -32,7 +33,9 @@ class QuickActionsSection extends StatelessWidget {
                 semanticLabel: 'إنشاء طلب جديد',
                 icon: Icons.add_rounded,
                 color: AppColors.primaryDark,
-                onPressed: () {},
+                onPressed: () {
+                  CreateOrderRoute().push(context);
+                },
               ),
             ),
             SizedBox(width: AppWidth.w4),
