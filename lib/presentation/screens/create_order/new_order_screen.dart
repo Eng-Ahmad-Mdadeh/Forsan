@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
+import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/establishment_type_card.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_step_indicator.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
@@ -20,8 +23,6 @@ class NewOrderScreen extends StatefulWidget {
 
 class _NewOrderScreenState extends State<NewOrderScreen> {
   final PageController _pageController = PageController();
-  int _currentStep = 0;
-  String _establishmentType = 'one_person';
 
   @override
   void dispose() {
@@ -29,7 +30,8 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     super.dispose();
   }
 
-  void _goToStep(int step) {
+  void _goToStep(BuildContext context, int step) {
+    context.read<NewOrderCubit>().changeStep(step);
     _pageController.animateToPage(
       step,
       duration: const Duration(milliseconds: 300),
@@ -39,10 +41,19 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => NewOrderCubit(),
+      child: BlocBuilder<NewOrderCubit, NewOrderState>(
+        builder: (context, state) => _buildScreen(context, state),
+      ),
+    );
+  }
+
+  Widget _buildScreen(BuildContext context, NewOrderState state) {
     final pages = <Widget>[
       _EstablishmentTypeStep(
-        selectedValue: _establishmentType,
-        onChanged: (value) => setState(() => _establishmentType = value),
+        selectedValue: state.establishmentType,
+        onChanged: context.read<NewOrderCubit>().selectEstablishmentType,
       ),
       const _ApplicantStep(),
       const _CompanyDataStep(),
@@ -55,9 +66,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
         backgroundColor: AppColors.white,
         showBackButton: true,
         showScrolledUnderElevation: false,
-        onTapBackButton: _currentStep == 0
+        onTapBackButton: state.currentStep == 0
             ? () => Navigator.of(context).pop()
-            : () => _goToStep(_currentStep - 1),
+            : () => _goToStep(context, state.currentStep - 1),
         customActions: [
           HeaderIconButton(
             icon: Icons.close_rounded,
@@ -76,14 +87,14 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                 AppPaddingWidth.p20,
                 AppPaddingHeight.p14,
               ),
-              child: OrderStepIndicator(currentStep: _currentStep),
+              child: OrderStepIndicator(currentStep: state.currentStep),
             ),
             Expanded(
               child: PageView.builder(
                 key: const Key('new_order_page_view'),
                 controller: _pageController,
                 itemCount: pages.length,
-                onPageChanged: (index) => setState(() => _currentStep = index),
+                onPageChanged: context.read<NewOrderCubit>().changeStep,
                 itemBuilder: (context, index) => pages[index],
               ),
             ),
@@ -100,12 +111,12 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                 height: AppHeight.h50,
                 color: AppColors.primary,
                 onPressed: () {
-                  if (_currentStep < pages.length - 1) {
-                    _goToStep(_currentStep + 1);
+                  if (state.currentStep < NewOrderCubit.lastStep) {
+                    _goToStep(context, state.currentStep + 1);
                   }
                 },
                 child: BodyTitle(
-                  text: _currentStep == pages.length - 1
+                  text: state.currentStep == NewOrderCubit.lastStep
                       ? context.loc.new_order_submit
                       : context.loc.new_order_next,
                   color: AppColors.white,
