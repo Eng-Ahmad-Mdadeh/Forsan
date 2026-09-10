@@ -605,5 +605,15 @@
   "new_order_individual_establishment": "مؤسسة فردية",
   "new_order_individual_establishment_description": "نشاط فردي باسم المالك.",
   "new_order_joint_stock_company": "شركة تضامنية",
-  "new_order_joint_stock_company_description": "شراكة وفق الشكل القانوني المناسب."
+  "new_order_joint_stock_company_description": "شراكة وفق الشكل القانوني المناسب.",
+  "new_order_applicant_role_title": "صفة مقدم الطلب",
+  "new_order_applicant_role_description": "حدد الصفة التي تتقدم بها لهذا الطلب.",
+  "new_order_syrian_citizen": "مواطن سوري",
+  "new_order_syrian_citizen_description": "أتقدم بالطلب بصفتي الشخصية.",
+  "new_order_expatriate": "مغترب / خارج سوريا",
+  "new_order_expatriate_description": "أتقدم بالطلب من خارج سوريا.",
+  "new_order_foreign_investor": "مستثمر أجنبي",
+  "new_order_foreign_investor_description": "غير سوري وأرغب بتأسيس نشاط.",
+  "new_order_company_representative": "ممثل عن شركة",
+  "new_order_company_representative_description": "أتقدم بالطلب نيابة عن جهة."
 }

@@ -4465,4 +4465,34 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get new_order_joint_stock_company_description => 'شراكة وفق الشكل القانوني المناسب.';
 
+  @override
+  String get new_order_applicant_role_title => 'صفة مقدم الطلب';
+
+  @override
+  String get new_order_applicant_role_description => 'حدد الصفة التي تتقدم بها لهذا الطلب.';
+
+  @override
+  String get new_order_syrian_citizen => 'مواطن سوري';
+
+  @override
+  String get new_order_syrian_citizen_description => 'أتقدم بالطلب بصفتي الشخصية.';
+
+  @override
+  String get new_order_expatriate => 'مغترب / خارج سوريا';
+
+  @override
+  String get new_order_expatriate_description => 'أتقدم بالطلب من خارج سوريا.';
+
+  @override
+  String get new_order_foreign_investor => 'مستثمر أجنبي';
+
+  @override
+  String get new_order_foreign_investor_description => 'غير سوري وأرغب بتأسيس نشاط.';
+
+  @override
+  String get new_order_company_representative => 'ممثل عن شركة';
+
+  @override
+  String get new_order_company_representative_description => 'أتقدم بالطلب نيابة عن جهة.';
+
 }

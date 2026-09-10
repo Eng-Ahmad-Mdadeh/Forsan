@@ -5,14 +5,15 @@ import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
-class EstablishmentTypeCard extends StatelessWidget {
-  const EstablishmentTypeCard({
+class OrderOptionCard extends StatelessWidget {
+  const OrderOptionCard({
     super.key,
     required this.title,
     required this.description,
     required this.icon,
     required this.selected,
     required this.onTap,
+    this.height,
   });
 
   final String title;
@@ -20,6 +21,7 @@ class EstablishmentTypeCard extends StatelessWidget {
   final IconData icon;
   final bool selected;
   final VoidCallback onTap;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class EstablishmentTypeCard extends StatelessWidget {
         color: AppColors.none,
         borderRadius: radius,
         child: Ink(
-          height: AppHeight.h90,
+          height: height ?? AppHeight.h90,
           decoration: BoxDecoration(
             color: selected ? null : AppColors.white,
             gradient: selected

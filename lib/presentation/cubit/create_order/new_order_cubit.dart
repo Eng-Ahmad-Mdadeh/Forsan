@@ -17,4 +17,10 @@ class NewOrderCubit extends Cubit<NewOrderState> {
 
     emit(state.copyWith(establishmentType: type));
   }
+
+  void selectApplicantType(String type) {
+    if (type == state.applicantType) return;
+
+    emit(state.copyWith(applicantType: type));
+  }
 }

@@ -4492,4 +4492,34 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get new_order_joint_stock_company_description => 'A partnership under the appropriate legal form.';
 
+  @override
+  String get new_order_applicant_role_title => 'Applicant role';
+
+  @override
+  String get new_order_applicant_role_description => 'Select the capacity in which you are submitting this request.';
+
+  @override
+  String get new_order_syrian_citizen => 'Syrian citizen';
+
+  @override
+  String get new_order_syrian_citizen_description => 'I am submitting this request personally.';
+
+  @override
+  String get new_order_expatriate => 'Expatriate / Outside Syria';
+
+  @override
+  String get new_order_expatriate_description => 'I am submitting this request from outside Syria.';
+
+  @override
+  String get new_order_foreign_investor => 'Foreign investor';
+
+  @override
+  String get new_order_foreign_investor_description => 'I am not Syrian and want to establish a business.';
+
+  @override
+  String get new_order_company_representative => 'Company representative';
+
+  @override
+  String get new_order_company_representative_description => 'I am submitting this request on behalf of an entity.';
+
 }

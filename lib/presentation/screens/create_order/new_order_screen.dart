@@ -6,7 +6,7 @@ import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
-import 'package:forsan/presentation/screens/create_order/widgets/establishment_type_card.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_option_card.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_step_indicator.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
@@ -55,7 +55,10 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
         selectedValue: state.establishmentType,
         onChanged: context.read<NewOrderCubit>().selectEstablishmentType,
       ),
-      const _ApplicantStep(),
+      _ApplicantStep(
+        selectedValue: state.applicantType,
+        onChanged: context.read<NewOrderCubit>().selectApplicantType,
+      ),
       const _CompanyDataStep(),
     ];
 
@@ -251,7 +254,7 @@ class _EstablishmentTypeStep extends StatelessWidget {
           ),
           SizedBox(height: AppHeight.h10),
           for (final option in options) ...[
-            EstablishmentTypeCard(
+            OrderOptionCard(
               title: option.title,
               description: option.description,
               icon: option.icon,
@@ -267,27 +270,92 @@ class _EstablishmentTypeStep extends StatelessWidget {
 }
 
 class _ApplicantStep extends StatelessWidget {
-  const _ApplicantStep();
+  const _ApplicantStep({
+    required this.selectedValue,
+    required this.onChanged,
+  });
+
+  final String selectedValue;
+  final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return _StepBody(
-      title: context.loc.new_order_applicant_title,
-      description: context.loc.new_order_applicant_description,
-      children: [
-        CustomInputField(
-          title: context.loc.new_order_full_name,
-          hintText: context.loc.new_order_full_name,
-          req: true,
+    final options = [
+      (
+        value: 'syrian_citizen',
+        title: context.loc.new_order_syrian_citizen,
+        description: context.loc.new_order_syrian_citizen_description,
+        icon: Icons.account_circle_outlined,
+      ),
+      (
+        value: 'expatriate',
+        title: context.loc.new_order_expatriate,
+        description: context.loc.new_order_expatriate_description,
+        icon: Icons.flight_takeoff_rounded,
+      ),
+      (
+        value: 'foreign_investor',
+        title: context.loc.new_order_foreign_investor,
+        description: context.loc.new_order_foreign_investor_description,
+        icon: Icons.person_add_alt_outlined,
+      ),
+      (
+        value: 'company_representative',
+        title: context.loc.new_order_company_representative,
+        description: context.loc.new_order_company_representative_description,
+        icon: Icons.manage_accounts_outlined,
+      ),
+    ];
+
+    return SingleChildScrollView(
+      padding: EdgeInsets.fromLTRB(
+        AppPaddingWidth.p10,
+        AppPaddingHeight.p8,
+        AppPaddingWidth.p10,
+        AppPaddingHeight.p16,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.person_outline_rounded,
+                size: AppSize.s17,
+                color: AppColors.secondary,
+              ),
+              SizedBox(width: AppWidth.w6),
+              Expanded(
+                child: SectionTitle(
+                  text: context.loc.new_order_applicant_role_title,
+                  color: AppColors.primary,
+                  fontSize: AppFontSize.s18,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: AppHeight.h4),
+          BodyTitle(
+            text: context.loc.new_order_applicant_role_description,
+            color: AppColors.greyText,
+            fontSize: AppFontSize.s13,
+            fontWeight: AppFontWeight.regular,
+            maxLines: 2,
+          ),
+          SizedBox(height: AppHeight.h10),
+          for (final option in options) ...[
+            OrderOptionCard(
+              title: option.title,
+              description: option.description,
+              icon: option.icon,
+              height: AppHeight.h75,
+              selected: selectedValue == option.value,
+              onTap: () => onChanged(option.value),
+            ),
+            SizedBox(height: AppHeight.h12),
+          ],
         ),
-        SizedBox(height: AppHeight.h16),
-        CustomInputField(
-          title: context.loc.new_order_phone,
-          hintText: context.loc.new_order_phone,
-          textInputType: TextInputType.phone,
-          req: true,
-        ),
-      ],
+      ),
     );
   }
 }
