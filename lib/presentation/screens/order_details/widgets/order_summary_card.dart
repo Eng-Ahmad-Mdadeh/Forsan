@@ -70,7 +70,10 @@ class OrderSummaryCard extends StatelessWidget {
                     _OrderSummaryRow(
                       icon: Icons.radio_button_checked_rounded,
                       label: context.loc.order_status,
-                      valueWidget: StatusBadge(status: order.status),
+                      valueWidget: StatusBadge(
+                        status: order.status,
+                        showOuterCircle: false,
+                      ),
                     ),
                     _OrderSummaryRow(
                       icon: Icons.work_outline_rounded,

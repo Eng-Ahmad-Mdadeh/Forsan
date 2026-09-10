@@ -73,7 +73,7 @@ class OrderDetailsHeaderCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              StatusBadge(status: order.status),
+              StatusBadge(status: order.status, showOuterCircle: false),
               SizedBox(height: AppHeight.h14),
               StatusIcon(status: order.status),
             ],
