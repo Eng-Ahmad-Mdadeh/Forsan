@@ -7,9 +7,21 @@ import 'text/body_title.dart';
 import '../screens/orders/models/order_item.dart';
 
 class StatusBadge extends StatelessWidget {
-  const StatusBadge({super.key, required this.status});
+  StatusBadge({super.key, required OrderStatus status})
+    : label = status.label,
+      color = status.color,
+      backgroundColor = status.backgroundColor;
 
-  final OrderStatus status;
+  const StatusBadge.custom({
+    super.key,
+    required this.label,
+    required this.color,
+    required this.backgroundColor,
+  });
+
+  final String label;
+  final Color color;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -19,7 +31,7 @@ class StatusBadge extends StatelessWidget {
       vertical: AppPaddingHeight.p5,
     ),
     decoration: ShapeDecoration(
-      color: status.backgroundColor,
+      color: backgroundColor,
       shape: const StadiumBorder(),
     ),
     child: Row(
@@ -38,7 +50,7 @@ class StatusBadge extends StatelessWidget {
             width: AppWidth.w10,
             height: AppWidth.w10,
             decoration: BoxDecoration(
-              color: status.color,
+              color: color,
               shape: BoxShape.circle,
             ),
           ),
@@ -46,8 +58,8 @@ class StatusBadge extends StatelessWidget {
         SizedBox(width: AppWidth.w7),
 
         BodyTitle(
-          text: status.label,
-          color: status.color,
+          text: label,
+          color: color,
           fontSize: AppFontSize.s12,
           fontWeight: AppFontWeight.medium,
         ),
