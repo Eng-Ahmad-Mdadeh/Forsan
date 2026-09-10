@@ -76,7 +76,6 @@ class OrderCard extends StatelessWidget {
                     ),
                     if (showFooter)
                       Row(
-
                         children: [
                           Icon(
                             Icons.person_outline_rounded,
@@ -108,10 +107,7 @@ class OrderCard extends StatelessWidget {
 }
 
 class _OrderInformation extends StatelessWidget {
-  const _OrderInformation({
-    required this.order,
-    required this.showDateLabel,
-  });
+  const _OrderInformation({required this.order, required this.showDateLabel});
 
   final OrderItem order;
   final bool showDateLabel;
@@ -145,9 +141,7 @@ class _OrderInformation extends StatelessWidget {
           ),
           SizedBox(width: AppWidth.w4),
           BodyTitle(
-            text: showDateLabel
-                ? 'تاريخ الطلب : ${order.date}'
-                : order.date,
+            text: showDateLabel ? 'تاريخ الطلب : ${order.date}' : order.date,
             color: AppColors.primaryDark,
             fontSize: AppFontSize.s10,
             fontWeight: AppFontWeight.medium,
@@ -167,7 +161,11 @@ class _OrderState extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.end,
     children: [
-      StatusBadge(status: status),
+      StatusBadge(
+        status: status,
+        fontSize: AppSize.s12,
+        fontWeight: AppFontWeight.medium,
+      ),
       SizedBox(height: AppHeight.h14),
       Align(
         alignment: AlignmentDirectional.centerEnd,

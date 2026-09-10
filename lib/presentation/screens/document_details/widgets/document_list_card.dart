@@ -93,8 +93,8 @@ class _DocumentRow extends StatelessWidget {
     child: Row(
       children: [
         Container(
-          width: AppWidth.w30,
-          height: AppHeight.h32,
+          width: AppWidth.w40,
+          height: AppHeight.h40,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: AppColors.light,
@@ -103,7 +103,7 @@ class _DocumentRow extends StatelessWidget {
           child: Icon(
             Icons.insert_drive_file_outlined,
             color: AppColors.secondaryText,
-            size: AppSize.s16,
+            size: AppSize.s24,
           ),
         ),
         SizedBox(width: AppWidth.w8),
@@ -113,15 +113,15 @@ class _DocumentRow extends StatelessWidget {
             children: [
               BodyTitle(
                 text: document.name,
-                color: AppColors.mainText,
-                fontSize: AppFontSize.s12,
+                color: AppColors.blackText,
+                fontSize: AppFontSize.s14,
                 fontWeight: AppFontWeight.medium,
               ),
               SizedBox(height: AppHeight.h3),
               BodyTitle(
                 text: document.size,
                 color: AppColors.secondaryText,
-                fontSize: AppFontSize.s8,
+                fontSize: AppFontSize.s10,
                 fontWeight: AppFontWeight.regular,
               ),
             ],
@@ -142,8 +142,8 @@ class _DocumentRow extends StatelessWidget {
               onTap: () {},
               borderRadius: BorderRadius.circular(AppRadius.r7),
               child: Container(
-                width: AppWidth.w24,
-                height: AppHeight.h24,
+                width: AppWidth.w25,
+                height: AppHeight.h25,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: AppColors.light,
@@ -151,8 +151,8 @@ class _DocumentRow extends StatelessWidget {
                 ),
                 child: Icon(
                   Icons.file_download_outlined,
-                  color: AppColors.secondaryText,
-                  size: AppSize.s14,
+                  color: AppColors.primaryDark,
+                  size: AppSize.s16,
                 ),
               ),
             ),

@@ -133,6 +133,8 @@ class _DocumentRow extends StatelessWidget {
         ),
         StatusBadge.custom(
           label: _documentStatusLabel(context, document.status),
+          fontSize: AppSize.s14,
+          fontWeight: AppFontWeight.regular,
           color: document.status.foregroundColor,
           backgroundColor: document.status.backgroundColor,
         ),
