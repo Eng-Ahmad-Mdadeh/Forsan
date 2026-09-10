@@ -4,6 +4,7 @@ import '../../../core/extension/localization_extension.dart';
 import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/app_fonts.dart';
 import '../../../core/resources/app_values.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/required_action_card.dart';
@@ -47,7 +48,13 @@ class OrdersDetailsScreen extends StatelessWidget {
           children: [
             OrderDetailsHeaderCard(order: order),
             SizedBox(height: AppHeight.h16),
-            RequiredActionCard(),
+            RequiredActionCard(
+              title: context.loc.order_required_action,
+              message: context.loc.order_required_documents_message,
+              buttonText: context.loc.order_complete_requirements,
+              semanticsLabel: context.loc.order_required_action,
+              onPressed: () => CompleteRequirementsRoute().push(context),
+            ),
             SizedBox(height: AppHeight.h16),
             OrderSummaryCard(
               order: order,

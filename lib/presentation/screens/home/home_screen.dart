@@ -35,11 +35,13 @@ class HomeScreen extends StatelessWidget {
           ),
           SizedBox(height: AppHeight.h16),
           RequiredActionCard(
-            orderNumber: 'FR-2026-001259',
+            title: 'sss',
             message:
                 'يرجى إرفاق المستندات المطلوبة لاستكمال \n مراجعة طلب تأسيس الشركة.',
             compact: true,
-            showIllustration: true,
+            buttonText: 'استكمال المتطلبات ',
+            semanticsLabel: 'fffffffff',
+            onPressed: () {},
           ),
           SizedBox(height: AppHeight.h16),
           const HomeStatisticsSection(),

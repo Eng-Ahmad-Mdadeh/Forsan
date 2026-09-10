@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
 
-import '../../core/extension/localization_extension.dart';
-import '../../core/resources/app_assets.dart';
 import '../../core/resources/app_colors.dart';
 import '../../core/resources/app_fonts.dart';
 import '../../core/resources/app_values.dart';
-import '../../core/routes/app_routes.dart';
 import 'custom_elevated_button.dart';
-import 'image_view.dart';
 import 'text/body_title.dart';
 
 class RequiredActionCard extends StatelessWidget {
   const RequiredActionCard({
     super.key,
-    this.orderNumber,
-    this.message,
+    this.title,
+    this.titleSpan,
+    required this.message,
+    required this.buttonText,
+    required this.semanticsLabel,
+    required this.onPressed,
     this.compact = false,
-    this.showIllustration = false,
-    this.onPressed,
-  });
+    this.illustration,
+  }) : assert(
+         (title == null) != (titleSpan == null),
+         'Provide either title or titleSpan.',
+       );
 
-  final String? orderNumber;
-  final String? message;
+  final String? title;
+  final InlineSpan? titleSpan;
+  final String message;
+  final String buttonText;
+  final String semanticsLabel;
+  final VoidCallback onPressed;
   final bool compact;
-  final bool showIllustration;
-  final VoidCallback? onPressed;
+  final Widget? illustration;
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +45,12 @@ class RequiredActionCard extends StatelessWidget {
               size: compact ? AppSize.s24 : AppSize.s30,
             ),
             SizedBox(width: compact ? AppWidth.w4 : AppWidth.w8),
-            Expanded(child: _buildTitle(context)),
+            Expanded(child: _buildTitle()),
           ],
         ),
         SizedBox(height: compact ? AppHeight.h4 : AppHeight.h12),
         BodyTitle(
-          text: message ?? context.loc.order_required_documents_message,
+          text: message,
           color: AppColors.blackCow,
           maxLines: compact ? 2 : null,
           fontSize: compact ? AppFontSize.s12 : AppFontSize.s14,
@@ -59,8 +64,7 @@ class RequiredActionCard extends StatelessWidget {
               : AlignmentDirectional.centerEnd,
           child: CustomElevatedButton(
             height: compact ? AppHeight.h35 : AppHeight.h48,
-            onPressed:
-                onPressed ?? () => CompleteRequirementsRoute().push(context),
+            onPressed: onPressed,
             color: compact ? AppColors.primary : AppColors.secondaryNormal,
             borderRadius: compact ? AppRadius.r8 : AppRadius.r12,
             padding: EdgeInsets.symmetric(
@@ -77,7 +81,7 @@ class RequiredActionCard extends StatelessWidget {
                 ),
                 SizedBox(width: AppWidth.w8),
                 BodyTitle(
-                  text: context.loc.order_complete_requirements,
+                  text: buttonText,
                   color: AppColors.white,
                   fontSize: compact ? AppFontSize.s12 : AppFontSize.s14,
                   fontWeight: AppFontWeight.medium,
@@ -93,7 +97,7 @@ class RequiredActionCard extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Semantics(
         container: true,
-        label: context.loc.order_required_action,
+        label: semanticsLabel,
         child: Container(
           width: double.infinity,
           padding: compact
@@ -118,13 +122,13 @@ class RequiredActionCard extends StatelessWidget {
               ),
             ],
           ),
-          child: showIllustration
+          child: illustration != null
               ? Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(child: content),
                     SizedBox(width: AppWidth.w12),
-                    _buildIllustration(),
+                    illustration!,
                   ],
                 )
               : content,
@@ -133,53 +137,13 @@ class RequiredActionCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTitle(BuildContext context) {
-    final number = orderNumber;
-    if (number == null) {
-      return BodyTitle(
-        text: context.loc.order_required_action,
-        color: AppColors.mainText,
-        fontSize: compact ? AppFontSize.s12 : AppFontSize.s16,
-        fontWeight: compact ? AppFontWeight.regular : AppFontWeight.bold,
-      );
-    }
-
+  Widget _buildTitle() {
     return BodyTitle(
-      textSpan: TextSpan(
-        children: [
-          const TextSpan(text: 'إجراء مطلوب على الطلب '),
-          TextSpan(
-            text: number,
-            style: TextStyle(
-              color: AppColors.mainText,
-              fontWeight: AppFontWeight.bold,
-              fontSize: AppFontSize.s12,
-            ),
-          ),
-        ],
-      ),
+      text: title,
+      textSpan: titleSpan,
       color: AppColors.mainText,
-      fontSize: AppFontSize.s12,
-      fontWeight: AppFontWeight.regular,
+      fontSize: compact ? AppFontSize.s12 : AppFontSize.s16,
+      fontWeight: compact ? AppFontWeight.regular : AppFontWeight.bold,
     );
   }
-
-  Widget _buildIllustration() => Semantics(
-    image: true,
-    label: 'شعار فرسان',
-    child: SizedBox(
-      width: AppWidth.w65,
-      child: ColorFiltered(
-        colorFilter: const ColorFilter.mode(
-          AppColors.secondaryNormal,
-          BlendMode.srcIn,
-        ),
-        child: ImageView(
-          imagePath: AppAssets.addFile,
-          fit: BoxFit.contain,
-          excludeFromSemantics: true,
-        ),
-      ),
-    ),
-  );
 }
