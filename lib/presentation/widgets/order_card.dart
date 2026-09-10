@@ -7,8 +7,7 @@ import '../../core/resources/app_values.dart';
 import 'text/body_title.dart';
 import 'text/section_title.dart';
 import '../screens/orders/models/order_item.dart';
-import '../screens/orders/widgets/order_status_badge.dart';
-import '../screens/orders/widgets/order_status_icon.dart';
+
 
 class OrderCard extends StatelessWidget {
   const OrderCard({
