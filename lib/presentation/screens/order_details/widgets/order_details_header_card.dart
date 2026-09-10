@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/presentation/widgets/status_badge.dart';
+import 'package:forsan/presentation/widgets/status_icon.dart';
 
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
@@ -7,8 +9,7 @@ import '../../../widgets/section_card.dart';
 import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
 import '../../orders/models/order_item.dart';
-import '../../orders/widgets/order_status_badge.dart';
-import '../../orders/widgets/order_status_icon.dart';
+
 
 class OrderDetailsHeaderCard extends StatelessWidget {
   const OrderDetailsHeaderCard({super.key, required this.order});
@@ -72,9 +73,9 @@ class OrderDetailsHeaderCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              OrderStatusBadge(status: order.status),
+              StatusBadge(status: order.status),
               SizedBox(height: AppHeight.h14),
-              OrderStatusIcon(status: order.status),
+              StatusIcon(status: order.status),
             ],
           ),
         ],

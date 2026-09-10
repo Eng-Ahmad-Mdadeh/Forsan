@@ -11,7 +11,7 @@ import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/text/body_title.dart';
 import '../../widgets/text/section_title.dart';
 import '../orders/models/order_item.dart';
-import '../orders/widgets/order_card.dart';
+import '../../widgets/order_card.dart';
 import 'widgets/order_attached_documents_card.dart';
 import 'widgets/order_documents_card.dart';
 import 'widgets/order_required_action_card.dart';

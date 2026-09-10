@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/resources/app_values.dart';
-import '../models/order_item.dart';
+import '../../core/resources/app_values.dart';
+import '../screens/orders/models/order_item.dart';
 
-class OrderStatusIcon extends StatelessWidget {
-  const OrderStatusIcon({super.key, required this.status});
+class StatusIcon extends StatelessWidget {
+  const StatusIcon({super.key, required this.status});
 
   final OrderStatus status;
 

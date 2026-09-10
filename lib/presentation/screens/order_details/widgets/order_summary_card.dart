@@ -4,8 +4,9 @@ import '../../../../core/extension/localization_extension.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
+import '../../../widgets/status_badge.dart';
 import '../../orders/models/order_item.dart';
-import '../../orders/widgets/order_status_badge.dart';
+
 import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
 
@@ -69,7 +70,7 @@ class OrderSummaryCard extends StatelessWidget {
                     _OrderSummaryRow(
                       icon: Icons.radio_button_checked_rounded,
                       label: context.loc.order_status,
-                      valueWidget: OrderStatusBadge(status: order.status),
+                      valueWidget: StatusBadge(status: order.status),
                     ),
                     _OrderSummaryRow(
                       icon: Icons.work_outline_rounded,

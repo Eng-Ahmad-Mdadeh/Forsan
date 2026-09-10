@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:iconamoon/iconamoon.dart';
-import '../../core/resources/app_colors.dart';
-import '../../core/resources/app_fonts.dart';
-import '../../core/resources/app_values.dart';
-import 'custom_search.dart';
+
+import '../../../../core/resources/app_colors.dart';
+import '../../../../core/resources/app_values.dart';
+import '../../../widgets/custom_search.dart';
+
+
 
 /// The search and filter controls used at the top of the orders list.
 class OrdersSearchBar extends StatelessWidget {

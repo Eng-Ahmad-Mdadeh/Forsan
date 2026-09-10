@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-
-import '../../../../core/resources/app_colors.dart';
-import '../../../../core/resources/app_fonts.dart';
-import '../../../../core/resources/app_values.dart';
-import '../../../widgets/text/body_title.dart';
-import '../../../widgets/text/section_title.dart';
-import '../models/order_item.dart';
-import 'order_status_badge.dart';
-import 'order_status_icon.dart';
+import 'package:forsan/presentation/widgets/status_badge.dart';
+import 'package:forsan/presentation/widgets/status_icon.dart';
+import '../../core/resources/app_colors.dart';
+import '../../core/resources/app_fonts.dart';
+import '../../core/resources/app_values.dart';
+import 'text/body_title.dart';
+import 'text/section_title.dart';
+import '../screens/orders/models/order_item.dart';
+import '../screens/orders/widgets/order_status_badge.dart';
+import '../screens/orders/widgets/order_status_icon.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({
@@ -164,11 +165,11 @@ class _OrderState extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.end,
     children: [
-      OrderStatusBadge(status: status),
+      StatusBadge(status: status),
       SizedBox(height: AppHeight.h14),
       Align(
         alignment: AlignmentDirectional.centerEnd,
-        child: OrderStatusIcon(status: status),
+        child: StatusIcon(status: status),
       ),
     ],
   );

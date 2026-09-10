@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/resources/app_values.dart';
 import '../models/order_item.dart';
-import 'order_card.dart';
+import '../../../widgets/order_card.dart';
 
 class OrdersList extends StatelessWidget {
   const OrdersList({super.key, required this.orders});

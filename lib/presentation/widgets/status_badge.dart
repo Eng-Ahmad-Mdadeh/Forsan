@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/resources/app_colors.dart';
-import '../../../../core/resources/app_fonts.dart';
-import '../../../../core/resources/app_values.dart';
-import '../../../widgets/text/body_title.dart';
-import '../models/order_item.dart';
+import '../../core/resources/app_colors.dart';
+import '../../core/resources/app_fonts.dart';
+import '../../core/resources/app_values.dart';
+import 'text/body_title.dart';
+import '../screens/orders/models/order_item.dart';
 
-class OrderStatusBadge extends StatelessWidget {
-  const OrderStatusBadge({super.key, required this.status});
+class StatusBadge extends StatelessWidget {
+  const StatusBadge({super.key, required this.status});
 
   final OrderStatus status;
 

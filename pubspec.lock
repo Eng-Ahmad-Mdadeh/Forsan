@@ -497,6 +497,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  fluentui_system_icons:
+    dependency: "direct main"
+    description:
+      name: fluentui_system_icons
+      sha256: "1592ae32dae75fb66741ab2c0607bc6554ef086f1c457e27ef937fb4901d33da"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.273"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -981,14 +989,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
-  iconamoon:
-    dependency: "direct main"
-    description:
-      name: iconamoon
-      sha256: f3de914381adbde53623d5270beb9a816643674e2d7a458ddc29d6c98495b834
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
   icons_plus:
     dependency: "direct main"
     description:
