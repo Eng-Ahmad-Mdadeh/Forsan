@@ -1,136 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/resources/app_assets.dart';
-import '../../../../core/resources/app_colors.dart';
-import '../../../../core/resources/app_fonts.dart';
-import '../../../../core/resources/app_values.dart';
-import '../../../../core/routes/app_routes.dart';
-import '../../../widgets/custom_elevated_button.dart';
-import '../../../widgets/image_view.dart';
-import '../../../widgets/text/body_title.dart';
+import '../../../widgets/required_action_card.dart';
 
 class RequiredDocumentsCard extends StatelessWidget {
   const RequiredDocumentsCard({super.key});
 
   @override
-  Widget build(BuildContext context) => Directionality(
-    textDirection: TextDirection.rtl,
-    child: Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: AppPaddingWidth.p12,
-        vertical: AppPaddingHeight.p12,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.secondaryLightHover,
-        borderRadius: BorderRadius.circular(AppRadius.r20),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.homeSoftShadow,
-            blurRadius: AppRadius.r10,
-            offset: Offset(0, AppHeight.h4),
-          ),
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.info_outline_rounded,
-                      color: AppColors.secondaryNormal,
-                      size: AppSize.s24,
-                    ),
-                    SizedBox(width: AppWidth.w4),
-                    Expanded(
-                      child: BodyTitle(
-                        textSpan: TextSpan(
-                          children: [
-                            const TextSpan(text: 'إجراء مطلوب على الطلب '),
-                            TextSpan(
-                              text: 'FR-2026-001259',
-                              style: TextStyle(
-                                color: AppColors.mainText,
-                                fontWeight: AppFontWeight.bold,
-                                fontSize: AppFontSize.s12,
-                              ),
-                            ),
-                          ],
-                        ),
-                        color: AppColors.mainText,
-                        fontSize: AppFontSize.s12,
-                        fontWeight: AppFontWeight.regular,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: AppHeight.h4),
-                BodyTitle(
-                  text: 'يرجى إرفاق المستندات المطلوبة لاستكمال \n مراجعة طلب تأسيس الشركة.',
-                  color: AppColors.blackCow,
-                  maxLines: 2,
-                  fontSize: AppFontSize.s12,
-                  fontWeight: AppFontWeight.regular,
-                  height: 1.6,
-                ),
-                SizedBox(height: AppHeight.h10),
-                Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: CustomElevatedButton(
-                    height: AppHeight.h35,
-                    onPressed: () {
-                      CompleteRequirementsRoute().push(context);
-                    },
-                    color: AppColors.primary,
-                    borderRadius: AppRadius.r8,
-                    padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p10),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.file_upload_outlined,
-                          size: AppSize.s16,
-                          color: AppColors.white,
-                        ),
-                        SizedBox(width: AppWidth.w8),
-                        BodyTitle(
-                          text:'استكمال المتطلبات',
-                          color: AppColors.white,
-                          fontSize: AppFontSize.s12,
-                          fontWeight: AppFontWeight.medium,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(width: AppWidth.w12),
-          Semantics(
-            image: true,
-            label: 'شعار فرسان',
-            child: SizedBox(
-              width: AppWidth.w65,
-              child: ColorFiltered(
-                colorFilter: const ColorFilter.mode(
-                  AppColors.secondaryNormal,
-                  BlendMode.srcIn,
-                ),
-                child: ImageView(
-                  imagePath: AppAssets.addFile,
-                  fit: BoxFit.contain,
-                  excludeFromSemantics: true,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
+  Widget build(BuildContext context) => const RequiredActionCard(
+    orderNumber: 'FR-2026-001259',
+    message:
+        'يرجى إرفاق المستندات المطلوبة لاستكمال \n مراجعة طلب تأسيس الشركة.',
+    compact: true,
+    showIllustration: true,
   );
 }
