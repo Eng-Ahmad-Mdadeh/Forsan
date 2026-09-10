@@ -6,6 +6,7 @@ import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../widgets/custom_elevated_button.dart';
+import '../../../widgets/image_view.dart';
 import '../../../widgets/text/body_title.dart';
 
 class RequiredDocumentsCard extends StatelessWidget {
@@ -120,8 +121,8 @@ class RequiredDocumentsCard extends StatelessWidget {
                   AppColors.secondaryNormal,
                   BlendMode.srcIn,
                 ),
-                child: Image.asset(
-                  AppAssets.addFile,
+                child: ImageView(
+                  imagePath: AppAssets.addFile,
                   fit: BoxFit.contain,
                   excludeFromSemantics: true,
                 ),

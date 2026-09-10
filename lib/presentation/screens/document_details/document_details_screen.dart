@@ -1,10 +1,111 @@
-import '../../../core/routes/app_routes_imports.dart';
+import 'package:flutter/material.dart';
+
+import '../../../core/resources/app_colors.dart';
+import '../../../core/resources/app_fonts.dart';
+import '../../../core/resources/app_values.dart';
+import '../../widgets/custom_app_bar.dart';
+import '../../widgets/text/section_title.dart';
+import 'models/document_details_models.dart';
+import 'widgets/document_complete_requirements_button.dart';
+import 'widgets/document_list_card.dart';
+import 'widgets/document_request_header_card.dart';
+import 'widgets/document_required_action_card.dart';
+
+export 'models/document_details_models.dart' show DocumentDetailsState;
 
 class DocumentDetailsScreen extends StatelessWidget {
-  const DocumentDetailsScreen({super.key});
+  const DocumentDetailsScreen({
+    super.key,
+    this.state = DocumentDetailsState.underReview,
+  });
+
+  final DocumentDetailsState state;
+
+  static const _requestDocuments = [
+    DocumentDetailsData(name: 'جواز السفر', size: '1.2 ميجا بايت'),
+    DocumentDetailsData(name: 'جواز السفر', size: '1.2 ميجا بايت'),
+    DocumentDetailsData(name: 'جواز السفر', size: '1.2 ميجا بايت'),
+  ];
+
+  static const _officialDocuments = [
+    DocumentDetailsData(name: 'عقد التأسيس', size: '1.2 ميجا بايت'),
+    DocumentDetailsData(name: 'وثيقة الرخصة', size: '1.2 ميجا بايت'),
+    DocumentDetailsData(name: 'السجل التجاري', size: '1.2 ميجا بايت'),
+  ];
 
   @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
+  Widget build(BuildContext context) => Directionality(
+    textDirection: TextDirection.rtl,
+    child: Scaffold(
+      backgroundColor: AppColors.white,
+      appBar: CustomAppBar(
+        title: 'تفاصيل الطلب',
+        backgroundColor: AppColors.white,
+        toolbarHeight: AppHeight.h70,
+        showBackButton: true,
+        showScrolledUnderElevation: false,
+        titleWidget: SectionTitle(
+          text: 'تفاصيل الطلب',
+          color: AppColors.mainText,
+          fontSize: AppFontSize.s20,
+          fontWeight: AppFontWeight.bold,
+        ),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(
+                  AppPaddingWidth.p16,
+                  AppPaddingHeight.p14,
+                  AppPaddingWidth.p16,
+                  AppPaddingHeight.p20,
+                ),
+                child: Column(
+                  children: [
+                    DocumentRequestHeaderCard(state: state),
+                    if (state == DocumentDetailsState.waitingDocuments) ...[
+                      SizedBox(height: AppHeight.h12),
+                      const DocumentRequiredActionCard(),
+                    ],
+                    SizedBox(height: AppHeight.h14),
+                    DocumentListCard(
+                      title: 'مستندات الطلب',
+                      documents: _requestDocuments,
+                      statuses: _requestDocumentStatuses,
+                    ),
+                    if (state == DocumentDetailsState.completed) ...[
+                      SizedBox(height: AppHeight.h16),
+                      const DocumentListCard(
+                        title: 'المستندات الرسمية',
+                        documents: _officialDocuments,
+                        statuses: null,
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+            if (state == DocumentDetailsState.waitingDocuments)
+              DocumentCompleteRequirementsButton(onPressed: () {}),
+          ],
+        ),
+      ),
+    ),
+  );
+
+  List<DocumentDetailsStatus>? get _requestDocumentStatuses => switch (state) {
+    DocumentDetailsState.underReview => List.filled(
+      _requestDocuments.length,
+      DocumentDetailsStatus.underReview,
+    ),
+    DocumentDetailsState.waitingDocuments => const [
+      DocumentDetailsStatus.approved,
+      DocumentDetailsStatus.rejected,
+      DocumentDetailsStatus.required,
+    ],
+    DocumentDetailsState.inProgress || DocumentDetailsState.completed =>
+      List.filled(_requestDocuments.length, DocumentDetailsStatus.approved),
+  };
 }
