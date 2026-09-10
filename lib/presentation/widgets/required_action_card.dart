@@ -36,27 +36,28 @@ class RequiredActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final content = Column(
-      crossAxisAlignment:
-          compact ? CrossAxisAlignment.start : CrossAxisAlignment.stretch,
+      crossAxisAlignment: compact
+          ? CrossAxisAlignment.start
+          : CrossAxisAlignment.stretch,
       children: [
         Row(
           children: [
             Icon(
               Icons.info_outline_rounded,
               color: AppColors.secondaryNormal,
-              size: compact ? AppSize.s24 : AppSize.s24,
+              size:  AppSize.s24 ,
             ),
-            SizedBox(width: compact ? AppWidth.w4 : AppWidth.w8),
+            SizedBox(width:  AppWidth.w4 ),
             Expanded(child: _buildTitle()),
           ],
         ),
-        SizedBox(height: compact ? AppHeight.h4 : AppHeight.h12),
+        SizedBox(height:AppHeight.h4 ),
         BodyTitle(
           text: message,
-          color: AppColors.blackCow,
+          color: AppColors.secondaryText,
           maxLines: compact ? 2 : null,
-          fontSize: compact ? AppFontSize.s12 : AppFontSize.s14,
-          fontWeight: AppFontWeight.regular,
+          fontSize:  AppFontSize.s12 ,
+          fontWeight:  AppFontWeight.regular,
           height: compact ? 1.6 : null,
         ),
         SizedBox(height: compact ? AppHeight.h10 : AppHeight.h12),
@@ -65,29 +66,26 @@ class RequiredActionCard extends StatelessWidget {
               ? AlignmentDirectional.centerStart
               : AlignmentDirectional.centerEnd,
           child: CustomElevatedButton(
-            height:  AppHeight.h35 ,
+            height: AppHeight.h37,
             onPressed: onPressed,
             color:
                 buttonColor ??
                 (compact ? AppColors.primary : AppColors.secondaryNormal),
-            borderRadius: compact ? AppRadius.r8 : AppRadius.r12,
-            padding: EdgeInsets.symmetric(
-              horizontal:
-                  compact ? AppPaddingWidth.p10 : AppPaddingWidth.p20,
-            ),
+            borderRadius: AppRadius.r8 ,
+            padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p10),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   Icons.file_upload_outlined,
-                  size: compact ? AppSize.s16 : AppSize.s22,
+                  size:  AppSize.s16 ,
                   color: AppColors.white,
                 ),
-                SizedBox(width: AppWidth.w8),
+                SizedBox(width: AppWidth.w4),
                 BodyTitle(
                   text: buttonText,
                   color: AppColors.white,
-                  fontSize: compact ? AppFontSize.s12 : AppFontSize.s14,
+                  fontSize: AppFontSize.s12 ,
                   fontWeight: AppFontWeight.medium,
                 ),
               ],
@@ -146,8 +144,8 @@ class RequiredActionCard extends StatelessWidget {
       text: title,
       textSpan: titleSpan,
       color: AppColors.mainText,
-      fontSize: compact ? AppFontSize.s12 : AppFontSize.s16,
-      fontWeight: compact ? AppFontWeight.regular : AppFontWeight.bold,
+      fontSize:  AppFontSize.s12 ,
+      fontWeight: compact ? AppFontWeight.regular : AppFontWeight.medium,
     );
   }
 }

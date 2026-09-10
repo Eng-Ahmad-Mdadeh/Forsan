@@ -61,7 +61,7 @@ class Pill extends StatelessWidget {
           BodyTitle(
             text: label,
             color: foreground,
-            fontSize: AppFontSize.s14,
+            fontSize: AppFontSize.s12,
           ),
         ],
       ),

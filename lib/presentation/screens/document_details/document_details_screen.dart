@@ -65,6 +65,7 @@ class DocumentDetailsScreen extends StatelessWidget {
                       SizedBox(height: AppHeight.h12),
                       RequiredActionCard(
                         title: 'إجراء مطلوب',
+
                         message: 'يرجى إرفاق المستندات المطلوبة لاستكمال الطلب',
                         buttonText: 'استكمال المتطلبات',
                         semanticsLabel: 'إجراء مطلوب',

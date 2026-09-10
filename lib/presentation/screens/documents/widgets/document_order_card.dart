@@ -16,6 +16,7 @@ class DocumentOrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => OrderCard(
     order: document,
+    detailsButtonText: 'تفاصيل ',
     onDetailsPressed: onDetailsPressed,
   );
 }
