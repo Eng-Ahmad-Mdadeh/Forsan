@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../../../core/resources/app_assets.dart';
 import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/app_values.dart';
+import '../../widgets/image_view.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({required this.onFinished, super.key});
@@ -54,10 +55,10 @@ class _SplashScreenState extends State<SplashScreen> {
                   AppColors.splashPattern,
                   BlendMode.srcIn,
                 ),
-                child: Image.asset(
-                  AppAssets.appBackground,
+                child: ImageView(
+                  imagePath: AppAssets.appBackground,
                   repeat: ImageRepeat.repeat,
-                  alignment: Alignment.topCenter,
+                  imageAlignment: Alignment.topCenter,
                 ),
               ),
             ),
@@ -66,8 +67,8 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Center(
               child: FractionallySizedBox(
                 widthFactor: .55,
-                child: Image.asset(
-                  AppAssets.fullLogo,
+                child: ImageView(
+                  imagePath: AppAssets.fullLogo,
                   fit: BoxFit.contain,
                   semanticLabel: 'شعار فرسان للخدمات',
                 ),
