@@ -7812,6 +7812,8 @@ abstract class AppLocalizations {
 
   String get new_order_step_establishment;
 
+  String get new_order_step_applicant;
+
   String get new_order_establishment_title;
 
   String get new_order_establishment_description;
@@ -7819,6 +7821,16 @@ abstract class AppLocalizations {
   String get new_order_new_company;
 
   String get new_order_company_branch;
+
+  String get new_order_contact_identity_title;
+
+  String get new_order_contact_identity_description;
+
+  String get new_order_full_name;
+
+  String get new_order_full_name_hint;
+
+  String get new_order_next;
 
   String get new_order_submit;
 

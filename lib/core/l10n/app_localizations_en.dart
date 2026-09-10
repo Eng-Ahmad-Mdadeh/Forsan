@@ -4415,6 +4415,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get new_order_step_establishment => 'Setup type';
 
   @override
+  String get new_order_step_applicant => 'Applicant';
+
+  @override
   String get new_order_establishment_title => 'Select the establishment type';
 
   @override
@@ -4425,6 +4428,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get new_order_company_branch => 'Open a branch of an existing company';
+
+  @override
+  String get new_order_contact_identity_title => 'Contact and identity details';
+
+  @override
+  String get new_order_contact_identity_description =>
+      'We will use this information to review the request and contact you about missing information or additional steps.';
+
+  @override
+  String get new_order_full_name => 'Full name';
+
+  @override
+  String get new_order_full_name_hint => 'Example: Mohammad Khatib';
+
+  @override
+  String get new_order_next => 'Next';
 
   @override
   String get new_order_submit => 'Submit request';

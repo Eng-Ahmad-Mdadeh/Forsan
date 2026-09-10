@@ -6,14 +6,37 @@ import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
+import 'package:forsan/presentation/screens/create_order/steps_widgets/applicant_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/establishment_type_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/order_step_indicator.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 
-class NewOrderScreen extends StatelessWidget {
+class NewOrderScreen extends StatefulWidget {
   const NewOrderScreen({super.key});
+
+  @override
+  State<NewOrderScreen> createState() => _NewOrderScreenState();
+}
+
+class _NewOrderScreenState extends State<NewOrderScreen> {
+  final PageController _pageController = PageController();
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _goToStep(BuildContext context, int step) {
+    context.read<NewOrderCubit>().changeStep(step);
+    _pageController.animateToPage(
+      step,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +56,9 @@ class NewOrderScreen extends StatelessWidget {
         backgroundColor: AppColors.white,
         showBackButton: true,
         showScrolledUnderElevation: false,
-        onTapBackButton: () => Navigator.of(context).pop(),
+        onTapBackButton: state.currentStep == 0
+            ? () => Navigator.of(context).pop()
+            : () => _goToStep(context, state.currentStep - 1),
         customActions: [
           HeaderIconButton(
             icon: Icons.close_rounded,
@@ -51,16 +76,24 @@ class NewOrderScreen extends StatelessWidget {
                 AppPaddingWidth.p20,
                 AppPaddingHeight.p14,
               ),
-              child: const OrderStepIndicator(),
+              child: OrderStepIndicator(currentStep: state.currentStep),
             ),
             Expanded(
-              child: EstablishmentTypeStep(
-                selectedValue: state.establishmentType,
-                onChanged:
-                    context.read<NewOrderCubit>().selectEstablishmentType,
-                selectedApplicantValue: state.applicantType,
-                onApplicantChanged:
-                    context.read<NewOrderCubit>().selectApplicantType,
+              child: PageView(
+                key: const Key('new_order_page_view'),
+                controller: _pageController,
+                onPageChanged: context.read<NewOrderCubit>().changeStep,
+                children: [
+                  EstablishmentTypeStep(
+                    selectedValue: state.establishmentType,
+                    onChanged:
+                        context.read<NewOrderCubit>().selectEstablishmentType,
+                    selectedApplicantValue: state.applicantType,
+                    onApplicantChanged:
+                        context.read<NewOrderCubit>().selectApplicantType,
+                  ),
+                  const ApplicantStep(),
+                ],
               ),
             ),
             Padding(
@@ -71,13 +104,19 @@ class NewOrderScreen extends StatelessWidget {
                 AppPaddingHeight.p16,
               ),
               child: CustomElevatedButton(
-                key: const Key('new_order_submit_button'),
+                key: const Key('new_order_next_button'),
                 width: double.infinity,
                 height: AppHeight.h50,
                 color: AppColors.primary,
-                onPressed: () {},
+                onPressed: () {
+                  if (state.currentStep < NewOrderCubit.lastStep) {
+                    _goToStep(context, state.currentStep + 1);
+                  }
+                },
                 child: BodyTitle(
-                  text: context.loc.new_order_submit,
+                  text: state.currentStep == NewOrderCubit.lastStep
+                      ? context.loc.new_order_submit
+                      : context.loc.new_order_next,
                   color: AppColors.white,
                   fontWeight: AppFontWeight.semiBold,
                 ),

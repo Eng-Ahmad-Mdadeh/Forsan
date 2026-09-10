@@ -4388,6 +4388,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get new_order_step_establishment => 'نوع التأسيس';
 
   @override
+  String get new_order_step_applicant => 'مقدم الطلب';
+
+  @override
   String get new_order_establishment_title => 'حدد نوع التأسيس';
 
   @override
@@ -4398,6 +4401,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get new_order_company_branch => 'فتح فرع لشركة قائمة';
+
+  @override
+  String get new_order_contact_identity_title => 'بيانات التواصل والهوية';
+
+  @override
+  String get new_order_contact_identity_description =>
+      'سنستخدم هذه المعلومات لمراجعة الطلب والتواصل معك بشأن النواقص والخطوات التالية.';
+
+  @override
+  String get new_order_full_name => 'الاسم الكامل';
+
+  @override
+  String get new_order_full_name_hint => 'مثال : محمد خطيب';
+
+  @override
+  String get new_order_next => 'التالي';
 
   @override
   String get new_order_submit => 'إرسال الطلب';
