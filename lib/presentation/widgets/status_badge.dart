@@ -11,6 +11,8 @@ class StatusBadge extends StatelessWidget {
     super.key,
     required OrderStatus status,
     this.showOuterCircle = true,
+    this.fontSize,
+    this.fontWeight,
   })
     : label = status.label,
       color = status.color,
@@ -22,12 +24,16 @@ class StatusBadge extends StatelessWidget {
     required this.color,
     required this.backgroundColor,
     this.showOuterCircle = false,
+    this.fontSize,
+    this.fontWeight,
   });
 
   final String label;
   final Color color;
   final Color backgroundColor;
   final bool showOuterCircle;
+  final double? fontSize;
+  final FontWeight? fontWeight;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -75,8 +81,8 @@ class StatusBadge extends StatelessWidget {
         BodyTitle(
           text: label,
           color: color,
-          fontSize: AppFontSize.s12,
-          fontWeight: AppFontWeight.medium,
+          fontSize: fontSize ?? AppFontSize.s12,
+          fontWeight: fontWeight ?? AppFontWeight.medium,
         ),
       ],
     ),
