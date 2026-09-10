@@ -64,8 +64,8 @@ class HomeScreen extends StatelessWidget {
             buttonColor: AppColors.primary,
             semanticsLabel:
                 'إجراء مطلوب على الطلب FR-2026-001259',
-            illustration: Image.asset(
-              AppAssets.addFile,
+            illustration: ImageView(
+              imagePath: AppAssets.addFile,
               width: AppWidth.w85,
               fit: BoxFit.contain,
               excludeFromSemantics: true,
