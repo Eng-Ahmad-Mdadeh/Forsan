@@ -3,6 +3,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/widgets/text/body_title.dart';
 
 class OrderStepIndicator extends StatelessWidget {
   const OrderStepIndicator({super.key, required this.currentStep});
@@ -90,30 +91,26 @@ class _StepNode extends StatelessWidget {
                       color: AppColors.secondary,
                       size: AppSize.s20,
                     )
-                  : Text(
-                      '$number',
-                      style: TextStyle(
-                        color: active
-                            ? AppColors.white
-                            : AppColors.secondaryText,
-                        fontSize: AppFontSize.s14,
-                        fontWeight: AppFontWeight.medium,
-                      ),
+                  : BodyTitle(
+                      text: '$number',
+                      color: active
+                          ? AppColors.white
+                          : AppColors.secondaryText,
+                      fontSize: AppFontSize.s14,
+                      fontWeight: AppFontWeight.medium,
                     ),
             ),
           ),
           SizedBox(height: AppHeight.h5),
-          Text(
-            label,
+          BodyTitle(
+            text: label,
             textAlign: TextAlign.center,
             maxLines: 1,
-            style: TextStyle(
-              color: highlighted
-                  ? AppColors.primary
-                  : AppColors.secondaryText,
-              fontSize: AppFontSize.s11,
-              fontWeight: AppFontWeight.regular,
-            ),
+            color: highlighted
+                ? AppColors.primary
+                : AppColors.secondaryText,
+            fontSize: AppFontSize.s11,
+            fontWeight: AppFontWeight.regular,
           ),
         ],
       ),
