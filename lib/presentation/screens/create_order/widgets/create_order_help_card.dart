@@ -5,6 +5,7 @@ import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class CreateOrderHelpCard extends StatelessWidget {
   const CreateOrderHelpCard({super.key, this.onTap});
@@ -13,7 +14,7 @@ class CreateOrderHelpCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = BorderRadius.circular(AppRadius.r20);
+    final borderRadius = BorderRadius.circular(AppRadius.r10);
 
     return Semantics(
       button: true,
@@ -22,7 +23,7 @@ class CreateOrderHelpCard extends StatelessWidget {
         color: AppColors.none,
         borderRadius: borderRadius,
         child: Ink(
-          height: AppHeight.h130,
+          height: AppHeight.h70,
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               begin: AlignmentDirectional.centerEnd,
@@ -43,7 +44,7 @@ class CreateOrderHelpCard extends StatelessWidget {
             onTap: onTap ?? () {},
             borderRadius: borderRadius,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p20),
+              padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p11),
               child: Row(
                 children: [
                   Expanded(
@@ -54,14 +55,14 @@ class CreateOrderHelpCard extends StatelessWidget {
                         SectionTitle(
                           text: context.loc.create_order_help_title,
                           color: AppColors.white,
-                          fontSize: AppFontSize.s24,
+                          fontSize: AppFontSize.s14,
                           maxLines: 1,
                         ),
-                        SizedBox(height: AppHeight.h8),
+                        SizedBox(height: AppHeight.h6),
                         BodyTitle(
                           text: context.loc.create_order_help_description,
                           color: AppColors.white,
-                          fontSize: AppFontSize.s16,
+                          fontSize: AppFontSize.s12,
                           fontWeight: AppFontWeight.regular,
                           maxLines: 2,
                         ),
@@ -70,16 +71,16 @@ class CreateOrderHelpCard extends StatelessWidget {
                   ),
                   SizedBox(width: AppWidth.w16),
                   Container(
-                    width: AppWidth.w62,
-                    height: AppHeight.h62,
+                    width: AppWidth.w35,
+                    height: AppHeight.h35,
                     decoration: BoxDecoration(
                       color: AppColors.white.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(AppRadius.r16),
+                      borderRadius: BorderRadius.circular(AppRadius.r8),
                     ),
                     child: Icon(
                       Icons.support_agent_rounded,
                       color: AppColors.white,
-                      size: AppSize.s38,
+                      size: AppSize.s24,
                     ),
                   ),
                 ],
