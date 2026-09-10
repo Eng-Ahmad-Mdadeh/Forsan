@@ -21,10 +21,15 @@ class OrderStepIndicator extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(labels.length * 2 - 1, (index) {
         if (index.isOdd) {
+          final connectorIndex = index ~/ 2;
           return Expanded(
-            child: _StepConnector(active: index ~/ 2 < currentStep),
+            child: _StepConnector(
+              startComplete: currentStep >= connectorIndex,
+              endComplete: currentStep > connectorIndex,
+            ),
           );
         }
+
         final step = index ~/ 2;
         return _StepNode(
           number: step + 1,
@@ -53,33 +58,48 @@ class _StepNode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final highlighted = active || complete;
+
     return SizedBox(
-      width: AppWidth.w70,
+      width: AppWidth.w75,
       child: Column(
         children: [
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            width: AppWidth.w33,
-            height: AppHeight.h33,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
+          Container(
+            width: AppWidth.w48,
+            height: AppHeight.h48,
+            padding: EdgeInsets.all(AppSize.s5),
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: active ? AppColors.primary : AppColors.light,
-              border: Border.all(
-                color: active ? AppColors.secondary : AppColors.lightActive,
-                width: active ? AppWidth.w2 : AppWidth.w1,
-              ),
-              boxShadow: active
-                  ? const [BoxShadow(color: AppColors.shadowPrimary, blurRadius: 6)]
-                  : null,
+              color: AppColors.light,
             ),
-            child: Text(
-              '$number',
-              style: TextStyle(
-                color: active ? AppColors.white : AppColors.secondaryText,
-                fontSize: AppFontSize.s12,
-                fontWeight: AppFontWeight.medium,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: highlighted ? AppColors.primary : AppColors.lightActive,
+                border: highlighted
+                    ? Border.all(
+                        color: AppColors.secondary,
+                        width: AppWidth.w2,
+                      )
+                    : null,
               ),
+              child: complete
+                  ? Icon(
+                      Icons.check_rounded,
+                      color: AppColors.secondary,
+                      size: AppSize.s20,
+                    )
+                  : Text(
+                      '$number',
+                      style: TextStyle(
+                        color: active
+                            ? AppColors.white
+                            : AppColors.secondaryText,
+                        fontSize: AppFontSize.s14,
+                        fontWeight: AppFontWeight.medium,
+                      ),
+                    ),
             ),
           ),
           SizedBox(height: AppHeight.h5),
@@ -88,9 +108,11 @@ class _StepNode extends StatelessWidget {
             textAlign: TextAlign.center,
             maxLines: 1,
             style: TextStyle(
-              color: highlighted ? AppColors.primary : AppColors.secondaryText,
-              fontSize: AppFontSize.s10,
-              fontWeight: active ? AppFontWeight.semiBold : AppFontWeight.regular,
+              color: highlighted
+                  ? AppColors.primary
+                  : AppColors.secondaryText,
+              fontSize: AppFontSize.s11,
+              fontWeight: AppFontWeight.regular,
             ),
           ),
         ],
@@ -100,38 +122,48 @@ class _StepNode extends StatelessWidget {
 }
 
 class _StepConnector extends StatelessWidget {
-  const _StepConnector({required this.active});
+  const _StepConnector({
+    required this.startComplete,
+    required this.endComplete,
+  });
 
-  final bool active;
+  final bool startComplete;
+  final bool endComplete;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: AppPaddingHeight.p16),
+      padding: EdgeInsets.only(top: AppPaddingHeight.p23),
       child: Row(
         children: [
-          Expanded(
-            child: Divider(
-              height: AppHeight.h1,
-              color: active ? AppColors.secondary : AppColors.lightActive,
-            ),
-          ),
+          Expanded(child: _ConnectorLine(complete: startComplete)),
           Transform.rotate(
             angle: 0.785,
             child: Container(
               width: AppWidth.w10,
               height: AppHeight.h10,
-              color: active ? AppColors.secondary : AppColors.light,
+              color: startComplete
+                  ? AppColors.secondary
+                  : AppColors.lightActive,
             ),
           ),
-          Expanded(
-            child: Divider(
-              height: AppHeight.h1,
-              color: active ? AppColors.secondary : AppColors.lightActive,
-            ),
-          ),
+          Expanded(child: _ConnectorLine(complete: endComplete)),
         ],
       ),
+    );
+  }
+}
+
+class _ConnectorLine extends StatelessWidget {
+  const _ConnectorLine({required this.complete});
+
+  final bool complete;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: AppHeight.h2,
+      color: complete ? AppColors.primary : AppColors.lightActive,
     );
   }
 }
