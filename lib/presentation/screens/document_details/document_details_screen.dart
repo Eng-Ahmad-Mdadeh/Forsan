@@ -35,13 +35,13 @@ class DocumentDetailsScreen extends StatelessWidget {
     child: Scaffold(
       backgroundColor: AppColors.white,
       appBar: CustomAppBar(
-        title: 'تفاصيل الطلب',
+        title: 'تفاصيل المستند',
         backgroundColor: AppColors.white,
         toolbarHeight: AppHeight.h70,
         showBackButton: true,
         showScrolledUnderElevation: false,
         titleWidget: SectionTitle(
-          text: 'تفاصيل الطلب',
+          text: 'تفاصيل المستند',
           color: AppColors.mainText,
           fontSize: AppFontSize.s20,
           fontWeight: AppFontWeight.bold,
@@ -78,16 +78,20 @@ class DocumentDetailsScreen extends StatelessWidget {
                       documents: _requestDocuments,
                       statuses: _requestDocumentStatuses,
                     ),
-                    if (state == DocumentDetailsState.completed) ...[
-                      SizedBox(height: AppHeight.h16),
-                      const AttachedDocumentsCard(),
-                    ],
+                    // if (state == DocumentDetailsState.completed) ...[
+                    //   SizedBox(height: AppHeight.h16),
+                    //   const AttachedDocumentsCard(),
+                    // ],
+                    SizedBox(height: AppHeight.h16),
+                    const AttachedDocumentsCard(),
+                    SizedBox(height: AppHeight.h16),
+                    DocumentCompleteRequirementsButton(onPressed: () {}),
                   ],
                 ),
               ),
             ),
-            if (state == DocumentDetailsState.waitingDocuments)
-              DocumentCompleteRequirementsButton(onPressed: () {}),
+            // if (state == DocumentDetailsState.waitingDocuments)
+            //   DocumentCompleteRequirementsButton(onPressed: () {}),
           ],
         ),
       ),

@@ -76,19 +76,20 @@ class OrderCard extends StatelessWidget {
                     ),
                     if (showFooter)
                       Row(
+
                         children: [
                           Icon(
                             Icons.person_outline_rounded,
                             color: AppColors.secondaryText,
-                            size: AppSize.s18,
+                            size: AppSize.s16,
                           ),
                           SizedBox(width: AppWidth.w4),
                           Expanded(
                             child: BodyTitle(
-                              text: 'المستشار: ${order.consultant}',
-                              color: AppColors.secondaryText,
-                              fontSize: AppFontSize.s11,
-                              fontWeight: AppFontWeight.regular,
+                              text: 'المستشار : ${order.consultant}',
+                              color: AppColors.primaryDark,
+                              fontSize: AppFontSize.s10,
+                              fontWeight: AppFontWeight.medium,
                               maxLines: 1,
                             ),
                           ),
@@ -122,7 +123,7 @@ class _OrderInformation extends StatelessWidget {
       SectionTitle(
         text: order.title,
         color: AppColors.primaryDark,
-        fontSize: AppFontSize.s15,
+        fontSize: AppFontSize.s14,
         fontWeight: AppFontWeight.bold,
         maxLines: 1,
       ),
@@ -130,16 +131,17 @@ class _OrderInformation extends StatelessWidget {
       BodyTitle(
         text: order.number,
         color: AppColors.secondaryText,
-        fontSize: AppFontSize.s11,
-        fontWeight: AppFontWeight.regular,
+        fontSize: AppFontSize.s12,
+        fontWeight: AppFontWeight.medium,
       ),
       SizedBox(height: AppHeight.h5),
       Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
             Icons.calendar_today_outlined,
             color: AppColors.secondaryText,
-            size: AppSize.s14,
+            size: AppSize.s12,
           ),
           SizedBox(width: AppWidth.w4),
           BodyTitle(
@@ -200,7 +202,7 @@ class _DetailsButton extends StatelessWidget {
             ),
             SizedBox(width: AppWidth.w6),
             Icon(
-              Icons.arrow_back_rounded,
+              Icons.arrow_forward_rounded,
               color: AppColors.primaryDark,
               size: AppSize.s17,
             ),
