@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
-import '../../../widgets/status_pill.dart';
+import '../../../widgets/status_badge.dart';
 import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
 import '../models/document_details_models.dart';
@@ -128,13 +128,12 @@ class _DocumentRow extends StatelessWidget {
           ),
         ),
         Column(
-
           children: [
             if (status != null) ...[
-              Pill(
+              StatusBadge.custom(
                 label: status!.label,
-                background: status!.backgroundColor,
-                foreground: status!.foregroundColor,
+                backgroundColor: status!.backgroundColor,
+                color: status!.foregroundColor,
               ),
               SizedBox(height: AppHeight.h4),
             ],

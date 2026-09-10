@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
-import '../../../widgets/status_pill.dart';
+import '../../../widgets/status_badge.dart';
 import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
 import '../models/document_details_models.dart';
@@ -72,10 +72,10 @@ class DocumentRequestHeaderCard extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Pill(
+            StatusBadge.custom(
               label: _label,
-              background: _backgroundColor,
-              foreground: _foregroundColor,
+              backgroundColor: _backgroundColor,
+              color: _foregroundColor,
             ),
             SizedBox(height: AppHeight.h14),
             Container(
