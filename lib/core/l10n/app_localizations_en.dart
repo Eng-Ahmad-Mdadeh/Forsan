@@ -4401,4 +4401,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get create_order_expatriate_services => 'Expatriate services';
+
+  @override
+  String get create_order_help_title => 'Need help?';
+
+  @override
+  String get create_order_help_description =>
+      'Our team is available to help you choose the right service';
 }

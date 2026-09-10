@@ -575,5 +575,7 @@
   "create_order_company_management": "Company management",
   "create_order_property": "Property and real estate",
   "create_order_investment": "Investment (coming soon)",
-  "create_order_expatriate_services": "Expatriate services"
+  "create_order_expatriate_services": "Expatriate services",
+  "create_order_help_title": "Need help?",
+  "create_order_help_description": "Our team is available to help you choose the right service"
 }

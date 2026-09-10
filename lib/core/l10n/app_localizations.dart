@@ -7804,6 +7804,10 @@ abstract class AppLocalizations {
   String get create_order_investment;
 
   String get create_order_expatriate_services;
+
+  String get create_order_help_title;
+
+  String get create_order_help_description;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

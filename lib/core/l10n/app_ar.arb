@@ -575,5 +575,7 @@
   "create_order_company_management": "إدارة الشركات",
   "create_order_property": "الملكية والعقارات",
   "create_order_investment": "الاستثمار (قريباً)",
-  "create_order_expatriate_services": "خدمات المغتربين"
+  "create_order_expatriate_services": "خدمات المغتربين",
+  "create_order_help_title": "تحتاج مساعدة؟",
+  "create_order_help_description": "فريقنا متاح لمساعدتك في اختيار نوع الخدمة المناسبة"
 }

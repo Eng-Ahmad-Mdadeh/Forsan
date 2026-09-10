@@ -4374,4 +4374,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get create_order_expatriate_services => 'خدمات المغتربين';
+
+  @override
+  String get create_order_help_title => 'تحتاج مساعدة؟';
+
+  @override
+  String get create_order_help_description =>
+      'فريقنا متاح لمساعدتك في اختيار نوع الخدمة المناسبة';
 }
