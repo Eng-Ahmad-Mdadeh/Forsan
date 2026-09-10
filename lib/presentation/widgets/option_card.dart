@@ -1,9 +1,12 @@
 import 'package:forsan/core/resources/app_assets.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
+import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/routes/app_routes_imports.dart';
 import 'package:forsan/presentation/widgets/custom_radio_tile.dart';
 import 'package:forsan/presentation/widgets/image_view.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
+import 'package:forsan/presentation/widgets/text/section_title.dart';
 
 class OptionCard extends StatelessWidget {
   const OptionCard({

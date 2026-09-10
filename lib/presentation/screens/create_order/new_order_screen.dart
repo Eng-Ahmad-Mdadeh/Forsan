@@ -354,7 +354,7 @@ class _ApplicantStep extends StatelessWidget {
             ),
             SizedBox(height: AppHeight.h12),
           ],
-        ),
+        ],
       ),
     );
   }
