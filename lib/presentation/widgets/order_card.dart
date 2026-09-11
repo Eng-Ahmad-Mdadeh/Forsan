@@ -30,7 +30,7 @@ class OrderCard extends StatelessWidget {
     textDirection: TextDirection.rtl,
     child: Semantics(
       container: true,
-      label: '${order.title}، ${order.number}، ${order.status.label}',
+      label: '${order.title}، ${order.number}، ${order.status}',
       child: Container(
         height: showFooter ? AppHeight.h150 : AppHeight.h120,
         clipBehavior: Clip.antiAlias,
@@ -49,7 +49,10 @@ class OrderCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(width: AppWidth.w6, color: order.status.color),
+            Container(
+              width: AppWidth.w6,
+              color: StatusBadge.colorFor(order.status),
+            ),
             Expanded(
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(
@@ -159,7 +162,7 @@ class _OrderInformation extends StatelessWidget {
 class _OrderState extends StatelessWidget {
   const _OrderState({required this.status});
 
-  final OrderStatus status;
+  final String status;
 
   @override
   Widget build(BuildContext context) => Column(

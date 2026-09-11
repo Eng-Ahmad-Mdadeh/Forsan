@@ -4,19 +4,39 @@ import '../../core/resources/app_colors.dart';
 import '../../core/resources/app_fonts.dart';
 import '../../core/resources/app_values.dart';
 import 'text/body_title.dart';
-import '../screens/orders/models/order_item.dart';
 
 class StatusBadge extends StatelessWidget {
   StatusBadge({
     super.key,
-    required OrderStatus status,
+    required String status,
     this.showOuterCircle = true,
     this.fontSize,
     this.fontWeight,
   })
-    : label = status.label,
-      color = status.color,
-      backgroundColor = status.backgroundColor;
+    : label = status,
+      color = colorFor(status),
+      backgroundColor = _backgroundColorFor(status);
+
+  static const waitingDocuments = 'بانتظار المستندات';
+  static const underReview = 'قيد المراجعة';
+  static const inProgress = 'قيد التنفيذ';
+  static const completed = 'مكتمل';
+
+  static Color colorFor(String status) => switch (status) {
+    waitingDocuments => AppColors.secondary,
+    underReview => AppColors.orange,
+    inProgress => AppColors.primary,
+    completed => AppColors.darkGreen,
+    _ => AppColors.greyText,
+  };
+
+  static Color _backgroundColorFor(String status) => switch (status) {
+    waitingDocuments => AppColors.secondaryLight,
+    underReview => AppColors.lightOrange,
+    inProgress => AppColors.lightPrimary,
+    completed => AppColors.lightGreen,
+    _ => AppColors.lightGrey,
+  };
 
   const StatusBadge.custom({
     super.key,

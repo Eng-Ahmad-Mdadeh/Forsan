@@ -7,6 +7,7 @@ import '../../../core/resources/app_fonts.dart';
 import '../../../core/resources/app_values.dart';
 import '../../cubit/orders/orders_cubit.dart';
 import '../../widgets/custom_app_bar.dart';
+import '../../widgets/status_badge.dart';
 import '../../widgets/text/section_title.dart';
 import 'models/order_item.dart';
 import 'widgets/orders_list.dart';
@@ -36,28 +37,28 @@ class _OrdersViewState extends State<_OrdersView> {
       number: 'FR-2026-00125925',
       date: '20/05/2026',
       consultant: 'أحمد إبراهيم',
-      status: OrderStatus.waitingDocuments,
+      status: StatusBadge.waitingDocuments,
     ),
     OrderItem(
       title: 'تأسيس شركة لشخص واحد',
       number: 'FR-2026-00125925',
       date: '20/05/2026',
       consultant: 'أحمد إبراهيم',
-      status: OrderStatus.underReview,
+      status: StatusBadge.underReview,
     ),
     OrderItem(
       title: 'تأسيس شركة لشخص واحد',
       number: 'FR-2026-00125925',
       date: '20/05/2026',
       consultant: 'أحمد إبراهيم',
-      status: OrderStatus.inProgress,
+      status: StatusBadge.inProgress,
     ),
     OrderItem(
       title: 'تأسيس شركة لشخص واحد',
       number: 'FR-2026-00125925',
       date: '20/05/2026',
       consultant: 'أحمد إبراهيم',
-      status: OrderStatus.completed,
+      status: StatusBadge.completed,
     ),
   ];
 
@@ -65,8 +66,8 @@ class _OrdersViewState extends State<_OrdersView> {
 
   List<OrderItem> _visibleOrders(int selectedStatus) => _orders.where((order) {
     final matchesStatus = switch (selectedStatus) {
-      1 => order.status == OrderStatus.underReview,
-      2 => order.status == OrderStatus.waitingDocuments,
+      1 => order.status == StatusBadge.underReview,
+      2 => order.status == StatusBadge.waitingDocuments,
       _ => true,
     };
     final normalizedQuery = _query.trim().toLowerCase();

@@ -5,6 +5,7 @@ import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/app_fonts.dart';
 import '../../../core/resources/app_values.dart';
 import '../../widgets/custom_app_bar.dart';
+import '../../widgets/status_badge.dart';
 import '../../widgets/text/section_title.dart';
 import '../document_details/document_details_screen.dart';
 import '../orders/models/order_item.dart';
@@ -19,7 +20,7 @@ class DocumentsScreen extends StatelessWidget {
       number: 'FR-2026-00125925',
       date: '20/05/2026',
       consultant: 'أحمد إبراهيم',
-      status: OrderStatus.waitingDocuments,
+      status: StatusBadge.waitingDocuments,
     ),
   ];
 

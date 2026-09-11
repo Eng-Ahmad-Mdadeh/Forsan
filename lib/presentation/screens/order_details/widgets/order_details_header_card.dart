@@ -19,7 +19,7 @@ class OrderDetailsHeaderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Semantics(
     container: true,
-    label: '${order.title}، ${order.number}، ${order.status.label}',
+    label: '${order.title}، ${order.number}، ${order.status}',
     child: SectionCard(
       borderRadius:BorderRadius.circular(AppRadius.r10),
       padding: EdgeInsets.symmetric(
