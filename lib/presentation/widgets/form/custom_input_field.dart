@@ -93,9 +93,9 @@ class CustomInputField extends StatelessWidget {
                 TextSpan(
                   text: title,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontSize: AppFontSize.s15,
-                    fontWeight: AppFontWeight.bold,
-                    color: AppColors.primaryDark,
+                    fontSize: AppFontSize.s14,
+                    fontWeight: AppFontWeight.medium,
+                    color: AppColors.mainText,
                   ),
                 ),
                 if (req)

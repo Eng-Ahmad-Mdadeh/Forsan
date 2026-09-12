@@ -51,10 +51,10 @@ class SectionCard extends StatelessWidget {
           child: Card(
             margin: margin,
             color: backgroundColor ?? AppColors.white,
-            shadowColor: showShadow! ? AppColors.lightGrey.withAlpha(590) : AppColors.none,
+            shadowColor: showShadow! ? AppColors.lightGrey.withAlpha(300) : AppColors.none,
             elevation: 5,
             shape: RoundedRectangleBorder(
-              side: showBorder! ? const BorderSide(color: AppColors.greyDivider, width: 1.5) : BorderSide.none,
+              side: showBorder! ?  BorderSide(color: AppColors.greyDivider.withOpacity(0.2), width: 1) : BorderSide.none,
               borderRadius: borderRadius ?? BorderRadius.circular(AppRadius.r25),
             ),
             child: Padding(

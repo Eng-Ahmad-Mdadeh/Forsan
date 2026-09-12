@@ -90,7 +90,7 @@ class _OrdersViewState extends State<_OrdersView> {
       titleWidget: SectionTitle(
         text: 'طلباتي',
         color: AppColors.mainText,
-        fontSize: AppFontSize.s24,
+        fontSize: AppFontSize.s20,
         fontWeight: AppFontWeight.bold,
       ),
       customActions: [
@@ -115,7 +115,7 @@ class _OrdersViewState extends State<_OrdersView> {
               onFilterPressed: () {},
             ),
           ),
-          SizedBox(height: AppHeight.h16),
+          SizedBox(height: AppHeight.h10),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
             child: const OrdersStatusTabs(),

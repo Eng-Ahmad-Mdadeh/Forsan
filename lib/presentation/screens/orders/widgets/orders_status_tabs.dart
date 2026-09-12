@@ -32,7 +32,7 @@ class OrdersStatusTabs extends StatelessWidget {
       unselectedTextColor: AppColors.mainText,
       fontWeight: AppFontWeight.medium,
       backgroundColor: Colors.transparent,
-      minTabWidth: AppWidth.w98,
+      minTabWidth: AppWidth.w90,
       showTabShadow: false,
       showTapOverlay: false,
       contentPadding: EdgeInsets.zero,

@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:forsan/core/routes/app_routes.dart';
 
@@ -44,7 +45,7 @@ class QuickActionsSection extends StatelessWidget {
                 key: const Key('support-action'),
                 label: 'الدعم',
                 semanticLabel: 'التواصل مع الدعم',
-                icon: Icons.forum_outlined,
+                icon: FluentIcons.chat_multiple_24_filled,
                 color: AppColors.homeSupportAction,
                 onPressed: () {},
               ),

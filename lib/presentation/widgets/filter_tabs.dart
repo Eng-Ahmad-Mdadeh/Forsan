@@ -106,7 +106,7 @@ class _FilterTab extends StatelessWidget {
         maxWidth: AppWidth.w200,
         minWidth: minWidth ?? AppWidth.w115,
       ),
-      height: AppHeight.h40,
+      height: AppHeight.h50,
       padding: EdgeInsetsDirectional.symmetric(horizontal: AppPaddingWidth.p13),
       decoration: BoxDecoration(
         color: selected ? AppColors.primary : AppColors.white,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
@@ -12,7 +11,7 @@ class HomeStatisticsSection extends StatelessWidget {
     _StatisticItem(
       title: 'الطلبات النشطة',
       value: '01',
-      icon: Icons.account_tree_outlined,
+      icon:Icons.account_tree_outlined,
     ),
     _StatisticItem(
       title: 'إجراءات مطلوبة',
@@ -71,7 +70,7 @@ class _StatisticCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.r16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.homeSoftShadow,
+            color: AppColors.homeSoftShadow.withOpacity(0.05),
             blurRadius: AppRadius.r10,
             offset: Offset(0, AppHeight.h4),
           ),

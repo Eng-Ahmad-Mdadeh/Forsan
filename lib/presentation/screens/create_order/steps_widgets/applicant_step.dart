@@ -6,6 +6,7 @@ import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class ApplicantStep extends StatelessWidget {
   const ApplicantStep({super.key});
@@ -23,25 +24,25 @@ class ApplicantStep extends StatelessWidget {
           Row(
             children: [
               Icon(
-                Icons.badge_outlined,
-                size: AppSize.s18,
+                Iconsax.personalcard_outline,
+                size: AppSize.s16,
                 color: AppColors.secondary,
               ),
-              SizedBox(width: AppWidth.w6),
+              SizedBox(width: AppWidth.w4),
               Expanded(
                 child: SectionTitle(
                   text: context.loc.new_order_contact_identity_title,
-                  color: AppColors.primary,
-                  fontSize: AppFontSize.s18,
+                  color: AppColors.primaryDark,
+                  fontSize: AppFontSize.s14,
                 ),
               ),
             ],
           ),
-          SizedBox(height: AppHeight.h6),
+          SizedBox(height: AppHeight.h8),
           BodyTitle(
             text: context.loc.new_order_contact_identity_description,
-            color: AppColors.greyText,
-            fontSize: AppFontSize.s13,
+            color: AppColors.secondaryText,
+            fontSize: AppFontSize.s12,
             fontWeight: AppFontWeight.regular,
             maxLines: 2,
           ),

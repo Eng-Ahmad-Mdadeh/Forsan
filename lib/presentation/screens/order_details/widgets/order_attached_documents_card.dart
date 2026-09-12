@@ -21,24 +21,25 @@ class OrderAttachedDocumentsCard extends StatelessWidget {
       label: context.loc.order_attached_documents,
       child: SectionCard(
         showBorder: true,
-        borderRadius: BorderRadius.circular(AppRadius.r17),
+        borderRadius: BorderRadius.circular(AppRadius.r8),
         padding: EdgeInsets.all(AppPaddingWidth.p16),
+        margin: EdgeInsets.all(AppPaddingWidth.p8),
         child: Column(
           children: [
             Row(
               children: [
                 Container(
-                  width: AppWidth.w42,
-                  height: AppHeight.h42,
+                  width: AppWidth.w30,
+                  height: AppHeight.h30,
                   decoration: BoxDecoration(
                     color: AppColors.light,
-                    borderRadius: BorderRadius.circular(AppRadius.r10),
+                    borderRadius: BorderRadius.circular(AppRadius.r8),
                   ),
                   alignment: Alignment.center,
                   child: Icon(
                     Icons.description_outlined,
-                    color: AppColors.primary,
-                    size: AppSize.s27,
+                    color: AppColors.primaryDark,
+                    size: AppSize.s22,
                   ),
                 ),
                 SizedBox(width: AppWidth.w10),

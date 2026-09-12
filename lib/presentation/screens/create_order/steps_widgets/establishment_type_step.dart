@@ -3,7 +3,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/establishment_type_card.dart';
+import 'package:forsan/presentation/screens/create_order/steps_widgets/order_option_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
@@ -98,24 +98,24 @@ class EstablishmentTypeStep extends StatelessWidget {
             children: [
               Icon(
                 Icons.grid_view_rounded,
-                size: AppSize.s17,
+                size: AppSize.s16,
                 color: AppColors.secondary,
               ),
-              SizedBox(width: AppWidth.w6),
+              SizedBox(width: AppWidth.w4),
               Expanded(
                 child: SectionTitle(
                   text: context.loc.new_order_establishment_title,
-                  color: AppColors.primary,
-                  fontSize: AppFontSize.s18,
+                  color: AppColors.primaryDark,
+                  fontSize: AppFontSize.s14,
                 ),
               ),
             ],
           ),
-          SizedBox(height: AppHeight.h4),
+          SizedBox(height: AppHeight.h8),
           BodyTitle(
             text: context.loc.new_order_establishment_description,
-            color: AppColors.greyText,
-            fontSize: AppFontSize.s13,
+            color: AppColors.secondaryText,
+            fontSize: AppFontSize.s12,
             fontWeight: AppFontWeight.regular,
             maxLines: 2,
           ),

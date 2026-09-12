@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:forsan/presentation/screens/order_details/widgets/order_details_header_card.dart';
 import '../../../core/extension/localization_extension.dart';
@@ -32,7 +33,7 @@ class OrdersDetailsScreen extends StatelessWidget {
       titleWidget: SectionTitle(
         text: context.loc.order_details,
         color: AppColors.mainText,
-        fontSize: AppFontSize.s20,
+        fontSize: AppFontSize.s18,
         fontWeight: AppFontWeight.bold,
       ),
     ),
@@ -102,10 +103,11 @@ class OrdersDetailsScreen extends StatelessWidget {
                     color: AppColors.primary,
                     borderRadius: AppRadius.r12,
                     onPressed: () {},
+                    padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p14),
                     child: Row(
                       children: [
                         Icon(
-                          Icons.chat_bubble_outline_rounded,
+                          FluentIcons.chat_multiple_24_filled,
                           color: AppColors.white,
                           size: AppSize.s15,
                         ),

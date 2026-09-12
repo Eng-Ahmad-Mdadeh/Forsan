@@ -5,7 +5,6 @@ import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class CreateOrderHelpCard extends StatelessWidget {
   const CreateOrderHelpCard({super.key, this.onTap});

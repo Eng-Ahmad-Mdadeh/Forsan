@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 import '../../../../core/resources/app_assets.dart';
 import '../../../../core/resources/app_colors.dart';
@@ -92,7 +93,7 @@ class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
               borderRadius: BorderRadius.circular(AppRadius.r8),
             ),
             child: Icon(
-              Icons.notifications_none_rounded,
+              Iconsax.notification_outline,
               color: AppColors.lightBlack,
               size: AppSize.s24,
             ),

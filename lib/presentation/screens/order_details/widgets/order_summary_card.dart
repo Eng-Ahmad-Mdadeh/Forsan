@@ -33,17 +33,17 @@ class OrderSummaryCard extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(AppRadius.r17),
+          borderRadius: BorderRadius.circular(AppRadius.r12),
           boxShadow: [
             BoxShadow(
-              color: AppColors.homeSoftShadow,
+              color: AppColors.homeSoftShadow.withOpacity(0.05),
               blurRadius: AppRadius.r7,
               offset: Offset(0, AppHeight.h2),
             ),
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(AppRadius.r17),
+          borderRadius: BorderRadius.circular(AppRadius.r12),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -110,20 +110,20 @@ class _OrderSummaryHeader extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     height: AppHeight.h55,
     color: AppColors.primary,
-    padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
+    padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p18),
     child: Row(
       children: [
         SectionTitle(
           text: context.loc.order_summary,
           color: AppColors.white,
-          fontSize: AppFontSize.s18,
+          fontSize: AppFontSize.s16,
           fontWeight: AppFontWeight.bold,
         ),
         const Spacer(),
         Icon(
           Icons.bookmark_rounded,
           color: AppColors.white,
-          size: AppSize.s20,
+          size: AppSize.s18,
         ),
       ],
     ),
@@ -149,10 +149,10 @@ class _OrderSummaryRow extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     children: [
       SizedBox(
-        height: AppHeight.h55,
+        height: AppHeight.h50,
         child: Row(
           children: [
-            Icon(icon, color: AppColors.secondary, size: AppSize.s20),
+            Icon(icon, color: AppColors.secondary, size: AppSize.s18),
             SizedBox(width: AppWidth.w10),
             BodyTitle(
               text: label,
@@ -170,7 +170,7 @@ class _OrderSummaryRow extends StatelessWidget {
                       text: value,
                       textAlign: TextAlign.end,
                       color: AppColors.blackCow,
-                      fontSize: AppFontSize.s13,
+                      fontSize: AppFontSize.s12,
                       fontWeight: AppFontWeight.bold,
                       maxLines: 2,
                     ),

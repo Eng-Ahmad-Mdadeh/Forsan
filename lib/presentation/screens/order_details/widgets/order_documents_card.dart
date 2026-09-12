@@ -43,10 +43,10 @@ class OrderDocumentsCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(AppRadius.r8),
-            border: Border.all(color: AppColors.lightGrey),
+            border: Border.all(color: AppColors.greyDivider.withOpacity(0.2)),
             boxShadow: [
               BoxShadow(
-                color: AppColors.homeSoftShadow,
+                color: AppColors.homeSoftShadow.withOpacity(0.03),
                 blurRadius: AppRadius.r7,
                 offset: Offset(0, AppHeight.h2),
               ),
@@ -88,13 +88,13 @@ class _DocumentsHeader extends StatelessWidget {
         child: Icon(
           Icons.description_outlined,
           size: AppSize.s20,
-          color: AppColors.homeSupportAction,
+          color: AppColors.primaryDark,
         ),
       ),
       SizedBox(width: AppWidth.w8),
       SectionTitle(
         text: title,
-        color: AppColors.mainText,
+        color: AppColors.secondaryText,
         fontSize: AppFontSize.s15,
         fontWeight: AppFontWeight.bold,
       ),

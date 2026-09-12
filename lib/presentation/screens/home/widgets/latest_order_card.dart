@@ -18,19 +18,19 @@ class LatestOrderCard extends StatelessWidget {
       container: true,
       label: 'تفاصيل الطلب FR-2026-00125925، نسبة الإنجاز 50 بالمائة',
       child: Container(
-        height: AppHeight.h170,
+        height: AppHeight.h160,
         padding: EdgeInsetsDirectional.only(
           start: AppPaddingWidth.p13,
           end: AppPaddingWidth.p16,
-          top: AppPaddingHeight.p17,
-          bottom: AppPaddingHeight.p10,
+          top: AppPaddingHeight.p15,
+
         ),
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(AppRadius.r16),
           boxShadow: [
             BoxShadow(
-              color: AppColors.homeSoftShadow,
+              color: AppColors.homeSoftShadow.withOpacity(0.05),
               blurRadius: AppRadius.r10,
               offset: Offset(0, AppHeight.h4),
             ),
@@ -61,7 +61,7 @@ class _OrderDetails extends StatelessWidget {
         children: [
           Container(
             width: AppWidth.w16,
-            height: AppWidth.w16,
+            height: AppHeight.h16,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
               color: AppColors.secondaryLightActive,
@@ -69,7 +69,7 @@ class _OrderDetails extends StatelessWidget {
             ),
             child: Container(
               width: AppWidth.w10,
-              height: AppWidth.w10,
+              height: AppHeight.h10,
               decoration: const BoxDecoration(
                 color: AppColors.secondaryNormal,
                 shape: BoxShape.circle,
@@ -127,14 +127,12 @@ class _OrderDetails extends StatelessWidget {
             color: AppColors.secondaryText,
           ),
           SizedBox(width: AppWidth.w2),
-          Expanded(
-            child: BodyTitle(
-              text: 'المستشار: أحمد إبراهيم',
-              color: AppColors.primaryDark,
-              fontSize: AppFontSize.s11,
-              fontWeight: AppFontWeight.medium,
-              maxLines: 1,
-            ),
+          BodyTitle(
+            text: 'المستشار: أحمد إبراهيم',
+            color: AppColors.primaryDark,
+            fontSize: AppFontSize.s11,
+            fontWeight: AppFontWeight.medium,
+            maxLines: 1,
           ),
         ],
       ),

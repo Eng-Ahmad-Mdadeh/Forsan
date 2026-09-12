@@ -56,10 +56,10 @@ class OrderStagesCard extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: AppColors.white,
-            borderRadius: BorderRadius.circular(AppRadius.r17),
+            borderRadius: BorderRadius.circular(AppRadius.r12),
             boxShadow: [
               BoxShadow(
-                color: AppColors.homeSoftShadow,
+                color: AppColors.homeSoftShadow.withOpacity(0.06),
                 blurRadius: AppRadius.r7,
                 offset: Offset(0, AppHeight.h2),
               ),
@@ -116,14 +116,6 @@ class _OrderStagesHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
     children: [
-      Expanded(
-        child: SectionTitle(
-          text: title,
-          color: AppColors.mainText,
-          fontSize: AppFontSize.s16,
-          fontWeight: AppFontWeight.bold,
-        ),
-      ),
       Container(
         width: AppWidth.w30,
         height: AppHeight.h30,
@@ -134,10 +126,20 @@ class _OrderStagesHeader extends StatelessWidget {
         alignment: Alignment.center,
         child: Icon(
           Icons.info_outline_rounded,
-          size: AppWidth.w22,
+          size: AppSize.s20,
           color: AppColors.secondaryText,
         ),
       ),
+      SizedBox(width: AppWidth.w8),
+      Expanded(
+        child: SectionTitle(
+          text: title,
+          color: AppColors.mainText,
+          fontSize: AppFontSize.s15,
+          fontWeight: AppFontWeight.bold,
+        ),
+      ),
+
     ],
   );
 }
@@ -211,7 +213,6 @@ class _OrderStageRow extends StatelessWidget {
                         color: AppColors.mainText,
                         fontSize: AppFontSize.s13,
                         fontWeight: AppFontWeight.bold,
-                        height: 1.35,
                       ),
                     ),
                     if (stage.date != null) ...[
@@ -220,7 +221,7 @@ class _OrderStageRow extends StatelessWidget {
                         text: stage.date!,
                         textAlign: TextAlign.right,
                         color: AppColors.secondaryNormal,
-                        fontSize: AppFontSize.s11,
+                        fontSize: AppFontSize.s12,
                         fontWeight: AppFontWeight.regular,
                         height: 1.35,
                       ),

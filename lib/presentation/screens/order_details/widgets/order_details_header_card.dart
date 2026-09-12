@@ -36,18 +36,18 @@ class OrderDetailsHeaderCard extends StatelessWidget {
                 SectionTitle(
                   text: order.title,
                   color: AppColors.primaryDark,
-                  fontSize: AppFontSize.s15,
+                  fontSize: AppFontSize.s14,
                   fontWeight: AppFontWeight.bold,
                   maxLines: 1,
                 ),
-                SizedBox(height: AppHeight.h6),
+                SizedBox(height: AppHeight.h4),
                 BodyTitle(
                   text: order.number,
                   color: AppColors.secondaryText,
-                  fontSize: AppFontSize.s11,
-                  fontWeight: AppFontWeight.regular,
+                  fontSize: AppFontSize.s12,
+                  fontWeight: AppFontWeight.medium,
                 ),
-                SizedBox(height: AppHeight.h14),
+                SizedBox(height: AppHeight.h12),
                 Row(
                   children: [
                     Icon(
