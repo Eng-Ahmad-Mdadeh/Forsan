@@ -6,6 +6,7 @@ import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class ProposedCompanyInfoStep extends StatelessWidget {
   const ProposedCompanyInfoStep({super.key});
@@ -25,16 +26,16 @@ class ProposedCompanyInfoStep extends StatelessWidget {
           Row(
             children: [
               Icon(
-                Icons.badge_outlined,
+                Iconsax.personalcard_outline,
+                size: AppSize.s16,
                 color: AppColors.secondary,
-                size: AppSize.s18,
               ),
-              SizedBox(width: AppWidth.w5),
+              SizedBox(width: AppWidth.w4),
               Expanded(
                 child: SectionTitle(
                   text: context.loc.new_order_proposed_company_info_title,
                   color: AppColors.primaryDark,
-                  fontSize: AppFontSize.s18,
+                  fontSize: AppFontSize.s14,
                 ),
               ),
             ],

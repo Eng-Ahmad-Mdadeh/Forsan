@@ -11,6 +11,7 @@ import 'package:forsan/presentation/widgets/custom_check_box.dart';
 import 'package:forsan/presentation/widgets/custom_text_from_field.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
+import 'package:forsan/presentation/widgets/text/section_title.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
@@ -23,7 +24,7 @@ class ApplicantStep extends StatefulWidget {
 
 class _ApplicantStepState extends State<ApplicantStep> {
   Country _selectedCountry = Country.parse('SY');
-  bool _hasRepresentativeInSyria = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,32 @@ class _ApplicantStepState extends State<ApplicantStep> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Row(
+            children: [
+              Icon(
+                Iconsax.personalcard_outline,
+                size: AppSize.s16,
+                color: AppColors.secondary,
+              ),
+              SizedBox(width: AppWidth.w4),
+              Expanded(
+                child: SectionTitle(
+                  text: context.loc.new_order_contact_identity_title,
+                  color: AppColors.primaryDark,
+                  fontSize: AppFontSize.s14,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: AppHeight.h8),
+          BodyTitle(
+            text: context.loc.new_order_contact_identity_description,
+            color: AppColors.secondaryText,
+            fontSize: AppFontSize.s12,
+            fontWeight: AppFontWeight.regular,
+            maxLines: 2,
+          ),
+          SizedBox(height: AppHeight.h8),
           CustomInputField(
             title: context.loc.new_order_full_name,
             hintText: context.loc.new_order_full_name_hint,
