@@ -67,7 +67,7 @@ class CustomDropDownWidget extends StatelessWidget {
                 decoration: CustomDropdownDecoration(
                   hintStyle: Theme.of(
                     context,
-                  ).textTheme.bodyMedium!.copyWith(color: AppColors.grey, fontWeight: AppFontWeight.regular),
+                  ).textTheme.bodyMedium!.copyWith(color: AppColors.grey, fontWeight: AppFontWeight.regular,fontSize:AppSize.s16),
                   listItemStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: AppColors.blackCow,
                     fontSize: AppFontSize.s14,

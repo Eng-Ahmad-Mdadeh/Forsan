@@ -1,4 +1,5 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
@@ -9,6 +10,8 @@ import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
 import 'package:forsan/presentation/widgets/custom_text_from_field.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
+import 'package:icons_plus/icons_plus.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class ApplicantStep extends StatefulWidget {
   const ApplicantStep({super.key});
@@ -33,25 +36,28 @@ class _ApplicantStepState extends State<ApplicantStep> {
           CustomInputField(
             title: context.loc.new_order_full_name,
             hintText: context.loc.new_order_full_name_hint,
+            fontSize: AppFontSize.s16,
             textInputType: TextInputType.name,
             backgroundColor: AppColors.white,
           ),
-          SizedBox(height: AppHeight.h10),
+          SizedBox(height: AppHeight.h8),
           CustomInputField(
             title: context.loc.new_order_father_name,
             hintText: context.loc.new_order_father_name_hint,
+            fontSize: AppFontSize.s16,
             backgroundColor: AppColors.white,
           ),
-          SizedBox(height: AppHeight.h10),
+          SizedBox(height: AppHeight.h8),
           _buildDropdown(
             context,
             label: context.loc.new_order_nationality,
             items: [context.loc.new_order_male, context.loc.new_order_female],
           ),
-          SizedBox(height: AppHeight.h10),
+          SizedBox(height: AppHeight.h8),
           CustomInputField(
             title: context.loc.new_order_passport_number_optional,
             hintText: context.loc.new_order_passport_number_hint,
+            fontSize: AppFontSize.s16,
             backgroundColor: AppColors.white,
           ),
           SizedBox(height: AppHeight.h10),
@@ -59,33 +65,27 @@ class _ApplicantStepState extends State<ApplicantStep> {
             title: context.loc.new_order_national_id,
             hintText: context.loc.new_order_national_id_hint,
             textInputType: TextInputType.number,
+            fontSize: AppFontSize.s16,
             backgroundColor: AppColors.white,
           ),
-          SizedBox(height: AppHeight.h10),
-          _buildDropdown(
-            context,
-            label: context.loc.new_order_nationality,
-            items: [
-              context.loc.new_order_syrian_nationality,
-              context.loc.new_order_non_syrian_nationality,
-            ],
-          ),
-          SizedBox(height: AppHeight.h10),
+
+          SizedBox(height: AppHeight.h8),
           _buildPhoneField(
             context,
             label: context.loc.new_order_mobile_number,
             hint: context.loc.new_order_mobile_number_hint,
           ),
-          SizedBox(height: AppHeight.h10),
+          SizedBox(height: AppHeight.h8),
           _buildPhoneField(
             context,
             label: context.loc.new_order_whatsapp_number,
             hint: context.loc.new_order_whatsapp_number_hint,
           ),
-          SizedBox(height: AppHeight.h10),
+          SizedBox(height: AppHeight.h8),
           CustomInputField(
             title: context.loc.new_order_email,
             hintText: context.loc.new_order_email_hint,
+            fontSize: AppFontSize.s16,
             textInputType: TextInputType.emailAddress,
             backgroundColor: AppColors.white,
           ),
@@ -104,7 +104,7 @@ class _ApplicantStepState extends State<ApplicantStep> {
       children: [
         BodyTitle(
           text: label,
-          textAlign: TextAlign.end,
+          textAlign: TextAlign.start,
           color: AppColors.mainText,
           fontSize: AppFontSize.s14,
           fontWeight: AppFontWeight.medium,
@@ -136,7 +136,7 @@ class _ApplicantStepState extends State<ApplicantStep> {
       children: [
         BodyTitle(
           text: label,
-          textAlign: TextAlign.end,
+          textAlign: TextAlign.start,
           fontSize: AppFontSize.s14,
           fontWeight: AppFontWeight.medium,
           color: AppColors.mainText,
@@ -151,7 +151,7 @@ class _ApplicantStepState extends State<ApplicantStep> {
             textAlignVertical: TextAlignVertical.center,
             cursorColor: AppColors.primary,
             cursorHeight: AppHeight.h20,
-            fontSize: AppFontSize.s14,
+            fontSize: AppFontSize.s16,
             hintText: hint,
             hintColor: AppColors.grey,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -164,8 +164,8 @@ class _ApplicantStepState extends State<ApplicantStep> {
               onTap: _showCountryPicker,
             ),
             suffixIcon: Icon(
-              Icons.phone,
-              size: AppFontSize.s20,
+              LucideIcons.phone,
+              size: AppFontSize.s16,
               color: AppColors.primaryDark,
             ),
             filled: true,
