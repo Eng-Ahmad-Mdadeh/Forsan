@@ -4421,6 +4421,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get new_order_step_company_info => 'Company details';
 
   @override
+  String get new_order_step_partners => 'Partners';
+
+  @override
+  String get new_order_step_activity => 'Activity';
+
+  @override
   String get new_order_establishment_title => 'Select the establishment type';
 
   @override
@@ -4500,6 +4506,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get new_order_proposed_company_info_title =>
       'Proposed company information';
+
+  @override
+  String get new_order_ownership_structure_title => 'Ownership structure';
+
+  @override
+  String get new_order_ownership_structure_description =>
+      'Enter the preliminary information about the owner or partners. Legal details can be completed after the request is reviewed.';
 
   @override
   String get new_order_proposed_company_info_description =>

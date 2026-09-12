@@ -16,29 +16,41 @@ class OrderStepIndicator extends StatelessWidget {
       context.loc.new_order_step_establishment,
       context.loc.new_order_step_applicant,
       context.loc.new_order_step_company_info,
+      context.loc.new_order_step_partners,
+      context.loc.new_order_step_activity,
     ];
+    final visibleStart = (currentStep - 1).clamp(0, labels.length - 3) as int;
+    final visibleLabels = labels.sublist(visibleStart, visibleStart + 3);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: List.generate(labels.length * 2 - 1, (index) {
-        if (index.isOdd) {
-          final connectorIndex = index ~/ 2;
-          return Expanded(
-            child: _StepConnector(
-              startComplete: currentStep >= connectorIndex,
-              endComplete: currentStep > connectorIndex,
+      children: [
+        if (visibleStart > 0)
+          Expanded(
+            child: _EdgeConnector(complete: currentStep > visibleStart - 1),
+          ),
+        for (var index = 0; index < visibleLabels.length; index++) ...[
+          _StepNode(
+            number: visibleStart + index + 1,
+            label: visibleLabels[index],
+            active: visibleStart + index == currentStep,
+            complete: visibleStart + index < currentStep,
+          ),
+          if (index < visibleLabels.length - 1)
+            Expanded(
+              child: _StepConnector(
+                startComplete: currentStep >= visibleStart + index,
+                endComplete: currentStep > visibleStart + index,
+              ),
             ),
-          );
-        }
-
-        final step = index ~/ 2;
-        return _StepNode(
-          number: step + 1,
-          label: labels[step],
-          active: step == currentStep,
-          complete: step < currentStep,
-        );
-      }),
+        ],
+        if (visibleStart + visibleLabels.length < labels.length)
+          Expanded(
+            child: _EdgeConnector(
+              complete: currentStep >= visibleStart + visibleLabels.length,
+            ),
+          ),
+      ],
     );
   }
 }
@@ -147,6 +159,20 @@ class _StepConnector extends StatelessWidget {
           Expanded(child: _ConnectorLine(complete: endComplete)),
         ],
       ),
+    );
+  }
+}
+
+class _EdgeConnector extends StatelessWidget {
+  const _EdgeConnector({required this.complete});
+
+  final bool complete;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: AppPaddingHeight.p23),
+      child: _ConnectorLine(complete: complete),
     );
   }
 }

@@ -4394,6 +4394,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get new_order_step_company_info => 'بيانات الشركة';
 
   @override
+  String get new_order_step_partners => 'الشركاء';
+
+  @override
+  String get new_order_step_activity => 'النشاط';
+
+  @override
   String get new_order_establishment_title => 'حدد نوع التأسيس';
 
   @override
@@ -4472,6 +4478,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get new_order_proposed_company_info_title => 'معلومات الشركة المقترحة';
+
+  @override
+  String get new_order_ownership_structure_title => 'هيكل الملكية';
+
+  @override
+  String get new_order_ownership_structure_description =>
+      'أدخل المعلومات المبدئية عن المالك أو الشركاء. يمكن استكمال التفاصيل القانونية بعد مراجعة الطلب.';
 
   @override
   String get new_order_proposed_company_info_description =>

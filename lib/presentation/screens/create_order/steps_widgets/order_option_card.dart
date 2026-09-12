@@ -81,7 +81,7 @@ class OrderOptionCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppRadius.r12),
                       border: Border.all(
                         color: AppColors.secondaryLightActive,
-                        width: AppWidth.w2,
+                        width: 0.6,
                       ),
                     ),
                     child: Container(

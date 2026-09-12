@@ -163,7 +163,6 @@ class EstablishmentTypeStep extends StatelessWidget {
               description: option.description,
               icon: option.icon,
               height: AppHeight.h80,
-
               selected: selectedApplicantValue == option.value,
               onTap: () => onApplicantChanged(option.value),
             ),
