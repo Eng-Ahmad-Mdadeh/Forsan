@@ -4416,6 +4416,52 @@ class AppLocalizationsAr extends AppLocalizations {
   String get new_order_full_name_hint => 'مثال : محمد خطيب';
 
   @override
+  String get new_order_father_name => 'اسم الأب';
+  @override
+  String get new_order_father_name_hint => 'ادخل اسم الأب';
+  @override
+  String get new_order_nationality => 'الجنسية';
+  @override
+  String get new_order_select_hint => 'يرجى الاختيار';
+  @override
+  String get new_order_male => 'ذكر';
+  @override
+  String get new_order_female => 'أنثى';
+  @override
+  String get new_order_syrian_nationality => 'سورية';
+  @override
+  String get new_order_non_syrian_nationality => 'غير سورية';
+  @override
+  String get new_order_passport_number_optional => 'رقم جواز السفر (اختياري)';
+  @override
+  String get new_order_passport_number_hint => 'ادخل رقم جواز السفر';
+  @override
+  String get new_order_national_id => 'الرقم الوطني / رقم الهوية';
+  @override
+  String get new_order_national_id_hint => 'ادخل الرقم الوطني / رقم الهوية';
+  @override
+  String get new_order_mobile_number => 'رقم الجوال';
+  @override
+  String get new_order_mobile_number_hint => '000 000 000';
+  @override
+  String get new_order_whatsapp_number => 'رقم واتساب';
+  @override
+  String get new_order_whatsapp_number_hint => 'اتركه فارغاً إذا كان نفس رقم الجوال';
+  @override
+  String get new_order_email => 'البريد الإلكتروني';
+  @override
+  String get new_order_email_hint => 'ادخل البريد الإلكتروني';
+
+  @override
+  String get new_order_delegation_in_syria => 'التفويض داخل سوريا';
+  @override
+  String get new_order_delegation_in_syria_description => 'حدد ما اذا كان لديك شخص مفوض أو وكيل داخل سوريا';
+  @override
+  String get new_order_has_representative_in_syria => 'لدي شخص مفوض أو وكيل داخل سوريا';
+  @override
+  String get new_order_representative_details_description => 'يمكن إضافة بياناته والوكالة ضمن المستندات لاحقاً.';
+
+  @override
   String get new_order_next => 'التالي';
 
   @override

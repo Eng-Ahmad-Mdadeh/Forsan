@@ -4443,6 +4443,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String get new_order_full_name_hint => 'Example: Mohammad Khatib';
 
   @override
+  String get new_order_father_name => "Father's name";
+  @override
+  String get new_order_father_name_hint => "Enter father's name";
+  @override
+  String get new_order_nationality => 'Nationality';
+  @override
+  String get new_order_select_hint => 'Please select';
+  @override
+  String get new_order_male => 'Male';
+  @override
+  String get new_order_female => 'Female';
+  @override
+  String get new_order_syrian_nationality => 'Syrian';
+  @override
+  String get new_order_non_syrian_nationality => 'Non-Syrian';
+  @override
+  String get new_order_passport_number_optional => 'Passport number (optional)';
+  @override
+  String get new_order_passport_number_hint => 'Enter passport number';
+  @override
+  String get new_order_national_id => 'National number / ID number';
+  @override
+  String get new_order_national_id_hint => 'Enter national number / ID number';
+  @override
+  String get new_order_mobile_number => 'Mobile number';
+  @override
+  String get new_order_mobile_number_hint => '000 000 000';
+  @override
+  String get new_order_whatsapp_number => 'WhatsApp number';
+  @override
+  String get new_order_whatsapp_number_hint => 'Leave empty if it is the same as the mobile number';
+  @override
+  String get new_order_email => 'Email';
+  @override
+  String get new_order_email_hint => 'Enter email';
+
+  @override
+  String get new_order_delegation_in_syria => 'Authorization inside Syria';
+  @override
+  String get new_order_delegation_in_syria_description => 'Specify whether you have an authorized person or agent inside Syria';
+  @override
+  String get new_order_has_representative_in_syria => 'I have an authorized person or agent inside Syria';
+  @override
+  String get new_order_representative_details_description => 'Their details and power of attorney can be added later with the documents.';
+
+  @override
   String get new_order_next => 'Next';
 
   @override
