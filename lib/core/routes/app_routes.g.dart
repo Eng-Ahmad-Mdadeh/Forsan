@@ -215,8 +215,7 @@ mixin $CreateOrderRoute on GoRouteData {
 }
 
 mixin $NewOrderRoute on GoRouteData {
-  static NewOrderRoute _fromState(GoRouterState state) =>
-      const NewOrderRoute();
+  static NewOrderRoute _fromState(GoRouterState state) => const NewOrderRoute();
 
   @override
   String get location => GoRouteData.$location('/create_order/new');

@@ -128,9 +128,9 @@ class EstablishmentTypeStep extends StatelessWidget {
               selected: selectedValue == option.value,
               onTap: () => onChanged(option.value),
             ),
-            SizedBox(height: AppHeight.h12),
+            SizedBox(height: AppHeight.h10),
           ],
-          SizedBox(height: AppHeight.h8),
+          SizedBox(height: AppHeight.h10),
           Row(
             children: [
               Icon(
@@ -156,7 +156,7 @@ class EstablishmentTypeStep extends StatelessWidget {
             fontWeight: AppFontWeight.regular,
             maxLines: 2,
           ),
-          SizedBox(height: AppHeight.h10),
+
           for (final option in applicantOptions) ...[
             OrderOptionCard(
               title: option.title,
@@ -166,7 +166,7 @@ class EstablishmentTypeStep extends StatelessWidget {
               selected: selectedApplicantValue == option.value,
               onTap: () => onApplicantChanged(option.value),
             ),
-            SizedBox(height: AppHeight.h12),
+            SizedBox(height: AppHeight.h10),
           ],
         ],
       ),

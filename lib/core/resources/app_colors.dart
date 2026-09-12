@@ -99,6 +99,7 @@ class AppColors {
   static const Color blackShadow = Color(0xFFA6A6A6);
 
   static const Color backGround = Color(0xFFFBFBFB);
+  static const Color goldBackGround = Color(0xFFF5EEDF);
   static const Color ofWhite = Color(0xFFB4B4B4);
   static const Color white = Color(0xFFFFFFFF);
   static const Color greyButton = Color(0xFFF3F4F5);

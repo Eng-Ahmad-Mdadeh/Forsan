@@ -22,10 +22,9 @@ class AttachedDocumentsCard extends StatelessWidget {
     decoration: BoxDecoration(
       color: AppColors.white,
       borderRadius: BorderRadius.circular(AppRadius.r12),
-      border: Border.all(color: AppColors.lightGrey),
       boxShadow: [
         BoxShadow(
-          color: AppColors.homeSoftShadow,
+          color: AppColors.homeSoftShadow.withOpacity(0.05),
           blurRadius: AppRadius.r7,
           offset: Offset(0, AppHeight.h2),
         ),

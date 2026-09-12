@@ -22,7 +22,7 @@ class DocumentRequestHeaderCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppRadius.r12),
       boxShadow: [
         BoxShadow(
-          color: AppColors.homeSoftShadow,
+          color: AppColors.homeSoftShadow.withOpacity(0.05),
           blurRadius: AppRadius.r7,
           offset: Offset(0, AppHeight.h2),
         ),

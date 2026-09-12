@@ -21,6 +21,7 @@ class CustomInputField extends StatelessWidget {
   final Function()? onTapOutside;
   final String hintText;
   final String? title;
+  final bool showCharacterCounter;
   final String? initialValue;
   final TextEditingController? controller;
   final bool showRiyal;
@@ -44,6 +45,7 @@ class CustomInputField extends StatelessWidget {
     this.req = false,
     this.readOnly = false,
     this.unFocus = false,
+    this.showCharacterCounter = false,
     this.validator,
     this.textDirection,
     this.textAlign,
@@ -108,11 +110,42 @@ class CustomInputField extends StatelessWidget {
               ],
             ),
           ),
-        ConstrainedBox(
-          constraints: BoxConstraints(minHeight: minimumFieldHeight ?? 0, maxHeight: minimumFieldHeight ?? 0),
-          child: showFlag
-              ? Directionality(textDirection: TextDirection.ltr, child: _buildTextField())
-              : _buildTextField(),
+        Column(
+          //crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            ConstrainedBox(
+              constraints: minimumFieldHeight != null
+                  ? BoxConstraints(
+                minHeight: minimumFieldHeight,
+                maxHeight: minimumFieldHeight,
+              )
+                  : const BoxConstraints(),
+              child: showFlag
+                  ? Directionality(
+                textDirection: TextDirection.ltr,
+                child: _buildTextField(),
+              )
+                  : _buildTextField(),
+            ),
+
+            if (showCharacterCounter && maxLength != null && controller != null)
+              ValueListenableBuilder<TextEditingValue>(
+                valueListenable: controller!,
+                builder: (context, value, child) {
+                  return Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: Transform.translate(
+                      offset: Offset(0, -AppHeight.h16),
+                      child: BodyTitle(
+                        text: '${value.text.length}/$maxLength',
+                        fontSize: AppFontSize.s14,
+                        color: AppColors.grey,
+                      ),
+                    ),
+                  );
+                },
+              ),
+          ],
         ),
       ],
     );

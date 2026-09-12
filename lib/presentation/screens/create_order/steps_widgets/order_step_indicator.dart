@@ -13,43 +13,74 @@ class OrderStepIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final labels = [
-      context.loc.new_order_step_establishment,
-      context.loc.new_order_step_applicant,
-      context.loc.new_order_step_company_info,
-      context.loc.new_order_step_partners,
-      context.loc.new_order_step_activity,
+      context.loc.new_order_step_establishment, // index 0 (خطوة 1)
+      context.loc.new_order_step_applicant,     // index 1 (خطوة 2)
+      context.loc.new_order_step_company_info,  // index 2 (خطوة 3)
+      context.loc.new_order_step_partners,      // index 3 (خطوة 4)
+      context.loc.new_order_step_activity,      // index 4 (خطوة 5)
+      'المستندات',                               // index 5 (خطوة 6)
+      'المراجعة',                                // index 6 (خطوة 7)
     ];
-    final visibleStart = (currentStep - 1).clamp(0, labels.length - 3) as int;
-    final visibleLabels = labels.sublist(visibleStart, visibleStart + 3);
+
+    // معادلة حساب بداية المجموعة (visibleStart):
+    // عند الخطوات (0, 1, 2) -> البداية 0 (تعرض 1, 2, 3)
+    // عند الخطوات (3, 4)    -> البداية 2 (تعرض 3✓, 4, 5)
+    // عند الخطوات (5, 6)    -> البداية 4 (تعرض 5✓, 6, 7)
+    final int visibleStart;
+    if (currentStep < 3) {
+      visibleStart = 0;
+    } else if (currentStep < 5) {
+      visibleStart = 2;
+    } else {
+      visibleStart = 4;
+    }
+
+    final visibleCount = (labels.length - visibleStart).clamp(1, 3);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // 1. خط البداية (لا يظهر في الصفحة الأولى، ويظهر كخط مكتمل عند الانتقال للمجموعات التالية)
         if (visibleStart > 0)
           Expanded(
-            child: _EdgeConnector(complete: currentStep > visibleStart - 1),
-          ),
-        for (var index = 0; index < visibleLabels.length; index++) ...[
-          _StepNode(
-            number: visibleStart + index + 1,
-            label: visibleLabels[index],
-            active: visibleStart + index == currentStep,
-            complete: visibleStart + index < currentStep,
-          ),
-          if (index < visibleLabels.length - 1)
-            Expanded(
-              child: _StepConnector(
-                startComplete: currentStep >= visibleStart + index,
-                endComplete: currentStep > visibleStart + index,
+            child: _EdgeConnector(complete: true),
+          )
+        else
+          const SizedBox.shrink(),
+
+        for (var i = 0; i < visibleCount; i++) ...[
+          ...() {
+            final actualIndex = visibleStart + i;
+            final isStepActive = actualIndex == currentStep;
+            final isStepComplete = actualIndex < currentStep;
+
+            return [
+              _StepNode(
+                number: actualIndex + 1,
+                label: labels[actualIndex],
+                active: isStepActive,
+                complete: isStepComplete,
               ),
-            ),
+              if (i < visibleCount - 1)
+                Expanded(
+                  child: _StepConnector(
+                    startComplete: currentStep >= actualIndex,
+                    endComplete: currentStep > actualIndex,
+                  ),
+                ),
+            ];
+          }(),
         ],
-        if (visibleStart + visibleLabels.length < labels.length)
+
+        // 2. خط النهاية (يظهر طالما يوجد خطوات متبقية بعد المجموعة الحالية)
+        if (visibleStart + visibleCount < labels.length)
           Expanded(
             child: _EdgeConnector(
-              complete: currentStep >= visibleStart + visibleLabels.length,
+              complete: currentStep >= visibleStart + visibleCount - 1,
             ),
-          ),
+          )
+        else
+          const SizedBox.shrink(),
       ],
     );
   }
@@ -92,25 +123,25 @@ class _StepNode extends StatelessWidget {
                 color: highlighted ? AppColors.primary : AppColors.lightActive,
                 border: highlighted
                     ? Border.all(
-                        color: AppColors.secondary,
-                        width: AppWidth.w2,
-                      )
+                  color: AppColors.secondary,
+                  width: AppWidth.w2,
+                )
                     : null,
               ),
               child: complete
                   ? Icon(
-                      Icons.check_rounded,
-                      color: AppColors.secondary,
-                      size: AppSize.s20,
-                    )
+                Icons.check_rounded,
+                color: AppColors.secondary,
+                size: AppSize.s20,
+              )
                   : BodyTitle(
-                      text: '$number',
-                      color: active
-                          ? AppColors.white
-                          : AppColors.secondaryText,
-                      fontSize: AppFontSize.s14,
-                      fontWeight: AppFontWeight.medium,
-                    ),
+                text: '$number',
+                color: active
+                    ? AppColors.white
+                    : AppColors.secondaryText,
+                fontSize: AppFontSize.s14,
+                fontWeight: AppFontWeight.medium,
+              ),
             ),
           ),
           SizedBox(height: AppHeight.h5),
@@ -142,18 +173,33 @@ class _StepConnector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: AppPaddingHeight.p23),
+      padding: EdgeInsets.only(top: AppPaddingHeight.p19),
       child: Row(
         children: [
           Expanded(child: _ConnectorLine(complete: startComplete)),
-          Transform.rotate(
-            angle: 0.785,
-            child: Container(
-              width: AppWidth.w10,
-              height: AppHeight.h10,
-              color: startComplete
-                  ? AppColors.secondary
-                  : AppColors.lightActive,
+          SizedBox(
+            width: AppWidth.w10,
+            height: AppHeight.h10,
+            child: Transform.rotate(
+              angle: 0.785,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      color: endComplete
+                          ? AppColors.secondary
+                          : AppColors.lightActive,
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      color: startComplete
+                          ? AppColors.secondary
+                          : AppColors.lightActive,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(child: _ConnectorLine(complete: endComplete)),
