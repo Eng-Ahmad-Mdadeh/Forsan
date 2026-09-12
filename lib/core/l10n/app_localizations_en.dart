@@ -4418,6 +4418,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get new_order_step_applicant => 'Applicant';
 
   @override
+  String get new_order_step_company_info => 'Company details';
+
+  @override
   String get new_order_establishment_title => 'Select the establishment type';
 
   @override
@@ -4493,6 +4496,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get new_order_submit => 'Submit request';
+
+  @override
+  String get new_order_proposed_company_info_title =>
+      'Proposed company information';
+
+  @override
+  String get new_order_proposed_company_info_description =>
+      'Enter the initial details for the company you would like to establish.';
+
+  @override
+  String get new_order_proposed_company_name => 'Proposed company name';
+
+  @override
+  String get new_order_proposed_company_name_hint =>
+      'Enter the proposed company name';
+
+  @override
+  String get new_order_company_activity => 'Company activity';
+
+  @override
+  String get new_order_company_activity_hint => "Enter the company's main activity";
+
+  @override
+  String get new_order_company_headquarters => 'Proposed company headquarters';
+
+  @override
+  String get new_order_company_headquarters_hint =>
+      'Enter the city or governorate';
+
+  @override
+  String get new_order_company_capital => 'Proposed capital';
+
+  @override
+  String get new_order_company_capital_hint => 'Enter the expected capital';
 
   @override
   String get new_order_one_person_company => 'Single-person company';

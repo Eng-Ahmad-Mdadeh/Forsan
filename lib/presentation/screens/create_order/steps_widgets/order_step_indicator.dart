@@ -15,6 +15,7 @@ class OrderStepIndicator extends StatelessWidget {
     final labels = [
       context.loc.new_order_step_establishment,
       context.loc.new_order_step_applicant,
+      context.loc.new_order_step_company_info,
     ];
 
     return Row(

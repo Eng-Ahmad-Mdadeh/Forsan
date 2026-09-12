@@ -7814,6 +7814,8 @@ abstract class AppLocalizations {
 
   String get new_order_step_applicant;
 
+  String get new_order_step_company_info;
+
   String get new_order_establishment_title;
 
   String get new_order_establishment_description;
@@ -7857,6 +7859,26 @@ abstract class AppLocalizations {
   String get new_order_next;
 
   String get new_order_submit;
+
+  String get new_order_proposed_company_info_title;
+
+  String get new_order_proposed_company_info_description;
+
+  String get new_order_proposed_company_name;
+
+  String get new_order_proposed_company_name_hint;
+
+  String get new_order_company_activity;
+
+  String get new_order_company_activity_hint;
+
+  String get new_order_company_headquarters;
+
+  String get new_order_company_headquarters_hint;
+
+  String get new_order_company_capital;
+
+  String get new_order_company_capital_hint;
 
   String get new_order_one_person_company;
 

@@ -4391,6 +4391,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get new_order_step_applicant => 'مقدم الطلب';
 
   @override
+  String get new_order_step_company_info => 'بيانات الشركة';
+
+  @override
   String get new_order_establishment_title => 'حدد نوع التأسيس';
 
   @override
@@ -4466,6 +4469,37 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get new_order_submit => 'إرسال الطلب';
+
+  @override
+  String get new_order_proposed_company_info_title => 'معلومات الشركة المقترحة';
+
+  @override
+  String get new_order_proposed_company_info_description =>
+      'أدخل المعلومات الأولية للشركة التي ترغب بتأسيسها.';
+
+  @override
+  String get new_order_proposed_company_name => 'اسم الشركة المقترح';
+
+  @override
+  String get new_order_proposed_company_name_hint => 'أدخل اسم الشركة المقترح';
+
+  @override
+  String get new_order_company_activity => 'نشاط الشركة';
+
+  @override
+  String get new_order_company_activity_hint => 'أدخل النشاط الرئيسي للشركة';
+
+  @override
+  String get new_order_company_headquarters => 'مقر الشركة المقترح';
+
+  @override
+  String get new_order_company_headquarters_hint => 'أدخل المدينة أو المحافظة';
+
+  @override
+  String get new_order_company_capital => 'رأس المال المقترح';
+
+  @override
+  String get new_order_company_capital_hint => 'أدخل رأس المال المتوقع';
 
   @override
   String get new_order_one_person_company => 'تأسيس شركة لشخص واحد';
