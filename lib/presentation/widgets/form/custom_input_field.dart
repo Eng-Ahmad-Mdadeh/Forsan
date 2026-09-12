@@ -30,7 +30,6 @@ class CustomInputField extends StatelessWidget {
   final bool? isExpanded;
   final TextInputType? textInputType;
   final Widget? suffix;
-  final Widget? prefix;
   final int? maxLines;
   final int? maxLength;
   final double? height;
@@ -62,7 +61,6 @@ class CustomInputField extends StatelessWidget {
     this.showClock = false,
     this.textInputType,
     this.suffix,
-    this.prefix,
     this.maxLines,
     this.maxLength,
     this.height,
@@ -156,36 +154,34 @@ class CustomInputField extends StatelessWidget {
         borderSide: const BorderSide(color: AppColors.red),
       ),
       borderRadius: borderRadius ?? AppRadius.r7,
-      prefixIcon:
-          prefix ??
-          (showFlag
-              ? Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(
-                        start: AppPaddingWidth.p12,
-                        end: AppPaddingWidth.p7,
-                        top: AppPaddingHeight.p12,
-                        bottom: AppPaddingHeight.p12,
-                      ),
-                      child: ImageView(
-                        imagePath: AppAssets.saudiFlag,
-                        height: AppHeight.h25,
-                        width: AppWidth.w25,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    BodyTitle(
-                      text: "+966",
-                      fontSize: AppFontSize.s14,
-                      fontWeight: AppFontWeight.regular,
-                      color: AppColors.greyText,
-                    ),
-                    SizedBox(width: AppWidth.w10),
-                  ],
-                )
-              : null),
+      prefixIcon: showFlag
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    start: AppPaddingWidth.p12,
+                    end: AppPaddingWidth.p7,
+                    top: AppPaddingHeight.p12,
+                    bottom: AppPaddingHeight.p12,
+                  ),
+                  child: ImageView(
+                    imagePath: AppAssets.saudiFlag,
+                    height: AppHeight.h25,
+                    width: AppWidth.w25,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                BodyTitle(
+                  text: "+966",
+                  fontSize: AppFontSize.s14,
+                  fontWeight: AppFontWeight.regular,
+                  color: AppColors.greyText,
+                ),
+                SizedBox(width: AppWidth.w10),
+              ],
+            )
+          : null,
       suffixIcon:
           suffix ??
           (showRiyal

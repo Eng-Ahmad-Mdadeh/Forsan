@@ -6,9 +6,9 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
+import 'package:forsan/presentation/widgets/custom_text_from_field.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class ApplicantStep extends StatefulWidget {
   const ApplicantStep({super.key});
@@ -72,11 +72,13 @@ class _ApplicantStepState extends State<ApplicantStep> {
           ),
           SizedBox(height: AppHeight.h10),
           _buildPhoneField(
+            context,
             label: context.loc.new_order_mobile_number,
             hint: context.loc.new_order_mobile_number_hint,
           ),
           SizedBox(height: AppHeight.h10),
           _buildPhoneField(
+            context,
             label: context.loc.new_order_whatsapp_number,
             hint: context.loc.new_order_whatsapp_number_hint,
           ),
@@ -124,24 +126,66 @@ class _ApplicantStepState extends State<ApplicantStep> {
     );
   }
 
-  Widget _buildPhoneField({required String label, required String hint}) {
-    return CustomInputField(
-      title: label,
-      hintText: hint,
-      textInputType: TextInputType.phone,
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.left,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      backgroundColor: AppColors.white,
-      prefix: _CountryDialCode(
-        country: _selectedCountry,
-        onTap: _showCountryPicker,
-      ),
-      suffix: Icon(
-        Iconsax.call_outline,
-        color: AppColors.primary,
-        size: AppSize.s18,
-      ),
+  Widget _buildPhoneField(
+    BuildContext context, {
+    required String label,
+    required String hint,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        BodyTitle(
+          text: label,
+          textAlign: TextAlign.end,
+          fontSize: AppFontSize.s14,
+          fontWeight: AppFontWeight.medium,
+          color: AppColors.mainText,
+        ),
+        SizedBox(height: AppHeight.h4),
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: CustomTextFromField(
+            maxLines: 1,
+            textInputType: TextInputType.phone,
+            textDirection: TextDirection.ltr,
+            textAlignVertical: TextAlignVertical.center,
+            cursorColor: AppColors.primary,
+            cursorHeight: AppHeight.h20,
+            fontSize: AppFontSize.s14,
+            hintText: hint,
+            hintColor: AppColors.grey,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            contentPaddingTop: 0,
+            contentPaddingBottom: 0,
+            contentPaddingStart: AppPaddingWidth.p12,
+            contentPaddingEnd: AppPaddingWidth.p12,
+            prefixIcon: _CountryDialCode(
+              country: _selectedCountry,
+              onTap: _showCountryPicker,
+            ),
+            suffixIcon: Icon(
+              Icons.phone,
+              size: AppFontSize.s20,
+              color: AppColors.primaryDark,
+            ),
+            filled: true,
+            color: AppColors.white,
+            borderRadius: AppRadius.r7,
+            enableInputBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppRadius.r7),
+              borderSide: const BorderSide(color: AppColors.lightGrey),
+            ),
+            focusedInputBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppRadius.r7),
+              borderSide: const BorderSide(color: AppColors.primary),
+            ),
+            errorInputBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppRadius.r7),
+              borderSide: const BorderSide(color: AppColors.red),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -180,7 +224,13 @@ class _CountryDialCode extends StatelessWidget {
               fontSize: AppFontSize.s14,
               color: AppColors.mainText,
             ),
-            SizedBox(width: AppWidth.w8),
+            SizedBox(width: AppWidth.w3),
+            Icon(
+              Icons.keyboard_arrow_down_rounded,
+              size: AppFontSize.s18,
+              color: AppColors.greyText,
+            ),
+            SizedBox(width: AppWidth.w5),
             Container(width: 1, height: AppHeight.h24, color: AppColors.lightGrey),
           ],
         ),
