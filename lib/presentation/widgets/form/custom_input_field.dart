@@ -76,7 +76,7 @@ class CustomInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inputHeight = height ?? (isExpanded ?? false ? null : AppHeight.h50);
+    final inputHeight = height ?? (isExpanded ?? false ? null : AppHeight.h48);
     final minimumFieldHeight = inputHeight == null
         ? null
         : inputHeight + (validator == null ? 0 : AppHeight.h20);

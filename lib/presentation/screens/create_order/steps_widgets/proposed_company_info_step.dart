@@ -53,11 +53,11 @@ class _ProposedCompanyInfoStepState extends State<ProposedCompanyInfoStep> {
             fontSize: AppFontSize.s12,
             fontWeight: AppFontWeight.regular,
           ),
-          SizedBox(height: AppHeight.h8),
+          SizedBox(height: AppHeight.h10),
           CustomInputField(
             title: context.loc.new_order_proposed_company_name,
             hintText: context.loc.new_order_proposed_company_name_hint,
-            fontSize: AppFontSize.s16,
+            fontSize: AppFontSize.s14,
             backgroundColor: AppColors.white,
           ),
           SizedBox(height: AppHeight.h8),
