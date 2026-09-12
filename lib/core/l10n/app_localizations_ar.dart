@@ -4475,13 +4475,60 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get new_order_proposed_company_info_description =>
-      'أدخل المعلومات الأولية للشركة التي ترغب بتأسيسها.';
+      'يمكن إدخال أكثر من اسم تجاري مقترح لزيادة احتمالية اعتماد أحد الخيارات.';
 
   @override
-  String get new_order_proposed_company_name => 'اسم الشركة المقترح';
+  String get new_order_proposed_company_name => 'الاسم التجاري المقترح الأول';
 
   @override
-  String get new_order_proposed_company_name_hint => 'أدخل اسم الشركة المقترح';
+  String get new_order_proposed_company_name_hint => 'مثال : فرسان التقنية';
+
+  @override
+  String get new_order_second_proposed_company_name_optional =>
+      'الاسم المقترح الثاني (اختياري)';
+
+  @override
+  String get new_order_second_proposed_company_name_hint =>
+      'ادخل الاسم المقترح الثاني';
+
+  @override
+  String get new_order_third_proposed_company_name_optional =>
+      'الاسم المقترح الثالث (اختياري)';
+
+  @override
+  String get new_order_third_proposed_company_name_hint =>
+      'ادخل الاسم المقترح الثالث';
+
+  @override
+  String get new_order_company_name_english_optional =>
+      'الاسم باللغة الإنجليزية (اختياري)';
+
+  @override
+  String get new_order_company_name_english_hint => 'ادخل الاسم باللغة الإنجليزية';
+
+  @override
+  String get new_order_governorate => 'المحافظة';
+
+  @override
+  String get new_order_city_or_area => 'المدينة / المنطقة';
+
+  @override
+  String get new_order_city_or_area_hint => 'ادخل المدينة / المنطقة';
+
+  @override
+  String get new_order_has_headquarters_currently => 'هل يوجد مقر حالياً؟';
+
+  @override
+  String get new_order_yes => 'نعم';
+
+  @override
+  String get new_order_no => 'لا';
+
+  @override
+  String get new_order_headquarters_address => 'عنوان المقر';
+
+  @override
+  String get new_order_headquarters_address_hint => 'ادخل عنوان المقر';
 
   @override
   String get new_order_company_activity => 'نشاط الشركة';

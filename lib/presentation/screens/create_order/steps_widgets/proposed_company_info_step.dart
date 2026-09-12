@@ -3,14 +3,20 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-class ProposedCompanyInfoStep extends StatelessWidget {
+class ProposedCompanyInfoStep extends StatefulWidget {
   const ProposedCompanyInfoStep({super.key});
 
+  @override
+  State<ProposedCompanyInfoStep> createState() => _ProposedCompanyInfoStepState();
+}
+
+class _ProposedCompanyInfoStepState extends State<ProposedCompanyInfoStep> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -47,37 +53,94 @@ class ProposedCompanyInfoStep extends StatelessWidget {
             fontSize: AppFontSize.s12,
             fontWeight: AppFontWeight.regular,
           ),
-          SizedBox(height: AppHeight.h16),
+          SizedBox(height: AppHeight.h8),
           CustomInputField(
             title: context.loc.new_order_proposed_company_name,
             hintText: context.loc.new_order_proposed_company_name_hint,
             fontSize: AppFontSize.s16,
             backgroundColor: AppColors.white,
           ),
-          SizedBox(height: AppHeight.h12),
+          SizedBox(height: AppHeight.h8),
           CustomInputField(
-            title: context.loc.new_order_company_activity,
-            hintText: context.loc.new_order_company_activity_hint,
+            title: context.loc.new_order_second_proposed_company_name_optional,
+            hintText: context.loc.new_order_second_proposed_company_name_hint,
             fontSize: AppFontSize.s16,
             backgroundColor: AppColors.white,
           ),
-          SizedBox(height: AppHeight.h12),
+          SizedBox(height: AppHeight.h8),
           CustomInputField(
-            title: context.loc.new_order_company_headquarters,
-            hintText: context.loc.new_order_company_headquarters_hint,
+            title: context.loc.new_order_third_proposed_company_name_optional,
+            hintText: context.loc.new_order_third_proposed_company_name_hint,
             fontSize: AppFontSize.s16,
             backgroundColor: AppColors.white,
           ),
-          SizedBox(height: AppHeight.h12),
+          SizedBox(height: AppHeight.h8),
           CustomInputField(
-            title: context.loc.new_order_company_capital,
-            hintText: context.loc.new_order_company_capital_hint,
+            title: context.loc.new_order_company_name_english_optional,
+            hintText: context.loc.new_order_company_name_english_hint,
             fontSize: AppFontSize.s16,
-            textInputType: TextInputType.number,
+            backgroundColor: AppColors.white,
+          ),
+          SizedBox(height: AppHeight.h8),
+          _buildDropdown(
+            context,
+            label: context.loc.new_order_governorate,
+            items: const [],
+          ),
+          SizedBox(height: AppHeight.h8),
+          CustomInputField(
+            title: context.loc.new_order_city_or_area,
+            hintText: context.loc.new_order_city_or_area_hint,
+            fontSize: AppFontSize.s16,
+            backgroundColor: AppColors.white,
+          ),
+          SizedBox(height: AppHeight.h8),
+          _buildDropdown(
+            context,
+            label: context.loc.new_order_has_headquarters_currently,
+            items: [context.loc.new_order_yes, context.loc.new_order_no],
+          ),
+          SizedBox(height: AppHeight.h8),
+          CustomInputField(
+            title: context.loc.new_order_headquarters_address,
+            hintText: context.loc.new_order_headquarters_address_hint,
+            fontSize: AppFontSize.s16,
             backgroundColor: AppColors.white,
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildDropdown(
+    BuildContext context, {
+    required String label,
+    required List<String> items,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        BodyTitle(
+          text: label,
+          textAlign: TextAlign.start,
+          color: AppColors.mainText,
+          fontSize: AppFontSize.s14,
+          fontWeight: AppFontWeight.medium,
+        ),
+        SizedBox(height: AppHeight.h4),
+        CustomDropDownWidget(
+          items: items,
+          isStringList: true,
+          hintText: context.loc.new_order_select_hint,
+          color: AppColors.white,
+          height: AppHeight.h50,
+          borderRadius: AppRadius.r7,
+          closedBorder: const Border.fromBorderSide(
+            BorderSide(color: AppColors.greyDivider, width: .7),
+          ),
+          onChanged: (_) {},
+        ),
+      ],
     );
   }
 }

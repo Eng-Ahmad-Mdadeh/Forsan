@@ -4503,14 +4503,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get new_order_proposed_company_info_description =>
-      'Enter the initial details for the company you would like to establish.';
+      'You can enter more than one proposed trade name to increase the likelihood that one option is approved.';
 
   @override
-  String get new_order_proposed_company_name => 'Proposed company name';
+  String get new_order_proposed_company_name => 'First proposed trade name';
 
   @override
   String get new_order_proposed_company_name_hint =>
-      'Enter the proposed company name';
+      'Example: Forsan Technology';
+
+  @override
+  String get new_order_second_proposed_company_name_optional =>
+      'Second proposed name (optional)';
+
+  @override
+  String get new_order_second_proposed_company_name_hint =>
+      'Enter the second proposed name';
+
+  @override
+  String get new_order_third_proposed_company_name_optional =>
+      'Third proposed name (optional)';
+
+  @override
+  String get new_order_third_proposed_company_name_hint =>
+      'Enter the third proposed name';
+
+  @override
+  String get new_order_company_name_english_optional =>
+      'Name in English (optional)';
+
+  @override
+  String get new_order_company_name_english_hint => 'Enter the name in English';
+
+  @override
+  String get new_order_governorate => 'Governorate';
+
+  @override
+  String get new_order_city_or_area => 'City / area';
+
+  @override
+  String get new_order_city_or_area_hint => 'Enter the city / area';
+
+  @override
+  String get new_order_has_headquarters_currently =>
+      'Do you currently have a headquarters?';
+
+  @override
+  String get new_order_yes => 'Yes';
+
+  @override
+  String get new_order_no => 'No';
+
+  @override
+  String get new_order_headquarters_address => 'Headquarters address';
+
+  @override
+  String get new_order_headquarters_address_hint =>
+      'Enter the headquarters address';
 
   @override
   String get new_order_company_activity => 'Company activity';

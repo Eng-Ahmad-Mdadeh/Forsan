@@ -7868,6 +7868,34 @@ abstract class AppLocalizations {
 
   String get new_order_proposed_company_name_hint;
 
+  String get new_order_second_proposed_company_name_optional;
+
+  String get new_order_second_proposed_company_name_hint;
+
+  String get new_order_third_proposed_company_name_optional;
+
+  String get new_order_third_proposed_company_name_hint;
+
+  String get new_order_company_name_english_optional;
+
+  String get new_order_company_name_english_hint;
+
+  String get new_order_governorate;
+
+  String get new_order_city_or_area;
+
+  String get new_order_city_or_area_hint;
+
+  String get new_order_has_headquarters_currently;
+
+  String get new_order_yes;
+
+  String get new_order_no;
+
+  String get new_order_headquarters_address;
+
+  String get new_order_headquarters_address_hint;
+
   String get new_order_company_activity;
 
   String get new_order_company_activity_hint;
