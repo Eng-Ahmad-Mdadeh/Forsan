@@ -4531,6 +4531,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get new_order_headquarters_address_hint => 'ادخل عنوان المقر';
 
   @override
+  String get new_order_trade_name_approval_notice =>
+      'اعتماد الاسم التجاري والمتطلبات النظامية النهائية يتم بعد مراجعة الطلب من فريق فرسان والجهات ذات العلاقة.';
+
+  @override
   String get new_order_company_activity => 'نشاط الشركة';
 
   @override

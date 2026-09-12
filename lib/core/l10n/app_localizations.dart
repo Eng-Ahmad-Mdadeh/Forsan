@@ -7896,6 +7896,8 @@ abstract class AppLocalizations {
 
   String get new_order_headquarters_address_hint;
 
+  String get new_order_trade_name_approval_notice;
+
   String get new_order_company_activity;
 
   String get new_order_company_activity_hint;

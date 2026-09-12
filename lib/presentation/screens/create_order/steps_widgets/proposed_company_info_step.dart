@@ -5,6 +5,7 @@ import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
+import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -106,6 +107,37 @@ class _ProposedCompanyInfoStepState extends State<ProposedCompanyInfoStep> {
             hintText: context.loc.new_order_headquarters_address_hint,
             fontSize: AppFontSize.s16,
             backgroundColor: AppColors.white,
+          ),
+          SizedBox(height: AppHeight.h16),
+          SectionCard(
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.symmetric(
+              horizontal: AppPaddingWidth.p12,
+              vertical: AppPaddingHeight.p10,
+            ),
+            borderRadius: BorderRadius.circular(AppRadius.r7),
+            backgroundColor: AppColors.light,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.info_outline_rounded,
+                  color: AppColors.primaryDark,
+                  size: AppSize.s20,
+                ),
+                SizedBox(width: AppWidth.w8),
+                Expanded(
+                  child: BodyTitle(
+                    text: context.loc.new_order_trade_name_approval_notice,
+                    color: AppColors.secondaryText,
+                    fontSize: AppFontSize.s12,
+                    fontWeight: AppFontWeight.regular,
+                    textAlign: TextAlign.start,
+                    maxLines: 2,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

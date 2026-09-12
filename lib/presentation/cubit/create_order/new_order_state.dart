@@ -4,7 +4,7 @@ class NewOrderState extends Equatable {
   const NewOrderState({
     this.currentStep = 0,
     this.establishmentType = 'one_person',
-    this.applicantType = 'syrian_citizen',
+    this.applicantType = ' ',
   });
 
   final int currentStep;
