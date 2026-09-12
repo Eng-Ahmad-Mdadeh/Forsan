@@ -1,6 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
@@ -29,39 +30,60 @@ class _ApplicantStepState extends State<ApplicantStep> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const CustomInputField(
-            title: 'اسم الأب',
-            hintText: 'ادخل اسم الأب',
+          CustomInputField(
+            title: context.loc.new_order_full_name,
+            hintText: context.loc.new_order_full_name_hint,
+            textInputType: TextInputType.name,
             backgroundColor: AppColors.white,
           ),
           SizedBox(height: AppHeight.h10),
-          _buildDropdown(label: 'الجنسية', items: const ['ذكر', 'أنثى']),
-          SizedBox(height: AppHeight.h10),
-          const CustomInputField(
-            title: 'رقم جواز السفر (اختياري)',
-            hintText: 'ادخل رقم جواز السفر',
+          CustomInputField(
+            title: context.loc.new_order_father_name,
+            hintText: context.loc.new_order_father_name_hint,
             backgroundColor: AppColors.white,
           ),
           SizedBox(height: AppHeight.h10),
-          const CustomInputField(
-            title: 'الرقم الوطني / رقم الهوية',
-            hintText: 'ادخل الرقم الوطني / رقم الهوية',
+          _buildDropdown(
+            context,
+            label: context.loc.new_order_nationality,
+            items: [context.loc.new_order_male, context.loc.new_order_female],
+          ),
+          SizedBox(height: AppHeight.h10),
+          CustomInputField(
+            title: context.loc.new_order_passport_number_optional,
+            hintText: context.loc.new_order_passport_number_hint,
+            backgroundColor: AppColors.white,
+          ),
+          SizedBox(height: AppHeight.h10),
+          CustomInputField(
+            title: context.loc.new_order_national_id,
+            hintText: context.loc.new_order_national_id_hint,
             textInputType: TextInputType.number,
             backgroundColor: AppColors.white,
           ),
           SizedBox(height: AppHeight.h10),
-          _buildDropdown(label: 'الجنسية', items: const ['سورية', 'غير سورية']),
-          SizedBox(height: AppHeight.h10),
-          _buildPhoneField(label: 'رقم الجوال', hint: '000 000 000'),
-          SizedBox(height: AppHeight.h10),
-          _buildPhoneField(
-            label: 'رقم واتساب',
-            hint: 'اتركه فارغاً إذا كان نفس رقم الجوال',
+          _buildDropdown(
+            context,
+            label: context.loc.new_order_nationality,
+            items: [
+              context.loc.new_order_syrian_nationality,
+              context.loc.new_order_non_syrian_nationality,
+            ],
           ),
           SizedBox(height: AppHeight.h10),
-          const CustomInputField(
-            title: 'البريد الإلكتروني',
-            hintText: 'ادخل البريد الإلكتروني',
+          _buildPhoneField(
+            label: context.loc.new_order_mobile_number,
+            hint: context.loc.new_order_mobile_number_hint,
+          ),
+          SizedBox(height: AppHeight.h10),
+          _buildPhoneField(
+            label: context.loc.new_order_whatsapp_number,
+            hint: context.loc.new_order_whatsapp_number_hint,
+          ),
+          SizedBox(height: AppHeight.h10),
+          CustomInputField(
+            title: context.loc.new_order_email,
+            hintText: context.loc.new_order_email_hint,
             textInputType: TextInputType.emailAddress,
             backgroundColor: AppColors.white,
           ),
@@ -70,7 +92,11 @@ class _ApplicantStepState extends State<ApplicantStep> {
     );
   }
 
-  Widget _buildDropdown({required String label, required List<String> items}) {
+  Widget _buildDropdown(
+    BuildContext context, {
+    required String label,
+    required List<String> items,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -85,7 +111,7 @@ class _ApplicantStepState extends State<ApplicantStep> {
         CustomDropDownWidget(
           items: items,
           isStringList: true,
-          hintText: 'يرجى الاختيار',
+          hintText: context.loc.new_order_select_hint,
           color: AppColors.white,
           height: AppHeight.h50,
           borderRadius: AppRadius.r7,

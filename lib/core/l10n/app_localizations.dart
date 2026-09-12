@@ -7830,6 +7830,25 @@ abstract class AppLocalizations {
 
   String get new_order_full_name_hint;
 
+  String get new_order_father_name;
+  String get new_order_father_name_hint;
+  String get new_order_nationality;
+  String get new_order_select_hint;
+  String get new_order_male;
+  String get new_order_female;
+  String get new_order_syrian_nationality;
+  String get new_order_non_syrian_nationality;
+  String get new_order_passport_number_optional;
+  String get new_order_passport_number_hint;
+  String get new_order_national_id;
+  String get new_order_national_id_hint;
+  String get new_order_mobile_number;
+  String get new_order_mobile_number_hint;
+  String get new_order_whatsapp_number;
+  String get new_order_whatsapp_number_hint;
+  String get new_order_email;
+  String get new_order_email_hint;
+
   String get new_order_next;
 
   String get new_order_submit;
