@@ -7,6 +7,7 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
+import 'package:forsan/presentation/widgets/custom_check_box.dart';
 import 'package:forsan/presentation/widgets/custom_text_from_field.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
@@ -22,6 +23,7 @@ class ApplicantStep extends StatefulWidget {
 
 class _ApplicantStepState extends State<ApplicantStep> {
   Country _selectedCountry = Country.parse('SY');
+  bool _hasRepresentativeInSyria = false;
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +91,110 @@ class _ApplicantStepState extends State<ApplicantStep> {
             textInputType: TextInputType.emailAddress,
             backgroundColor: AppColors.white,
           ),
+          SizedBox(height: AppHeight.h24),
+          _buildDelegationSection(context),
         ],
       ),
+    );
+  }
+
+  Widget _buildDelegationSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.add_moderator_outlined,
+              color: AppColors.secondary,
+              size: AppSize.s17,
+            ),
+            SizedBox(width: AppWidth.w4),
+            BodyTitle(
+              text: context.loc.new_order_delegation_in_syria,
+              color: AppColors.primaryDark,
+              fontSize: AppFontSize.s14,
+              fontWeight: AppFontWeight.bold,
+            ),
+          ],
+        ),
+        SizedBox(height: AppHeight.h8),
+        BodyTitle(
+          text: context.loc.new_order_delegation_in_syria_description,
+          textAlign: TextAlign.center,
+          color: AppColors.secondaryText,
+          fontSize: AppFontSize.s12,
+          fontWeight: AppFontWeight.regular,
+          maxLines: 2,
+        ),
+        SizedBox(height: AppHeight.h8),
+        Container(
+          height:AppHeight.h60,
+          padding: EdgeInsets.all(AppPaddingWidth.p6),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(AppRadius.r10),
+            boxShadow:  [
+              BoxShadow(
+                color: AppColors.homeSoftShadow.withOpacity(0.05),
+                blurRadius: 12,
+                offset: Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: AppWidth.w45,
+                height: AppHeight.h45,
+                decoration: BoxDecoration(
+                  color: AppColors.secondaryLight,
+                  borderRadius: BorderRadius.circular(AppRadius.r12),
+                ),
+                child: Icon(
+                  Icons.add_moderator_outlined,
+                  color: AppColors.secondary,
+                  size: AppSize.s24,
+                ),
+              ),
+              SizedBox(width: AppWidth.w12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: AppHeight.h6),
+                    BodyTitle(
+                      text: context.loc.new_order_has_representative_in_syria,
+                      color: AppColors.mainText,
+                      fontSize: AppFontSize.s12,
+                      fontWeight: AppFontWeight.bold,
+                      maxLines: 2,
+                    ),
+                    SizedBox(height: AppHeight.h6),
+                    BodyTitle(
+                      text: context.loc.new_order_representative_details_description,
+                      color: AppColors.secondaryText,
+                      fontSize: AppFontSize.s10,
+                      fontWeight: AppFontWeight.regular,
+                      maxLines: 2,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: AppWidth.w8),
+              CustomCheckBox(
+                value: _hasRepresentativeInSyria,
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() => _hasRepresentativeInSyria = value);
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: AppHeight.h100),
+      ],
     );
   }
 

@@ -4453,6 +4453,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get new_order_email_hint => 'ادخل البريد الإلكتروني';
 
   @override
+  String get new_order_delegation_in_syria => 'التفويض داخل سوريا';
+  @override
+  String get new_order_delegation_in_syria_description => 'حدد ما اذا كان لديك شخص مفوض أو وكيل داخل سوريا';
+  @override
+  String get new_order_has_representative_in_syria => 'لدي شخص مفوض أو وكيل داخل سوريا';
+  @override
+  String get new_order_representative_details_description => 'يمكن إضافة بياناته والوكالة ضمن المستندات لاحقاً.';
+
+  @override
   String get new_order_next => 'التالي';
 
   @override

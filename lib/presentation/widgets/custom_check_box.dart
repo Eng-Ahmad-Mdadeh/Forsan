@@ -22,6 +22,10 @@ class CustomCheckBox extends StatelessWidget {
             ),
             value: state,
             activeColor: AppColors.primary,
+            side: BorderSide(
+              color: AppColors.primaryDark,
+              width: 1.5,
+            ),
             onChanged: (value) {
               if (value == null) return;
               context.read<CheckBoxCubit>().toggleUCheckBox(value);

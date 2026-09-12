@@ -4480,6 +4480,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get new_order_email_hint => 'Enter email';
 
   @override
+  String get new_order_delegation_in_syria => 'Authorization inside Syria';
+  @override
+  String get new_order_delegation_in_syria_description => 'Specify whether you have an authorized person or agent inside Syria';
+  @override
+  String get new_order_has_representative_in_syria => 'I have an authorized person or agent inside Syria';
+  @override
+  String get new_order_representative_details_description => 'Their details and power of attorney can be added later with the documents.';
+
+  @override
   String get new_order_next => 'Next';
 
   @override
