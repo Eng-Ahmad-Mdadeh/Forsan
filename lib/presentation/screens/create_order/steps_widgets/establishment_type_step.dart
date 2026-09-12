@@ -135,24 +135,24 @@ class EstablishmentTypeStep extends StatelessWidget {
             children: [
               Icon(
                 Icons.person_outline_rounded,
-                size: AppSize.s17,
+                size: AppSize.s16,
                 color: AppColors.secondary,
               ),
               SizedBox(width: AppWidth.w6),
               Expanded(
                 child: SectionTitle(
                   text: context.loc.new_order_applicant_role_title,
-                  color: AppColors.primary,
-                  fontSize: AppFontSize.s18,
+                  color: AppColors.primaryDark,
+                  fontSize: AppFontSize.s14,
                 ),
               ),
             ],
           ),
-          SizedBox(height: AppHeight.h4),
+          SizedBox(height: AppHeight.h8),
           BodyTitle(
             text: context.loc.new_order_applicant_role_description,
-            color: AppColors.greyText,
-            fontSize: AppFontSize.s13,
+            color: AppColors.secondaryText,
+            fontSize: AppFontSize.s12,
             fontWeight: AppFontWeight.regular,
             maxLines: 2,
           ),
@@ -162,7 +162,8 @@ class EstablishmentTypeStep extends StatelessWidget {
               title: option.title,
               description: option.description,
               icon: option.icon,
-              height: AppHeight.h75,
+              height: AppHeight.h80,
+
               selected: selectedApplicantValue == option.value,
               onTap: () => onApplicantChanged(option.value),
             ),

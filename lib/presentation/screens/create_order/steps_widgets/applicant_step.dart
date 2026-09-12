@@ -182,14 +182,7 @@ class _ApplicantStepState extends State<ApplicantStep> {
                 ),
               ),
               SizedBox(width: AppWidth.w8),
-              CustomCheckBox(
-                value: _hasRepresentativeInSyria,
-                onChanged: (value) {
-                  if (value != null) {
-                    setState(() => _hasRepresentativeInSyria = value);
-                  }
-                },
-              ),
+              CustomCheckBox(),
             ],
           ),
         ),
@@ -199,10 +192,10 @@ class _ApplicantStepState extends State<ApplicantStep> {
   }
 
   Widget _buildDropdown(
-    BuildContext context, {
-    required String label,
-    required List<String> items,
-  }) {
+      BuildContext context, {
+        required String label,
+        required List<String> items,
+      }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -231,10 +224,10 @@ class _ApplicantStepState extends State<ApplicantStep> {
   }
 
   Widget _buildPhoneField(
-    BuildContext context, {
-    required String label,
-    required String hint,
-  }) {
+      BuildContext context, {
+        required String label,
+        required String hint,
+      }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

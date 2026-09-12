@@ -25,7 +25,7 @@ class OrderOptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(AppRadius.r12);
+    final radius = BorderRadius.circular(AppRadius.r8);
     final titleColor = selected ? AppColors.white : AppColors.primary;
     final descriptionColor = selected
         ? AppColors.white
@@ -39,7 +39,7 @@ class OrderOptionCard extends StatelessWidget {
         color: AppColors.none,
         borderRadius: radius,
         child: Ink(
-          height: height ?? AppHeight.h90,
+          height: height ?? AppHeight.h80,
           decoration: BoxDecoration(
             color: selected ? null : AppColors.white,
             gradient: selected
@@ -71,22 +71,22 @@ class OrderOptionCard extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    width: AppWidth.w52,
-                    height: AppHeight.h52,
+                    width: AppWidth.w50,
+                    height: AppHeight.h50,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: selected
                           ? AppColors.white
                           : AppColors.secondaryLight,
-                      borderRadius: BorderRadius.circular(AppRadius.r13),
+                      borderRadius: BorderRadius.circular(AppRadius.r12),
                       border: Border.all(
                         color: AppColors.secondaryLightActive,
                         width: AppWidth.w2,
                       ),
                     ),
                     child: Container(
-                      width: AppWidth.w42,
-                      height: AppHeight.h42,
+                      width: AppWidth.w40,
+                      height: AppHeight.h40,
                       decoration: BoxDecoration(
                         color: selected ? AppColors.white : AppColors.primary,
                         borderRadius: BorderRadius.circular(AppRadius.r10),
@@ -94,7 +94,7 @@ class OrderOptionCard extends StatelessWidget {
                       child: Icon(
                         icon,
                         color: selected ? AppColors.primary : AppColors.white,
-                        size: AppSize.s25,
+                        size: AppSize.s24,
                       ),
                     ),
                   ),
@@ -107,15 +107,15 @@ class OrderOptionCard extends StatelessWidget {
                         SectionTitle(
                           text: title,
                           color: titleColor,
-                          fontSize: AppFontSize.s15,
+                          fontSize: AppFontSize.s13,
                           maxLines: 1,
                         ),
-                        SizedBox(height: AppHeight.h5),
+                        SizedBox(height: AppHeight.h3),
                         BodyTitle(
                           text: description,
                           color: descriptionColor,
                           fontSize: AppFontSize.s12,
-                          fontWeight: AppFontWeight.regular,
+                          fontWeight: AppFontWeight.medium,
                           maxLines: 2,
                         ),
                       ],
