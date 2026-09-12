@@ -632,6 +632,7 @@
   "new_order_no": "No",
   "new_order_headquarters_address": "Headquarters address",
   "new_order_headquarters_address_hint": "Enter the headquarters address",
+  "new_order_trade_name_approval_notice": "Trade-name approval and final regulatory requirements are determined after the request is reviewed by the Forsan team and the relevant authorities.",
   "new_order_company_activity": "Company activity",
   "new_order_company_activity_hint": "Enter the company's main activity",
   "new_order_company_headquarters": "Proposed company headquarters",

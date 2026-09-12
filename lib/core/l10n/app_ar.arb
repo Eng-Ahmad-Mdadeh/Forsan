@@ -632,6 +632,7 @@
   "new_order_no": "لا",
   "new_order_headquarters_address": "عنوان المقر",
   "new_order_headquarters_address_hint": "ادخل عنوان المقر",
+  "new_order_trade_name_approval_notice": "اعتماد الاسم التجاري والمتطلبات النظامية النهائية يتم بعد مراجعة الطلب من فريق فرسان والجهات ذات العلاقة.",
   "new_order_company_activity": "نشاط الشركة",
   "new_order_company_activity_hint": "أدخل النشاط الرئيسي للشركة",
   "new_order_company_headquarters": "مقر الشركة المقترح",

@@ -4562,6 +4562,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Enter the headquarters address';
 
   @override
+  String get new_order_trade_name_approval_notice =>
+      'Trade-name approval and final regulatory requirements are determined after the request is reviewed by the Forsan team and the relevant authorities.';
+
+  @override
   String get new_order_company_activity => 'Company activity';
 
   @override
