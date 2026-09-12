@@ -7,9 +7,10 @@ import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/applicant_step.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/proposed_company_info_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/establishment_type_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/order_step_indicator.dart';
+import 'package:forsan/presentation/screens/create_order/steps_widgets/ownership_structure_step.dart';
+import 'package:forsan/presentation/screens/create_order/steps_widgets/proposed_company_info_step.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
@@ -95,6 +96,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   ),
                   const ApplicantStep(),
                   const ProposedCompanyInfoStep(),
+                  const OwnershipStructureStep(),
                 ],
               ),
             ),
