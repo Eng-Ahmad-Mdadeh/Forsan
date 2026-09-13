@@ -1,5 +1,7 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/core/extension/file_type_extension.dart';
+import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
 
 class NewOrderCubit extends Cubit<NewOrderState> {
@@ -25,10 +27,29 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     emit(state.copyWith(applicantType: type));
   }
 
-  void addDocuments(List<PlatformFile> documents) {
-    if (documents.isEmpty) return;
+  Future<int?> pickDocuments() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: AppFileConstraints.documentExtensions,
+      allowMultiple: true,
+    );
 
-    emit(state.copyWith(documents: [...state.documents, ...documents]));
+    if (result == null) return null;
+
+    return addDocuments(result.files);
+  }
+
+  int addDocuments(List<PlatformFile> documents) {
+    final validDocuments = documents.where(
+      (document) => document.isValidDocument,
+    );
+    final rejectedDocuments = documents.length - validDocuments.length;
+
+    if (validDocuments.isNotEmpty) {
+      emit(state.copyWith(documents: [...state.documents, ...validDocuments]));
+    }
+
+    return rejectedDocuments;
   }
 
   void removeDocument(PlatformFile document) {
