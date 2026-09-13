@@ -4754,4 +4754,12 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get new_order_delete_partner => 'حذف الشريك';
 
+  @override
+  String get new_order_information_confirmation =>
+      'أقر بأن المعلومات المدخلة صحيحة حسب علمي، وأتفهم أن قبول الطلب النهائي يعتمد على المراجعة واستكمال المتطلبات.';
+
+  @override
+  String get new_order_terms_confirmation =>
+      'أوافق على سياسة الخصوصية وشروط استخدام منصة فرسان.';
+
 }

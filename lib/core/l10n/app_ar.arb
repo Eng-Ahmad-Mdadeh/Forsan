@@ -705,5 +705,7 @@
   "new_order_in_kind_contribution": "مساهمة عينية",
   "new_order_mixed_contribution": "مساهمة عينية ونقدية",
   "new_order_add_partner": "إضافة شريك جديد",
-  "new_order_delete_partner": "حذف الشريك"
+  "new_order_delete_partner": "حذف الشريك",
+  "new_order_information_confirmation": "أقر بأن المعلومات المدخلة صحيحة حسب علمي، وأتفهم أن قبول الطلب النهائي يعتمد على المراجعة واستكمال المتطلبات.",
+  "new_order_terms_confirmation": "أوافق على سياسة الخصوصية وشروط استخدام منصة فرسان."
 }

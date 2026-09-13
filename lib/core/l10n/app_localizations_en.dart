@@ -4786,4 +4786,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get new_order_delete_partner => 'Delete partner';
 
+  @override
+  String get new_order_information_confirmation =>
+      'I confirm that the information entered is correct to the best of my knowledge, and I understand that final acceptance of the request depends on review and completion of the requirements.';
+
+  @override
+  String get new_order_terms_confirmation =>
+      "I agree to Forsan platform's privacy policy and terms of use.";
+
 }
