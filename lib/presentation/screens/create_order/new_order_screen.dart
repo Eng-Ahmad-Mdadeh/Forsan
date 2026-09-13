@@ -103,14 +103,6 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   ActivityStep(),
                   DocumentsStep(),
                   ReviewStep(
-                    establishmentType: _establishmentTypeLabel(
-                      context,
-                      state.establishmentType,
-                    ),
-                    applicantType: _applicantTypeLabel(
-                      context,
-                      state.applicantType,
-                    ),
                     onEditStep: (step) => _goToStep(context, step),
                   ),
                 ],
@@ -148,24 +140,4 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     );
   }
 
-  String _establishmentTypeLabel(BuildContext context, String value) {
-    return switch (value) {
-      'one_person' => context.loc.new_order_one_person_company,
-      'limited_liability' => context.loc.new_order_limited_liability_company,
-      'foreign_partner' => context.loc.new_order_foreign_partner_company,
-      'individual' => context.loc.new_order_individual_establishment,
-      'joint_stock' => context.loc.new_order_joint_stock_company,
-      _ => context.loc.new_order_select_hint,
-    };
-  }
-
-  String _applicantTypeLabel(BuildContext context, String value) {
-    return switch (value) {
-      'syrian_citizen' => context.loc.new_order_syrian_citizen,
-      'expatriate' => context.loc.new_order_expatriate,
-      'foreign_investor' => context.loc.new_order_foreign_investor,
-      'company_representative' => context.loc.new_order_company_representative,
-      _ => context.loc.new_order_select_hint,
-    };
-  }
 }

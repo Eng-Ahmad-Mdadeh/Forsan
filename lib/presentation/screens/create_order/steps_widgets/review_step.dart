@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
@@ -18,17 +20,14 @@ import 'package:icons_plus/icons_plus.dart';
 class ReviewStep extends StatelessWidget {
   const ReviewStep({
     super.key,
-    required this.establishmentType,
-    required this.applicantType,
     required this.onEditStep,
   });
 
-  final String establishmentType;
-  final String applicantType;
   final ValueChanged<int> onEditStep;
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<NewOrderCubit>().state;
     final cards = [
       ReviewSectionCard(
         title: context.loc.new_order_step_establishment,
@@ -37,11 +36,11 @@ class ReviewStep extends StatelessWidget {
         fields: [
           (
             label: context.loc.new_order_establishment_title,
-            value: establishmentType,
+            value: _establishmentTypeLabel(context, state.establishmentType),
           ),
           (
             label: context.loc.new_order_applicant_role_title,
-            value: applicantType,
+            value: _applicantTypeLabel(context, state.applicantType),
           ),
         ],
       ),
@@ -128,6 +127,27 @@ class ReviewStep extends StatelessWidget {
       separatorBuilder: (_, __) => SizedBox(height: AppHeight.h14),
       itemBuilder: (_, index) => cards[index],
     );
+  }
+
+  String _establishmentTypeLabel(BuildContext context, String value) {
+    return switch (value) {
+      'one_person' => context.loc.new_order_one_person_company,
+      'limited_liability' => context.loc.new_order_limited_liability_company,
+      'foreign_partner' => context.loc.new_order_foreign_partner_company,
+      'individual' => context.loc.new_order_individual_establishment,
+      'joint_stock' => context.loc.new_order_joint_stock_company,
+      _ => context.loc.new_order_select_hint,
+    };
+  }
+
+  String _applicantTypeLabel(BuildContext context, String value) {
+    return switch (value) {
+      'syrian_citizen' => context.loc.new_order_syrian_citizen,
+      'expatriate' => context.loc.new_order_expatriate,
+      'foreign_investor' => context.loc.new_order_foreign_investor,
+      'company_representative' => context.loc.new_order_company_representative,
+      _ => context.loc.new_order_select_hint,
+    };
   }
 }
 
