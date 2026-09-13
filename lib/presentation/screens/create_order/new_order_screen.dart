@@ -100,9 +100,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   const ApplicantStep(),
                   const ProposedCompanyInfoStep(),
                   const OwnershipStructureStep(),
-                   ActivityStep(),
-                   DocumentsStep(),
-                  const ReviewStep(),
+                  ActivityStep(),
+                  DocumentsStep(),
+                  ReviewStep(sections: _reviewSections(context, state)),
                 ],
               ),
             ),
@@ -136,5 +136,49 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
         ),
       ),
     );
+  }
+
+  List<ReviewSection> _reviewSections(
+    BuildContext context,
+    NewOrderState state,
+  ) {
+    return [
+      ReviewSection(
+        title: context.loc.new_order_step_establishment,
+        icon: Icons.grid_view_rounded,
+        onEdit: () => _goToStep(context, 0),
+        fields: [
+          ReviewField(
+            label: context.loc.new_order_establishment_title,
+            value: _establishmentTypeLabel(context, state.establishmentType),
+          ),
+          ReviewField(
+            label: context.loc.new_order_applicant_role_title,
+            value: _applicantTypeLabel(context, state.applicantType),
+          ),
+        ],
+      ),
+    ];
+  }
+
+  String _establishmentTypeLabel(BuildContext context, String value) {
+    return switch (value) {
+      'one_person' => context.loc.new_order_one_person_company,
+      'limited_liability' => context.loc.new_order_limited_liability_company,
+      'foreign_partner' => context.loc.new_order_foreign_partner_company,
+      'individual' => context.loc.new_order_individual_establishment,
+      'joint_stock' => context.loc.new_order_joint_stock_company,
+      _ => context.loc.new_order_select_hint,
+    };
+  }
+
+  String _applicantTypeLabel(BuildContext context, String value) {
+    return switch (value) {
+      'syrian_citizen' => context.loc.new_order_syrian_citizen,
+      'expatriate' => context.loc.new_order_expatriate,
+      'foreign_investor' => context.loc.new_order_foreign_investor,
+      'company_representative' => context.loc.new_order_company_representative,
+      _ => context.loc.new_order_select_hint,
+    };
   }
 }
