@@ -18,6 +18,7 @@ import 'package:forsan/presentation/screens/orders/orders_screen.dart';
 import 'package:forsan/presentation/screens/order_details/orders_details_screen.dart';
 import 'package:forsan/presentation/screens/orders/models/order_item.dart';
 import 'package:forsan/presentation/screens/signup/signup_screen.dart';
+import 'package:forsan/presentation/screens/show_profile/show_profile_screen.dart';
 import 'package:forsan/presentation/screens/splash/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -192,7 +193,12 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
       routes: [TypedGoRoute<DocumentsRoute>(path: '/documents')],
     ),
     TypedStatefulShellBranch<MoreBranch>(
-      routes: [TypedGoRoute<MoreRoute>(path: '/more')],
+      routes: [
+        TypedGoRoute<MoreRoute>(
+          path: '/more',
+          routes: [TypedGoRoute<ShowProfileRoute>(path: 'profile')],
+        ),
+      ],
     ),
   ],
 )
@@ -272,5 +278,21 @@ class MoreRoute extends GoRouteData with $MoreRoute {
     GoRouterState state,
   ) {
     return const MoreScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
+class ShowProfileRoute extends GoRouteData with $ShowProfileRoute {
+  const ShowProfileRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return const ShowProfileScreen().buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
   }
 }

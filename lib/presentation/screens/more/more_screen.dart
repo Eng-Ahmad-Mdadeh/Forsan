@@ -3,6 +3,7 @@ import 'package:forsan/core/resources/app_assets.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/presentation/widgets/custom_avatar.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/image_view.dart';
@@ -182,7 +183,12 @@ class _MoreMenu extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         for (var index = 0; index < _items.length; index++) ...[
-          _MoreTile(item: _items[index]),
+          _MoreTile(
+            item: _items[index],
+            onTap: index == 0
+                ? () => const ShowProfileRoute().push(context)
+                : null,
+          ),
           if (index != _items.length - 1)
              Divider(height: 1, thickness: .7, color: AppColors.lightGrey.withOpacity(0.5)),
         ],
@@ -206,9 +212,10 @@ class _MoreMenuItem {
 }
 
 class _MoreTile extends StatelessWidget {
-  const _MoreTile({required this.item});
+  const _MoreTile({required this.item, this.onTap});
 
   final _MoreMenuItem item;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -263,7 +270,7 @@ class _MoreTile extends StatelessWidget {
         color: foregroundColor,
         size: AppSize.s24,
       ),
-      onTap: () {},
+      onTap: onTap,
     );
   }
 }
