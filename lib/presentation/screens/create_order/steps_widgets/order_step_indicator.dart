@@ -18,8 +18,8 @@ class OrderStepIndicator extends StatelessWidget {
       context.loc.new_order_step_company_info,  // index 2 (خطوة 3)
       context.loc.new_order_step_partners,      // index 3 (خطوة 4)
       context.loc.new_order_step_activity,      // index 4 (خطوة 5)
-      'المستندات',                               // index 5 (خطوة 6)
-      'المراجعة',                                // index 6 (خطوة 7)
+      context.loc.new_order_step_documents,                               // index 5 (خطوة 6)
+      context.loc.new_order_step_review,                                // index 6 (خطوة 7)
     ];
 
     // معادلة حساب بداية المجموعة (visibleStart):

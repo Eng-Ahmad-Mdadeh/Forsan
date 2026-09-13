@@ -7958,6 +7958,50 @@ abstract class AppLocalizations {
 
   String get new_order_company_representative_description;
 
+  String get new_order_step_documents;
+  String get new_order_step_review;
+  String get new_order_documents_size_error;
+  String get new_order_documents_available_title;
+  String get new_order_documents_available_description;
+  String get new_order_document_authorization;
+  String get new_order_document_if_available;
+  String get new_order_document_identity;
+  String get new_order_document_required_when_available;
+  String get new_order_document_headquarters;
+  String get new_order_attachments;
+  String get new_order_upload_tap;
+  String get new_order_upload_hint;
+  String get new_order_delete_attachment;
+  String get new_order_activity_title;
+  String get new_order_activity_description;
+  String get new_order_main_activity;
+  String get new_order_trade;
+  String get new_order_industry;
+  String get new_order_services;
+  String get new_order_agriculture;
+  String get new_order_education;
+  String get new_order_health;
+  String get new_order_tourism;
+  String get new_order_requires_special_license;
+  String get new_order_activity_description_label;
+  String get new_order_activity_description_hint;
+  String get new_order_sub_activity_description_label;
+  String get new_order_delete_sub_activity;
+  String get new_order_sub_activity_description_hint;
+  String get new_order_add_sub_activity;
+  String get new_order_partner_count;
+  String get new_order_expected_capital;
+  String get new_order_expected_capital_hint;
+  String get new_order_primary_partner;
+  String get new_order_ownership_percentage;
+  String get new_order_ownership_percentage_hint;
+  String get new_order_contribution_type;
+  String get new_order_cash_contribution;
+  String get new_order_in_kind_contribution;
+  String get new_order_mixed_contribution;
+  String get new_order_add_partner;
+  String get new_order_delete_partner;
+
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

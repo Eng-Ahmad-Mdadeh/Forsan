@@ -4657,4 +4657,133 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get new_order_company_representative_description => 'I am submitting this request on behalf of an entity.';
 
+  @override
+  String get new_order_step_documents => 'Documents';
+
+  @override
+  String get new_order_step_review => 'Review';
+
+  @override
+  String get new_order_documents_size_error => 'The maximum file size is 10 MB.';
+
+  @override
+  String get new_order_documents_available_title => 'Attach available documents';
+
+  @override
+  String get new_order_documents_available_description => 'You do not need to provide all documents now. Upload what is available and the Forsan team will identify missing documents after review.';
+
+  @override
+  String get new_order_document_authorization => 'Power of attorney or authorization';
+
+  @override
+  String get new_order_document_if_available => 'If available';
+
+  @override
+  String get new_order_document_identity => 'Identity card / passport copy';
+
+  @override
+  String get new_order_document_required_when_available => 'Required when available';
+
+  @override
+  String get new_order_document_headquarters => 'Headquarters document';
+
+  @override
+  String get new_order_attachments => 'Attachments';
+
+  @override
+  String get new_order_upload_tap => 'Tap to upload';
+
+  @override
+  String get new_order_upload_hint => 'Maximum size per file is 10 MB - PDF, JPG, PNG';
+
+  @override
+  String get new_order_delete_attachment => 'Delete attachment';
+
+  @override
+  String get new_order_activity_title => 'Company activity';
+
+  @override
+  String get new_order_activity_description => 'The clearer the activity description, the more accurately the team can determine the process and requirements.';
+
+  @override
+  String get new_order_main_activity => 'Main activity';
+
+  @override
+  String get new_order_trade => 'Trade';
+
+  @override
+  String get new_order_industry => 'Industry';
+
+  @override
+  String get new_order_services => 'Services';
+
+  @override
+  String get new_order_agriculture => 'Agriculture';
+
+  @override
+  String get new_order_education => 'Education';
+
+  @override
+  String get new_order_health => 'Health';
+
+  @override
+  String get new_order_tourism => 'Tourism';
+
+  @override
+  String get new_order_requires_special_license => 'Does it require special approval or licensing?';
+
+  @override
+  String get new_order_activity_description_label => 'Detailed activity description';
+
+  @override
+  String get new_order_activity_description_hint => 'Example: Mohammad Khatib';
+
+  @override
+  String get new_order_sub_activity_description_label => 'Detailed sub-activity description';
+
+  @override
+  String get new_order_delete_sub_activity => 'Delete sub-activity';
+
+  @override
+  String get new_order_sub_activity_description_hint => 'Example: Mohammad Al-Khatib';
+
+  @override
+  String get new_order_add_sub_activity => 'Add sub-activity';
+
+  @override
+  String get new_order_partner_count => 'Number of partners';
+
+  @override
+  String get new_order_expected_capital => 'Expected capital';
+
+  @override
+  String get new_order_expected_capital_hint => 'Example: 1,000,000 SYP';
+
+  @override
+  String get new_order_primary_partner => 'Primary partner / owner';
+
+  @override
+  String get new_order_ownership_percentage => 'Ownership percentage';
+
+  @override
+  String get new_order_ownership_percentage_hint => 'Example: 50%';
+
+  @override
+  String get new_order_contribution_type => 'Contribution type';
+
+  @override
+  String get new_order_cash_contribution => 'Cash contribution';
+
+  @override
+  String get new_order_in_kind_contribution => 'In-kind contribution';
+
+  @override
+  String get new_order_mixed_contribution => 'In-kind and cash contribution';
+
+  @override
+  String get new_order_add_partner => 'Add new partner';
+
+  @override
+  String get new_order_delete_partner => 'Delete partner';
+
 }

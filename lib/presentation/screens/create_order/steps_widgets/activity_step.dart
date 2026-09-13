@@ -35,7 +35,7 @@ class ActivityStep extends StatelessWidget {
               SizedBox(width: AppWidth.w4),
               Expanded(
                 child: SectionTitle(
-                  text: 'طبيعة نشاط الشركة ',
+                  text: context.loc.new_order_activity_title,
                   color: AppColors.primaryDark,
                   fontSize: AppFontSize.s14,
                 ),
@@ -45,7 +45,7 @@ class ActivityStep extends StatelessWidget {
           SizedBox(height: AppHeight.h8),
           BodyTitle(
             text:
-                'كلما كان وصف النشاط أوضح، تمكن الفريق من تحديد المسار والمتطلبات بشكل أدق',
+                context.loc.new_order_activity_description,
             color: AppColors.secondaryText,
             fontSize: AppFontSize.s12,
             fontWeight: AppFontWeight.regular,
@@ -54,27 +54,27 @@ class ActivityStep extends StatelessWidget {
           SizedBox(height: AppHeight.h8),
           _buildDropdown(
             context,
-            label: 'النشاط الرئيسي',
+            label: context.loc.new_order_main_activity,
             items: [
-              'تجارة',
-              'صناعة',
-              'خدمات',
-              'زراعة',
-              'تعليم',
-              'صحة',
-              'سياحة',
+              context.loc.new_order_trade,
+              context.loc.new_order_industry,
+              context.loc.new_order_services,
+              context.loc.new_order_agriculture,
+              context.loc.new_order_education,
+              context.loc.new_order_health,
+              context.loc.new_order_tourism,
             ],
           ),
           SizedBox(height: AppHeight.h8),
           _buildDropdown(
             context,
-            label: 'هل يتطلب موافقة أو ترخيصاً خاصاً؟',
-            items: ['نعم', 'لا'],
+            label: context.loc.new_order_requires_special_license,
+            items: [context.loc.new_order_yes, context.loc.new_order_no],
           ),
           SizedBox(height: AppHeight.h10),
           CustomInputField(
-            title: 'وصف النشاط بالتفصيل',
-            hintText: 'مثال : محمد خطيب',
+            title: context.loc.new_order_activity_description_label,
+            hintText: context.loc.new_order_activity_description_hint,
             fontSize: AppFontSize.s16,
             backgroundColor: AppColors.white,
             maxLines: 4,
@@ -91,7 +91,7 @@ class ActivityStep extends StatelessWidget {
                 children: [
                   Expanded(
                     child: BodyTitle(
-                      text: 'وصف النشاط الفرعي بالتفصيل',
+                      text: context.loc.new_order_sub_activity_description_label,
                       color: AppColors.mainText,
                       fontSize: AppFontSize.s14,
                       fontWeight: AppFontWeight.medium,
@@ -103,7 +103,7 @@ class ActivityStep extends StatelessWidget {
                     child: IconButton(
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      tooltip: 'حذف النشاط الفرعي',
+                      tooltip: context.loc.new_order_delete_sub_activity,
                       onPressed: subDescriptionController.clear,
                       icon: Icon(
                         Icons.delete_outline_rounded,
@@ -116,7 +116,7 @@ class ActivityStep extends StatelessWidget {
               ),
               SizedBox(height: AppHeight.h4),
               CustomInputField(
-                hintText: 'مثال : محمد الخطيب',
+                hintText: context.loc.new_order_sub_activity_description_hint,
                 fontSize: AppFontSize.s16,
                 backgroundColor: AppColors.white,
                 maxLines: 4,
@@ -152,7 +152,7 @@ class ActivityStep extends StatelessWidget {
                   SizedBox(width: AppWidth.w4),
                   Flexible(
                     child: SectionTitle(
-                      text: 'اضافة نشاط فرعي',
+                      text: context.loc.new_order_add_sub_activity,
                       color: AppColors.primaryDark,
                       fontSize: AppFontSize.s14,
                       fontWeight: AppFontWeight.regular,

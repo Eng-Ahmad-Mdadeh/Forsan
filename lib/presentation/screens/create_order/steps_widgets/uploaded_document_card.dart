@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
@@ -44,7 +45,7 @@ class UploadedDocumentCard extends StatelessWidget {
           ),
           SizedBox(width: AppWidth.w12),
           IconButton(
-            tooltip: 'حذف المرفق',
+            tooltip: context.loc.new_order_delete_attachment,
             onPressed: onRemove,
             icon: Icon(
               Icons.delete_outline_rounded,

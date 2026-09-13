@@ -22,7 +22,7 @@ class CreateOrderAppBar extends StatelessWidget implements PreferredSizeWidget{
       customActions: [
         Semantics(
           button: true,
-          label: 'الإشعارات',
+          label: context.loc.notifications,
           child: InkWell(
             onTap: () {},
             borderRadius: BorderRadius.circular(AppRadius.r8),
