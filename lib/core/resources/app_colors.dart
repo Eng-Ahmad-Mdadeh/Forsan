@@ -66,6 +66,12 @@ class AppColors {
   static const Color blue = Color(0xFF34A4B0);
   static const Color shadowPrimary = Color(0x8E0D3D35);
 
+  /// More screen profile banner.
+  static const Color profileBannerStart = Color(0xFF197968);
+  static const Color profileBannerEnd = normal;
+  static const Color profileAvatarBackground = Color(0xFFF7F5FF);
+  static const Color profileAvatarForeground = Color(0xFF0D4B40);
+
   /// Splash screen
   static const Color splashBackground = normal;
   static const Color splashPattern = Color(0xFF28564E);

@@ -1,30 +1,46 @@
 import 'package:flutter/material.dart';
 import '../../core/resources/app_colors.dart';
+import '../../../core/resources/app_values.dart';
 import '../../core/resources/app_fonts.dart';
 import 'text/body_title.dart';
 
 class CustomAvatar extends StatelessWidget {
   final String name;
+  final Color backgroundColor;
+  final Color foregroundColor;
+  final IconData? icon;
+  final double? iconSize;
+  final BoxBorder? border;
 
-  const CustomAvatar({super.key, required this.name});
+  const CustomAvatar({
+    super.key,
+    required this.name,
+    this.backgroundColor = AppColors.yellow,
+    this.foregroundColor = AppColors.white,
+    this.icon,
+    this.iconSize,
+    this.border,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: const BoxDecoration(
+      width: AppWidth.w100,
+      height: AppHeight.h100,
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.yellow,
-        // color: Color.fromRGBO(name.codeUnitAt(0), name.codeUnitAt(0) ~/ 2, name.codeUnitAt(0) ~/ 3, 0.5),
+        color: backgroundColor,
+        border: border,
       ),
       alignment: Alignment.center,
-      child: BodyTitle(
-        text: name[0],
-        color: AppColors.white,
-        fontSize: AppFontSize.s40,
-        fontWeight: AppFontWeight.medium,
-      ),
+      child: icon != null
+          ? Icon(icon, color: foregroundColor, size: iconSize)
+          : BodyTitle(
+              text: name.isEmpty ? '' : name[0],
+              color: foregroundColor,
+              fontSize: AppFontSize.s16,
+              fontWeight: AppFontWeight.bold,
+            ),
     );
   }
 }
