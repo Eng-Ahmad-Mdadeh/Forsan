@@ -103,29 +103,15 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   ActivityStep(),
                   DocumentsStep(),
                   ReviewStep(
-                    cards: [
-                      ReviewSectionCard(
-                        title: context.loc.new_order_step_establishment,
-                        icon: Icons.grid_view_rounded,
-                        onEdit: () => _goToStep(context, 0),
-                        fields: [
-                          (
-                            label: context.loc.new_order_establishment_title,
-                            value: _establishmentTypeLabel(
-                              context,
-                              state.establishmentType,
-                            ),
-                          ),
-                          (
-                            label: context.loc.new_order_applicant_role_title,
-                            value: _applicantTypeLabel(
-                              context,
-                              state.applicantType,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                    establishmentType: _establishmentTypeLabel(
+                      context,
+                      state.establishmentType,
+                    ),
+                    applicantType: _applicantTypeLabel(
+                      context,
+                      state.applicantType,
+                    ),
+                    onEditStep: (step) => _goToStep(context, step),
                   ),
                 ],
               ),
