@@ -13,6 +13,7 @@ import 'package:forsan/presentation/screens/create_order/steps_widgets/establish
 import 'package:forsan/presentation/screens/create_order/steps_widgets/order_step_indicator.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/ownership_structure_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/proposed_company_info_step.dart';
+import 'package:forsan/presentation/screens/create_order/steps_widgets/review_step.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
@@ -101,6 +102,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   const OwnershipStructureStep(),
                    ActivityStep(),
                    DocumentsStep(),
+                  const ReviewStep(),
                 ],
               ),
             ),
