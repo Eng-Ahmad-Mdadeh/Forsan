@@ -26,17 +26,17 @@ class DocumentRequirementCard extends StatelessWidget {
         horizontal: AppPaddingWidth.p16,
         vertical: AppPaddingHeight.p18,
       ),
-      borderRadius: BorderRadius.circular(AppRadius.r12),
+      borderRadius: BorderRadius.circular(AppRadius.r8),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.primaryDark, size: AppSize.s22),
-          SizedBox(width: AppWidth.w12),
+          Icon(icon, color: AppColors.primaryDark, size: AppSize.s18),
+          SizedBox(width: AppWidth.w4),
           Expanded(
             child: SectionTitle(
               text: title,
               color: AppColors.primaryDark,
-              fontSize: AppFontSize.s16,
-              fontWeight: AppFontWeight.medium,
+              fontSize: AppFontSize.s14,
+              fontWeight: AppFontWeight.regular,
               maxLines: 1,
             ),
           ),
@@ -44,7 +44,7 @@ class DocumentRequirementCard extends StatelessWidget {
           BodyTitle(
             text: availability,
             color: AppColors.secondary,
-            fontSize: AppFontSize.s14,
+            fontSize: AppFontSize.s12,
             fontWeight: AppFontWeight.regular,
             maxLines: 1,
           ),

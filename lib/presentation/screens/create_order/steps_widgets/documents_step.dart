@@ -91,7 +91,7 @@ class DocumentsStep extends StatelessWidget {
               const DocumentRequirementCard(
                 title: 'وكالة أو تفويض',
                 availability: 'إن وجد',
-                icon: Icons.assignment_ind_outlined,
+                icon: Icons.add_moderator_outlined,
               ),
               SizedBox(height: AppHeight.h10),
               const DocumentRequirementCard(
