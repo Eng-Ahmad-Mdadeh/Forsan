@@ -102,7 +102,31 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   const OwnershipStructureStep(),
                   ActivityStep(),
                   DocumentsStep(),
-                  ReviewStep(sections: _reviewSections(context, state)),
+                  ReviewStep(
+                    cards: [
+                      ReviewSectionCard(
+                        title: context.loc.new_order_step_establishment,
+                        icon: Icons.grid_view_rounded,
+                        onEdit: () => _goToStep(context, 0),
+                        fields: [
+                          (
+                            label: context.loc.new_order_establishment_title,
+                            value: _establishmentTypeLabel(
+                              context,
+                              state.establishmentType,
+                            ),
+                          ),
+                          (
+                            label: context.loc.new_order_applicant_role_title,
+                            value: _applicantTypeLabel(
+                              context,
+                              state.applicantType,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -136,29 +160,6 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
         ),
       ),
     );
-  }
-
-  List<ReviewSection> _reviewSections(
-    BuildContext context,
-    NewOrderState state,
-  ) {
-    return [
-      ReviewSection(
-        title: context.loc.new_order_step_establishment,
-        icon: Icons.grid_view_rounded,
-        onEdit: () => _goToStep(context, 0),
-        fields: [
-          ReviewField(
-            label: context.loc.new_order_establishment_title,
-            value: _establishmentTypeLabel(context, state.establishmentType),
-          ),
-          ReviewField(
-            label: context.loc.new_order_applicant_role_title,
-            value: _applicantTypeLabel(context, state.applicantType),
-          ),
-        ],
-      ),
-    ];
   }
 
   String _establishmentTypeLabel(BuildContext context, String value) {
