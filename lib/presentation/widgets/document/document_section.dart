@@ -60,7 +60,7 @@ class DocumentSection extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: AppColors.backGround,
-              border: Border.all(color: AppColors.lightActive),
+              border: Border.all(color: AppColors.greyDivider),
               borderRadius: BorderRadius.circular(AppRadius.r16),
             ),
             child: ClipRRect(

@@ -22,7 +22,7 @@ class UploadedDocumentCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       padding: EdgeInsets.symmetric(
         horizontal: AppPaddingWidth.p16,
-        vertical: AppPaddingHeight.p16,
+       // vertical: AppPaddingHeight.p10,
       ),
       borderRadius: BorderRadius.circular(AppRadius.r16),
       child: Row(
@@ -30,14 +30,14 @@ class UploadedDocumentCard extends StatelessWidget {
           Icon(
             Icons.description_outlined,
             color: AppColors.primary,
-            size: AppSize.s30,
+            size: AppSize.s16,
           ),
-          SizedBox(width: AppWidth.w12),
+          SizedBox(width: AppWidth.w4),
           Expanded(
             child: BodyTitle(
               text: document.name,
               color: AppColors.primary,
-              fontSize: AppFontSize.s16,
+              fontSize: AppFontSize.s13,
               fontWeight: AppFontWeight.regular,
               maxLines: 1,
             ),
@@ -49,7 +49,7 @@ class UploadedDocumentCard extends StatelessWidget {
             icon: Icon(
               Icons.delete_outline_rounded,
               color: AppColors.red,
-              size: AppSize.s30,
+              size: AppSize.s20,
             ),
           ),
         ],

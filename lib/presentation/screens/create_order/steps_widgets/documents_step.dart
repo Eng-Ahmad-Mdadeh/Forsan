@@ -1,4 +1,3 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/resources/app_colors.dart';
@@ -9,6 +8,7 @@ import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
 import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/document_requirement_card.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/uploaded_document_card.dart';
+import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -17,35 +17,22 @@ class DocumentsStep extends StatelessWidget {
   const DocumentsStep({super.key});
 
   Future<void> _pickDocuments(BuildContext context) async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: AppFileConstraints.documentExtensions,
-      allowMultiple: true,
-    );
+    final rejectedDocuments = await context.read<NewOrderCubit>().pickDocuments();
 
-    if (result == null || !context.mounted) return;
-
-    final validDocuments = result.files
-        .where(
-          (file) => file.size <= AppFileConstraints.maxDocumentSizeInBytes,
-        )
-        .toList();
-    final hasOversizedDocument = validDocuments.length != result.files.length;
-
-    context.read<NewOrderCubit>().addDocuments(validDocuments);
-
-    if (hasOversizedDocument) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: BodyTitle(
-            text: 'الحد الأقصى لحجم الملف هو 10 MB.',
-            color: AppColors.white,
-            fontWeight: AppFontWeight.regular,
-          ),
-          backgroundColor: AppColors.red,
-        ),
-      );
+    if (!context.mounted || rejectedDocuments == 0) {
+      return;
     }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: BodyTitle(
+          text: 'الحد الأقصى لحجم الملف هو 10 MB.',
+          color: AppColors.white,
+          fontWeight: AppFontWeight.regular,
+        ),
+        backgroundColor: AppColors.red,
+      ),
+    );
   }
 
   @override
@@ -91,7 +78,7 @@ class DocumentsStep extends StatelessWidget {
               const DocumentRequirementCard(
                 title: 'وكالة أو تفويض',
                 availability: 'إن وجد',
-                icon: Icons.add_moderator_outlined,
+                icon: Icons.assignment_ind_outlined,
               ),
               SizedBox(height: AppHeight.h10),
               const DocumentRequirementCard(
@@ -109,16 +96,16 @@ class DocumentsStep extends StatelessWidget {
               SectionTitle(
                 text: 'مرفقات',
                 color: AppColors.mainText,
-                fontSize: AppFontSize.s22,
+                fontSize: AppFontSize.s14,
                 textAlign: TextAlign.right,
               ),
-              SizedBox(height: AppHeight.h16),
               DocumentSection(
                 image: null,
                 onTap: () => _pickDocuments(context),
                 paddingTop: AppPaddingHeight.p1,
                 uploadLabel: 'اضغط للرفع',
                 uploadHint: 'الحد الأقصى لكل ملف 10 MB - PDF, JPG, PNG',
+
               ),
               if (state.documents.isNotEmpty) ...[
                 SizedBox(height: AppHeight.h20),
@@ -134,6 +121,39 @@ class DocumentsStep extends StatelessWidget {
                   ),
                 ),
               ],
+              SizedBox(height: AppHeight.h26),
+              SectionCard(
+                margin: EdgeInsets.zero,
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppPaddingWidth.p12,
+                  vertical: AppPaddingHeight.p10,
+                ),
+                borderRadius: BorderRadius.circular(AppRadius.r7),
+                backgroundColor: AppColors.goldBackGround,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.info_outline_rounded,
+                      color: AppColors.mainText,
+                      size: AppSize.s20,
+                    ),
+                    SizedBox(width: AppWidth.w8),
+                    Expanded(
+                      child: BodyTitle(
+                        text: 'تحفظ الملفات ضمن ملف الطلب وتستخدم فقط لأغراض دراسة وتنفيذ الخدمة.',
+                        color: AppColors.mainText,
+                        fontSize: AppFontSize.s12,
+                        fontWeight: AppFontWeight.regular,
+                        textAlign: TextAlign.start,
+                        maxLines: 2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: AppHeight.h50),
+
             ],
           ),
         );
