@@ -64,12 +64,12 @@ class _ProfileCard extends StatelessWidget {
             AppColors.profileBannerEnd,
           ],
         ),
-        borderRadius: BorderRadius.circular(AppRadius.r18),
+        borderRadius: BorderRadius.circular(AppRadius.r12),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: AppPaddingWidth.p12,
-          vertical: AppPaddingHeight.p12,
+          horizontal: AppPaddingWidth.p16,
+          vertical: AppPaddingHeight.p10,
         ),
         child: Row(
           textDirection: TextDirection.rtl,
@@ -90,7 +90,7 @@ class _ProfileCard extends StatelessWidget {
                       iconSize: AppSize.s58,
                       border: Border.all(
                         color: AppColors.white,
-                        width: AppWidth.w4,
+                        width: AppWidth.w6,
                       ),
                     ),
                   ),
@@ -107,7 +107,7 @@ class _ProfileCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(width: AppWidth.w20),
+            SizedBox(width: AppWidth.w70),
             Expanded(
               child: ImageView(
                 imagePath: AppAssets.fullLogo,
