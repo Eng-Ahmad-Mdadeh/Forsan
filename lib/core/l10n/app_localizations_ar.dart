@@ -4625,4 +4625,133 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get new_order_company_representative_description => 'أتقدم بالطلب نيابة عن جهة.';
 
+  @override
+  String get new_order_step_documents => 'المستندات';
+
+  @override
+  String get new_order_step_review => 'المراجعة';
+
+  @override
+  String get new_order_documents_size_error => 'الحد الأقصى لحجم الملف هو 10 MB.';
+
+  @override
+  String get new_order_documents_available_title => 'ارفاق الوثائق المتوفرة';
+
+  @override
+  String get new_order_documents_available_description => 'ليس من الضروري توفر جميع الوثائق الآن. ارفع المتوفر وسيحدد فريق فرسان النواقص بعد المراجعة.';
+
+  @override
+  String get new_order_document_authorization => 'وكالة أو تفويض';
+
+  @override
+  String get new_order_document_if_available => 'إن وجد';
+
+  @override
+  String get new_order_document_identity => 'صورة الهوية / جواز السفر';
+
+  @override
+  String get new_order_document_required_when_available => 'مطلوب عند توفره';
+
+  @override
+  String get new_order_document_headquarters => 'مستند المقر';
+
+  @override
+  String get new_order_attachments => 'مرفقات';
+
+  @override
+  String get new_order_upload_tap => 'اضغط للرفع';
+
+  @override
+  String get new_order_upload_hint => 'الحد الأقصى لكل ملف 10 MB - PDF, JPG, PNG';
+
+  @override
+  String get new_order_delete_attachment => 'حذف المرفق';
+
+  @override
+  String get new_order_activity_title => 'طبيعة نشاط الشركة';
+
+  @override
+  String get new_order_activity_description => 'كلما كان وصف النشاط أوضح، تمكن الفريق من تحديد المسار والمتطلبات بشكل أدق';
+
+  @override
+  String get new_order_main_activity => 'النشاط الرئيسي';
+
+  @override
+  String get new_order_trade => 'تجارة';
+
+  @override
+  String get new_order_industry => 'صناعة';
+
+  @override
+  String get new_order_services => 'خدمات';
+
+  @override
+  String get new_order_agriculture => 'زراعة';
+
+  @override
+  String get new_order_education => 'تعليم';
+
+  @override
+  String get new_order_health => 'صحة';
+
+  @override
+  String get new_order_tourism => 'سياحة';
+
+  @override
+  String get new_order_requires_special_license => 'هل يتطلب موافقة أو ترخيصاً خاصاً؟';
+
+  @override
+  String get new_order_activity_description_label => 'وصف النشاط بالتفصيل';
+
+  @override
+  String get new_order_activity_description_hint => 'مثال : محمد خطيب';
+
+  @override
+  String get new_order_sub_activity_description_label => 'وصف النشاط الفرعي بالتفصيل';
+
+  @override
+  String get new_order_delete_sub_activity => 'حذف النشاط الفرعي';
+
+  @override
+  String get new_order_sub_activity_description_hint => 'مثال : محمد الخطيب';
+
+  @override
+  String get new_order_add_sub_activity => 'اضافة نشاط فرعي';
+
+  @override
+  String get new_order_partner_count => 'عدد الشركاء';
+
+  @override
+  String get new_order_expected_capital => 'رأس المال المتوقع';
+
+  @override
+  String get new_order_expected_capital_hint => 'مثال :1,000,000 ل.س';
+
+  @override
+  String get new_order_primary_partner => 'الشريك / المالك الرئيسي';
+
+  @override
+  String get new_order_ownership_percentage => 'نسبة الملكية';
+
+  @override
+  String get new_order_ownership_percentage_hint => 'مثال :50%';
+
+  @override
+  String get new_order_contribution_type => 'نوع المساهمة';
+
+  @override
+  String get new_order_cash_contribution => 'مساهمة نقدية';
+
+  @override
+  String get new_order_in_kind_contribution => 'مساهمة عينية';
+
+  @override
+  String get new_order_mixed_contribution => 'مساهمة عينية ونقدية';
+
+  @override
+  String get new_order_add_partner => 'إضافة شريك جديد';
+
+  @override
+  String get new_order_delete_partner => 'حذف الشريك';
+
 }

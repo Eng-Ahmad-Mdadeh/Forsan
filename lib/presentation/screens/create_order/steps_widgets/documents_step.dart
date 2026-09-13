@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
@@ -26,7 +27,7 @@ class DocumentsStep extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: BodyTitle(
-          text: 'الحد الأقصى لحجم الملف هو 10 MB.',
+          text: context.loc.new_order_documents_size_error,
           color: AppColors.white,
           fontWeight: AppFontWeight.regular,
         ),
@@ -58,7 +59,7 @@ class DocumentsStep extends StatelessWidget {
                   SizedBox(width: AppWidth.w4),
                   Expanded(
                     child: SectionTitle(
-                      text: 'ارفاق الوثائق المتوفرة',
+                      text: context.loc.new_order_documents_available_title,
                       color: AppColors.primaryDark,
                       fontSize: AppFontSize.s14,
                     ),
@@ -68,33 +69,33 @@ class DocumentsStep extends StatelessWidget {
               SizedBox(height: AppHeight.h8),
               BodyTitle(
                 text:
-                    'ليس من الضروري توفر جميع الوثائق الآن. ارفع المتوفر وسيحدد فريق فرسان النواقص بعد المراجعة.',
+                    context.loc.new_order_documents_available_description,
                 color: AppColors.secondaryText,
                 fontSize: AppFontSize.s12,
                 fontWeight: AppFontWeight.regular,
                 maxLines: 2,
               ),
               SizedBox(height: AppHeight.h16),
-              const DocumentRequirementCard(
-                title: 'وكالة أو تفويض',
-                availability: 'إن وجد',
-                icon: Icons.assignment_ind_outlined,
+              DocumentRequirementCard(
+                title: context.loc.new_order_document_authorization,
+                availability: context.loc.new_order_document_if_available,
+                icon: Icons.add_moderator_outlined,
               ),
               SizedBox(height: AppHeight.h10),
-              const DocumentRequirementCard(
-                title: 'صورة الهوية / جواز السفر',
-                availability: 'مطلوب عند توفره',
+              DocumentRequirementCard(
+                title: context.loc.new_order_document_identity,
+                availability: context.loc.new_order_document_required_when_available,
                 icon: Icons.badge_outlined,
               ),
               SizedBox(height: AppHeight.h10),
-              const DocumentRequirementCard(
-                title: 'مستند المقر',
-                availability: 'إن وجد',
+              DocumentRequirementCard(
+                title: context.loc.new_order_document_headquarters,
+                availability: context.loc.new_order_document_if_available,
                 icon: Icons.description_outlined,
               ),
               SizedBox(height: AppHeight.h24),
               SectionTitle(
-                text: 'مرفقات',
+                text: context.loc.new_order_attachments,
                 color: AppColors.mainText,
                 fontSize: AppFontSize.s14,
                 textAlign: TextAlign.right,
@@ -103,9 +104,8 @@ class DocumentsStep extends StatelessWidget {
                 image: null,
                 onTap: () => _pickDocuments(context),
                 paddingTop: AppPaddingHeight.p1,
-                uploadLabel: 'اضغط للرفع',
-                uploadHint: 'الحد الأقصى لكل ملف 10 MB - PDF, JPG, PNG',
-
+                uploadLabel: context.loc.new_order_upload_tap,
+                uploadHint: context.loc.new_order_upload_hint,
               ),
               if (state.documents.isNotEmpty) ...[
                 SizedBox(height: AppHeight.h20),

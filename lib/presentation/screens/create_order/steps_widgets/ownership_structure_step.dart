@@ -51,13 +51,13 @@ class OwnershipStructureStep extends StatelessWidget {
           SizedBox(height: AppHeight.h8),
           _buildDropdown(
             context,
-            label: 'عدد الشركاء',
+            label: context.loc.new_order_partner_count,
             items: ['1', '2', '3', '4', '5'],
           ),
           SizedBox(height: AppHeight.h8),
           CustomInputField(
-            title: 'رأس المال المتوقع',
-            hintText: 'مثال :1,000,000 ل.س',
+            title: context.loc.new_order_expected_capital,
+            hintText: context.loc.new_order_expected_capital_hint,
             fontSize: AppFontSize.s16,
             backgroundColor: AppColors.white,
           ),
@@ -72,7 +72,7 @@ class OwnershipStructureStep extends StatelessWidget {
               SizedBox(width: AppWidth.w4),
               Expanded(
                 child: SectionTitle(
-                  text: 'الشريك / المالك الرئيسي',
+                  text: context.loc.new_order_primary_partner,
                   color: AppColors.primaryDark,
                   fontSize: AppFontSize.s14,
                 ),
@@ -81,8 +81,8 @@ class OwnershipStructureStep extends StatelessWidget {
           ),
           SizedBox(height: AppHeight.h8),
           CustomInputField(
-            title: 'الاسم الكامل',
-            hintText: 'مثال :محمد الخطيب',
+            title: context.loc.new_order_full_name,
+            hintText: context.loc.new_order_full_name_hint,
             fontSize: AppFontSize.s16,
             backgroundColor: AppColors.white,
           ),
@@ -94,16 +94,16 @@ class OwnershipStructureStep extends StatelessWidget {
           ),
           SizedBox(height: AppHeight.h8),
           CustomInputField(
-            title: 'نسبة الملكية',
-            hintText: 'مثال :50%',
+            title: context.loc.new_order_ownership_percentage,
+            hintText: context.loc.new_order_ownership_percentage_hint,
             fontSize: AppFontSize.s16,
             backgroundColor: AppColors.white,
           ),
           SizedBox(height: AppHeight.h8),
           _buildDropdown(
             context,
-            label: 'نوع المساهمة',
-            items: ['مساهمة نقدية', 'مساهمة عينية', 'مساهمة عينية ونقدية'],
+            label: context.loc.new_order_contribution_type,
+            items: [context.loc.new_order_cash_contribution, context.loc.new_order_in_kind_contribution, context.loc.new_order_mixed_contribution],
           ),
           SizedBox(height: AppHeight.h8),
           Stack(
@@ -124,8 +124,8 @@ class OwnershipStructureStep extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min, // لجعل الارتفاع متناسباً مع العناصر
                   children: [
                     CustomInputField(
-                      title: 'الاسم الكامل',
-                      hintText: 'مثال :محمد الخطيب',
+                      title: context.loc.new_order_full_name,
+                      hintText: context.loc.new_order_full_name_hint,
                       fontSize: AppFontSize.s16,
                       backgroundColor: AppColors.white,
                     ),
@@ -140,19 +140,19 @@ class OwnershipStructureStep extends StatelessWidget {
                     ),
                     SizedBox(height: AppHeight.h8),
                     CustomInputField(
-                      title: 'نسبة الملكية',
-                      hintText: 'مثال :50%',
+                      title: context.loc.new_order_ownership_percentage,
+                      hintText: context.loc.new_order_ownership_percentage_hint,
                       fontSize: AppFontSize.s16,
                       backgroundColor: AppColors.white,
                     ),
                     SizedBox(height: AppHeight.h8),
                     _buildDropdown(
                       context,
-                      label: 'نوع المساهمة',
+                      label: context.loc.new_order_contribution_type,
                       items: [
-                        'مساهمة نقدية',
-                        'مساهمة عينية',
-                        'مساهمة عينية ونقدية',
+                        context.loc.new_order_cash_contribution,
+                        context.loc.new_order_in_kind_contribution,
+                        context.loc.new_order_mixed_contribution,
                       ],
                     ),
                   ],
@@ -200,7 +200,7 @@ class OwnershipStructureStep extends StatelessWidget {
                   SizedBox(width: AppWidth.w4),
                   Flexible(
                     child: SectionTitle(
-                      text: 'إضافة شريك جديد',
+                      text: context.loc.new_order_add_partner,
                       color: AppColors.primaryDark,
                       fontSize: AppFontSize.s14,
                       fontWeight: AppFontWeight.regular,
