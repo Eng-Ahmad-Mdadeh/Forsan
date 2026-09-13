@@ -175,8 +175,7 @@ class ReviewSectionCard extends StatelessWidget {
         vertical: AppPaddingHeight.p16,
       ),
       borderRadius: BorderRadius.circular(AppRadius.r12),
-      showShadow: false,
-      showBorder: true,
+      showShadow: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -190,7 +189,7 @@ class ReviewSectionCard extends StatelessWidget {
             _ReviewFieldRow(field: fields[index]),
             if (index < fields.length - 1) ...[
               SizedBox(height: AppHeight.h12),
-              const Divider(color: AppColors.greyDivider, height: 1),
+              const Divider(color: AppColors.goldBackGround, height: 1),
               SizedBox(height: AppHeight.h12),
             ],
           ],
@@ -270,7 +269,8 @@ class _ReviewFieldRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           child: BodyTitle(
