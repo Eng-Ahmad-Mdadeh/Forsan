@@ -84,16 +84,48 @@ class ActivityStep extends StatelessWidget {
             showCharacterCounter: true,
           ),
 
-          CustomInputField(
-            title: 'وصف النشاط الفرعي بالتفصيل',
-            hintText: 'مثال : محمد الخطيب',
-            fontSize: AppFontSize.s16,
-            backgroundColor: AppColors.white,
-            maxLines: 4,
-            maxLength: 100,
-            isExpanded: true,
-            controller: subDescriptionController,
-            showCharacterCounter: true,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: BodyTitle(
+                      text: 'وصف النشاط الفرعي بالتفصيل',
+                      color: AppColors.mainText,
+                      fontSize: AppFontSize.s14,
+                      fontWeight: AppFontWeight.medium,
+                    ),
+                  ),
+                  SizedBox(
+                    width: AppWidth.w24,
+                    height: AppHeight.h24,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      tooltip: 'حذف النشاط الفرعي',
+                      onPressed: subDescriptionController.clear,
+                      icon: Icon(
+                        Icons.delete_outline_rounded,
+                        color: AppColors.red,
+                        size: AppSize.s20,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: AppHeight.h4),
+              CustomInputField(
+                hintText: 'مثال : محمد الخطيب',
+                fontSize: AppFontSize.s16,
+                backgroundColor: AppColors.white,
+                maxLines: 4,
+                maxLength: 100,
+                isExpanded: true,
+                controller: subDescriptionController,
+                showCharacterCounter: true,
+              ),
+            ],
           ),
           Padding(
             padding: EdgeInsets.only(
