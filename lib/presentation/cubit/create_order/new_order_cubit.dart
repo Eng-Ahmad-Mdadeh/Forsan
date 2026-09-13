@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
 
 class NewOrderCubit extends Cubit<NewOrderState> {
@@ -22,5 +23,16 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     if (type == state.applicantType) return;
 
     emit(state.copyWith(applicantType: type));
+  }
+
+  void addDocuments(List<PlatformFile> documents) {
+    if (documents.isEmpty) return;
+
+    emit(state.copyWith(documents: [...state.documents, ...documents]));
+  }
+
+  void removeDocument(PlatformFile document) {
+    final documents = List<PlatformFile>.of(state.documents)..remove(document);
+    emit(state.copyWith(documents: documents));
   }
 }
