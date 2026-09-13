@@ -221,7 +221,7 @@ class _ReviewCardHeader extends StatelessWidget {
         if (onEdit != null)
           Semantics(
             button: true,
-            label: MaterialLocalizations.of(context).editButtonLabel,
+           // label: MaterialLocalizations.of(context).editButtonLabel,
             child: InkResponse(
               key: ValueKey('review_section_edit_$title'),
               onTap: onEdit,
