@@ -18,14 +18,14 @@ import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 
-class NewOrderScreen extends StatefulWidget {
-  const NewOrderScreen({super.key});
+class CreateNewOrderScreen extends StatefulWidget {
+  const CreateNewOrderScreen({super.key});
 
   @override
-  State<NewOrderScreen> createState() => _NewOrderScreenState();
+  State<CreateNewOrderScreen> createState() => _CreateNewOrderScreenState();
 }
 
-class _NewOrderScreenState extends State<NewOrderScreen> {
+class _CreateNewOrderScreenState extends State<CreateNewOrderScreen> {
   final PageController _pageController = PageController();
 
   @override
@@ -139,5 +139,4 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
       ),
     );
   }
-
 }

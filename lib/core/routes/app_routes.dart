@@ -8,8 +8,8 @@ import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/core/utils/enums/enum_utils.dart';
 import 'package:forsan/data/data_sources/auth/auth_storage_data_source.dart';
 import 'package:forsan/presentation/screens/check_code/check_code_screen.dart';
-import 'package:forsan/presentation/screens/create_order/create_order_screen.dart';
-import 'package:forsan/presentation/screens/create_order/new_order_screen.dart';
+import 'package:forsan/presentation/screens/create_order/create_new_order.dart';
+import 'package:forsan/presentation/screens/create_order/select_service_type.dart';
 import 'package:forsan/presentation/screens/documents/documents_screen.dart';
 import 'package:forsan/presentation/screens/home/home_screen.dart';
 import 'package:forsan/presentation/screens/login/login_screen.dart';
@@ -148,33 +148,33 @@ class CompleteRequirementsRoute extends GoRouteData
   }
 }
 
-@TypedGoRoute<CreateOrderRoute>(
-  path: '/create_order',
-  routes: [TypedGoRoute<NewOrderRoute>(path: 'new')],
+@TypedGoRoute<SelectServiceTypeRoute>(
+  path: '/select_service_type',
+  routes: [TypedGoRoute<CreateNewOrderRoute>(path: 'create_new_order')],
 )
-class CreateOrderRoute extends GoRouteData with $CreateOrderRoute {
-  const CreateOrderRoute();
+class SelectServiceTypeRoute extends GoRouteData with $SelectServiceTypeRoute {
+  const SelectServiceTypeRoute();
 
   @override
   CustomTransitionPage<void> buildPage(
     BuildContext context,
     GoRouterState state,
   ) {
-    return const CreateOrderScreen().buildPage(
+    return const SelectServiceTypeScreen().buildPage(
       pageAnimation: PageAnimation.fade,
     );
   }
 }
 
-class NewOrderRoute extends GoRouteData with $NewOrderRoute {
-  const NewOrderRoute();
+class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
+  const CreateNewOrderRoute();
 
   @override
   CustomTransitionPage<void> buildPage(
     BuildContext context,
     GoRouterState state,
   ) {
-    return const NewOrderScreen().buildPage(
+    return const CreateNewOrderScreen().buildPage(
       pageAnimation: PageAnimation.fade,
     );
   }

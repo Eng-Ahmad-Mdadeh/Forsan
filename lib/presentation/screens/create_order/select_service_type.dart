@@ -6,14 +6,14 @@ import 'package:forsan/presentation/screens/create_order/widgets/create_order_he
 import 'package:forsan/presentation/screens/create_order/widgets/create_order_help_card.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/create_order_services_grid.dart';
 
-class CreateOrderScreen extends StatelessWidget {
-  const CreateOrderScreen({super.key});
+class SelectServiceTypeScreen extends StatelessWidget {
+  const SelectServiceTypeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar:CreateOrderAppBar(),
+      appBar: const CreateOrderAppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(

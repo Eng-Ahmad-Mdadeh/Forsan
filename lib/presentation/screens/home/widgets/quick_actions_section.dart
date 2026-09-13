@@ -35,7 +35,7 @@ class QuickActionsSection extends StatelessWidget {
                 icon: Icons.add_rounded,
                 color: AppColors.primaryDark,
                 onPressed: () {
-                  CreateOrderRoute().push(context);
+                  const SelectServiceTypeRoute().push(context);
                 },
               ),
             ),
