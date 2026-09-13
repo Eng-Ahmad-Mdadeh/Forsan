@@ -35,7 +35,10 @@ class MoreScreen extends StatelessWidget {
       ],
     ),
     body: ListView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppPaddingWidth.p16,
+        vertical: AppPaddingHeight.p1,
+      ),
       children: const [
         _ProfileCard(),
         SizedBox(height: 20),
