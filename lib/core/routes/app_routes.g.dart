@@ -12,7 +12,7 @@ List<RouteBase> get $appRoutes => [
   $signupRoute,
   $ordersDetailsRoute,
   $completeRequirementsRoute,
-  $createOrderRoute,
+  $selectServiceTypeRoute,
   $appShellRoute,
 ];
 
@@ -180,25 +180,25 @@ mixin $CompleteRequirementsRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $createOrderRoute => GoRouteData.$route(
-  path: '/create_order',
+RouteBase get $selectServiceTypeRoute => GoRouteData.$route(
+  path: '/select_service_type',
   hasOverriddenOnExit: false,
-  factory: $CreateOrderRoute._fromState,
+  factory: $SelectServiceTypeRoute._fromState,
   routes: [
     GoRouteData.$route(
-      path: 'new',
+      path: 'create_new_order',
       hasOverriddenOnExit: false,
-      factory: $NewOrderRoute._fromState,
+      factory: $CreateNewOrderRoute._fromState,
     ),
   ],
 );
 
-mixin $CreateOrderRoute on GoRouteData {
-  static CreateOrderRoute _fromState(GoRouterState state) =>
-      const CreateOrderRoute();
+mixin $SelectServiceTypeRoute on GoRouteData {
+  static SelectServiceTypeRoute _fromState(GoRouterState state) =>
+      const SelectServiceTypeRoute();
 
   @override
-  String get location => GoRouteData.$location('/create_order');
+  String get location => GoRouteData.$location('/select_service_type');
 
   @override
   void go(BuildContext context) => context.go(location);
@@ -214,11 +214,13 @@ mixin $CreateOrderRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin $NewOrderRoute on GoRouteData {
-  static NewOrderRoute _fromState(GoRouterState state) => const NewOrderRoute();
+mixin $CreateNewOrderRoute on GoRouteData {
+  static CreateNewOrderRoute _fromState(GoRouterState state) =>
+      const CreateNewOrderRoute();
 
   @override
-  String get location => GoRouteData.$location('/create_order/new');
+  String get location =>
+      GoRouteData.$location('/select_service_type/create_new_order');
 
   @override
   void go(BuildContext context) => context.go(location);

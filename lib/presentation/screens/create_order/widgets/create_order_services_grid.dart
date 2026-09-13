@@ -60,7 +60,7 @@ class CreateOrderServicesGrid extends StatelessWidget {
           ),
           itemBuilder: (context, index) => ServiceCard(
             service: services[index],
-            onTap: () => const NewOrderRoute().push(context),
+            onTap: () => const CreateNewOrderRoute().push(context),
           ),
         ),
         SizedBox(height: AppHeight.h16),
