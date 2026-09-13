@@ -36,7 +36,7 @@ class DocumentsScreen extends StatelessWidget {
       titleWidget: SectionTitle(
         text: 'المستندات',
         color: AppColors.mainText,
-        fontSize: AppFontSize.s24,
+        fontSize: AppFontSize.s18,
         fontWeight: AppFontWeight.bold,
       ),
       customActions: [

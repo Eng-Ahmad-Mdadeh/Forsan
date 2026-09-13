@@ -90,7 +90,7 @@ class _OrdersViewState extends State<_OrdersView> {
       titleWidget: SectionTitle(
         text: 'طلباتي',
         color: AppColors.mainText,
-        fontSize: AppFontSize.s20,
+        fontSize: AppFontSize.s18,
         fontWeight: AppFontWeight.bold,
       ),
       customActions: [
