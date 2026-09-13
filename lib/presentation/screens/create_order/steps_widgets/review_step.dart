@@ -5,6 +5,7 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
+import 'package:forsan/presentation/widgets/custom_check_box.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
@@ -28,7 +29,7 @@ class ReviewStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<NewOrderCubit>().state;
-    final cards = [
+    final cards = <Widget>[
       ReviewSectionCard(
         title: context.loc.new_order_step_establishment,
         icon: Icons.grid_view_rounded,
@@ -114,6 +115,14 @@ class ReviewStep extends StatelessWidget {
           ),
         ],
       ),
+      _ReviewConfirmationCard(
+        key: const Key('review_information_confirmation'),
+        text: context.loc.new_order_information_confirmation,
+      ),
+      _ReviewConfirmationCard(
+        key: const Key('review_terms_confirmation'),
+        text: context.loc.new_order_terms_confirmation,
+      ),
     ];
 
     return ListView.separated(
@@ -148,6 +157,53 @@ class ReviewStep extends StatelessWidget {
       'company_representative' => context.loc.new_order_company_representative,
       _ => context.loc.new_order_select_hint,
     };
+  }
+}
+
+class _ReviewConfirmationCard extends StatelessWidget {
+  const _ReviewConfirmationCard({
+    super.key,
+    required this.text,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: AppPaddingWidth.p8,
+        vertical: AppPaddingHeight.p10,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.light,
+        borderRadius: BorderRadius.circular(AppRadius.r8),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.light.withOpacity(0.9),
+            blurRadius: AppRadius.r7,
+            offset: Offset(0, AppHeight.h2),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CustomCheckBox(),
+          SizedBox(width: AppWidth.w4),
+          Expanded(
+            child: BodyTitle(
+              text: text,
+              textAlign: TextAlign.start,
+              color: AppColors.primaryDark,
+              fontSize: AppFontSize.s14,
+              fontWeight: AppFontWeight.regular,
+              maxLines: 4,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

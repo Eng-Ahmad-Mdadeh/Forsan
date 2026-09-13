@@ -8002,6 +8002,18 @@ abstract class AppLocalizations {
   String get new_order_add_partner;
   String get new_order_delete_partner;
 
+  /// No description provided for @new_order_information_confirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'I confirm that the information entered is correct to the best of my knowledge, and I understand that final acceptance of the request depends on review and completion of the requirements.'**
+  String get new_order_information_confirmation;
+
+  /// No description provided for @new_order_terms_confirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to Forsan platform's privacy policy and terms of use.'**
+  String get new_order_terms_confirmation;
+
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
