@@ -8,16 +8,16 @@ import 'package:forsan/presentation/widgets/text/section_title.dart';
 
 /// Displays the sections entered by the user before submitting an order.
 ///
-/// The content is supplied through [sections], allowing the same review UI to
+/// The content is supplied through [cards], allowing the same review UI to
 /// be used for every order type and for any number of cards.
 class ReviewStep extends StatelessWidget {
   const ReviewStep({
     super.key,
-    required this.sections,
+    required this.cards,
     this.padding,
   });
 
-  final List<ReviewSection> sections;
+  final List<ReviewSectionCard> cards;
   final EdgeInsetsGeometry? padding;
 
   @override
@@ -30,18 +30,17 @@ class ReviewStep extends StatelessWidget {
             AppPaddingWidth.p10,
             AppPaddingHeight.p24,
           ),
-      itemCount: sections.length,
+      itemCount: cards.length,
       separatorBuilder: (_, __) => SizedBox(height: AppHeight.h14),
-      itemBuilder: (context, index) => ReviewSectionCard(
-        section: sections[index],
-      ),
+      itemBuilder: (_, index) => cards[index],
     );
   }
 }
 
-/// The dynamic data displayed in one review card.
-class ReviewSection {
-  const ReviewSection({
+/// A reusable card matching the order-review design.
+class ReviewSectionCard extends StatelessWidget {
+  const ReviewSectionCard({
+    super.key,
     required this.title,
     required this.fields,
     required this.icon,
@@ -49,30 +48,9 @@ class ReviewSection {
   });
 
   final String title;
-  final List<ReviewField> fields;
+  final List<({String label, String value})> fields;
   final IconData icon;
   final VoidCallback? onEdit;
-}
-
-/// A label and its selected value in a [ReviewSection].
-class ReviewField {
-  const ReviewField({
-    required this.label,
-    required this.value,
-  });
-
-  final String label;
-  final String value;
-}
-
-/// A reusable card matching the order-review design.
-class ReviewSectionCard extends StatelessWidget {
-  const ReviewSectionCard({
-    super.key,
-    required this.section,
-  });
-
-  final ReviewSection section;
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +61,15 @@ class ReviewSectionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _ReviewCardHeader(section: section),
+          _ReviewCardHeader(
+            title: title,
+            icon: icon,
+            onEdit: onEdit,
+          ),
           SizedBox(height: AppHeight.h24),
-          for (var index = 0; index < section.fields.length; index++) ...[
-            _ReviewFieldRow(field: section.fields[index]),
-            if (index < section.fields.length - 1) ...[
+          for (var index = 0; index < fields.length; index++) ...[
+            _ReviewFieldRow(field: fields[index]),
+            if (index < fields.length - 1) ...[
               SizedBox(height: AppHeight.h18),
               const Divider(color: AppColors.secondaryLightActive, height: 1),
               SizedBox(height: AppHeight.h18),
@@ -100,9 +82,15 @@ class ReviewSectionCard extends StatelessWidget {
 }
 
 class _ReviewCardHeader extends StatelessWidget {
-  const _ReviewCardHeader({required this.section});
+  const _ReviewCardHeader({
+    required this.title,
+    required this.icon,
+    this.onEdit,
+  });
 
-  final ReviewSection section;
+  final String title;
+  final IconData icon;
+  final VoidCallback? onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +104,7 @@ class _ReviewCardHeader extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadius.r16),
           ),
           child: Icon(
-            section.icon,
+            icon,
             color: AppColors.secondary,
             size: AppSize.s28,
           ),
@@ -124,17 +112,17 @@ class _ReviewCardHeader extends StatelessWidget {
         SizedBox(width: AppWidth.w12),
         Expanded(
           child: SectionTitle(
-            text: section.title,
+            text: title,
             color: AppColors.mainText,
             fontSize: AppFontSize.s24,
             fontWeight: AppFontWeight.bold,
             maxLines: 1,
           ),
         ),
-        if (section.onEdit != null)
+        if (onEdit != null)
           IconButton(
             tooltip: MaterialLocalizations.of(context).editButtonLabel,
-            onPressed: section.onEdit,
+            onPressed: onEdit,
             icon: Icon(
               Icons.edit_outlined,
               color: AppColors.primary,
@@ -149,7 +137,7 @@ class _ReviewCardHeader extends StatelessWidget {
 class _ReviewFieldRow extends StatelessWidget {
   const _ReviewFieldRow({required this.field});
 
-  final ReviewField field;
+  final ({String label, String value}) field;
 
   @override
   Widget build(BuildContext context) {
