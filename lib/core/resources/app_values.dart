@@ -1,5 +1,12 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+class AppFileConstraints {
+  AppFileConstraints._();
+
+  static const int maxDocumentSizeInBytes = 10 * 1024 * 1024;
+  static const List<String> documentExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
+}
+
 class AppDurations {
   AppDurations._();
 
