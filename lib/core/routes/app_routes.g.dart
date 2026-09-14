@@ -274,10 +274,18 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
           factory: $MoreRoute._fromState,
           routes: [
             GoRouteData.$route(
-              path: 'profile',
+              path: 'show_profile',
               hasOverriddenOnExit: false,
               parentNavigatorKey: ShowProfileRoute.$parentNavigatorKey,
               factory: $ShowProfileRoute._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'edit_profile',
+                  hasOverriddenOnExit: false,
+                  parentNavigatorKey: ShowProfileRoute.$parentNavigatorKey,
+                  factory: $ShowProfileRoute._fromState,
+                ),
+              ],
             ),
           ],
         ),
@@ -376,7 +384,29 @@ mixin $ShowProfileRoute on GoRouteData {
       const ShowProfileRoute();
 
   @override
-  String get location => GoRouteData.$location('/more/profile');
+  String get location => GoRouteData.$location('/more/show_profile');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $ShowProfileRoute on GoRouteData {
+  static ShowProfileRoute _fromState(GoRouterState state) =>
+      const ShowProfileRoute();
+
+  @override
+  String get location =>
+      GoRouteData.$location('/more/show_profile/edit_profile');
 
   @override
   void go(BuildContext context) => context.go(location);

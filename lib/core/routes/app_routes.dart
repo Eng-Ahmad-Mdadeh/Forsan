@@ -11,6 +11,7 @@ import 'package:forsan/presentation/screens/check_code/check_code_screen.dart';
 import 'package:forsan/presentation/screens/create_order/create_new_order.dart';
 import 'package:forsan/presentation/screens/create_order/select_service_type.dart';
 import 'package:forsan/presentation/screens/documents/documents_screen.dart';
+import 'package:forsan/presentation/screens/edit_profile/edit_profile_screen.dart';
 import 'package:forsan/presentation/screens/home/home_screen.dart';
 import 'package:forsan/presentation/screens/login/login_screen.dart';
 import 'package:forsan/presentation/screens/more/more_screen.dart';
@@ -196,7 +197,12 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
       routes: [
         TypedGoRoute<MoreRoute>(
           path: '/more',
-          routes: [TypedGoRoute<ShowProfileRoute>(path: 'profile')],
+          routes: [
+            TypedGoRoute<ShowProfileRoute>(
+              path: 'show_profile',
+              routes: [TypedGoRoute<ShowProfileRoute>(path: 'edit_profile')],
+            ),
+          ],
         ),
       ],
     ),
@@ -292,6 +298,21 @@ class ShowProfileRoute extends GoRouteData with $ShowProfileRoute {
     GoRouterState state,
   ) {
     return const ShowProfileScreen().buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
+  }
+}
+class EditProfileRoute extends GoRouteData with $EditProfileRoute {
+  const EditProfileRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  CustomTransitionPage<void> buildPage(
+      BuildContext context,
+      GoRouterState state,
+      ) {
+    return const EditProfileScreen().buildPage(
       pageAnimation: PageAnimation.fade,
     );
   }
