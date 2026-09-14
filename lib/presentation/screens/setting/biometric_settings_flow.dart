@@ -1,15 +1,13 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
+import 'package:forsan/core/resources/app_assets.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
-import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/cubit/setting/setting_cubit.dart';
 import 'package:forsan/presentation/screens/setting/bottom_sheets/biometric_activation_sheet.dart';
 import 'package:forsan/presentation/screens/setting/bottom_sheets/biometric_verification_sheet.dart';
 import 'package:forsan/presentation/widgets/biometric_app_lock_gate.dart';
-import 'package:forsan/presentation/widgets/custom_animation_dialog.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
@@ -45,32 +43,157 @@ Future<void> handleBiometricsChanged(
 }
 
 Future<void> _showActivationSuccessDialog(BuildContext context) {
-  return CustomAnimationDialog.showDialog(
-    context,
-    message: context.loc.biometric_activation_success_message,
-    dialogType: DialogType.success,
-    okText: context.loc.biometric_activation_success_button,
-    okColor: AppColors.primary,
-    dismissOnBackKeyPress: false,
-    onOkPressed: () {},
-    messageWidget: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SectionTitle(
-          text: context.loc.biometric_activation_success_title,
-          color: AppColors.primary,
-          fontSize: AppFontSize.s20,
+  return showGeneralDialog<void>(
+    context: context,
+    useRootNavigator: true,
+    barrierDismissible: false,
+    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    barrierColor: Colors.black.withValues(alpha: 0.45),
+    transitionDuration: const Duration(milliseconds: 280),
+    pageBuilder: (dialogContext, _, __) => PopScope(
+      canPop: false,
+      child: _ActivationSuccessDialog(
+        title: context.loc.biometric_activation_success_title,
+        message: context.loc.biometric_activation_success_message,
+        buttonText: context.loc.biometric_activation_success_button,
+        onDone: () => Navigator.of(dialogContext, rootNavigator: true).pop(),
+      ),
+    ),
+    transitionBuilder: (_, animation, __, child) => FadeTransition(
+      opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
+      child: ScaleTransition(
+        scale: Tween<double>(begin: 0.92, end: 1).animate(
+          CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
         ),
-        SizedBox(height: AppHeight.h8),
-        BodyTitle(
-          text: context.loc.biometric_activation_success_message,
-          color: AppColors.mainText,
-          fontSize: AppFontSize.s16,
-          fontWeight: AppFontWeight.regular,
-          textAlign: TextAlign.center,
-          maxLines: 3,
-        ),
-      ],
+        child: child,
+      ),
     ),
   );
+}
+
+class _ActivationSuccessDialog extends StatelessWidget {
+  const _ActivationSuccessDialog({
+    required this.title,
+    required this.message,
+    required this.buttonText,
+    required this.onDone,
+  });
+
+  final String title;
+  final String message;
+  final String buttonText;
+  final VoidCallback onDone;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Center(
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            width: double.infinity,
+            constraints: const BoxConstraints(maxWidth: 640),
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: 0.035,
+                    child: Image.asset(
+                      AppAssets.appBackground,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(32, 42, 32, 32),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const _SuccessIcon(),
+                      const SizedBox(height: 44),
+                      SectionTitle(
+                        text: title,
+                        color: AppColors.primary,
+                        fontSize: AppFontSize.s24,
+                        fontWeight: AppFontWeight.bold,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 8),
+                      BodyTitle(
+                        text: message,
+                        color: AppColors.mainText,
+                        fontSize: AppFontSize.s18,
+                        fontWeight: AppFontWeight.regular,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.visible,
+                        maxLines: 3,
+                      ),
+                      const SizedBox(height: 48),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: FilledButton(
+                          onPressed: onDone,
+                          style: FilledButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: AppColors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                          child: Text(
+                            buttonText,
+                            style: TextStyle(
+                              fontFamily: AppFontFamily.tajawal,
+                              fontSize: AppFontSize.s18,
+                              fontWeight: AppFontWeight.medium,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SuccessIcon extends StatelessWidget {
+  const _SuccessIcon();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 120,
+      height: 120,
+      padding: const EdgeInsets.all(18),
+      decoration: const BoxDecoration(
+        color: AppColors.light,
+        shape: BoxShape.circle,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          shape: BoxShape.circle,
+          border: Border.all(color: AppColors.secondary, width: 7),
+        ),
+        child: const Icon(
+          Icons.check_rounded,
+          color: AppColors.secondary,
+          size: 48,
+        ),
+      ),
+    );
+  }
 }
