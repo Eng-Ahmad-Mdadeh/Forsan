@@ -16,6 +16,7 @@ class CustomSubmitButton extends StatelessWidget {
     this.marginEnd,
     this.verification = true,
     this.useGradient = true,
+    this.icon,
   });
 
   final String text;
@@ -26,6 +27,7 @@ class CustomSubmitButton extends StatelessWidget {
   final double? marginEnd;
   final bool verification;
   final bool useGradient;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class CustomSubmitButton extends StatelessWidget {
       marginBottom: marginBottom,
       marginStart: marginStart,
       marginEnd: marginEnd,
-      borderRadius: AppRadius.r7,
+      borderRadius: AppRadius.r8,
       color: useGradient ? null : (verification ? AppColors.primary : AppColors.greyText),
       gradient: useGradient
           ? LinearGradient(
@@ -49,7 +51,23 @@ class CustomSubmitButton extends StatelessWidget {
             )
           : null,
       onPressed: onPressed ?? () {},
-      child: SectionTitle(text: text, color: AppColors.white, textAlign: TextAlign.center)
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        textDirection: TextDirection.ltr,
+        children: [
+          SectionTitle(
+            text: text,
+            color: AppColors.white,
+            textAlign: TextAlign.center,
+          ),
+          if (icon != null) ...[
+            SizedBox(width: AppWidth.w8),
+            Icon(icon, color: AppColors.white, size: AppSize.s20),
+          ],
+        ],
+      )
           .animate(key: ValueKey('$text-$verification'))
           .fade(duration: 220.ms)
           .moveY(begin: 12, end: 0, duration: 320.ms, curve: Curves.easeOutCubic)

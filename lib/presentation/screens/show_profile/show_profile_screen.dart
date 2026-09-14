@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/presentation/screens/show_profile/widgets/profile_info_card.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_avatar.dart';
@@ -64,7 +65,9 @@ class ShowProfileScreen extends StatelessWidget {
               CustomSubmitButton(
                 text: 'تعديل   ✎',
                 useGradient: false,
-                onPressed: () {},
+                onPressed: () {
+                  EditProfileRoute().push(context);
+                },
               ),
             ],
           ),
