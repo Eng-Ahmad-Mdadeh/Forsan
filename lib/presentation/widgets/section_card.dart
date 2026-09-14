@@ -66,6 +66,7 @@ class SectionCard extends StatelessWidget {
                 children: [
                   if (title != null)
                     Row(
+                      textDirection: TextDirection.ltr,
                       children: [
                         Expanded(
                           flex: 6,
@@ -77,7 +78,7 @@ class SectionCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const Spacer(),
+                        const SizedBox(width:3),
                         if (trailing != null) trailing!,
                         if (onEditTap != null)
                           InkWell(

@@ -275,8 +275,8 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
           routes: [
             GoRouteData.$route(
               path: 'profile',
-              parentNavigatorKey: ShowProfileRoute.$parentNavigatorKey,
               hasOverriddenOnExit: false,
+              parentNavigatorKey: ShowProfileRoute.$parentNavigatorKey,
               factory: $ShowProfileRoute._fromState,
             ),
           ],
