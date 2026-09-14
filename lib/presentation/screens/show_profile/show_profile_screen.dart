@@ -63,11 +63,10 @@ class ShowProfileScreen extends StatelessWidget {
                 ),
               ),
               CustomSubmitButton(
+                key: const Key('show-profile-edit-button'),
                 text: 'تعديل   ✎',
                 useGradient: false,
-                onPressed: () {
-                  EditProfileRoute().push(context);
-                },
+                onPressed: () => const EditProfileRoute().push(context),
               ),
             ],
           ),
@@ -76,5 +75,4 @@ class ShowProfileScreen extends StatelessWidget {
     );
   }
 }
-
 
