@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/presentation/cubit/setting/setting_cubit.dart';
 import 'package:forsan/presentation/screens/setting/bottom_sheets/biometric_activation_sheet.dart';
 import 'package:forsan/presentation/screens/setting/bottom_sheets/biometric_verification_sheet.dart';
+import 'package:forsan/presentation/widgets/biometric_app_lock_gate.dart';
 
 Future<void> handleBiometricsChanged(
   BuildContext context,
@@ -11,6 +12,9 @@ Future<void> handleBiometricsChanged(
   final cubit = context.read<SettingCubit>();
   if (!value) {
     await cubit.setBiometricsEnabled(false);
+    if (context.mounted) {
+      BiometricAppLockGate.of(context).disableLock();
+    }
     return;
   }
 
@@ -25,5 +29,7 @@ Future<void> handleBiometricsChanged(
   final activated = await showBiometricVerificationSheet(context, cubit);
   if (!context.mounted) return;
 
-  if (!activated) cubit.resetBiometricSwitch();
+  if (!activated) {
+    cubit.resetBiometricSwitch();
+  }
 }

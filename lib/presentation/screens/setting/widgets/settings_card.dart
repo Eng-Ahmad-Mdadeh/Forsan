@@ -27,7 +27,7 @@ class SettingsCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(AppRadius.r14),
       child: SizedBox(
-        height: AppHeight.h90,
+        height: AppHeight.h55,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p20),
           child: Row(
