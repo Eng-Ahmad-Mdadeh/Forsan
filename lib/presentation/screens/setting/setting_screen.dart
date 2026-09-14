@@ -9,6 +9,7 @@ import 'package:forsan/presentation/cubit/setting/setting_state.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:forsan/presentation/widgets/custom_switch.dart';
+import 'package:forsan/presentation/widgets/text/body_title.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -72,14 +73,14 @@ class _SettingView extends StatelessWidget {
           SizedBox(height: AppHeight.h17),
           _SettingsCard(
             icon: Icons.translate_rounded,
-            onTap: _showLanguageSheet,
+            onTap: () => _showLanguageSheet(context),
             child: _SettingsTitle(title: context.loc.language),
           ),
           SizedBox(height: AppHeight.h17),
           _SettingsCard(
             icon: Icons.delete_outline_rounded,
             color: AppColors.red,
-            onTap: _showDeleteAccountSheet,
+            onTap: () => _showDeleteAccountSheet(context),
             child: _SettingsTitle(
               title: context.loc.delete_account,
               color: AppColors.red,
@@ -90,7 +91,7 @@ class _SettingView extends StatelessWidget {
     ),
   );
 
-  void _showLanguageSheet() {
+  void _showLanguageSheet(BuildContext context) {
     CustomBottomSheet.show<void>(
       context,
       title: context.loc.choose_language,
@@ -109,15 +110,13 @@ class _SettingView extends StatelessWidget {
                   groupValue: state.language,
                   activeColor: AppColors.primary,
                   contentPadding: EdgeInsets.zero,
-                  title: Text(
-                    language == SettingLanguage.arabic
+                  title: BodyTitle(
+                    text: language == SettingLanguage.arabic
                         ? 'العربية'
                         : 'English',
-                    style: TextStyle(
-                      color: AppColors.mainText,
-                      fontSize: AppFontSize.s16,
-                      fontWeight: AppFontWeight.medium,
-                    ),
+                    color: AppColors.mainText,
+                    fontSize: AppFontSize.s16,
+                    fontWeight: AppFontWeight.medium,
                   ),
                   onChanged: (value) {
                     if (value != null) {
@@ -132,7 +131,7 @@ class _SettingView extends StatelessWidget {
     );
   }
 
-  void _showDeleteAccountSheet() {
+  void _showDeleteAccountSheet(BuildContext context) {
     CustomBottomSheet.show<void>(
       context,
       title: context.loc.delete_account,
@@ -151,14 +150,13 @@ class _SettingView extends StatelessWidget {
             size: AppSize.s50,
           ),
           SizedBox(height: AppHeight.h15),
-          Text(
-            context.loc.delete_account_confirm_message,
+          BodyTitle(
+            text: context.loc.delete_account_confirm_message,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.mainText,
-              fontSize: AppFontSize.s16,
-              fontWeight: AppFontWeight.medium,
-            ),
+            color: AppColors.mainText,
+            fontSize: AppFontSize.s16,
+            fontWeight: AppFontWeight.medium,
+            maxLines: 3,
           ),
           SizedBox(height: AppHeight.h25),
           Row(
@@ -171,7 +169,11 @@ class _SettingView extends StatelessWidget {
                     side: const BorderSide(color: AppColors.primary),
                     minimumSize: Size.fromHeight(AppHeight.h50),
                   ),
-                  child: Text(context.loc.cancel),
+                  child: BodyTitle(
+                    text: context.loc.cancel,
+                    color: AppColors.primary,
+                    fontSize: AppFontSize.s16,
+                  ),
                 ),
               ),
               SizedBox(width: AppWidth.w12),
@@ -182,7 +184,11 @@ class _SettingView extends StatelessWidget {
                     backgroundColor: AppColors.red,
                     minimumSize: Size.fromHeight(AppHeight.h50),
                   ),
-                  child: Text(context.loc.confirm),
+                  child: BodyTitle(
+                    text: context.loc.confirm,
+                    color: AppColors.white,
+                    fontSize: AppFontSize.s16,
+                  ),
                 ),
               ),
             ],
@@ -242,13 +248,11 @@ class _SettingsTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Align(
     alignment: AlignmentDirectional.centerStart,
-    child: Text(
-      title,
-      style: TextStyle(
-        color: color,
-        fontSize: AppFontSize.s18,
-        fontWeight: AppFontWeight.regular,
-      ),
+    child: BodyTitle(
+      text: title,
+      color: color,
+      fontSize: AppFontSize.s18,
+      fontWeight: AppFontWeight.regular,
     ),
   );
 }
