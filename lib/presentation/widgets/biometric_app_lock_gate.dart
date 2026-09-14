@@ -13,6 +13,13 @@ class BiometricAppLockGate extends StatefulWidget {
 
   final Widget child;
 
+  /// Returns the lock controller already provided by the app-level gate.
+  ///
+  /// Descendant screens should reuse this controller instead of creating a
+  /// second gate or duplicating its lock-state handling.
+  static BiometricLockCubit of(BuildContext context) =>
+      context.read<BiometricLockCubit>();
+
   @override
   State<BiometricAppLockGate> createState() => _BiometricAppLockGateState();
 }
