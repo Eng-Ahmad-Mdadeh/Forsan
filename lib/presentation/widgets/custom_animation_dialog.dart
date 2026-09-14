@@ -39,11 +39,11 @@ class CustomAnimationDialog {
       ),
       btnOkColor: okColor ?? AppColors.lightPrimary,
       btnCancelColor: cancelColor,
-      btnCancelText: cancelText ?? "Cancel",
+      btnCancelText: cancelText,
       btnOkText: okText ?? "Retry",
-      btnCancelOnPress: onCancelPressed ?? () {
-        context.pop();
-      },
+      btnCancelOnPress: cancelText == null && onCancelPressed == null
+          ? null
+          : onCancelPressed ?? () => context.pop(),
       btnOkOnPress: onOkPressed,
     ).show();
   }

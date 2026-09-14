@@ -1487,6 +1487,24 @@ abstract class AppLocalizations {
   /// **'Use fingerprint or face recognition to access your account faster and more securely'**
   String get biometric_activation_description;
 
+  /// No description provided for @biometric_activation_success_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Successfully enabled'**
+  String get biometric_activation_success_title;
+
+  /// No description provided for @biometric_activation_success_message.
+  ///
+  /// In en, this message translates to:
+  /// **'You can now use your fingerprint for quick account access'**
+  String get biometric_activation_success_message;
+
+  /// No description provided for @biometric_activation_success_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get biometric_activation_success_button;
+
   /// No description provided for @enable.
   ///
   /// In en, this message translates to:
