@@ -50,6 +50,8 @@ class MoreMenu extends StatelessWidget {
             item: _items[index],
             onTap: index == 0
                 ? () => const ShowProfileRoute().push(context)
+                : index == 7
+                ? () => const SettingRoute().push(context)
                 : null,
           ),
           if (index != _items.length - 1)
