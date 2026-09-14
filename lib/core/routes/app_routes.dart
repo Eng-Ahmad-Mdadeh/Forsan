@@ -13,6 +13,7 @@ import 'package:forsan/presentation/screens/create_order/select_service_type.dar
 import 'package:forsan/presentation/screens/documents/documents_screen.dart';
 import 'package:forsan/presentation/screens/edit_profile/edit_profile_screen.dart';
 import 'package:forsan/presentation/screens/home/home_screen.dart';
+import 'package:forsan/presentation/screens/invoices_and_payments/invoices_and_payments_screen.dart';
 import 'package:forsan/presentation/screens/login/login_screen.dart';
 import 'package:forsan/presentation/screens/more/more_screen.dart';
 import 'package:forsan/presentation/screens/orders/orders_screen.dart';
@@ -200,6 +201,7 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
           path: '/more',
           routes: [
             TypedGoRoute<SettingRoute>(path: 'setting'),
+            TypedGoRoute<InvoicesAndPaymentsRoute>(path: 'invoices_and_payments'),
             TypedGoRoute<ShowProfileRoute>(
               path: 'show_profile',
               routes: [TypedGoRoute<EditProfileRoute>(path: 'edit_profile')],
@@ -305,6 +307,23 @@ class SettingRoute extends GoRouteData with $SettingRoute {
     );
   }
 }
+class InvoicesAndPaymentsRoute extends GoRouteData with $InvoicesAndPaymentsRoute {
+  const InvoicesAndPaymentsRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+
+  @override
+  CustomTransitionPage<void> buildPage(
+      BuildContext context,
+      GoRouterState state,
+      ) {
+    return const InvoicesAndPaymentsScreen().buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
+  }
+}
+
 class ShowProfileRoute extends GoRouteData with $ShowProfileRoute {
   const ShowProfileRoute();
 

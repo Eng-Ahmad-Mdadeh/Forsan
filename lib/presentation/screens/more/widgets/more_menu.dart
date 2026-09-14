@@ -52,6 +52,8 @@ class MoreMenu extends StatelessWidget {
                 ? () => const ShowProfileRoute().push(context)
                 : index == 7
                 ? () => const SettingRoute().push(context)
+                : index == 1
+                ? () => const InvoicesAndPaymentsRoute().push(context)
                 : null,
           ),
           if (index != _items.length - 1)
