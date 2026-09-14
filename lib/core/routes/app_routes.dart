@@ -200,7 +200,7 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
           routes: [
             TypedGoRoute<ShowProfileRoute>(
               path: 'show_profile',
-              routes: [TypedGoRoute<ShowProfileRoute>(path: 'edit_profile')],
+              routes: [TypedGoRoute<EditProfileRoute>(path: 'edit_profile')],
             ),
           ],
         ),

@@ -282,8 +282,8 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
                 GoRouteData.$route(
                   path: 'edit_profile',
                   hasOverriddenOnExit: false,
-                  parentNavigatorKey: ShowProfileRoute.$parentNavigatorKey,
-                  factory: $ShowProfileRoute._fromState,
+                  parentNavigatorKey: EditProfileRoute.$parentNavigatorKey,
+                  factory: $EditProfileRoute._fromState,
                 ),
               ],
             ),
@@ -400,9 +400,9 @@ mixin $ShowProfileRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin $ShowProfileRoute on GoRouteData {
-  static ShowProfileRoute _fromState(GoRouterState state) =>
-      const ShowProfileRoute();
+mixin $EditProfileRoute on GoRouteData {
+  static EditProfileRoute _fromState(GoRouterState state) =>
+      const EditProfileRoute();
 
   @override
   String get location =>
