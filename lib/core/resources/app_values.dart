@@ -247,6 +247,7 @@ class AppWidth {
   static double w190 = 190.0.w;
   static double w200 = 200.0.w;
   static double w210 = 210.0.w;
+  static double w225 = 225.0.w;
   static double w240 = 240.0.w;
   static double w280 = 280.0.w;
   static double w290 = 290.0.w;
@@ -254,6 +255,7 @@ class AppWidth {
   static double w320 = 320.0.w;
   static double w325 = 325.0.w;
   static double w350 = 350.0.w;
+  static double w370 = 370.0.w;
   static double w390 = 390.0.w;
   static double w400 = 400.0.w;
   static double w433 = 433.0.w;

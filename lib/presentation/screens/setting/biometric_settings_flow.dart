@@ -93,7 +93,7 @@ class _ActivationSuccessDialog extends StatelessWidget {
           color: AppColors.none,
           child: Container(
             width: double.infinity,
-            constraints: BoxConstraints(maxWidth: AppWidth.w400),
+            constraints: BoxConstraints(maxWidth: AppWidth.w370),
             margin: EdgeInsets.symmetric(horizontal: AppMarginWidth.m16),
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
@@ -113,37 +113,37 @@ class _ActivationSuccessDialog extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                    AppPaddingWidth.p31,
-                    AppPaddingHeight.p43,
-                    AppPaddingWidth.p31,
-                    AppPaddingHeight.p33,
+                    AppPaddingWidth.p12,
+                    AppPaddingHeight.p23,
+                    AppPaddingWidth.p12,
+                    AppPaddingHeight.p18,
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const _SuccessIcon(),
-                      SizedBox(height: AppHeight.h44),
+                      SizedBox(height: AppHeight.h24),
                       SectionTitle(
                         text: title,
                         color: AppColors.primary,
-                        fontSize: AppFontSize.s24,
+                        fontSize: AppFontSize.s18,
                         fontWeight: AppFontWeight.bold,
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: AppHeight.h8),
                       BodyTitle(
                         text: message,
-                        color: AppColors.mainText,
-                        fontSize: AppFontSize.s18,
+                        color: AppColors.black,
+                        fontSize: AppFontSize.s16,
                         fontWeight: AppFontWeight.regular,
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.visible,
                         maxLines: 3,
                       ),
-                      SizedBox(height: AppHeight.h48),
+                      SizedBox(height: AppHeight.h24),
                       SizedBox(
-                        width: double.infinity,
-                        height: AppHeight.h55,
+                        width: AppWidth.w225,
+                        height: AppHeight.h48,
                         child: FilledButton(
                           onPressed: onDone,
                           style: FilledButton.styleFrom(
@@ -151,7 +151,7 @@ class _ActivationSuccessDialog extends StatelessWidget {
                             foregroundColor: AppColors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
-                                AppRadius.r15,
+                                AppRadius.r8,
                               ),
                             ),
                           ),
@@ -159,8 +159,8 @@ class _ActivationSuccessDialog extends StatelessWidget {
                             buttonText,
                             style: TextStyle(
                               fontFamily: AppFontFamily.tajawal,
-                              fontSize: AppFontSize.s18,
-                              fontWeight: AppFontWeight.medium,
+                              fontSize: AppFontSize.s16,
+                              fontWeight: AppFontWeight.regular,
                             ),
                           ),
                         ),
