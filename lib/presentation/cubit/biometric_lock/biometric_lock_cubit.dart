@@ -14,4 +14,8 @@ class BiometricLockCubit extends Cubit<BiometricLockState> {
     final authenticated = await _service.authenticate(reason: reason);
     emit(BiometricLockState(isLocked: !authenticated));
   }
+
+  void disableLock() {
+    emit(const BiometricLockState());
+  }
 }
