@@ -17,7 +17,35 @@ class SettingCubit extends Cubit<SettingState> {
 
   Future<void> setBiometricsEnabled(bool value) async {
     await _biometricLockService.setEnabled(value);
+    if (isClosed) return;
+
     emit(state.copyWith(biometricsEnabled: value));
+  }
+
+  void resetBiometricSwitch() {
+    if (isClosed) return;
+
+    emit(
+      state.copyWith(
+        biometricSwitchRevision: state.biometricSwitchRevision + 1,
+      ),
+    );
+  }
+
+  Future<bool> activateBiometrics({required String reason}) async {
+    try {
+      if (!await _biometricLockService.canUseBiometrics()) return false;
+
+      final authenticated = await _biometricLockService.authenticate(
+        reason: reason,
+      );
+      if (!authenticated || isClosed) return false;
+
+      await setBiometricsEnabled(true);
+      return !isClosed && state.biometricsEnabled;
+    } catch (_) {
+      return false;
+    }
   }
 
   void selectLanguage(SettingLanguage language) {
