@@ -200,7 +200,7 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
           routes: [
             TypedGoRoute<ShowProfileRoute>(
               path: 'show_profile',
-              routes: [TypedGoRoute<ShowProfileRoute>(path: 'edit_profile')],
+              routes: [TypedGoRoute<EditProfileRoute>(path: 'edit_profile')],
             ),
           ],
         ),
@@ -302,6 +302,7 @@ class ShowProfileRoute extends GoRouteData with $ShowProfileRoute {
     );
   }
 }
+
 class EditProfileRoute extends GoRouteData with $EditProfileRoute {
   const EditProfileRoute();
 
@@ -309,9 +310,9 @@ class EditProfileRoute extends GoRouteData with $EditProfileRoute {
 
   @override
   CustomTransitionPage<void> buildPage(
-      BuildContext context,
-      GoRouterState state,
-      ) {
+    BuildContext context,
+    GoRouterState state,
+  ) {
     return const EditProfileScreen().buildPage(
       pageAnimation: PageAnimation.fade,
     );
