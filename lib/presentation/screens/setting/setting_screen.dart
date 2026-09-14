@@ -469,7 +469,7 @@ class _BiometricIllustration extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SizedBox(
     width: showCheck ? AppWidth.w86 : AppWidth.w132,
-    height: showCheck ? AppHeight.h86 : AppHeight.h132,
+    height: showCheck ? AppHeight.h86 : AppHeight.h130,
     child: Stack(
       alignment: Alignment.center,
       children: [

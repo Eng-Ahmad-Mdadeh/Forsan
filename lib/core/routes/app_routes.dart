@@ -292,6 +292,8 @@ class MoreRoute extends GoRouteData with $MoreRoute {
 class SettingRoute extends GoRouteData with $SettingRoute {
   const SettingRoute();
 
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
 
   @override
   CustomTransitionPage<void> buildPage(
@@ -322,7 +324,6 @@ class ShowProfileRoute extends GoRouteData with $ShowProfileRoute {
 class EditProfileRoute extends GoRouteData with $EditProfileRoute {
   const EditProfileRoute();
 
-  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
 
   @override
   CustomTransitionPage<void> buildPage(
