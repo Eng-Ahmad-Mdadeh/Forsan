@@ -4,6 +4,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_assets.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
+import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/cubit/setting/setting_cubit.dart';
 import 'package:forsan/presentation/screens/setting/bottom_sheets/biometric_activation_sheet.dart';
 import 'package:forsan/presentation/screens/setting/bottom_sheets/biometric_verification_sheet.dart';
@@ -48,8 +49,8 @@ Future<void> _showActivationSuccessDialog(BuildContext context) {
     useRootNavigator: true,
     barrierDismissible: false,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-    barrierColor: Colors.black.withValues(alpha: 0.45),
-    transitionDuration: const Duration(milliseconds: 280),
+    barrierColor: AppColors.black.withValues(alpha: 0.45),
+    transitionDuration: AppDurations.navigationSelection,
     pageBuilder: (dialogContext, _, __) => PopScope(
       canPop: false,
       child: _ActivationSuccessDialog(
@@ -89,15 +90,15 @@ class _ActivationSuccessDialog extends StatelessWidget {
     return SafeArea(
       child: Center(
         child: Material(
-          color: Colors.transparent,
+          color: AppColors.none,
           child: Container(
             width: double.infinity,
-            constraints: const BoxConstraints(maxWidth: 640),
-            margin: const EdgeInsets.symmetric(horizontal: 16),
+            constraints: BoxConstraints(maxWidth: AppWidth.w400),
+            margin: EdgeInsets.symmetric(horizontal: AppMarginWidth.m16),
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               color: AppColors.white,
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(AppRadius.r18),
             ),
             child: Stack(
               children: [
@@ -111,12 +112,17 @@ class _ActivationSuccessDialog extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 42, 32, 32),
+                  padding: EdgeInsets.fromLTRB(
+                    AppPaddingWidth.p31,
+                    AppPaddingHeight.p43,
+                    AppPaddingWidth.p31,
+                    AppPaddingHeight.p33,
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const _SuccessIcon(),
-                      const SizedBox(height: 44),
+                      SizedBox(height: AppHeight.h44),
                       SectionTitle(
                         text: title,
                         color: AppColors.primary,
@@ -124,7 +130,7 @@ class _ActivationSuccessDialog extends StatelessWidget {
                         fontWeight: AppFontWeight.bold,
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: AppHeight.h8),
                       BodyTitle(
                         text: message,
                         color: AppColors.mainText,
@@ -134,17 +140,19 @@ class _ActivationSuccessDialog extends StatelessWidget {
                         overflow: TextOverflow.visible,
                         maxLines: 3,
                       ),
-                      const SizedBox(height: 48),
+                      SizedBox(height: AppHeight.h48),
                       SizedBox(
                         width: double.infinity,
-                        height: 56,
+                        height: AppHeight.h55,
                         child: FilledButton(
                           onPressed: onDone,
                           style: FilledButton.styleFrom(
                             backgroundColor: AppColors.primary,
                             foregroundColor: AppColors.white,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(
+                                AppRadius.r15,
+                              ),
                             ),
                           ),
                           child: Text(
@@ -175,9 +183,12 @@ class _SuccessIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
-      height: 120,
-      padding: const EdgeInsets.all(18),
+      width: AppWidth.w120,
+      height: AppHeight.h120,
+      padding: EdgeInsets.symmetric(
+        horizontal: AppPaddingWidth.p18,
+        vertical: AppPaddingHeight.p18,
+      ),
       decoration: const BoxDecoration(
         color: AppColors.light,
         shape: BoxShape.circle,
@@ -186,12 +197,15 @@ class _SuccessIcon extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.primary,
           shape: BoxShape.circle,
-          border: Border.all(color: AppColors.secondary, width: 7),
+          border: Border.all(
+            color: AppColors.secondary,
+            width: AppWidth.w7,
+          ),
         ),
-        child: const Icon(
+        child: Icon(
           Icons.check_rounded,
           color: AppColors.secondary,
-          size: 48,
+          size: AppSize.s50,
         ),
       ),
     );
