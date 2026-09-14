@@ -323,8 +323,7 @@ class ShowProfileRoute extends GoRouteData with $ShowProfileRoute {
 
 class EditProfileRoute extends GoRouteData with $EditProfileRoute {
   const EditProfileRoute();
-  static final GlobalKey<NavigatorState> $1parentNavigatorKey = rootNavigatorKey;
-
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
 
   @override
   CustomTransitionPage<void> buildPage(
