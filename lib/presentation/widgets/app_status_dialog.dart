@@ -20,8 +20,16 @@ class AppStatusDialog extends StatelessWidget {
     this.iconColor = AppColors.secondary,
     this.iconBackgroundColor = AppColors.primary,
     this.iconBorderColor = AppColors.secondary,
+    this.iconOuterBackgroundColor = AppColors.light,
     this.titleColor = AppColors.primary,
     this.primaryButtonColor = AppColors.primary,
+    this.secondaryButtonColor = AppColors.primary,
+    this.messageColor = AppColors.black,
+    this.messageFontSize,
+    this.messageFontWeight = AppFontWeight.regular,
+    this.messageMaxLines = 3,
+    this.buttonsDirection = Axis.vertical,
+    this.showCloseButton = false,
     this.canDismiss = false,
   });
 
@@ -35,8 +43,16 @@ class AppStatusDialog extends StatelessWidget {
   final Color iconColor;
   final Color iconBackgroundColor;
   final Color iconBorderColor;
+  final Color iconOuterBackgroundColor;
   final Color titleColor;
   final Color primaryButtonColor;
+  final Color secondaryButtonColor;
+  final Color messageColor;
+  final double? messageFontSize;
+  final FontWeight messageFontWeight;
+  final int messageMaxLines;
+  final Axis buttonsDirection;
+  final bool showCloseButton;
   final bool canDismiss;
 
   static Future<void> show(
@@ -51,8 +67,16 @@ class AppStatusDialog extends StatelessWidget {
     Color iconColor = AppColors.secondary,
     Color iconBackgroundColor = AppColors.primary,
     Color iconBorderColor = AppColors.secondary,
+    Color iconOuterBackgroundColor = AppColors.light,
     Color titleColor = AppColors.primary,
     Color primaryButtonColor = AppColors.primary,
+    Color secondaryButtonColor = AppColors.primary,
+    Color messageColor = AppColors.black,
+    double? messageFontSize,
+    FontWeight messageFontWeight = AppFontWeight.regular,
+    int messageMaxLines = 3,
+    Axis buttonsDirection = Axis.vertical,
+    bool showCloseButton = false,
     bool canDismiss = false,
   }) {
     return showGeneralDialog<void>(
@@ -73,8 +97,16 @@ class AppStatusDialog extends StatelessWidget {
         iconColor: iconColor,
         iconBackgroundColor: iconBackgroundColor,
         iconBorderColor: iconBorderColor,
+        iconOuterBackgroundColor: iconOuterBackgroundColor,
         titleColor: titleColor,
         primaryButtonColor: primaryButtonColor,
+        secondaryButtonColor: secondaryButtonColor,
+        messageColor: messageColor,
+        messageFontSize: messageFontSize,
+        messageFontWeight: messageFontWeight,
+        messageMaxLines: messageMaxLines,
+        buttonsDirection: buttonsDirection,
+        showCloseButton: showCloseButton,
         canDismiss: canDismiss,
       ),
       transitionBuilder: (_, animation, __, child) => FadeTransition(
@@ -132,50 +164,54 @@ class AppStatusDialog extends StatelessWidget {
                           iconColor: iconColor,
                           backgroundColor: iconBackgroundColor,
                           borderColor: iconBorderColor,
+                          outerBackgroundColor: iconOuterBackgroundColor,
                         ),
-                        SizedBox(height: AppHeight.h24),
-                        SectionTitle(
-                          text: title,
-                          color: titleColor,
-                          fontSize: AppFontSize.s18,
-                          fontWeight: AppFontWeight.bold,
-                          textAlign: TextAlign.center,
-                        ),
+                        if (title.trim().isNotEmpty) ...[
+                          SizedBox(height: AppHeight.h24),
+                          SectionTitle(
+                            text: title,
+                            color: titleColor,
+                            fontSize: AppFontSize.s18,
+                            fontWeight: AppFontWeight.bold,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                         SizedBox(height: AppHeight.h8),
                         BodyTitle(
                           text: message,
-                          color: AppColors.black,
-                          fontSize: AppFontSize.s16,
-                          fontWeight: AppFontWeight.regular,
+                          color: messageColor,
+                          fontSize: messageFontSize ?? AppFontSize.s16,
+                          fontWeight: messageFontWeight,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.visible,
-                          maxLines: 3,
+                          maxLines: messageMaxLines,
                         ),
                         SizedBox(height: AppHeight.h24),
-                        _DialogButton(
-                          text: primaryButtonText,
-                          color: primaryButtonColor,
-                          onPressed: () => _handleAction(
-                            context,
-                            onPrimaryPressed,
-                          ),
+                        _DialogActions(
+                          primaryButtonText: primaryButtonText,
+                          primaryButtonColor: primaryButtonColor,
+                          secondaryButtonColor: secondaryButtonColor,
+                          onPrimaryPressed: () =>
+                              _handleAction(context, onPrimaryPressed),
+                          secondaryButtonText: secondaryButtonText,
+                          onSecondaryPressed: () =>
+                              _handleAction(context, onSecondaryPressed),
+                          direction: buttonsDirection,
                         ),
-                        if (secondaryButtonText != null) ...[
-                          SizedBox(height: AppHeight.h8),
-                          _DialogButton(
-                            text: secondaryButtonText!,
-                            color: AppColors.white,
-                            foregroundColor: primaryButtonColor,
-                            borderColor: primaryButtonColor,
-                            onPressed: () => _handleAction(
-                              context,
-                              onSecondaryPressed,
-                            ),
-                          ),
-                        ],
                       ],
                     ),
                   ),
+                  if (showCloseButton)
+                    PositionedDirectional(
+                      top: AppPaddingHeight.p12,
+                      start: AppPaddingWidth.p12,
+                      child: _CloseButton(
+                        onPressed: () => Navigator.of(
+                          context,
+                          rootNavigator: true,
+                        ).pop(),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -191,6 +227,89 @@ class AppStatusDialog extends StatelessWidget {
       return;
     }
     Navigator.of(context, rootNavigator: true).pop();
+  }
+}
+
+class _DialogActions extends StatelessWidget {
+  const _DialogActions({
+    required this.primaryButtonText,
+    required this.primaryButtonColor,
+    required this.secondaryButtonColor,
+    required this.onPrimaryPressed,
+    required this.secondaryButtonText,
+    required this.onSecondaryPressed,
+    required this.direction,
+  });
+
+  final String primaryButtonText;
+  final Color primaryButtonColor;
+  final Color secondaryButtonColor;
+  final VoidCallback onPrimaryPressed;
+  final String? secondaryButtonText;
+  final VoidCallback onSecondaryPressed;
+  final Axis direction;
+
+  @override
+  Widget build(BuildContext context) {
+    final primary = _DialogButton(
+      text: primaryButtonText,
+      color: primaryButtonColor,
+      onPressed: onPrimaryPressed,
+    );
+    final secondary = secondaryButtonText == null
+        ? null
+        : _DialogButton(
+            text: secondaryButtonText!,
+            color: AppColors.white,
+            foregroundColor: secondaryButtonColor,
+            borderColor: secondaryButtonColor,
+            onPressed: onSecondaryPressed,
+          );
+
+    if (direction == Axis.horizontal && secondary != null) {
+      return Row(
+        children: [
+          Expanded(child: primary),
+          SizedBox(width: AppWidth.w12),
+          Expanded(child: secondary),
+        ],
+      );
+    }
+
+    return Column(
+      children: [
+        primary,
+        if (secondary != null) ...[
+          SizedBox(height: AppHeight.h8),
+          secondary,
+        ],
+      ],
+    );
+  }
+}
+
+class _CloseButton extends StatelessWidget {
+  const _CloseButton({required this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.square(
+      dimension: AppSize.s50,
+      child: OutlinedButton(
+        onPressed: onPressed,
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.primary,
+          padding: EdgeInsets.zero,
+          side: const BorderSide(color: AppColors.lightGrey),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.r8),
+          ),
+        ),
+        child: Icon(Icons.close_rounded, size: AppSize.s30),
+      ),
+    );
   }
 }
 
@@ -243,12 +362,14 @@ class _StatusIcon extends StatelessWidget {
     required this.iconColor,
     required this.backgroundColor,
     required this.borderColor,
+    required this.outerBackgroundColor,
   });
 
   final IconData icon;
   final Color iconColor;
   final Color backgroundColor;
   final Color borderColor;
+  final Color outerBackgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -259,8 +380,8 @@ class _StatusIcon extends StatelessWidget {
         horizontal: AppPaddingWidth.p18,
         vertical: AppPaddingHeight.p18,
       ),
-      decoration: const BoxDecoration(
-        color: AppColors.light,
+      decoration: BoxDecoration(
+        color: outerBackgroundColor,
         shape: BoxShape.circle,
       ),
       child: Container(

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
+import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/core/routes/app_routes.dart';
+import 'package:forsan/presentation/bloc/auth/logout/logout_bloc.dart';
 import 'package:forsan/presentation/screens/more/widgets/more_menu_item.dart';
 import 'package:forsan/presentation/screens/more/widgets/more_tile.dart';
+import 'package:forsan/presentation/widgets/app_status_dialog.dart';
 
 class MoreMenu extends StatelessWidget {
   const MoreMenu({super.key});
@@ -32,7 +37,23 @@ class MoreMenu extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) => Card(
+  Widget build(BuildContext context) => BlocProvider(
+    create: (_) => LogoutBloc(),
+    child: BlocListener<LogoutBloc, ILogoutState>(
+      listener: (context, state) {
+        if (state is LogoutLoaded) {
+          const LoginRoute().go(context);
+        } else if (state is LogoutFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+      },
+      child: Builder(builder: (context) => _buildMenu(context)),
+    ),
+  );
+
+  Widget _buildMenu(BuildContext context) => Card(
     margin: EdgeInsets.zero,
     elevation: 1,
     shadowColor: AppColors.black.withValues(alpha: .1),
@@ -54,6 +75,8 @@ class MoreMenu extends StatelessWidget {
                 ? () => const SettingRoute().push(context)
                 : index == 1
                 ? () => const InvoicesAndPaymentsRoute().push(context)
+                : index == _items.length - 1
+                ? () => _showLogoutDialog(context)
                 : null,
           ),
           if (index != _items.length - 1)
@@ -66,4 +89,31 @@ class MoreMenu extends StatelessWidget {
       ],
     ),
   );
+
+  Future<void> _showLogoutDialog(BuildContext context) {
+    return AppStatusDialog.show(
+      context,
+      title: '',
+      message: context.loc.logout_confirmation,
+      primaryButtonText: context.loc.confirm,
+      secondaryButtonText: context.loc.cancel,
+      icon: Icons.logout_rounded,
+      iconColor: AppColors.white,
+      iconBackgroundColor: AppColors.primary,
+      iconBorderColor: AppColors.secondary,
+      iconOuterBackgroundColor: const Color(0xFFE4DEF2),
+      secondaryButtonColor: AppColors.red,
+      messageColor: AppColors.primary,
+      messageFontSize: AppFontSize.s20,
+      messageFontWeight: AppFontWeight.bold,
+      messageMaxLines: 2,
+      buttonsDirection: Axis.horizontal,
+      showCloseButton: true,
+      canDismiss: true,
+      onPrimaryPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+        context.read<LogoutBloc>().add(const LogoutEvent());
+      },
+    );
+  }
 }
