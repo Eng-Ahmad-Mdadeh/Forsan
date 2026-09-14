@@ -12,6 +12,7 @@ import 'package:forsan/presentation/widgets/text/body_title.dart';
 void showLanguageSheet(BuildContext context) {
   CustomBottomSheet.show<void>(
     context,
+    canPop: false,
     title: context.loc.choose_language,
     heightFactor: .34,
     borderRadius: AppRadius.r20,
