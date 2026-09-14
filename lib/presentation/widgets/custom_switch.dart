@@ -80,22 +80,12 @@ class CustomSwitch extends StatelessWidget {
               ),
               BlocBuilder<ReservationSwitchCubit, bool>(
                 builder: (context, state) {
-                  return Transform.scale(
-                    scale: .9.sp,
-                    child: SizedBox(
-                      height: AppHeight.h35,
-                      width: AppWidth.w50,
-                      child: Switch(
-                        value: state,
-                        activeColor: Color(0xFF34C759),
-                        inactiveTrackColor: AppColors.backGround,
-                        inactiveThumbColor: AppColors.grey,
-                        onChanged: (value) {
-                          context.read<ReservationSwitchCubit>().switchChanged(value);
-                          onChanged.call(value);
-                        },
-                      ),
-                    ),
+                  return _SwitchControl(
+                    value: state,
+                    onChanged: (value) {
+                      context.read<ReservationSwitchCubit>().switchChanged(value);
+                      onChanged.call(value);
+                    },
                   );
                 },
               ),
@@ -107,6 +97,95 @@ class CustomSwitch extends StatelessWidget {
             },
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _SwitchControl extends StatelessWidget {
+  static const _animationDuration = Duration(milliseconds: 200);
+  static const _activeColor = Color(0xFF34C759);
+  static const _inactiveColor = Color(0xFFC7C7CC);
+  static const _inactiveIndicatorColor = Color(0xFFB3B3B7);
+
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  const _SwitchControl({required this.value, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    final width = 66.w;
+    final height = 29.h;
+    final inset = 2.w;
+    final thumbWidth = 42.w;
+
+    return Semantics(
+      toggled: value,
+      button: true,
+      onTap: () => onChanged(!value),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => onChanged(!value),
+        child: AnimatedContainer(
+          duration: _animationDuration,
+          curve: Curves.easeInOut,
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: value ? _activeColor : _inactiveColor,
+            borderRadius: BorderRadius.circular(height / 2),
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned(
+                right: 12.w,
+                child: AnimatedOpacity(
+                  duration: _animationDuration,
+                  opacity: value ? 1 : 0,
+                  child: Container(
+                    width: 1.5.w,
+                    height: 10.h,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 8.w,
+                child: AnimatedOpacity(
+                  duration: _animationDuration,
+                  opacity: value ? 0 : 1,
+                  child: Container(
+                    width: 10.w,
+                    height: 10.w,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: _inactiveIndicatorColor,
+                        width: 1.w,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              AnimatedPositioned(
+                duration: _animationDuration,
+                curve: Curves.easeInOut,
+                left: value ? inset : width - thumbWidth - inset,
+                top: 2.h,
+                child: Container(
+                  width: thumbWidth,
+                  height: height - 4.h,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(height / 2),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
