@@ -12,6 +12,7 @@ import 'package:forsan/core/services/app_services.dart';
 import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/core/utils/connection_network_service.dart';
 import 'package:forsan/presentation/cubit/code_check/code_check_cubit.dart';
+import 'package:forsan/presentation/widgets/biometric_app_lock_gate.dart';
 
 import 'presentation/cubit/language/language_cubit.dart';
 
@@ -71,11 +72,13 @@ class App extends StatelessWidget {
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               routerConfig: appRouter,
               builder: (context, child) {
-                return ColoredBox(
-                  color: AppColors.backGround,
-                  child: SafeArea(
-                    top: false,
-                    child: child ?? const SizedBox.shrink(),
+                return BiometricAppLockGate(
+                  child: ColoredBox(
+                    color: AppColors.backGround,
+                    child: SafeArea(
+                      top: false,
+                      child: child ?? const SizedBox.shrink(),
+                    ),
                   ),
                 );
               },
