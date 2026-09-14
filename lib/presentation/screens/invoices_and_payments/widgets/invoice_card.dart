@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/core/routes/app_routes.dart';
 
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
@@ -14,6 +15,9 @@ class InvoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SectionCard(
+    onTap: (){
+      PaymentsDetailsRoute().push(context);
+    },
     margin: EdgeInsets.zero,
     padding: EdgeInsets.symmetric(
       horizontal: AppPaddingWidth.p16,

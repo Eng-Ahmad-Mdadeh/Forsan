@@ -19,6 +19,7 @@ import 'package:forsan/presentation/screens/more/more_screen.dart';
 import 'package:forsan/presentation/screens/orders/orders_screen.dart';
 import 'package:forsan/presentation/screens/order_details/orders_details_screen.dart';
 import 'package:forsan/presentation/screens/orders/models/order_item.dart';
+import 'package:forsan/presentation/screens/payments_details/payments_details_screen.dart';
 import 'package:forsan/presentation/screens/setting/setting_screen.dart';
 import 'package:forsan/presentation/screens/signup/signup_screen.dart';
 import 'package:forsan/presentation/screens/show_profile/show_profile_screen.dart';
@@ -201,7 +202,10 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
           path: '/more',
           routes: [
             TypedGoRoute<SettingRoute>(path: 'setting'),
-            TypedGoRoute<InvoicesAndPaymentsRoute>(path: 'invoices_and_payments'),
+            TypedGoRoute<InvoicesAndPaymentsRoute>(
+              path: 'invoices_and_payments',
+              routes: [TypedGoRoute<PaymentsDetailsRoute>(path: 'payments_details')],
+            ),
             TypedGoRoute<ShowProfileRoute>(
               path: 'show_profile',
               routes: [TypedGoRoute<EditProfileRoute>(path: 'edit_profile')],
@@ -296,29 +300,44 @@ class SettingRoute extends GoRouteData with $SettingRoute {
 
   static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
 
-
   @override
   CustomTransitionPage<void> buildPage(
-      BuildContext context,
-      GoRouterState state,
-      ) {
-    return const SettingScreen().buildPage(
-      pageAnimation: PageAnimation.fade,
-    );
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return const SettingScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
-class InvoicesAndPaymentsRoute extends GoRouteData with $InvoicesAndPaymentsRoute {
+
+class InvoicesAndPaymentsRoute extends GoRouteData
+    with $InvoicesAndPaymentsRoute {
   const InvoicesAndPaymentsRoute();
 
   static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
 
+  @override
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return const InvoicesAndPaymentsScreen().buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
+  }
+}
+
+class PaymentsDetailsRoute extends GoRouteData
+    with $PaymentsDetailsRoute {
+  const PaymentsDetailsRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
 
   @override
   CustomTransitionPage<void> buildPage(
       BuildContext context,
       GoRouterState state,
       ) {
-    return const InvoicesAndPaymentsScreen().buildPage(
+    return const PaymentsDetailsScreen().buildPage(
       pageAnimation: PageAnimation.fade,
     );
   }
@@ -342,6 +361,7 @@ class ShowProfileRoute extends GoRouteData with $ShowProfileRoute {
 
 class EditProfileRoute extends GoRouteData with $EditProfileRoute {
   const EditProfileRoute();
+
   static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
 
   @override

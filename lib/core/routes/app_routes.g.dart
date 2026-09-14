@@ -284,6 +284,14 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
               hasOverriddenOnExit: false,
               parentNavigatorKey: InvoicesAndPaymentsRoute.$parentNavigatorKey,
               factory: $InvoicesAndPaymentsRoute._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'payments_details',
+                  hasOverriddenOnExit: false,
+                  parentNavigatorKey: PaymentsDetailsRoute.$parentNavigatorKey,
+                  factory: $PaymentsDetailsRoute._fromState,
+                ),
+              ],
             ),
             GoRouteData.$route(
               path: 'show_profile',
@@ -417,6 +425,28 @@ mixin $InvoicesAndPaymentsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/more/invoices_and_payments');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $PaymentsDetailsRoute on GoRouteData {
+  static PaymentsDetailsRoute _fromState(GoRouterState state) =>
+      const PaymentsDetailsRoute();
+
+  @override
+  String get location =>
+      GoRouteData.$location('/more/invoices_and_payments/payments_details');
 
   @override
   void go(BuildContext context) => context.go(location);
