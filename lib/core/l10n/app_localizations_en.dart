@@ -731,6 +731,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biometric_activation_description => 'Use fingerprint or face recognition to access your account faster and more securely';
 
   @override
+  String get biometric_activation_success_title => 'Successfully enabled';
+
+  @override
+  String get biometric_activation_success_message =>
+      'You can now use your fingerprint for quick account access';
+
+  @override
+  String get biometric_activation_success_button => 'Done';
+
+  @override
   String get enable => 'Enable';
 
   @override

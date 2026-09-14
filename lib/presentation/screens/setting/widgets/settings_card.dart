@@ -32,8 +32,8 @@ class SettingsCard extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p20),
           child: Row(
             children: [
-              Icon(icon, color: color, size: AppSize.s30),
-              SizedBox(width: AppWidth.w15),
+              Icon(icon, color: color, size: AppSize.s24),
+              SizedBox(width: AppWidth.w10),
               Expanded(child: child),
             ],
           ),

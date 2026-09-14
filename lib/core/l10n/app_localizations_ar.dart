@@ -728,6 +728,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get biometric_activation_description => 'استخدم بصمة الإصبع أو بصمة الوجه للدخول أسرع وأكثر أمانًا إلى حسابك';
 
   @override
+  String get biometric_activation_success_title => 'تم التفعيل بنجاح';
+
+  @override
+  String get biometric_activation_success_message =>
+      'يمكنك الآن استخدام بصمة الإصبع للدخول السريع إلى حسابك';
+
+  @override
+  String get biometric_activation_success_button => 'تم';
+
+  @override
   String get enable => 'تفعيل';
 
   @override

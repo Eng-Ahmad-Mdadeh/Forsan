@@ -19,7 +19,7 @@ class SettingsTitle extends StatelessWidget {
     child: BodyTitle(
       text: title,
       color: color,
-      fontSize: AppFontSize.s18,
+      fontSize: AppFontSize.s16,
       fontWeight: AppFontWeight.regular,
     ),
   );
