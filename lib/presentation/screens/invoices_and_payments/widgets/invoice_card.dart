@@ -17,7 +17,7 @@ class InvoiceCard extends StatelessWidget {
     margin: EdgeInsets.zero,
     padding: EdgeInsets.symmetric(
       horizontal: AppPaddingWidth.p16,
-      vertical: AppPaddingHeight.p16,
+      vertical: AppPaddingHeight.p8,
     ),
     borderRadius: BorderRadius.circular(AppRadius.r10),
     child: Column(
@@ -36,7 +36,7 @@ class InvoiceCard extends StatelessWidget {
                     style: TextStyle(
                       color: AppColors.homeSupportAction,
                       fontFamily: AppFontFamily.tajawal,
-                      fontSize: AppFontSize.s14,
+                      fontSize: AppFontSize.s12,
                       fontWeight: AppFontWeight.regular,
                     ),
                   ),
@@ -48,7 +48,7 @@ class InvoiceCard extends StatelessWidget {
                     style: TextStyle(
                       color: AppColors.primary,
                       fontFamily: AppFontFamily.tajawal,
-                      fontSize: AppFontSize.s18,
+                      fontSize: AppFontSize.s14,
                       fontWeight: AppFontWeight.bold,
                     ),
                   ),
@@ -59,27 +59,24 @@ class InvoiceCard extends StatelessWidget {
             StatusBadge(
               status: invoice.status,
               showIndicator: false,
-              fontSize: AppFontSize.s14,
+              fontSize: AppFontSize.s12,
               fontWeight: AppFontWeight.bold,
             ),
           ],
         ),
         SizedBox(height: AppHeight.h25),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: _InvoiceDetail(
-                label: 'تاريخ الفاتورة :',
-                value: invoice.invoiceDate,
-              ),
+            _InvoiceDetail(
+              label: 'تاريخ الفاتورة :',
+              value: invoice.invoiceDate,
             ),
-            SizedBox(width: AppWidth.w10),
-            Expanded(
-              child: _InvoiceDetail(
-                label: 'الإجمالي :',
-                value: '\uFDFC ${invoice.total}',
-                valueDirection: TextDirection.ltr,
-              ),
+
+            _InvoiceDetail(
+              label: 'الإجمالي :',
+              value: '\uFDFC ${invoice.total}',
+              valueDirection: TextDirection.ltr,
             ),
           ],
         ),
@@ -110,7 +107,7 @@ class _InvoiceDetail extends StatelessWidget {
           style: TextStyle(
             color: AppColors.greyMan,
             fontFamily: AppFontFamily.tajawal,
-            fontSize: AppFontSize.s14,
+            fontSize: AppFontSize.s12,
             fontWeight: AppFontWeight.regular,
           ),
         ),
@@ -124,7 +121,7 @@ class _InvoiceDetail extends StatelessWidget {
           style: TextStyle(
             color: AppColors.primary,
             fontFamily: AppFontFamily.tajawal,
-            fontSize: AppFontSize.s14,
+            fontSize: AppFontSize.s12,
             fontWeight: AppFontWeight.bold,
           ),
         ),

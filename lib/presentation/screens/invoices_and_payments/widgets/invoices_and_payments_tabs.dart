@@ -24,6 +24,7 @@ class InvoicesAndPaymentsTabs extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.r12),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: List.generate(_labels.length, (index) {
           return Expanded(
             child: Padding(
@@ -91,7 +92,7 @@ class _PaymentTab extends StatelessWidget {
                 style: TextStyle(
                   color: selected ? AppColors.white : AppColors.mainText,
                   fontFamily: AppFontFamily.tajawal,
-                  fontSize: AppFontSize.s18,
+                  fontSize: AppFontSize.s15,
                   fontWeight: AppFontWeight.regular,
                 ),
               ),
