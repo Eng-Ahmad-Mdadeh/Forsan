@@ -3,6 +3,7 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
+import 'package:forsan/presentation/widgets/custom_submit_button.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
 import 'widgets/payment_attachments_card.dart';
@@ -54,6 +55,15 @@ class PaymentsDetailsScreen extends StatelessWidget {
               ),
               SizedBox(height: AppHeight.h16),
               const PaymentAttachmentsCard(),
+              SizedBox(height: AppHeight.h16),
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: AppPaddingWidth.p5),
+                child: CustomSubmitButton(
+                  text: 'دفع',
+                  useGradient: false,
+                  onPressed: (){},
+                ),
+              ),
             ],
           ),
         ),

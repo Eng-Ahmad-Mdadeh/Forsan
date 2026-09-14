@@ -3,6 +3,7 @@ import 'package:forsan/core/resources/app_assets.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/widgets/custom_submit_button.dart';
 import 'package:forsan/presentation/widgets/image_view.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
@@ -44,8 +45,8 @@ class PaymentAttachmentsCard extends StatelessWidget {
                   Expanded(
                     child: BodyTitle(
                       text: 'صورة الفاتورة',
-                      color: AppColors.mainText,
-                      fontSize: AppFontSize.s16,
+                      color: AppColors.black,
+                      fontSize: AppFontSize.s14,
                       fontWeight: AppFontWeight.regular,
                     ),
                   ),
@@ -63,17 +64,17 @@ class PaymentAttachmentsCard extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            BodyTitle(
-                              text: 'تحميل',
-                              color: AppColors.normal,
-                              fontSize: AppFontSize.s16,
-                              fontWeight: AppFontWeight.regular,
-                            ),
-                            SizedBox(width: AppWidth.w5),
                             Icon(
                               Icons.download_outlined,
                               color: AppColors.normal,
-                              size: AppSize.s22,
+                              size: AppSize.s18,
+                            ),
+                            SizedBox(width: AppWidth.w4),
+                            BodyTitle(
+                              text: 'تحميل',
+                              color: AppColors.primaryDark,
+                              fontSize: AppFontSize.s14,
+                              fontWeight: AppFontWeight.medium,
                             ),
                           ],
                         ),
@@ -98,25 +99,25 @@ class _AttachmentsHeader extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: AppWidth.w48,
-          height: AppHeight.h48,
+          width: AppWidth.w33,
+          height: AppHeight.h33,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: AppColors.light.withOpacity(0.55),
-            borderRadius: BorderRadius.circular(AppRadius.r12),
+            borderRadius: BorderRadius.circular(AppRadius.r8),
           ),
           child: Icon(
             Icons.attach_file,
             color: AppColors.normal,
-            size: AppSize.s27,
+            size: AppSize.s20,
           ),
         ),
-        SizedBox(width: AppWidth.w10),
+        SizedBox(width: AppWidth.w8),
         Expanded(
           child: SectionTitle(
             text: 'المرفقات',
-            color: AppColors.normal,
-            fontSize: AppFontSize.s20,
+            color: AppColors.primaryDark,
+            fontSize: AppFontSize.s16,
             fontWeight: AppFontWeight.bold,
           ),
         ),

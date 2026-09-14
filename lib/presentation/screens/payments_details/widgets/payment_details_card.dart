@@ -129,7 +129,17 @@ class _PaymentDetailRow extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.lightGreySec.withOpacity(0.7),
         borderRadius: BorderRadius.circular(AppRadius.r8),
-        border: Border.all(color: AppColors.greyDivider.withOpacity(0.2)),
+        border: Border(
+          right: BorderSide(
+              color: AppColors.greyDivider.withOpacity(0.2)
+          ),
+          left: BorderSide(
+              color: AppColors.greyDivider.withOpacity(0.2)
+          ),
+          bottom: BorderSide(
+              color: AppColors.greyDivider.withOpacity(0.2)
+          ),
+        )
       ),
       child: Row(
         children: [

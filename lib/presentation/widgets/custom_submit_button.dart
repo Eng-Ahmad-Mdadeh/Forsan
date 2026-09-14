@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
@@ -61,6 +62,8 @@ class CustomSubmitButton extends StatelessWidget {
             text: text,
             color: AppColors.white,
             textAlign: TextAlign.center,
+            fontSize: AppSize.s16,
+            fontWeight: AppFontWeight.medium,
           ),
           if (icon != null) ...[
             SizedBox(width: AppWidth.w8),
