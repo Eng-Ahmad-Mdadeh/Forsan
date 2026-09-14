@@ -274,6 +274,12 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
           factory: $MoreRoute._fromState,
           routes: [
             GoRouteData.$route(
+              path: 'setting',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: SettingRoute.$parentNavigatorKey,
+              factory: $SettingRoute._fromState,
+            ),
+            GoRouteData.$route(
               path: 'show_profile',
               hasOverriddenOnExit: false,
               parentNavigatorKey: ShowProfileRoute.$parentNavigatorKey,
@@ -364,6 +370,26 @@ mixin $MoreRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/more');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $SettingRoute on GoRouteData {
+  static SettingRoute _fromState(GoRouterState state) => const SettingRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more/setting');
 
   @override
   void go(BuildContext context) => context.go(location);
