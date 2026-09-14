@@ -17,6 +17,7 @@ class SectionCard extends StatelessWidget {
   final Function()? onEditTap;
   final Widget? trailing;
   final Color? backgroundColor;
+  final Gradient? backgroundGradient;
   final String? subtitle;
   final bool? showShadow;
   final bool? showBorder;
@@ -32,6 +33,7 @@ class SectionCard extends StatelessWidget {
     this.onEditTap,
     this.trailing,
     this.backgroundColor,
+    this.backgroundGradient,
     this.subtitle,
     this.showShadow = true,
     this.showBorder = false,
@@ -51,53 +53,66 @@ class SectionCard extends StatelessWidget {
           child: Card(
             margin: margin,
             color: backgroundColor ?? AppColors.white,
-            shadowColor: showShadow! ? AppColors.lightGrey.withAlpha(300) : AppColors.none,
+            shadowColor:
+                showShadow! ? AppColors.lightGrey.withAlpha(300) : AppColors.none,
             elevation: 5,
             shape: RoundedRectangleBorder(
-              side: showBorder! ?  BorderSide(color: AppColors.greyDivider.withOpacity(0.2), width: 1) : BorderSide.none,
+              side: showBorder!
+                  ? BorderSide(
+                      color: AppColors.greyDivider.withOpacity(0.2),
+                      width: 1,
+                    )
+                  : BorderSide.none,
               borderRadius: borderRadius ?? BorderRadius.circular(AppRadius.r25),
             ),
-            child: Padding(
-              padding: padding ?? const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                spacing: AppHeight.h13,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (title != null)
-                    Row(
-                      textDirection: TextDirection.ltr,
-                      children: [
-                        Expanded(
-                          flex: 6,
-                          child: MarqueeWidget(
-                            child: SectionTitle(
-                              overflow: TextOverflow.visible,
-                              text: title,
-                              color: AppColors.primary,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: backgroundGradient,
+                borderRadius:
+                    borderRadius ?? BorderRadius.circular(AppRadius.r25),
+              ),
+              child: Padding(
+                padding: padding ?? const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: AppHeight.h13,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (title != null)
+                      Row(
+                        textDirection: TextDirection.ltr,
+                        children: [
+                          Expanded(
+                            flex: 6,
+                            child: MarqueeWidget(
+                              child: SectionTitle(
+                                overflow: TextOverflow.visible,
+                                text: title,
+                                color: AppColors.primary,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width:3),
-                        if (trailing != null) trailing!,
-                        if (onEditTap != null)
-                          InkWell(
-                            onTap: onEditTap,
-                            child: Icon(
-                              Iconsax.edit_2_outline,
-                              color: AppColors.primary,
-                              size: AppSize.s25,
+                          const SizedBox(width: 3),
+                          if (trailing != null) trailing!,
+                          if (onEditTap != null)
+                            InkWell(
+                              onTap: onEditTap,
+                              child: Icon(
+                                Iconsax.edit_2_outline,
+                                color: AppColors.primary,
+                                size: AppSize.s25,
+                              ),
                             ),
-                          ),
-                      ],
-                    ),
-                  if (subtitle != null)
-                    BodyTitle(
-                      text: subtitle!,
-                      color: AppColors.greyText,
-                    ),
-                  child,
-                ],
+                        ],
+                      ),
+                    if (subtitle != null)
+                      BodyTitle(
+                        text: subtitle!,
+                        color: AppColors.greyText,
+                      ),
+                    child,
+                  ],
+                ),
               ),
             ),
           ),
