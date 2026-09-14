@@ -13,6 +13,14 @@ class BiometricAppLockGate extends StatefulWidget {
 
   final Widget child;
 
+  /// Keeps the app-level lock in sync when the preference is changed from the
+  /// settings screen without creating a second lock gate around that screen.
+  static void syncPreference(BuildContext context, {required bool enabled}) {
+    context
+        .findAncestorStateOfType<_BiometricAppLockGateState>()
+        ?._syncPreference(enabled);
+  }
+
   @override
   State<BiometricAppLockGate> createState() => _BiometricAppLockGateState();
 }
@@ -51,6 +59,12 @@ class _BiometricAppLockGateState extends State<BiometricAppLockGate> with Widget
 
     if (state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
       _biometricLockCubit.lockIfEnabled();
+    }
+  }
+
+  void _syncPreference(bool enabled) {
+    if (!enabled && _biometricLockCubit.state.isLocked) {
+      _biometricLockCubit.disableLock();
     }
   }
 

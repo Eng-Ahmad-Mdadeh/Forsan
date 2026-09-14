@@ -288,6 +288,7 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
                 GoRouteData.$route(
                   path: 'edit_profile',
                   hasOverriddenOnExit: false,
+                  parentNavigatorKey: EditProfileRoute.$parentNavigatorKey,
                   factory: $EditProfileRoute._fromState,
                 ),
               ],
