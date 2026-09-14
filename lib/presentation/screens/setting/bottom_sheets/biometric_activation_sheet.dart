@@ -15,12 +15,12 @@ Future<bool?> showBiometricActivationSheet(BuildContext context) {
     title: '',
     showHeader: false,
     isScroll: false,
-    heightFactor: .43,
+    heightFactor: .37,
     borderRadius: AppRadius.r14,
     backgroundColor: AppColors.white,
     padding: EdgeInsets.symmetric(
       horizontal: AppPaddingWidth.p20,
-      vertical: AppPaddingHeight.p10,
+
     ),
     body: Column(
       children: [
@@ -35,13 +35,13 @@ Future<bool?> showBiometricActivationSheet(BuildContext context) {
         SizedBox(height: AppHeight.h8),
         BodyTitle(
           text: context.loc.biometric_activation_description,
-          color: AppColors.greyText,
+          color: AppColors.black,
           fontSize: AppFontSize.s14,
           fontWeight: AppFontWeight.regular,
           textAlign: TextAlign.center,
           maxLines: 3,
         ),
-        const Spacer(),
+        SizedBox(height: AppHeight.h18),
         SizedBox(
           width: double.infinity,
           height: AppHeight.h50,

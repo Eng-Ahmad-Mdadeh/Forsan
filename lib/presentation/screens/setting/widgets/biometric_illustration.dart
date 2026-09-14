@@ -17,11 +17,11 @@ class BiometricIllustration extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: showCheck ? AppColors.secondaryLight : AppColors.white,
-            border: Border.all(
-              color: AppColors.primary,
-              width: showCheck ? AppWidth.w1 : AppWidth.w5,
-            ),
+            color: showCheck ? AppColors.lightActive.withOpacity(0.08) : AppColors.white,
+            // border: Border.all(
+            //   color: AppColors.primary,
+            //   width: showCheck ? AppWidth.w1 : AppWidth.w5,
+            // ),
           ),
         ),
         Icon(
@@ -29,24 +29,24 @@ class BiometricIllustration extends StatelessWidget {
           color: AppColors.primary,
           size: showCheck ? AppSize.s58 : AppSize.s65,
         ),
-        if (showCheck)
-          PositionedDirectional(
-            end: 0,
-            bottom: 0,
-            child: Container(
-              width: AppWidth.w30,
-              height: AppHeight.h30,
-              decoration: const BoxDecoration(
-                color: AppColors.white,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.check_circle_rounded,
-                color: AppColors.primary,
-                size: AppSize.s30,
-              ),
-            ),
-          ),
+        // if (showCheck)
+        //   PositionedDirectional(
+        //     end: 0,
+        //     bottom: 0,
+        //     child: Container(
+        //       width: AppWidth.w30,
+        //       height: AppHeight.h30,
+        //       decoration: const BoxDecoration(
+        //         color: AppColors.white,
+        //         shape: BoxShape.circle,
+        //       ),
+        //       child: Icon(
+        //         Icons.check_circle_rounded,
+        //         color: AppColors.primary,
+        //         size: AppSize.s30,
+        //       ),
+        //     ),
+        //   ),
       ],
     ),
   );

@@ -19,7 +19,7 @@ Future<bool> showBiometricVerificationSheet(
     title: '',
     showHeader: false,
     isScroll: false,
-    heightFactor: .52,
+    heightFactor: .45,
     borderRadius: AppRadius.r14,
     backgroundColor: AppColors.white,
     padding: EdgeInsets.symmetric(
@@ -85,7 +85,7 @@ class _BiometricVerificationContentState
             text: 'تحقق من الهوية',
             color: AppColors.primary,
             textAlign: TextAlign.center,
-            fontSize: AppFontSize.s16,
+            fontSize: AppFontSize.s18,
           ),
           SheetCloseButton(onTap: () => Navigator.of(context).pop(false)),
         ],
@@ -105,7 +105,7 @@ class _BiometricVerificationContentState
       SizedBox(height: AppHeight.h8),
       BodyTitle(
         text: 'ضع إصبعك على المستشعر للتحقق من هويتك وتأمين الميزة',
-        color: AppColors.greyText,
+        color: AppColors.black,
         fontSize: AppFontSize.s14,
         fontWeight: AppFontWeight.regular,
         textAlign: TextAlign.center,
