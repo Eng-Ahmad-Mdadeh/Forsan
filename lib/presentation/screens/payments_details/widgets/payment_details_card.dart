@@ -29,7 +29,7 @@ class PaymentDetailsCard extends StatelessWidget {
       child: SectionCard(
         showBorder: true,
         margin: EdgeInsets.zero,
-        borderRadius: BorderRadius.circular(AppRadius.r12),
+        borderRadius: BorderRadius.circular(AppRadius.r8),
         padding: EdgeInsetsDirectional.symmetric(
           horizontal: AppPaddingWidth.p16,
           vertical: AppPaddingHeight.p16,
@@ -81,23 +81,23 @@ class _PaymentDetailsHeader extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: AppWidth.w42,
-          height: AppHeight.h42,
+          width: AppWidth.w33,
+          height: AppHeight.h33,
           decoration: BoxDecoration(
             color: AppColors.light,
             borderRadius: BorderRadius.circular(AppRadius.r10),
           ),
           child: Icon(
-            Icons.description_outlined,
-            color: AppColors.primary,
-            size: AppSize.s24,
+            Icons.folder_open,
+            color: AppColors.primaryDark,
+            size: AppSize.s20,
           ),
         ),
-        SizedBox(width: AppWidth.w10),
+        SizedBox(width: AppWidth.w8),
         SectionTitle(
           text: 'تفاصيل العملية',
-          color: AppColors.primary,
-          fontSize: AppFontSize.s20,
+          color: AppColors.primaryDark,
+          fontSize: AppFontSize.s16,
           fontWeight: AppFontWeight.bold,
         ),
       ],
@@ -121,24 +121,24 @@ class _PaymentDetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(minHeight: AppHeight.h60),
+      constraints: BoxConstraints(minHeight: AppHeight.h48),
       padding: EdgeInsetsDirectional.symmetric(
-        horizontal: AppPaddingWidth.p12,
-        vertical: AppPaddingHeight.p12,
+        horizontal: AppPaddingWidth.p8,
+        vertical: AppPaddingHeight.p13,
       ),
       decoration: BoxDecoration(
-        color: AppColors.lightGreySec,
-        borderRadius: BorderRadius.circular(AppRadius.r10),
+        color: AppColors.lightGreySec.withOpacity(0.7),
+        borderRadius: BorderRadius.circular(AppRadius.r8),
         border: Border.all(color: AppColors.greyDivider.withOpacity(0.2)),
       ),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.primary, size: AppSize.s20),
-          SizedBox(width: AppWidth.w10),
+          Icon(icon, color: AppColors.primary, size: AppSize.s16),
+          SizedBox(width: AppWidth.w4),
           BodyTitle(
             text: label,
-            color: AppColors.blackCow,
-            fontSize: AppFontSize.s16,
+            color: AppColors.black,
+            fontSize: AppFontSize.s14,
             fontWeight: AppFontWeight.regular,
           ),
           SizedBox(width: AppWidth.w10),
@@ -152,7 +152,7 @@ class _PaymentDetailRow extends StatelessWidget {
               style: TextStyle(
                 color: AppColors.lightBlack,
                 fontFamily: AppFontFamily.tajawal,
-                fontSize: AppFontSize.s16,
+                fontSize: AppFontSize.s14,
                 fontWeight: AppFontWeight.bold,
               ),
             ),

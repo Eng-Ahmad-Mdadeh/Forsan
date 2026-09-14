@@ -38,18 +38,20 @@ class PaymentsDetailsScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
+
+              const PaymentSummaryCard(
+                totalAmount: '40,000',
+                paidAmount: '30,000',
+                remainingAmount: '10,000',
+              ),
+              SizedBox(height: AppHeight.h16),
+
               const PaymentDetailsCard(
                 invoiceNumber: 'TX-88921',
                 service: 'تأسيس اعمال',
                 serviceType: 'تأسيس شركة لشخص واحد',
                 date: '09:00 AM 06-06-2026',
                 amount: '40,000',
-              ),
-              SizedBox(height: AppHeight.h16),
-              const PaymentSummaryCard(
-                totalAmount: '40,000',
-                paidAmount: '30,000',
-                remainingAmount: '10,000',
               ),
             ],
           ),
