@@ -10,6 +10,7 @@ class StatusBadge extends StatelessWidget {
     super.key,
     required String status,
     this.showOuterCircle = true,
+    this.showIndicator = true,
     this.fontSize,
     this.fontWeight,
   })
@@ -21,12 +22,16 @@ class StatusBadge extends StatelessWidget {
   static const underReview = 'قيد المراجعة';
   static const inProgress = 'قيد التنفيذ';
   static const completed = 'مكتمل';
+  static const paid = 'تم الدفع';
+  static const pendingPayment = 'بانتظار الدفع';
 
   static Color colorFor(String status) => switch (status) {
     waitingDocuments => AppColors.secondary,
     underReview => AppColors.orange,
     inProgress => AppColors.primary,
     completed => AppColors.darkGreen,
+    paid => AppColors.primary,
+    pendingPayment => AppColors.orange,
     _ => AppColors.greyText,
   };
 
@@ -35,6 +40,8 @@ class StatusBadge extends StatelessWidget {
     underReview => AppColors.lightOrange,
     inProgress => AppColors.lightPrimary,
     completed => AppColors.lightGreen,
+    paid => AppColors.lightGreen,
+    pendingPayment => AppColors.lightOrange,
     _ => AppColors.lightGrey,
   };
 
@@ -44,6 +51,7 @@ class StatusBadge extends StatelessWidget {
     required this.color,
     required this.backgroundColor,
     this.showOuterCircle = false,
+    this.showIndicator = true,
     this.fontSize,
     this.fontWeight,
   });
@@ -52,6 +60,7 @@ class StatusBadge extends StatelessWidget {
   final Color color;
   final Color backgroundColor;
   final bool showOuterCircle;
+  final bool showIndicator;
   final double? fontSize;
   final FontWeight? fontWeight;
 
@@ -70,7 +79,7 @@ class StatusBadge extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (showOuterCircle)
+        if (showIndicator && showOuterCircle)
           Container(
             width: AppWidth.w16,
             height: AppWidth.w16,
@@ -88,7 +97,7 @@ class StatusBadge extends StatelessWidget {
               ),
             ),
           )
-        else
+        else if (showIndicator)
           Container(
             width: AppWidth.w10,
             height: AppWidth.w10,
@@ -97,7 +106,7 @@ class StatusBadge extends StatelessWidget {
               shape: BoxShape.circle,
             ),
           ),
-        SizedBox(width: AppWidth.w7),
+        if (showIndicator) SizedBox(width: AppWidth.w7),
         BodyTitle(
           text: label,
           color: color,

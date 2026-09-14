@@ -8,10 +8,40 @@ import 'package:forsan/presentation/widgets/text/section_title.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 import '../../cubit/invoices_and_payments/invoices_and_payments_cubit.dart';
+import '../../widgets/status_badge.dart';
+import 'models/invoice_item.dart';
+import 'widgets/invoices_list.dart';
 import 'widgets/invoices_and_payments_tabs.dart';
 
 class InvoicesAndPaymentsScreen extends StatelessWidget {
   const InvoicesAndPaymentsScreen({super.key});
+
+  static const _invoices = [
+    InvoiceItem(
+      number: 'TX-88921',
+      title: 'تأسيس شركة لشخص واحد',
+      invoiceDate: '15/05/2026',
+      total: '126,500.00',
+      status: StatusBadge.paid,
+    ),
+    InvoiceItem(
+      number: 'TX-88921',
+      title: 'تأسيس شركة لشخص واحد',
+      invoiceDate: '15/05/2026',
+      total: '126,500.00',
+      status: StatusBadge.pendingPayment,
+    ),
+  ];
+
+  List<InvoiceItem> _visibleInvoices(int selectedTab) => _invoices
+      .where(
+        (invoice) => switch (selectedTab) {
+          1 => invoice.status == StatusBadge.paid,
+          2 => invoice.status == StatusBadge.pendingPayment,
+          _ => true,
+        },
+      )
+      .toList();
 
   @override
   Widget build(BuildContext context) => BlocProvider(
@@ -39,17 +69,25 @@ class InvoicesAndPaymentsScreen extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(
-            AppPaddingWidth.p13,
-            AppPaddingHeight.p5,
-            AppPaddingWidth.p13,
-            0,
-          ),
-          child: const Align(
-            alignment: AlignmentDirectional.topCenter,
-            child: InvoicesAndPaymentsTabs(),
-          ),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(
+                AppPaddingWidth.p13,
+                AppPaddingHeight.p5,
+                AppPaddingWidth.p13,
+                0,
+              ),
+              child: const InvoicesAndPaymentsTabs(),
+            ),
+            Expanded(
+              child: BlocBuilder<InvoicesAndPaymentsCubit, int>(
+                builder: (context, selectedTab) => InvoicesList(
+                  invoices: _visibleInvoices(selectedTab),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     ),
