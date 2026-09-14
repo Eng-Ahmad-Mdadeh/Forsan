@@ -10,6 +10,7 @@ class SettingCubit extends Cubit<SettingState> {
   }
 
   final BiometricLockService _biometricLockService;
+  bool _isAuthenticating = false;
 
   void setNotificationsEnabled(bool value) {
     emit(state.copyWith(notificationsEnabled: value));
@@ -33,6 +34,9 @@ class SettingCubit extends Cubit<SettingState> {
   }
 
   Future<bool> activateBiometrics({required String reason}) async {
+    if (_isAuthenticating) return false;
+    _isAuthenticating = true;
+
     try {
       if (!await _biometricLockService.canUseBiometrics()) return false;
 
@@ -45,6 +49,8 @@ class SettingCubit extends Cubit<SettingState> {
       return !isClosed && state.biometricsEnabled;
     } catch (_) {
       return false;
+    } finally {
+      _isAuthenticating = false;
     }
   }
 
