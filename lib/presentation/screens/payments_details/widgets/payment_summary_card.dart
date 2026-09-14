@@ -28,22 +28,22 @@ class PaymentSummaryCard extends StatelessWidget {
         end: AlignmentDirectional.centerEnd,
         colors: [AppColors.profileBannerEnd, AppColors.profileBannerStart],
       ),
-      borderRadius: BorderRadius.circular(AppRadius.r25),
+      borderRadius: BorderRadius.circular(AppRadius.r12),
       padding: EdgeInsetsDirectional.symmetric(
-        horizontal: AppPaddingWidth.p24,
-        vertical: AppPaddingHeight.p24,
+        horizontal: AppPaddingWidth.p12,
+        vertical: AppPaddingHeight.p12,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _AmountRow(label: 'المبلغ الإجمالي', amount: totalAmount),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p20),
+            padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p8),
             child: const _DashedDivider(),
           ),
           _AmountRow(label: 'المبلغ المدفوع', amount: paidAmount),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p20),
+            padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p8),
             child: const _DashedDivider(),
           ),
           _AmountRow(label: 'المبلغ المتبقي', amount: remainingAmount),
@@ -62,22 +62,20 @@ class _AmountRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BodyTitle(
           text: label,
           color: AppColors.white,
-          fontSize: AppFontSize.s18,
+          fontSize: AppFontSize.s16,
           fontWeight: AppFontWeight.regular,
-          textAlign: TextAlign.end,
         ),
         SizedBox(height: AppHeight.h5),
         SectionTitle(
           text: '$amount ل.س',
           color: AppColors.white,
-          fontSize: AppFontSize.s30,
+          fontSize: AppFontSize.s20,
           fontWeight: AppFontWeight.bold,
-          textAlign: TextAlign.end,
         ),
       ],
     );
@@ -93,7 +91,8 @@ class _DashedDivider extends StatelessWidget {
       builder: (context, constraints) {
         final dashWidth = AppWidth.w10;
         final gapWidth = AppWidth.w8;
-        final dashCount = (constraints.maxWidth / (dashWidth + gapWidth)).floor();
+        final dashCount = (constraints.maxWidth / (dashWidth + gapWidth))
+            .floor();
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,7 +101,7 @@ class _DashedDivider extends StatelessWidget {
             (_) => SizedBox(
               width: dashWidth,
               height: AppHeight.h2,
-              child: const ColoredBox(color: AppColors.secondaryText),
+              child: ColoredBox(color: AppColors.white.withOpacity(0.08)),
             ),
           ),
         );

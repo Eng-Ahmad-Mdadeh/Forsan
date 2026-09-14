@@ -30,11 +30,10 @@ class PaymentsDetailsScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsetsDirectional.fromSTEB(
-            AppPaddingWidth.p16,
-            AppPaddingHeight.p16,
-            AppPaddingWidth.p16,
-            AppPaddingHeight.p24,
+          padding: EdgeInsetsDirectional.only(
+            start: AppPaddingWidth.p16,
+            bottom:AppPaddingWidth.p16,
+            end:AppPaddingHeight.p16,
           ),
           child: const PaymentSummaryCard(
             totalAmount: '40,000',
