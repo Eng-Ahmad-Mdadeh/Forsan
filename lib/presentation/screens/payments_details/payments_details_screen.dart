@@ -5,6 +5,7 @@ import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
+import 'widgets/payment_attachments_card.dart';
 import 'widgets/payment_details_card.dart';
 import 'widgets/payment_summary_card.dart';
 
@@ -38,14 +39,12 @@ class PaymentsDetailsScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-
               const PaymentSummaryCard(
                 totalAmount: '40,000',
                 paidAmount: '30,000',
                 remainingAmount: '10,000',
               ),
               SizedBox(height: AppHeight.h16),
-
               const PaymentDetailsCard(
                 invoiceNumber: 'TX-88921',
                 service: 'تأسيس اعمال',
@@ -53,6 +52,8 @@ class PaymentsDetailsScreen extends StatelessWidget {
                 date: '09:00 AM 06-06-2026',
                 amount: '40,000',
               ),
+              SizedBox(height: AppHeight.h16),
+              const PaymentAttachmentsCard(),
             ],
           ),
         ),
