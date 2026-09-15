@@ -425,6 +425,18 @@ class AppLocalizationsAr extends AppLocalizations {
       'يرجى تسديد الدفعة الأولى ليقوم فريق فرسان لتنفيذ المعاملة';
 
   @override
+  String get pay_choose_payment_method => 'اختر طريقة الدفع';
+
+  @override
+  String get pay_bank_transfer => 'تحويل بنكي';
+
+  @override
+  String get pay_western_union => 'Western Union';
+
+  @override
+  String get pay_sham_cash => 'شام كاش';
+
+  @override
   String get login_required_title => 'تحتاج إلى تسجيل الدخول';
 
   @override

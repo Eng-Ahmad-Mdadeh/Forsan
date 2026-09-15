@@ -920,6 +920,30 @@ abstract class AppLocalizations {
   /// **'Please pay the first payment so the Forsan team can process the transaction'**
   String get pay_first_payment_note;
 
+  /// No description provided for @pay_choose_payment_method.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a payment method'**
+  String get pay_choose_payment_method;
+
+  /// No description provided for @pay_bank_transfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transfer'**
+  String get pay_bank_transfer;
+
+  /// No description provided for @pay_western_union.
+  ///
+  /// In en, this message translates to:
+  /// **'Western Union'**
+  String get pay_western_union;
+
+  /// No description provided for @pay_sham_cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Sham Cash'**
+  String get pay_sham_cash;
+
   /// No description provided for @login_required_title.
   ///
   /// In en, this message translates to:
