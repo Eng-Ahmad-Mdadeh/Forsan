@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#FFD600"/>
-  <path fill="#050505" d="M10 13h9l8 13h-9zm12 0h9l8 13h-9z"/>
-  <text x="8" y="39" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#050505">Western</text>
-  <text x="8" y="51" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#050505">Union</text>
-</svg>

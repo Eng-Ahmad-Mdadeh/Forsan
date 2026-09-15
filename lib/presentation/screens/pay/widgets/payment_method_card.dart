@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
@@ -38,7 +37,7 @@ class PaymentMethodCard extends StatelessWidget {
               SizedBox(
                 width: AppWidth.w52,
                 height: AppHeight.h52,
-                child: SvgPicture.asset(assetPath, fit: BoxFit.contain),
+                child: Image.asset(assetPath, fit: BoxFit.contain),
               ),
               SizedBox(width: AppWidth.w16),
               Expanded(

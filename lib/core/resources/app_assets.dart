@@ -31,9 +31,6 @@ class AppAssets {
   static String appBanner = '$imagePath/app_banner.png';
   static String addFile = '$imagePath/add_file.png';
   static String newOrder = '$imagePath/newOrder.png';
-  static String bankTransfer = '$imagePath/bank_transfer.svg';
-  static String westernUnion = '$imagePath/western_union.svg';
-  static String shamCash = '$imagePath/sham_cash.svg';
   static String authBackground = '$imagePath/auth_background.png';
   static String verificationCode = '$imagePath/verification_code.png';
   static String verification = '$imagePath/verification.png';

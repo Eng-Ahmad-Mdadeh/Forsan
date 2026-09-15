@@ -34,19 +34,19 @@ class PaymentMethodsSection extends StatelessWidget {
         SizedBox(height: AppHeight.h20),
         PaymentMethodCard(
           title: context.loc.pay_bank_transfer,
-          assetPath: AppAssets.bankTransfer,
+          assetPath: AppAssets.addFile,
           onTap: onBankTransferTap,
         ),
         SizedBox(height: AppHeight.h16),
         PaymentMethodCard(
           title: context.loc.pay_western_union,
-          assetPath: AppAssets.westernUnion,
+          assetPath: AppAssets.addFile,
           onTap: onWesternUnionTap,
         ),
         SizedBox(height: AppHeight.h16),
         PaymentMethodCard(
           title: context.loc.pay_sham_cash,
-          assetPath: AppAssets.shamCash,
+          assetPath: AppAssets.addFile,
           onTap: onShamCashTap,
         ),
       ],
