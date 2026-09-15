@@ -396,6 +396,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get phone_number => 'رقم الجوال';
 
   @override
+  String get login_welcome_back => 'أهلاً بعودتك';
+
+  @override
+  String get login_phone_prompt => 'أدخل رقم الجوال للمتابعة';
+
+  @override
+  String get login_continue => 'متابعة';
+
+  @override
+  String get login_terms_agreement => 'بتسجيل الدخول أنت توافق على';
+
+  @override
+  String get login_country_search_hint =>
+      'ابحث باسم الدولة أو رمز الاتصال';
+
+  @override
   String get login_required_title => 'تحتاج إلى تسجيل الدخول';
 
   @override

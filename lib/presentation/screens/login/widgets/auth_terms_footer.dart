@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
@@ -14,7 +15,7 @@ class AuthTermsFooter extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const _FooterLink(text: 'الشروط والأحكام'),
+          _FooterLink(text: context.loc.terms),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p8),
             child: BodyTitle(
@@ -24,7 +25,7 @@ class AuthTermsFooter extends StatelessWidget {
               fontWeight: AppFontWeight.regular,
             ),
           ),
-          const _FooterLink(text: 'سياسة الخصوصية'),
+          _FooterLink(text: context.loc.privacy),
         ],
       ),
     );

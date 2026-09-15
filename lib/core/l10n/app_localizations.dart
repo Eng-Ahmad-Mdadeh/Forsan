@@ -866,6 +866,36 @@ abstract class AppLocalizations {
   /// **'Phone Number'**
   String get phone_number;
 
+  /// No description provided for @login_welcome_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get login_welcome_back;
+
+  /// No description provided for @login_phone_prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your mobile number to continue'**
+  String get login_phone_prompt;
+
+  /// No description provided for @login_continue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get login_continue;
+
+  /// No description provided for @login_terms_agreement.
+  ///
+  /// In en, this message translates to:
+  /// **'By logging in, you agree to'**
+  String get login_terms_agreement;
+
+  /// No description provided for @login_country_search_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by country name or dialing code'**
+  String get login_country_search_hint;
+
   /// No description provided for @login_required_title.
   ///
   /// In en, this message translates to:

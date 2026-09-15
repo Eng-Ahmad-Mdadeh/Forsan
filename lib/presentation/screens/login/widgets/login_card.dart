@@ -58,7 +58,7 @@ class LoginCard extends StatelessWidget {
               ContinueLoginButton(loginFormKey: loginFormKey),
               SizedBox(height: AppHeight.h50),
               SectionTitle(
-                text: "بتسجيل الدخول انت توافق على",
+                text: context.loc.login_terms_agreement,
                 fontWeight: AppFontWeight.medium,
                 fontSize: AppFontSize.s12,
                 color: AppColors.mainText,
@@ -81,14 +81,14 @@ class _WelcomeMessage extends StatelessWidget {
     return Column(
       children: [
         SectionTitle(
-          text: 'أهلاً بعودتك',
+          text: context.loc.login_welcome_back,
           color: AppColors.primary,
           fontWeight: AppFontWeight.extraBold,
           fontSize: AppFontSize.s18,
         ),
         SizedBox(height: AppHeight.h6),
         BodyTitle(
-          text: 'أدخل رقم الجوال للمتابعة',
+          text: context.loc.login_phone_prompt,
           color: AppColors.greyText,
           fontSize: AppFontSize.s16,
           fontWeight: AppFontWeight.regular,
