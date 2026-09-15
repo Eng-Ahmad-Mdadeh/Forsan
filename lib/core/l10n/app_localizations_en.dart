@@ -427,6 +427,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please pay the first payment so the Forsan team can process the transaction';
 
   @override
+  String get pay_choose_payment_method => 'Choose a payment method';
+
+  @override
+  String get pay_bank_transfer => 'Bank transfer';
+
+  @override
+  String get pay_western_union => 'Western Union';
+
+  @override
+  String get pay_sham_cash => 'Sham Cash';
+
+  @override
   String get login_required_title => 'Login Required';
 
   @override
