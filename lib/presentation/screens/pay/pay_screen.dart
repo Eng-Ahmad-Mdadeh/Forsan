@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/screens/pay/widgets/payment_plan_card.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
-
 
 class PayScreen extends StatelessWidget {
   const PayScreen({super.key});
@@ -17,6 +17,22 @@ class PayScreen extends StatelessWidget {
         backgroundColor: AppColors.white,
         showScrolledUnderElevation: false,
         toolbarHeight: AppHeight.h70,
+      ),
+      body: Padding(
+        padding: EdgeInsetsDirectional.only(
+          start: AppPaddingWidth.p16,
+          end: AppPaddingWidth.p16,
+          bottom: AppPaddingHeight.p16,
+        ),
+        child: Column(
+          children: [
+            PaymentPlanCard(
+              totalAmount: '10000',
+              firstPaymentAmount: '5000',
+              secondPaymentAmount: '5000',
+            ),
+          ],
+        ),
       ),
     );
   }

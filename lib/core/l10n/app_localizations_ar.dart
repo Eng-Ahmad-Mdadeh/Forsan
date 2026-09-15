@@ -412,6 +412,19 @@ class AppLocalizationsAr extends AppLocalizations {
       'ابحث باسم الدولة أو رمز الاتصال';
 
   @override
+  String get pay_total_amount => 'المبلغ الإجمالي';
+
+  @override
+  String get pay_first_payment_amount => 'مبلغ الدفعة الأولى';
+
+  @override
+  String get pay_second_payment_amount => 'مبلغ الدفعة الثانية';
+
+  @override
+  String get pay_first_payment_note =>
+      'يرجى تسديد الدفعة الأولى ليقوم فريق فرسان لتنفيذ المعاملة';
+
+  @override
   String get login_required_title => 'تحتاج إلى تسجيل الدخول';
 
   @override
