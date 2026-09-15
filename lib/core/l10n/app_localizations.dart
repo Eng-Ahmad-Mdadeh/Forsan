@@ -3605,6 +3605,12 @@ abstract class AppLocalizations {
   /// **'Privacy Policy'**
   String get privacy;
 
+  /// No description provided for @privacy_policy_section_title.
+  ///
+  /// In en, this message translates to:
+  /// **'1.  Privacy Policy'**
+  String get privacy_policy_section_title;
+
   /// No description provided for @terms.
   ///
   /// In en, this message translates to:
