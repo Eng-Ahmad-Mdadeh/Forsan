@@ -20,7 +20,7 @@ import 'package:forsan/presentation/screens/orders/orders_screen.dart';
 import 'package:forsan/presentation/screens/order_details/orders_details_screen.dart';
 import 'package:forsan/presentation/screens/orders/models/order_item.dart';
 import 'package:forsan/presentation/screens/pay/pay_screen.dart';
-import 'package:forsan/presentation/screens/payment_methods/bank_transfer_screen.dart';
+import 'package:forsan/presentation/screens/payment_methods/bank_transfer/bank_transfer_screen.dart';
 import 'package:forsan/presentation/screens/payments_details/payments_details_screen.dart';
 import 'package:forsan/presentation/screens/setting/setting_screen.dart';
 import 'package:forsan/presentation/screens/signup/signup_screen.dart';
