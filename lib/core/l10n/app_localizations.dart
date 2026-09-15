@@ -3035,6 +3035,12 @@ abstract class AppLocalizations {
   /// **'Bank Name'**
   String get bank_name;
 
+  /// No description provided for @beneficiary_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiary Name'**
+  String get beneficiary_name;
+
   /// No description provided for @bank_name_placeholder.
   ///
   /// In en, this message translates to:
