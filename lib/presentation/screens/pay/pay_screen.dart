@@ -34,7 +34,8 @@ class PayScreen extends StatelessWidget {
                 secondPaymentAmount: '5000',
               ),
               SizedBox(height: AppHeight.h24),
-              const PaymentMethodsSection(),
+              const PaymentMethodsSection(
+              ),
             ],
           ),
         ),

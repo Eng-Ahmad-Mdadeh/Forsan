@@ -20,6 +20,7 @@ import 'package:forsan/presentation/screens/orders/orders_screen.dart';
 import 'package:forsan/presentation/screens/order_details/orders_details_screen.dart';
 import 'package:forsan/presentation/screens/orders/models/order_item.dart';
 import 'package:forsan/presentation/screens/pay/pay_screen.dart';
+import 'package:forsan/presentation/screens/payment_methods/bank_transfer_screen.dart';
 import 'package:forsan/presentation/screens/payments_details/payments_details_screen.dart';
 import 'package:forsan/presentation/screens/setting/setting_screen.dart';
 import 'package:forsan/presentation/screens/signup/signup_screen.dart';
@@ -154,19 +155,33 @@ class CompleteRequirementsRoute extends GoRouteData
   }
 }
 
-@TypedGoRoute<PayRoute>(path: '/pay')
-class PayRoute extends GoRouteData
-    with $PayRoute {
+@TypedGoRoute<PayRoute>(
+  path: '/pay',
+  routes: [
+    TypedGoRoute<BankTransferRoute>(path: '/bank-transfer'),
+  ],
+)
+class PayRoute extends GoRouteData with $PayRoute {
   const PayRoute();
+
+  @override
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return const PayScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
+class BankTransferRoute extends GoRouteData with $BankTransferRoute {
+  const BankTransferRoute();
 
   @override
   CustomTransitionPage<void> buildPage(
       BuildContext context,
       GoRouterState state,
       ) {
-    return const PayScreen().buildPage(
-      pageAnimation: PageAnimation.fade,
-    );
+    return const BankTransferScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
 
@@ -221,7 +236,9 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
             TypedGoRoute<SettingRoute>(path: 'setting'),
             TypedGoRoute<InvoicesAndPaymentsRoute>(
               path: 'invoices_and_payments',
-              routes: [TypedGoRoute<PaymentsDetailsRoute>(path: 'payments_details')],
+              routes: [
+                TypedGoRoute<PaymentsDetailsRoute>(path: 'payments_details'),
+              ],
             ),
             TypedGoRoute<ShowProfileRoute>(
               path: 'show_profile',
@@ -343,17 +360,16 @@ class InvoicesAndPaymentsRoute extends GoRouteData
   }
 }
 
-class PaymentsDetailsRoute extends GoRouteData
-    with $PaymentsDetailsRoute {
+class PaymentsDetailsRoute extends GoRouteData with $PaymentsDetailsRoute {
   const PaymentsDetailsRoute();
 
   static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
 
   @override
   CustomTransitionPage<void> buildPage(
-      BuildContext context,
-      GoRouterState state,
-      ) {
+    BuildContext context,
+    GoRouterState state,
+  ) {
     return const PaymentsDetailsScreen().buildPage(
       pageAnimation: PageAnimation.fade,
     );

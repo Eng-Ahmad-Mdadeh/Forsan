@@ -25,28 +25,28 @@ class PaymentMethodCard extends StatelessWidget {
       label: title,
       child: SectionCard(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.r16),
+        borderRadius: BorderRadius.circular(AppRadius.r12),
         padding: EdgeInsetsDirectional.symmetric(
-          horizontal: AppPaddingWidth.p20,
-          vertical: AppPaddingHeight.p20,
+          horizontal: AppPaddingWidth.p16,
+          vertical: AppPaddingHeight.p16,
         ),
         margin: EdgeInsets.zero,
         child: SizedBox(
-          height: AppHeight.h52,
+          height: AppHeight.h35,
           child: Row(
             children: [
               ImageView(
                 imagePath: assetPath,
-                width: AppWidth.w52,
-                height: AppHeight.h52,
+                width: AppWidth.w33,
+                height: AppHeight.h33,
                 fit: BoxFit.contain,
                 excludeFromSemantics: true,
               ),
-              SizedBox(width: AppWidth.w16),
+              SizedBox(width: AppWidth.w8),
               Expanded(
                 child: SectionTitle(
                   text: title,
-                  fontSize: AppFontSize.s18,
+                  fontSize: AppFontSize.s14,
                   fontWeight: AppFontWeight.bold,
                   color: AppColors.mainText,
                   textAlign: TextAlign.start,
@@ -57,7 +57,7 @@ class PaymentMethodCard extends StatelessWidget {
               Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: AppColors.lightBlack,
-                size: AppSize.s20,
+                size: AppSize.s18,
               ),
             ],
           ),

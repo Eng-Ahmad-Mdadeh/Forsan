@@ -185,6 +185,13 @@ RouteBase get $payRoute => GoRouteData.$route(
   path: '/pay',
   hasOverriddenOnExit: false,
   factory: $PayRoute._fromState,
+  routes: [
+    GoRouteData.$route(
+      path: '/bank-transfer',
+      hasOverriddenOnExit: false,
+      factory: $BankTransferRoute._fromState,
+    ),
+  ],
 );
 
 mixin $PayRoute on GoRouteData {
@@ -192,6 +199,27 @@ mixin $PayRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/pay');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $BankTransferRoute on GoRouteData {
+  static BankTransferRoute _fromState(GoRouterState state) =>
+      const BankTransferRoute();
+
+  @override
+  String get location => GoRouteData.$location('/bank-transfer');
 
   @override
   void go(BuildContext context) => context.go(location);
