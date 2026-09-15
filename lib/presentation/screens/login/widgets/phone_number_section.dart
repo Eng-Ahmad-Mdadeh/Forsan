@@ -39,7 +39,7 @@ class _PhoneNumberSectionState extends State<PhoneNumberSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        BodyTitle(text: 'رقم الجوال'),
+        BodyTitle(text: context.loc.phone_number),
         SizedBox(height: AppHeight.h8),
         Directionality(
           textDirection: TextDirection.ltr,
@@ -102,7 +102,7 @@ class _PhoneNumberSectionState extends State<PhoneNumberSection> {
         bottomSheetHeight: MediaQuery.sizeOf(context).height * .72,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         inputDecoration: InputDecoration(
-          hintText: 'ابحث باسم الدولة أو رمز الاتصال',
+          hintText: context.loc.login_country_search_hint,
           prefixIcon: const Icon(Icons.search_rounded),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppRadius.r10)),
         ),

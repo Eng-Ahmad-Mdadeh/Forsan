@@ -398,6 +398,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phone_number => 'Phone Number';
 
   @override
+  String get login_welcome_back => 'Welcome back';
+
+  @override
+  String get login_phone_prompt => 'Enter your mobile number to continue';
+
+  @override
+  String get login_continue => 'Continue';
+
+  @override
+  String get login_terms_agreement => 'By logging in, you agree to';
+
+  @override
+  String get login_country_search_hint =>
+      'Search by country name or dialing code';
+
+  @override
   String get login_required_title => 'Login Required';
 
   @override

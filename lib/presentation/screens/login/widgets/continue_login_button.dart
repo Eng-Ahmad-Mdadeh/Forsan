@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/extension/remove_zero_from_number.dart';
 import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/domain/entities/auth/auth_entity.dart';
@@ -18,7 +19,7 @@ class ContinueLoginButton extends StatelessWidget {
     return BlocBuilder<LoginCubit, LoginCubitState>(
       builder: (context, cubitState) {
         return CustomSubmitButton(
-          text: 'متابعة',
+          text: context.loc.login_continue,
           marginTop: 0,
           marginBottom: 0,
           useGradient: false,

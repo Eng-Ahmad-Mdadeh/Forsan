@@ -12,6 +12,7 @@ List<RouteBase> get $appRoutes => [
   $signupRoute,
   $ordersDetailsRoute,
   $completeRequirementsRoute,
+  $payRoute,
   $selectServiceTypeRoute,
   $appShellRoute,
 ];
@@ -165,6 +166,32 @@ mixin $CompleteRequirementsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/complete-requirements');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $payRoute => GoRouteData.$route(
+  path: '/pay',
+  hasOverriddenOnExit: false,
+  factory: $PayRoute._fromState,
+);
+
+mixin $PayRoute on GoRouteData {
+  static PayRoute _fromState(GoRouterState state) => const PayRoute();
+
+  @override
+  String get location => GoRouteData.$location('/pay');
 
   @override
   void go(BuildContext context) => context.go(location);

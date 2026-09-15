@@ -77,7 +77,9 @@ class OrdersDetailsScreen extends StatelessWidget {
                     height: AppHeight.h52,
                     color: AppColors.homeSupportAction,
                     borderRadius: AppRadius.r12,
-                    onPressed: () {},
+                    onPressed: () {
+                      PayRoute().push(context);
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

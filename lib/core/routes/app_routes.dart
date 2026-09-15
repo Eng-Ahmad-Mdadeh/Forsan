@@ -19,6 +19,7 @@ import 'package:forsan/presentation/screens/more/more_screen.dart';
 import 'package:forsan/presentation/screens/orders/orders_screen.dart';
 import 'package:forsan/presentation/screens/order_details/orders_details_screen.dart';
 import 'package:forsan/presentation/screens/orders/models/order_item.dart';
+import 'package:forsan/presentation/screens/pay/pay_screen.dart';
 import 'package:forsan/presentation/screens/payments_details/payments_details_screen.dart';
 import 'package:forsan/presentation/screens/setting/setting_screen.dart';
 import 'package:forsan/presentation/screens/signup/signup_screen.dart';
@@ -148,6 +149,22 @@ class CompleteRequirementsRoute extends GoRouteData
     GoRouterState state,
   ) {
     return const CompleteRequirementsScreen().buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
+  }
+}
+
+@TypedGoRoute<PayRoute>(path: '/pay')
+class PayRoute extends GoRouteData
+    with $PayRoute {
+  const PayRoute();
+
+  @override
+  CustomTransitionPage<void> buildPage(
+      BuildContext context,
+      GoRouterState state,
+      ) {
+    return const PayScreen().buildPage(
       pageAnimation: PageAnimation.fade,
     );
   }
