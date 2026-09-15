@@ -187,7 +187,7 @@ RouteBase get $payRoute => GoRouteData.$route(
   factory: $PayRoute._fromState,
   routes: [
     GoRouteData.$route(
-      path: '/bank-transfer',
+      path: 'bank-transfer',
       hasOverriddenOnExit: false,
       factory: $BankTransferRoute._fromState,
     ),
@@ -219,7 +219,7 @@ mixin $BankTransferRoute on GoRouteData {
       const BankTransferRoute();
 
   @override
-  String get location => GoRouteData.$location('/bank-transfer');
+  String get location => GoRouteData.$location('/pay/bank-transfer');
 
   @override
   void go(BuildContext context) => context.go(location);

@@ -136,6 +136,7 @@
   "confirm": "Confirm Request",
   "save": "Save",
   "bank_name": "Bank Name",
+  "beneficiary_name": "Beneficiary Name",
   "exit": "Exit",
   "category": "Category / Offer Type",
   "schedule": "Scheduling (Auction)",
