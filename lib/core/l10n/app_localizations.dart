@@ -896,6 +896,30 @@ abstract class AppLocalizations {
   /// **'Search by country name or dialing code'**
   String get login_country_search_hint;
 
+  /// No description provided for @pay_total_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Total amount'**
+  String get pay_total_amount;
+
+  /// No description provided for @pay_first_payment_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'First payment amount'**
+  String get pay_first_payment_amount;
+
+  /// No description provided for @pay_second_payment_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Second payment amount'**
+  String get pay_second_payment_amount;
+
+  /// No description provided for @pay_first_payment_note.
+  ///
+  /// In en, this message translates to:
+  /// **'Please pay the first payment so the Forsan team can process the transaction'**
+  String get pay_first_payment_note;
+
   /// No description provided for @login_required_title.
   ///
   /// In en, this message translates to:

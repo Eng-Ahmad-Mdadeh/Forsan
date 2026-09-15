@@ -414,6 +414,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Search by country name or dialing code';
 
   @override
+  String get pay_total_amount => 'Total amount';
+
+  @override
+  String get pay_first_payment_amount => 'First payment amount';
+
+  @override
+  String get pay_second_payment_amount => 'Second payment amount';
+
+  @override
+  String get pay_first_payment_note =>
+      'Please pay the first payment so the Forsan team can process the transaction';
+
+  @override
   String get login_required_title => 'Login Required';
 
   @override
