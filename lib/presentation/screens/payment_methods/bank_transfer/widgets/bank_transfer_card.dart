@@ -46,11 +46,17 @@ class BankTransferCard extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  begin: AlignmentDirectional.topStart,
-                  end: AlignmentDirectional.bottomEnd,
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                   colors: [
-                    AppColors.bankTransferCardStart,
-                    AppColors.bankTransferCardEnd,
+                    Color(0xFF187061),
+                    Color(0xFF0D3D35),
+                    Color(0xFF187061),
+                  ],
+                  stops: [
+                    0.0,
+                    0.52,
+                    1.0,
                   ],
                 ),
                 borderRadius: BorderRadius.circular(AppRadius.r20),
@@ -62,20 +68,20 @@ class BankTransferCard extends StatelessWidget {
                     value: bankName,
                     icon: Icons.account_balance_outlined,
                   ),
-                  SizedBox(height: AppHeight.h16),
+                  SizedBox(height: AppHeight.h12),
                   _BankDetail(
                     label: beneficiaryLabel,
                     value: beneficiaryName,
                     icon: Icons.person_outline_rounded,
                   ),
-                  SizedBox(height: AppHeight.h16),
+                  SizedBox(height: AppHeight.h12),
                   _BankDetail(
                     label: accountNumberLabel,
                     value: accountNumber,
                     icon: Icons.credit_card_outlined,
                     onCopy: () => _copy(accountNumber),
                   ),
-                  SizedBox(height: AppHeight.h16),
+                  SizedBox(height: AppHeight.h12),
                   _BankDetail(
                     label: ibanLabel,
                     value: iban,
@@ -86,11 +92,11 @@ class BankTransferCard extends StatelessWidget {
               ),
             ),
             PositionedDirectional(
-              top: -AppHeight.h60,
-              start: -AppWidth.w45,
+              top: -AppHeight.h130,
+              end: -AppWidth.w12,
               child: Container(
-                width: AppWidth.w200,
-                height: AppHeight.h130,
+                width: AppWidth.w170,
+                height: AppHeight.h165,
                 decoration: const BoxDecoration(
                   color: AppColors.bankTransferDecoration,
                   shape: BoxShape.circle,
@@ -128,17 +134,16 @@ class _BankDetail extends StatelessWidget {
         SectionTitle(
           text: label,
           color: AppColors.white,
-          fontSize: AppFontSize.s16,
+          fontSize: AppFontSize.s14,
           fontWeight: AppFontWeight.bold,
           textAlign: TextAlign.start,
           maxLines: 1,
         ),
-        SizedBox(height: AppHeight.h7),
         Container(
-          constraints: BoxConstraints(minHeight: AppHeight.h60),
+          height: AppHeight.h55,
           padding: EdgeInsetsDirectional.symmetric(
-            horizontal: AppPaddingWidth.p16,
-            vertical: AppPaddingHeight.p12,
+            horizontal: AppPaddingWidth.p12,
+            vertical: AppPaddingHeight.p16,
           ),
           decoration: BoxDecoration(
             color: AppColors.bankTransferField,
@@ -146,13 +151,13 @@ class _BankDetail extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(icon, color: AppColors.white, size: AppSize.s25),
-              SizedBox(width: AppWidth.w12),
+              Icon(icon, color: AppColors.white, size: AppSize.s24),
+              SizedBox(width: AppWidth.w8),
               Expanded(
                 child: BodyTitle(
                   text: value,
                   color: AppColors.white,
-                  fontSize: AppFontSize.s18,
+                  fontSize: AppFontSize.s16,
                   fontWeight: onCopy == null
                       ? AppFontWeight.regular
                       : AppFontWeight.bold,
@@ -164,13 +169,12 @@ class _BankDetail extends StatelessWidget {
                 SizedBox(width: AppWidth.w8),
                 IconButton(
                   onPressed: onCopy,
+                  constraints: const BoxConstraints(
+                    minWidth: 24,
+                    minHeight: 24,
+                  ),
                   tooltip: MaterialLocalizations.of(context).copyButtonLabel,
                   visualDensity: VisualDensity.compact,
-                  padding: EdgeInsets.zero,
-                  constraints: BoxConstraints.tightFor(
-                    width: AppWidth.w40,
-                    height: AppHeight.h40,
-                  ),
                   icon: Icon(
                     Icons.copy_outlined,
                     color: AppColors.white,
