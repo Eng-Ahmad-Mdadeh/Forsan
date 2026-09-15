@@ -734,5 +734,7 @@
   "bank_transfer_upload_receipt_hint": "الرجاء إرفاق صورة لعملية التحويل البنكي",
   "western_union_transfer_number": "رقم تحويل (MTCN)",
   "western_union_transfer_number_hint": "ادخل رقم التحويل",
-  "western_union_upload_receipt_hint": "الرجاء إرفاق صورة لعملية التحويل"
+  "western_union_upload_receipt_hint": "الرجاء إرفاق صورة لعملية التحويل",
+  "sham_cash_transfer_instruction": "ارسل المبلغ الى العنوان التالي",
+  "sham_cash_upload_receipt_hint": "الرجاء إرفاق صورة لعملية التحويل"
 }

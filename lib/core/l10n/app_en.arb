@@ -734,5 +734,7 @@
   "bank_transfer_upload_receipt_hint": "Please attach an image of the bank transfer receipt",
   "western_union_transfer_number": "Transfer number (MTCN)",
   "western_union_transfer_number_hint": "Enter the transfer number",
-  "western_union_upload_receipt_hint": "Please attach an image of the transfer receipt"
+  "western_union_upload_receipt_hint": "Please attach an image of the transfer receipt",
+  "sham_cash_transfer_instruction": "Send the amount to the following address",
+  "sham_cash_upload_receipt_hint": "Please attach an image of the transfer receipt"
 }

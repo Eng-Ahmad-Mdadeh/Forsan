@@ -4881,4 +4881,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get western_union_upload_receipt_hint =>
       'Please attach an image of the transfer receipt';
 
+  @override
+  String get sham_cash_transfer_instruction =>
+      'Send the amount to the following address';
+
+  @override
+  String get sham_cash_upload_receipt_hint =>
+      'Please attach an image of the transfer receipt';
 }

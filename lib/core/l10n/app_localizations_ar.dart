@@ -4848,4 +4848,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get western_union_upload_receipt_hint =>
       'الرجاء إرفاق صورة لعملية التحويل';
 
+  @override
+  String get sham_cash_transfer_instruction =>
+      'ارسل المبلغ الى العنوان التالي';
+
+  @override
+  String get sham_cash_upload_receipt_hint =>
+      'الرجاء إرفاق صورة لعملية التحويل';
 }

@@ -8127,6 +8127,18 @@ abstract class AppLocalizations {
   String get western_union_transfer_number_hint;
   String get western_union_upload_receipt_hint;
 
+  /// No description provided for @sham_cash_transfer_instruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Send the amount to the following address'**
+  String get sham_cash_transfer_instruction;
+
+  /// No description provided for @sham_cash_upload_receipt_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Please attach an image of the transfer receipt'**
+  String get sham_cash_upload_receipt_hint;
+
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
