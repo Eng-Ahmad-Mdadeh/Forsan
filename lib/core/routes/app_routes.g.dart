@@ -196,6 +196,11 @@ RouteBase get $payRoute => GoRouteData.$route(
       hasOverriddenOnExit: false,
       factory: $WesternUnionRoute._fromState,
     ),
+    GoRouteData.$route(
+      path: 'sham-cash',
+      hasOverriddenOnExit: false,
+      factory: $ShamCashRoute._fromState,
+    ),
   ],
 );
 
@@ -246,6 +251,26 @@ mixin $WesternUnionRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/pay/western-union');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $ShamCashRoute on GoRouteData {
+  static ShamCashRoute _fromState(GoRouterState state) => const ShamCashRoute();
+
+  @override
+  String get location => GoRouteData.$location('/pay/sham-cash');
 
   @override
   void go(BuildContext context) => context.go(location);

@@ -44,7 +44,7 @@ class WesternUnionForm extends StatelessWidget {
           image: receiptImage,
           onTap: onReceiptTap ?? () {},
           onRemove: onRemoveReceipt,
-          height: AppHeight.h160,
+          height: AppHeight.h170,
           paddingTop: AppPaddingHeight.p8,
           isExpanded: true,
           uploadLabel: context.loc.bank_transfer_upload_receipt,

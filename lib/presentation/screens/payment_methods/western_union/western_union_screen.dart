@@ -22,9 +22,9 @@ class WesternUnionScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsetsDirectional.fromSTEB(
-          AppPaddingWidth.p10,
+          AppPaddingWidth.p16,
           AppPaddingHeight.p8,
-          AppPaddingWidth.p10,
+          AppPaddingWidth.p16,
           AppPaddingHeight.p24,
         ),
         child: const WesternUnionForm(),
