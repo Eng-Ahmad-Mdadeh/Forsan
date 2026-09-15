@@ -1554,6 +1554,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bank_name => 'اسم البنك';
 
   @override
+  String get beneficiary_name => 'اسم المستفيد';
+
+  @override
   String get bank_name_placeholder => 'الراجحي / الأهلي ...';
 
   @override

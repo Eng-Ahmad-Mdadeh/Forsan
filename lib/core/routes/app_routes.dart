@@ -155,12 +155,7 @@ class CompleteRequirementsRoute extends GoRouteData
   }
 }
 
-@TypedGoRoute<PayRoute>(
-  path: '/pay',
-  routes: [
-    TypedGoRoute<BankTransferRoute>(path: '/bank-transfer'),
-  ],
-)
+@TypedGoRoute<PayRoute>(path: '/pay')
 class PayRoute extends GoRouteData with $PayRoute {
   const PayRoute();
 
@@ -173,15 +168,18 @@ class PayRoute extends GoRouteData with $PayRoute {
   }
 }
 
+@TypedGoRoute<BankTransferRoute>(path: '/bank-transfer')
 class BankTransferRoute extends GoRouteData with $BankTransferRoute {
   const BankTransferRoute();
 
   @override
   CustomTransitionPage<void> buildPage(
-      BuildContext context,
-      GoRouterState state,
-      ) {
-    return const BankTransferScreen().buildPage(pageAnimation: PageAnimation.fade);
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return const BankTransferScreen().buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
   }
 }
 

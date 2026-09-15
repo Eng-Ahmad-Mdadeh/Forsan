@@ -13,6 +13,7 @@ List<RouteBase> get $appRoutes => [
   $ordersDetailsRoute,
   $completeRequirementsRoute,
   $payRoute,
+  $bankTransferRoute,
   $selectServiceTypeRoute,
   $appShellRoute,
 ];
@@ -185,13 +186,6 @@ RouteBase get $payRoute => GoRouteData.$route(
   path: '/pay',
   hasOverriddenOnExit: false,
   factory: $PayRoute._fromState,
-  routes: [
-    GoRouteData.$route(
-      path: '/bank-transfer',
-      hasOverriddenOnExit: false,
-      factory: $BankTransferRoute._fromState,
-    ),
-  ],
 );
 
 mixin $PayRoute on GoRouteData {
@@ -213,6 +207,12 @@ mixin $PayRoute on GoRouteData {
   @override
   void replace(BuildContext context) => context.replace(location);
 }
+
+RouteBase get $bankTransferRoute => GoRouteData.$route(
+  path: '/bank-transfer',
+  hasOverriddenOnExit: false,
+  factory: $BankTransferRoute._fromState,
+);
 
 mixin $BankTransferRoute on GoRouteData {
   static BankTransferRoute _fromState(GoRouterState state) =>
