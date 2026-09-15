@@ -7,6 +7,7 @@ import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/cubit/bank_transfer/bank_transfer_cubit.dart';
 import 'package:forsan/presentation/cubit/bank_transfer/bank_transfer_state.dart';
+import 'package:forsan/presentation/widgets/custom_submit_button.dart';
 import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
 import 'package:intl/intl.dart';
@@ -44,43 +45,46 @@ class _BankTransferFormState extends State<BankTransferForm> {
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = AppRadius.r16;
+    final borderRadius = AppRadius.r8;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         CustomInputField(
+          fontWeight:AppFontWeight.bold,
           title: context.loc.bank_transfer_amount,
           hintText: context.loc.bank_transfer_amount_hint,
           controller: _amountController,
           textInputType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
-          height: AppHeight.h55,
+          height: AppHeight.h50,
           borderRadius: borderRadius,
           fontSize: AppFontSize.s16,
           backgroundColor: AppColors.white,
         ),
-        SizedBox(height: AppHeight.h16),
+        SizedBox(height: AppHeight.h10),
         CustomInputField(
           title: context.loc.bank_transfer_date,
           hintText: context.loc.bank_transfer_date_hint,
           controller: _dateController,
           readOnly: true,
           onTap: _selectDate,
-          height: AppHeight.h55,
+          fontWeight:AppFontWeight.bold,
+          height: AppHeight.h50,
           borderRadius: borderRadius,
           fontSize: AppFontSize.s16,
           backgroundColor: AppColors.white,
           suffix: Icon(
             Icons.calendar_today_outlined,
             color: AppColors.mainText,
-            size: AppSize.s24,
+            size: AppSize.s16,
           ),
         ),
         BlocBuilder<BankTransferCubit, BankTransferState>(
           buildWhen: (previous, current) =>
               previous.receiptImage != current.receiptImage,
           builder: (context, state) => DocumentSection(
+            height: AppHeight.h170,
             title: context.loc.bank_transfer_attachments,
             image: state.receiptImage,
             onTap: () => context.read<BankTransferCubit>().pickReceipt(context),
@@ -88,10 +92,18 @@ class _BankTransferFormState extends State<BankTransferForm> {
                 ? null
                 : context.read<BankTransferCubit>().removeReceipt,
             isExpanded: true,
-            paddingTop: AppPaddingHeight.p16,
+            paddingTop: AppPaddingHeight.p8,
             uploadLabel: context.loc.bank_transfer_upload_receipt,
             uploadHint: context.loc.bank_transfer_upload_receipt_hint,
           ),
+        ),
+        SizedBox(height: AppHeight.h50),
+        CustomSubmitButton(
+          key: const Key('show-profile-edit-button'),
+          text: 'ارسال الطلب',
+          useGradient: false,
+          icon: Icons.send_outlined,
+          onPressed: () => (){},
         ),
       ],
     );

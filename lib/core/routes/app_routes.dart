@@ -21,6 +21,7 @@ import 'package:forsan/presentation/screens/order_details/orders_details_screen.
 import 'package:forsan/presentation/screens/orders/models/order_item.dart';
 import 'package:forsan/presentation/screens/pay/pay_screen.dart';
 import 'package:forsan/presentation/screens/payment_methods/bank_transfer/bank_transfer_screen.dart';
+import 'package:forsan/presentation/screens/payment_methods/western_union/western_union_screen.dart';
 import 'package:forsan/presentation/screens/payments_details/payments_details_screen.dart';
 import 'package:forsan/presentation/screens/setting/setting_screen.dart';
 import 'package:forsan/presentation/screens/signup/signup_screen.dart';
@@ -157,7 +158,10 @@ class CompleteRequirementsRoute extends GoRouteData
 
 @TypedGoRoute<PayRoute>(
   path: '/pay',
-  routes: [TypedGoRoute<BankTransferRoute>(path: 'bank-transfer')],
+  routes: [
+    TypedGoRoute<BankTransferRoute>(path: 'bank-transfer'),
+    TypedGoRoute<WesternUnionRoute>(path: 'western-union'),
+  ],
 )
 class PayRoute extends GoRouteData with $PayRoute {
   const PayRoute();
@@ -180,6 +184,20 @@ class BankTransferRoute extends GoRouteData with $BankTransferRoute {
     GoRouterState state,
   ) {
     return const BankTransferScreen().buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
+  }
+}
+
+class WesternUnionRoute extends GoRouteData with $WesternUnionRoute {
+  const WesternUnionRoute();
+
+  @override
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return const WesternUnionScreen().buildPage(
       pageAnimation: PageAnimation.fade,
     );
   }

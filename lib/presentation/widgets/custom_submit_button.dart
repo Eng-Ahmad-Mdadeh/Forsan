@@ -56,7 +56,7 @@ class CustomSubmitButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
-        textDirection: TextDirection.ltr,
+        textDirection: TextDirection.rtl,
         children: [
           SectionTitle(
             text: text,

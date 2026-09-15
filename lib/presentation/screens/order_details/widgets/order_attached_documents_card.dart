@@ -23,7 +23,7 @@ class OrderAttachedDocumentsCard extends StatelessWidget {
         showBorder: true,
         borderRadius: BorderRadius.circular(AppRadius.r8),
         padding: EdgeInsets.all(AppPaddingWidth.p16),
-        margin: EdgeInsets.all(AppPaddingWidth.p8),
+
         child: Column(
           children: [
             Row(

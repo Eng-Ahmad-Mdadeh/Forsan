@@ -191,6 +191,11 @@ RouteBase get $payRoute => GoRouteData.$route(
       hasOverriddenOnExit: false,
       factory: $BankTransferRoute._fromState,
     ),
+    GoRouteData.$route(
+      path: 'western-union',
+      hasOverriddenOnExit: false,
+      factory: $WesternUnionRoute._fromState,
+    ),
   ],
 );
 
@@ -220,6 +225,27 @@ mixin $BankTransferRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/pay/bank-transfer');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $WesternUnionRoute on GoRouteData {
+  static WesternUnionRoute _fromState(GoRouterState state) =>
+      const WesternUnionRoute();
+
+  @override
+  String get location => GoRouteData.$location('/pay/western-union');
 
   @override
   void go(BuildContext context) => context.go(location);

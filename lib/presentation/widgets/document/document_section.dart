@@ -11,6 +11,7 @@ class DocumentSection extends StatelessWidget {
   final String? supTitle;
   final String? image;
   final double? paddingTop;
+  final double? height;
   final double? paddingBottom;
   final VoidCallback onTap;
   final bool isExpanded;
@@ -24,6 +25,7 @@ class DocumentSection extends StatelessWidget {
     super.key,
     this.title,
     this.supTitle,
+    this.height,
     required this.onTap,
     required this.image,
     this.paddingTop,
@@ -58,6 +60,7 @@ class DocumentSection extends StatelessWidget {
           ],
           SizedBox(height: AppHeight.h10),
           Container(
+            height: height ?? AppHeight.h220,
             decoration: BoxDecoration(
               color: AppColors.backGround,
               border: Border.all(color: AppColors.greyDivider),

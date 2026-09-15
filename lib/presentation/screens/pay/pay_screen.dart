@@ -37,6 +37,7 @@ class PayScreen extends StatelessWidget {
               SizedBox(height: AppHeight.h24),
               PaymentMethodsSection(
                 onBankTransferTap: () => const BankTransferRoute().push(context),
+                onWesternUnionTap: () => const WesternUnionRoute().push(context),
               ),
             ],
           ),

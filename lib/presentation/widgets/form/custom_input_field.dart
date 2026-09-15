@@ -36,6 +36,7 @@ class CustomInputField extends StatelessWidget {
   final double? height;
   final double? borderRadius;
   final double? fontSize;
+  final FontWeight? fontWeight;
   final Color? backgroundColor;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
@@ -55,6 +56,7 @@ class CustomInputField extends StatelessWidget {
     this.onFieldSubmitted,
     this.onTapOutside,
     this.title,
+    this.fontWeight,
     this.initialValue,
     this.controller,
     this.showRiyal = false,
@@ -96,7 +98,7 @@ class CustomInputField extends StatelessWidget {
                   text: title,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontSize: AppFontSize.s14,
-                    fontWeight: AppFontWeight.medium,
+                    fontWeight: fontWeight ?? AppFontWeight.medium,
                     color: AppColors.mainText,
                   ),
                 ),
