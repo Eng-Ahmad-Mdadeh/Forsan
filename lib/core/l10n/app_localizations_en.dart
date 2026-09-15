@@ -4848,4 +4848,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get new_order_terms_confirmation =>
       "I agree to Forsan platform's privacy policy and terms of use.";
 
+  @override
+  String get bank_transfer_amount => 'Transfer amount';
+
+  @override
+  String get bank_transfer_amount_hint => 'Example: 1000';
+
+  @override
+  String get bank_transfer_date => 'Transfer date';
+
+  @override
+  String get bank_transfer_date_hint => 'Select deposit date';
+
+  @override
+  String get bank_transfer_attachments => 'Attachments';
+
+  @override
+  String get bank_transfer_upload_receipt => 'Upload transfer receipt';
+
+  @override
+  String get bank_transfer_upload_receipt_hint =>
+      'Please attach an image of the bank transfer receipt';
+
 }

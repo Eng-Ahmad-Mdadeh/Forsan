@@ -8116,6 +8116,14 @@ abstract class AppLocalizations {
   /// **'I agree to Forsan platform's privacy policy and terms of use.'**
   String get new_order_terms_confirmation;
 
+  String get bank_transfer_amount;
+  String get bank_transfer_amount_hint;
+  String get bank_transfer_date;
+  String get bank_transfer_date_hint;
+  String get bank_transfer_attachments;
+  String get bank_transfer_upload_receipt;
+  String get bank_transfer_upload_receipt_hint;
+
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

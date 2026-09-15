@@ -724,5 +724,12 @@
   "new_order_add_partner": "إضافة شريك جديد",
   "new_order_delete_partner": "حذف الشريك",
   "new_order_information_confirmation": "أقر بأن المعلومات المدخلة صحيحة حسب علمي، وأتفهم أن قبول الطلب النهائي يعتمد على المراجعة واستكمال المتطلبات.",
-  "new_order_terms_confirmation": "أوافق على سياسة الخصوصية وشروط استخدام منصة فرسان."
+  "new_order_terms_confirmation": "أوافق على سياسة الخصوصية وشروط استخدام منصة فرسان.",
+  "bank_transfer_amount": "قيمة التحويل",
+  "bank_transfer_amount_hint": "مثال: 1000",
+  "bank_transfer_date": "تاريخ التحويل",
+  "bank_transfer_date_hint": "اختر تاريخ الإيداع",
+  "bank_transfer_attachments": "مرفقات",
+  "bank_transfer_upload_receipt": "ارفع صورة التحويل",
+  "bank_transfer_upload_receipt_hint": "الرجاء إرفاق صورة لعملية التحويل البنكي"
 }

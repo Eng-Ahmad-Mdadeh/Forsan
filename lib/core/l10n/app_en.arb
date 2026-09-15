@@ -724,5 +724,12 @@
   "new_order_add_partner": "Add new partner",
   "new_order_delete_partner": "Delete partner",
   "new_order_information_confirmation": "I confirm that the information entered is correct to the best of my knowledge, and I understand that final acceptance of the request depends on review and completion of the requirements.",
-  "new_order_terms_confirmation": "I agree to Forsan platform's privacy policy and terms of use."
+  "new_order_terms_confirmation": "I agree to Forsan platform's privacy policy and terms of use.",
+  "bank_transfer_amount": "Transfer amount",
+  "bank_transfer_amount_hint": "Example: 1000",
+  "bank_transfer_date": "Transfer date",
+  "bank_transfer_date_hint": "Select deposit date",
+  "bank_transfer_attachments": "Attachments",
+  "bank_transfer_upload_receipt": "Upload transfer receipt",
+  "bank_transfer_upload_receipt_hint": "Please attach an image of the bank transfer receipt"
 }

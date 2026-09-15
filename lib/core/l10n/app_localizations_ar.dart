@@ -4816,4 +4816,26 @@ class AppLocalizationsAr extends AppLocalizations {
   String get new_order_terms_confirmation =>
       'أوافق على سياسة الخصوصية وشروط استخدام منصة فرسان.';
 
+  @override
+  String get bank_transfer_amount => 'قيمة التحويل';
+
+  @override
+  String get bank_transfer_amount_hint => 'مثال: 1000';
+
+  @override
+  String get bank_transfer_date => 'تاريخ التحويل';
+
+  @override
+  String get bank_transfer_date_hint => 'اختر تاريخ الإيداع';
+
+  @override
+  String get bank_transfer_attachments => 'مرفقات';
+
+  @override
+  String get bank_transfer_upload_receipt => 'ارفع صورة التحويل';
+
+  @override
+  String get bank_transfer_upload_receipt_hint =>
+      'الرجاء إرفاق صورة لعملية التحويل البنكي';
+
 }
