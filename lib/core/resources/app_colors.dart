@@ -72,6 +72,12 @@ class AppColors {
   static const Color profileAvatarBackground = Color(0xFFF7F5FF);
   static const Color profileAvatarForeground = Color(0xFF0D4B40);
 
+  /// Bank transfer details card.
+  static const Color bankTransferCardStart = Color(0xFF197968);
+  static const Color bankTransferCardEnd = Color(0xFF0B4A40);
+  static const Color bankTransferField = Color(0xFF4A837A);
+  static const Color bankTransferDecoration = Color(0x1AFFFFFF);
+
   /// Splash screen
   static const Color splashBackground = normal;
   static const Color splashPattern = Color(0xFF28564E);

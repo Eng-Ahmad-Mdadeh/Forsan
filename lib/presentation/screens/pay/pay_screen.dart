@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/presentation/screens/pay/widgets/payment_plan_card.dart';
 import 'package:forsan/presentation/screens/pay/widgets/payment_methods_section.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
@@ -34,7 +35,10 @@ class PayScreen extends StatelessWidget {
                 secondPaymentAmount: '5000',
               ),
               SizedBox(height: AppHeight.h24),
-              const PaymentMethodsSection(
+              PaymentMethodsSection(
+                  onBankTransferTap:(){
+                    BankTransferRoute().push(context);
+                  }
               ),
             ],
           ),

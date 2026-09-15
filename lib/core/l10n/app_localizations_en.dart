@@ -1563,6 +1563,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bank_name => 'Bank Name';
 
   @override
+  String get beneficiary_name => 'Beneficiary Name';
+
+  @override
   String get bank_name_placeholder => 'Al Rajhi / NCB ...';
 
   @override
