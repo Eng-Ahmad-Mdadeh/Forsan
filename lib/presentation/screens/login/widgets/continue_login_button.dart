@@ -23,23 +23,22 @@ class ContinueLoginButton extends StatelessWidget {
           marginBottom: 0,
           useGradient: false,
           onPressed: () async {
-            CheckCodeRoute().push(context);
-            // if (!(loginFormKey.currentState?.validate() ?? false)) return;
-            //
-            // final phone = cubitState.user?.phone ?? '';
-            // final dialCode = context.read<CodeCheckCubit>().state.dialCode;
-            // context.read<LoginCubit>().phoneChanged(phone);
-            // if (context.mounted) {
-            //   context.read<LoginBloc>().add(
-            //     LoginEvent(
-            //       AuthEntity(
-            //         phone: "$dialCode${phone.removeZero}",
-            //         typeMessage: 'sms',
-            //       ),
-            //     ),
-            //   );
-            //   CheckCodeRoute().push(context);
-            // }
+            if (!(loginFormKey.currentState?.validate() ?? false)) return;
+
+            final phone = cubitState.user?.phone ?? '';
+            final dialCode = context.read<CodeCheckCubit>().state.dialCode;
+            context.read<LoginCubit>().phoneChanged(phone);
+            if (context.mounted) {
+              context.read<LoginBloc>().add(
+                LoginEvent(
+                  AuthEntity(
+                    phone: "$dialCode${phone.removeZero}",
+                    typeMessage: 'sms',
+                  ),
+                ),
+              );
+              CheckCodeRoute().push(context);
+            }
           },
         );
       },

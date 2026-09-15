@@ -22,7 +22,7 @@ class AuthEntity extends Equatable {
       // if (phone != null) 'phone': "+966550610408",
       // if (phone != null) 'phone': "+9660581333357",
       // if (typeMessage != null) 'type_message': 'sms',
-      if (typeMessage != null) 'type_message': typeMessage,
+      //if (typeMessage != null) 'type_message': typeMessage,
       if (code != null) 'code': code,
       // if (code != null) 'code': "4441",
       if (fcm != null) 'fcm_token': fcm,
