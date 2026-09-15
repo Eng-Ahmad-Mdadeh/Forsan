@@ -3,6 +3,8 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/widgets/text/body_title.dart';
+import 'package:forsan/presentation/widgets/text/section_title.dart';
 
 class PaymentPlanCard extends StatelessWidget {
   const PaymentPlanCard({
@@ -87,31 +89,25 @@ class _PaymentAmount extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
-              label,
+            BodyTitle(
+              text: label,
               textAlign: TextAlign.end,
-              style: TextStyle(
-                color: AppColors.white.withOpacity(0.9),
-                fontFamily: AppFontFamily.tajawal,
-                fontSize: AppFontSize.s16,
-                fontWeight: AppFontWeight.regular,
-                height: 1.2,
-              ),
+              color: AppColors.white.withOpacity(0.9),
+              fontSize: AppFontSize.s16,
+              fontWeight: AppFontWeight.regular,
+              height: 1.2,
             ),
             if (note != null) ...[
               SizedBox(width: AppWidth.w8),
               Expanded(
-                child: Text(
-                  note!,
+                child: BodyTitle(
+                  text: note!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: AppColors.secondaryNormal,
-                    fontFamily: AppFontFamily.tajawal,
-                    fontSize: AppFontSize.s12,
-                    fontWeight: AppFontWeight.regular,
-                    height: 1.35,
-                  ),
+                  color: AppColors.secondaryNormal,
+                  fontSize: AppFontSize.s12,
+                  fontWeight: AppFontWeight.regular,
+                  height: 1.35,
                 ),
               ),
             ] else
@@ -121,16 +117,13 @@ class _PaymentAmount extends StatelessWidget {
         SizedBox(height: AppHeight.h4),
         Directionality(
           textDirection: TextDirection.ltr,
-          child: Text(
-            '$amount $currency',
+          child: SectionTitle(
+            text: '$amount $currency',
             textAlign: TextAlign.end,
-            style: TextStyle(
-              color: AppColors.white,
-              fontFamily: AppFontFamily.tajawal,
-              fontSize: AppFontSize.s24,
-              fontWeight: AppFontWeight.bold,
-              height: 1.15,
-            ),
+            color: AppColors.white,
+            fontSize: AppFontSize.s24,
+            fontWeight: AppFontWeight.bold,
+            height: 1.15,
           ),
         ),
       ],
