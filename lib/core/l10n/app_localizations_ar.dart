@@ -4838,4 +4838,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bank_transfer_upload_receipt_hint =>
       'الرجاء إرفاق صورة لعملية التحويل البنكي';
 
+  @override
+  String get western_union_transfer_number => 'رقم تحويل (MTCN)';
+
+  @override
+  String get western_union_transfer_number_hint => 'ادخل رقم التحويل';
+
+  @override
+  String get western_union_upload_receipt_hint =>
+      'الرجاء إرفاق صورة لعملية التحويل';
+
 }

@@ -731,5 +731,8 @@
   "bank_transfer_date_hint": "اختر تاريخ الإيداع",
   "bank_transfer_attachments": "مرفقات",
   "bank_transfer_upload_receipt": "ارفع صورة التحويل",
-  "bank_transfer_upload_receipt_hint": "الرجاء إرفاق صورة لعملية التحويل البنكي"
+  "bank_transfer_upload_receipt_hint": "الرجاء إرفاق صورة لعملية التحويل البنكي",
+  "western_union_transfer_number": "رقم تحويل (MTCN)",
+  "western_union_transfer_number_hint": "ادخل رقم التحويل",
+  "western_union_upload_receipt_hint": "الرجاء إرفاق صورة لعملية التحويل"
 }

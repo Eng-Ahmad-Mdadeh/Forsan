@@ -4870,4 +4870,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bank_transfer_upload_receipt_hint =>
       'Please attach an image of the bank transfer receipt';
 
+  @override
+  String get western_union_transfer_number => 'Transfer number (MTCN)';
+
+  @override
+  String get western_union_transfer_number_hint =>
+      'Enter the transfer number';
+
+  @override
+  String get western_union_upload_receipt_hint =>
+      'Please attach an image of the transfer receipt';
+
 }

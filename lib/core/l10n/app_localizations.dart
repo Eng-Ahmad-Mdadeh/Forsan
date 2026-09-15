@@ -8123,6 +8123,9 @@ abstract class AppLocalizations {
   String get bank_transfer_attachments;
   String get bank_transfer_upload_receipt;
   String get bank_transfer_upload_receipt_hint;
+  String get western_union_transfer_number;
+  String get western_union_transfer_number_hint;
+  String get western_union_upload_receipt_hint;
 
 }
 
