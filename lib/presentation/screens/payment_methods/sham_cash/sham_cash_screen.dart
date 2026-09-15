@@ -7,6 +7,7 @@ import 'package:forsan/presentation/cubit/sham_cash/sham_cash_cubit.dart';
 import 'package:forsan/presentation/screens/payment_methods/sham_cash/widgets/sham_cash_card.dart';
 import 'package:forsan/presentation/screens/payment_methods/sham_cash/widgets/sham_cash_form.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
+import 'package:forsan/presentation/widgets/custom_submit_button.dart';
 
 class ShamCashScreen extends StatelessWidget {
   const ShamCashScreen({super.key});
@@ -39,6 +40,14 @@ class ShamCashScreen extends StatelessWidget {
               ),
               SizedBox(height: AppHeight.h24),
               const ShamCashForm(),
+              SizedBox(height: AppHeight.h220),
+              CustomSubmitButton(
+                key: const Key('sham_cash_submit_button'),
+                text: 'ارسال الطلب',
+                useGradient: false,
+                icon: Icons.send_outlined,
+                onPressed: () => (){},
+              ),
             ],
           ),
         ),

@@ -97,14 +97,7 @@ class _BankTransferFormState extends State<BankTransferForm> {
             uploadHint: context.loc.bank_transfer_upload_receipt_hint,
           ),
         ),
-        SizedBox(height: AppHeight.h50),
-        CustomSubmitButton(
-          key: const Key('show-profile-edit-button'),
-          text: 'ارسال الطلب',
-          useGradient: false,
-          icon: Icons.send_outlined,
-          onPressed: () => (){},
-        ),
+
       ],
     );
   }

@@ -24,6 +24,7 @@ import 'package:forsan/presentation/screens/payment_methods/bank_transfer/bank_t
 import 'package:forsan/presentation/screens/payment_methods/sham_cash/sham_cash_screen.dart';
 import 'package:forsan/presentation/screens/payment_methods/western_union/western_union_screen.dart';
 import 'package:forsan/presentation/screens/payments_details/payments_details_screen.dart';
+import 'package:forsan/presentation/screens/privacy_policy/privacy_policy_screen.dart';
 import 'package:forsan/presentation/screens/setting/setting_screen.dart';
 import 'package:forsan/presentation/screens/signup/signup_screen.dart';
 import 'package:forsan/presentation/screens/show_profile/show_profile_screen.dart';
@@ -267,6 +268,7 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
           path: '/more',
           routes: [
             TypedGoRoute<SettingRoute>(path: 'setting'),
+            TypedGoRoute<PrivacyPolicyRoute>(path: 'privacy_policy'),
             TypedGoRoute<InvoicesAndPaymentsRoute>(
               path: 'invoices_and_payments',
               routes: [
@@ -373,6 +375,20 @@ class SettingRoute extends GoRouteData with $SettingRoute {
     GoRouterState state,
   ) {
     return const SettingScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
+class PrivacyPolicyRoute extends GoRouteData with $PrivacyPolicyRoute {
+  const PrivacyPolicyRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  CustomTransitionPage<void> buildPage(
+      BuildContext context,
+      GoRouterState state,
+      ) {
+    return const PrivacyPolicyScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
 

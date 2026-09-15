@@ -50,6 +50,7 @@ class _ShamCashFormState extends State<ShamCashForm> {
           buildWhen: (previous, current) =>
               previous.receiptImage != current.receiptImage,
           builder: (context, state) => DocumentSection(
+            fontWeight: AppFontWeight.bold,
             title: context.loc.bank_transfer_attachments,
             image: state.receiptImage,
             onTap: () => context.read<ShamCashCubit>().pickReceipt(context),
@@ -57,7 +58,7 @@ class _ShamCashFormState extends State<ShamCashForm> {
                 ? null
                 : context.read<ShamCashCubit>().removeReceipt,
             height: AppHeight.h170,
-            paddingTop: AppPaddingHeight.p8,
+            paddingTop: AppPaddingHeight.p12,
             isExpanded: true,
             uploadLabel: context.loc.bank_transfer_upload_receipt,
             uploadHint: context.loc.sham_cash_upload_receipt_hint,

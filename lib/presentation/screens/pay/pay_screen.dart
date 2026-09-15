@@ -38,6 +38,7 @@ class PayScreen extends StatelessWidget {
               PaymentMethodsSection(
                 onBankTransferTap: () => const BankTransferRoute().push(context),
                 onWesternUnionTap: () => const WesternUnionRoute().push(context),
+                onShamCashTap: () => const ShamCashRoute().push(context),
               ),
             ],
           ),

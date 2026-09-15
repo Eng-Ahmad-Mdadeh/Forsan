@@ -38,13 +38,13 @@ class ShamCashCard extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    AppColors.bankTransferCardStart,
-                    AppColors.bankTransferCardEnd,
-                    AppColors.bankTransferCardStart,
+                    Color(0xFF187061),
+                    Color(0xFF0D3D35),
+                    Color(0xFF187061),
                   ],
                   stops: [0, 0.52, 1],
                 ),
-                borderRadius: BorderRadius.circular(AppRadius.r20),
+                borderRadius: BorderRadius.circular(AppRadius.r16),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,7 +52,7 @@ class ShamCashCard extends StatelessWidget {
                   SectionTitle(
                     text: instruction,
                     color: AppColors.white,
-                    fontSize: AppFontSize.s16,
+                    fontSize: AppFontSize.s14,
                     fontWeight: AppFontWeight.bold,
                     textAlign: TextAlign.start,
                     maxLines: 1,
@@ -81,7 +81,6 @@ class ShamCashCard extends StatelessWidget {
                             color: AppColors.white,
                             fontSize: AppFontSize.s16,
                             fontWeight: AppFontWeight.bold,
-                            textAlign: TextAlign.center,
                             maxLines: 1,
                           ),
                         ),
@@ -94,8 +93,9 @@ class ShamCashCard extends StatelessWidget {
                             minWidth: 24,
                             minHeight: 24,
                           ),
-                          tooltip:
-                              MaterialLocalizations.of(context).copyButtonLabel,
+                          tooltip: MaterialLocalizations.of(
+                            context,
+                          ).copyButtonLabel,
                           visualDensity: VisualDensity.compact,
                           icon: Icon(
                             Icons.copy_outlined,

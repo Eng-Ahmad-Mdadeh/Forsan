@@ -386,6 +386,12 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
               factory: $SettingRoute._fromState,
             ),
             GoRouteData.$route(
+              path: 'privacy_policy',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: PrivacyPolicyRoute.$parentNavigatorKey,
+              factory: $PrivacyPolicyRoute._fromState,
+            ),
+            GoRouteData.$route(
               path: 'invoices_and_payments',
               hasOverriddenOnExit: false,
               parentNavigatorKey: InvoicesAndPaymentsRoute.$parentNavigatorKey,
@@ -510,6 +516,27 @@ mixin $SettingRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/more/setting');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $PrivacyPolicyRoute on GoRouteData {
+  static PrivacyPolicyRoute _fromState(GoRouterState state) =>
+      const PrivacyPolicyRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more/privacy_policy');
 
   @override
   void go(BuildContext context) => context.go(location);

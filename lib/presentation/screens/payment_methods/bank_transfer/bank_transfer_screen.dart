@@ -7,6 +7,7 @@ import 'package:forsan/presentation/cubit/bank_transfer/bank_transfer_cubit.dart
 import 'package:forsan/presentation/screens/payment_methods/bank_transfer/widgets/bank_transfer_card.dart';
 import 'package:forsan/presentation/screens/payment_methods/bank_transfer/widgets/bank_transfer_form.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
+import 'package:forsan/presentation/widgets/custom_submit_button.dart';
 
 class BankTransferScreen extends StatelessWidget {
   const BankTransferScreen({super.key});
@@ -45,6 +46,14 @@ class BankTransferScreen extends StatelessWidget {
               ),
               SizedBox(height: AppHeight.h24),
               const BankTransferForm(),
+              SizedBox(height: AppHeight.h50),
+              CustomSubmitButton(
+                key: const Key('bank_transfer_submit_button'),
+                text: 'ارسال الطلب',
+                useGradient: false,
+                icon: Icons.send_outlined,
+                onPressed: () => (){},
+              ),
             ],
           ),
         ),

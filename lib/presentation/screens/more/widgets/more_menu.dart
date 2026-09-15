@@ -75,6 +75,8 @@ class MoreMenu extends StatelessWidget {
                 ? () => const SettingRoute().push(context)
                 : index == 1
                 ? () => const InvoicesAndPaymentsRoute().push(context)
+                : index == 2
+                ? () => const PrivacyPolicyRoute().push(context)
                 : index == _items.length - 1
                 ? () => _showLogoutDialog(context)
                 : null,
