@@ -10,6 +10,7 @@ import 'package:forsan/presentation/screens/login/widgets/auth_terms_footer.dart
 import 'package:forsan/presentation/screens/login/widgets/continue_login_button.dart';
 import 'package:forsan/presentation/screens/login/widgets/phone_number_section.dart';
 import 'package:forsan/presentation/widgets/custom_snack_bar.dart';
+import 'package:forsan/presentation/widgets/loading_widget.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
@@ -33,10 +34,17 @@ class LoginCard extends StatelessWidget {
             contentType: ContentType.failure,
           );
           context.pop();
-        }if(state is LoginLoaded){
+        }
+        if (state is LoginLoaded) {
+          context.pop();
           CheckCodeRoute().push(context);
-        }if(state is LoginLoading){
-
+        }
+        if (state is LoginLoading) {
+          showDialog(
+            context: context,
+            builder: (context) =>
+                const PopScope(canPop: false, child: LoadingWidget(0)),
+          );
         }
       },
       builder: (context, state) {
