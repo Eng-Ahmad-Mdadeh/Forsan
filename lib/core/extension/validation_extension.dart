@@ -1,6 +1,8 @@
 extension Validation on String {
   bool get isValidPhone {
-    final RegExp phoneRegex = RegExp(r'^(009665|9665|\\+9665|05|5)([503649187])([0-9]{7})$');
+    final RegExp phoneRegex = RegExp(
+      r'^(?:(?:00963|963|\+963|0)?9[3-9][0-9]{7}|(?:00966|966|\+966|0)?5[0-9]{8})$',
+    );
     return phoneRegex.hasMatch(this);
   }
 
