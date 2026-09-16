@@ -55,7 +55,7 @@ class _PhoneNumberSectionState extends State<PhoneNumberSection> {
             cursorColor: AppColors.primary,
             cursorHeight: AppHeight.h20,
             fontSize: AppFontSize.s16,
-            hintText: '949 594 190',
+            hintText: '944 123 456',
             hintColor: AppColors.grey,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             contentPaddingTop: 0,
