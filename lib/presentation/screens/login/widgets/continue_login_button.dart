@@ -34,7 +34,6 @@ class ContinueLoginButton extends StatelessWidget {
                 LoginEvent(
                   AuthEntity(
                     phone: "$dialCode${phone.removeZero}",
-                    typeMessage: 'sms',
                   ),
                 ),
               );
