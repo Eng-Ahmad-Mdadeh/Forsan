@@ -66,7 +66,7 @@ class _FQScreenState extends State<FQScreen> {
             AppPaddingHeight.p24,
           ),
           itemCount: _questions.length,
-          separatorBuilder: (_, _) => SizedBox(height: AppMarginHeight.m8),
+          separatorBuilder: (_, _) => SizedBox(height: AppMarginHeight.m7),
           itemBuilder: (context, index) {
             return _QuestionCard(
               question: _questions[index],
@@ -161,18 +161,18 @@ class _QuestionCard extends StatelessWidget {
                     firstChild: const SizedBox(width: double.infinity),
                     secondChild: Padding(
                       padding: EdgeInsetsDirectional.only(
-                        start: AppPaddingWidth.p24,
+                        start: AppPaddingWidth.p20,
                         end: AppPaddingWidth.p24,
                         top: AppPaddingHeight.p13,
                         bottom: AppPaddingHeight.p8,
                       ),
                       child: Text(
                         question.answer,
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         style: TextStyle(
                           color: AppColors.blackCow,
                           fontFamily: AppFontFamily.tajawal,
-                          fontSize: AppFontSize.s13,
+                          fontSize: AppFontSize.s14,
                           fontWeight: AppFontWeight.regular,
                           height: 1.9,
                         ),
