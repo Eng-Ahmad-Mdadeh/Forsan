@@ -39,6 +39,19 @@ class BaseModel<T> extends Equatable {
   factory BaseModel.fromJson(Map<String, dynamic> json, T Function(Object? json) fromJsonT) =>
       _$BaseModelFromJson(json, fromJsonT);
 
+  /// Parses responses whose payload fields are returned at the response root
+  /// instead of inside `data`.
+  factory BaseModel.fromJsonWithRootData(
+    Map<String, dynamic> json,
+    T Function(Object? json) fromJsonT,
+  ) {
+    final baseModel = _$BaseModelFromJson<T>(json, fromJsonT);
+
+    return baseModel.data == null
+        ? baseModel.copyWith(data: fromJsonT(json))
+        : baseModel;
+  }
+
   @override
   List<Object?> get props => [
     success,

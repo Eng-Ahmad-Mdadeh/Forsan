@@ -15,6 +15,7 @@ abstract class BaseRemoteDataSource<T> {
     Map<String, dynamic>? data,
     T Function(Object? json)? fromJsonT,
     bool isFormData = true,
+    bool dataMayBeAtRoot = false,
   }) async {
     final response = await locator<NetworkHelper>().post(
       endpoint,
@@ -26,11 +27,11 @@ abstract class BaseRemoteDataSource<T> {
       (result) {
         final json = result.data;
         if (json is! Map<String, dynamic>) return const Right(null);
+        final parser = fromJsonT ?? (_) => null as T;
         return Right(
-          BaseModel<T>.fromJson(
-            json,
-            fromJsonT ?? (_) => null as T,
-          ),
+          dataMayBeAtRoot
+              ? BaseModel<T>.fromJsonWithRootData(json, parser)
+              : BaseModel<T>.fromJson(json, parser),
         );
       },
     );

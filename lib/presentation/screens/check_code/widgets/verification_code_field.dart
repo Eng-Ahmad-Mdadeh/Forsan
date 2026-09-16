@@ -67,11 +67,7 @@ class VerificationCodeField extends StatelessWidget {
   static void submit(BuildContext context, {required String code}) {
     if (code.length != codeLength) return;
 
-
     final state = context.read<CodeCheckCubit>().state;
-    print('rrrrrrrrrrrrrrrr');
-    print(state.challengeId);
-
     context.read<CheckCodeBloc>().add(
       CheckCodeEvent(
         AuthEntity(
