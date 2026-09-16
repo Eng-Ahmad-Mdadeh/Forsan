@@ -470,6 +470,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signup_enter_full_name => 'Please enter your full name';
 
   @override
+  String get signup_city_name => 'City name';
+
+  @override
+  String get signup_enter_city_name => 'Please enter the city name';
+
+  @override
+  String get signup_father_name => "Father's name";
+
+  @override
+  String get signup_enter_father_name => "Please enter your father's name";
+
+  @override
+  String get signup_passport_number => 'Passport number';
+
+  @override
+  String get signup_enter_passport_number => 'Please enter your passport number';
+
+  @override
+  String get signup_whatsapp_number => 'WhatsApp number';
+
+  @override
+  String get signup_enter_whatsapp_number => 'Please enter your WhatsApp number';
+
+  @override
+  String get signup_national_id => 'National ID';
+
+  @override
+  String get signup_enter_national_id => 'Please enter your national ID';
+
+  @override
   String get signup_nationality => 'Nationality';
 
   @override

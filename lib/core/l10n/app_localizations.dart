@@ -998,6 +998,36 @@ abstract class AppLocalizations {
   /// No description provided for @signup_enter_full_name.
   String get signup_enter_full_name;
 
+  /// No description provided for @signup_city_name.
+  String get signup_city_name;
+
+  /// No description provided for @signup_enter_city_name.
+  String get signup_enter_city_name;
+
+  /// No description provided for @signup_father_name.
+  String get signup_father_name;
+
+  /// No description provided for @signup_enter_father_name.
+  String get signup_enter_father_name;
+
+  /// No description provided for @signup_passport_number.
+  String get signup_passport_number;
+
+  /// No description provided for @signup_enter_passport_number.
+  String get signup_enter_passport_number;
+
+  /// No description provided for @signup_whatsapp_number.
+  String get signup_whatsapp_number;
+
+  /// No description provided for @signup_enter_whatsapp_number.
+  String get signup_enter_whatsapp_number;
+
+  /// No description provided for @signup_national_id.
+  String get signup_national_id;
+
+  /// No description provided for @signup_enter_national_id.
+  String get signup_enter_national_id;
+
   /// No description provided for @signup_nationality.
   String get signup_nationality;
 

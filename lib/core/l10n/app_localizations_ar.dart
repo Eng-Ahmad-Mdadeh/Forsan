@@ -468,6 +468,36 @@ class AppLocalizationsAr extends AppLocalizations {
   String get signup_enter_full_name => 'يرجى إدخال الاسم الكامل';
 
   @override
+  String get signup_city_name => 'اسم المدينة';
+
+  @override
+  String get signup_enter_city_name => 'يرجى إدخال اسم المدينة';
+
+  @override
+  String get signup_father_name => 'اسم الأب';
+
+  @override
+  String get signup_enter_father_name => 'يرجى إدخال اسم الأب';
+
+  @override
+  String get signup_passport_number => 'رقم جواز السفر';
+
+  @override
+  String get signup_enter_passport_number => 'يرجى إدخال رقم جواز السفر';
+
+  @override
+  String get signup_whatsapp_number => 'رقم الواتس';
+
+  @override
+  String get signup_enter_whatsapp_number => 'يرجى إدخال رقم الواتس';
+
+  @override
+  String get signup_national_id => 'الرقم الوطني';
+
+  @override
+  String get signup_enter_national_id => 'يرجى إدخال الرقم الوطني';
+
+  @override
   String get signup_nationality => 'الجنسية';
 
   @override
