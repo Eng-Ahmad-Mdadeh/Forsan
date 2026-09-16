@@ -3,6 +3,9 @@ import 'package:injectable/injectable.dart';
 
 class AuthEntity extends Equatable {
   final String? phone;
+  // final String? fullName;
+  // final String? email;
+  // final String? country;
   final String? typeMessage;
   final String? code;
   final String? challengeId;

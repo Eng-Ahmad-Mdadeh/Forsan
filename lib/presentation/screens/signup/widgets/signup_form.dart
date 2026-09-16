@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
+import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/presentation/screens/home/home_screen.dart';
@@ -55,6 +56,7 @@ class _SignupFormState extends State<SignupForm> {
                   CustomInputField(
                     controller: _fullNameController,
                     title: context.loc.full_name,
+                    backgroundColor: AppColors.white,
                     hintText: context.loc.signup_enter_full_name,
                     textInputType: TextInputType.name,
                     validator: _requiredValidator,
@@ -79,6 +81,7 @@ class _SignupFormState extends State<SignupForm> {
                   ),
                   SizedBox(height: AppHeight.h12),
                   CustomInputField(
+                    backgroundColor: AppColors.white,
                     controller: _emailController,
                     title: context.loc.email,
                     hintText: context.loc.signup_enter_email,
