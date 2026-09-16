@@ -13,8 +13,8 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
 
   Future<Either<AppException, BaseModel<AuthModel>?>> login(AuthEntity data) {
     return postData(
-      endpoint: ApiEndpoints.login,
-      // fromJsonT: AuthModel.fromJson,
+      endpoint: ApiEndpoints.sendOtp,
+      fromJsonT: AuthModel.fromJson,
       data: data.toJson(),
     );
   }

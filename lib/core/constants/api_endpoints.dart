@@ -2,7 +2,7 @@ class ApiEndpoints {
   const ApiEndpoints._();
 
   //#region Base Url
-  static const String baseUrl = 'https://backend-dev.tamleek.maktab.sa/api';
+  static const String baseUrl = 'https://api.forsan.sy/api';
   static const String user = '/user';
   static const String mediaUrl = 'http://backend-dev.tamleek.maktab.sa/media/';
 
@@ -15,7 +15,7 @@ class ApiEndpoints {
 
   //#region Email
   static const String email = '/email';
-  static const String sendOtp = '/send-otp';
+  static const String sendOtp = '/otp/request';
   static const String verifyOtp = '/verify-otp';
 
   //#endregion

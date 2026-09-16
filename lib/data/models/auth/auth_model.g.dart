@@ -7,10 +7,18 @@ part of 'auth_model.dart';
 // **************************************************************************
 
 AuthModel _$AuthModelFromJson(Map<String, dynamic> json) => AuthModel(
+  accessToken: json['accessToken'] as String?,
+  challengeId: json['challengeId'] as String?,
+  expiresIn: (json['expiresIn'] as num?)?.toInt(),
+  devCode: json['devCode'] as String?,
   user: json['user'] == null
       ? null
-      : UserModel.fromJson(json['user'] as Map<String, dynamic>),
-  accessToken: json['access_token'] as String?,
-  tokenType: json['token_type'] as String?,
-  expiresIn: json['expires_in'] as num?,
+      : User.fromJson(json['user'] as Map<String, dynamic>),
+);
+
+User _$UserFromJson(Map<String, dynamic> json) => User(
+  id: json['id'] as String?,
+  phone: json['phone'] as String?,
+  fullName: json['fullName'] as String?,
+  role: json['role'] as String?,
 );
