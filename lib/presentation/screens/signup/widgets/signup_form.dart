@@ -80,7 +80,7 @@ class _SignupFormState extends State<SignupForm> {
                     textInputType: TextInputType.streetAddress,
                     validator: _requiredValidator,
                   ),
-                  SizedBox(height: AppHeight.h12),
+
                   CustomInputField(
                     controller: _fatherNameController,
                     title: context.loc.signup_father_name,
@@ -89,7 +89,7 @@ class _SignupFormState extends State<SignupForm> {
                     textInputType: TextInputType.name,
                     validator: _requiredValidator,
                   ),
-                  SizedBox(height: AppHeight.h12),
+
                   SignupDropdownField(
                     title: context.loc.country,
                     hint: context.loc.signup_select_hint,
@@ -117,7 +117,6 @@ class _SignupFormState extends State<SignupForm> {
                     textDirection: TextDirection.ltr,
                     validator: _requiredValidator,
                   ),
-                  SizedBox(height: AppHeight.h12),
                   CustomInputField(
                     controller: _whatsappNumberController,
                     title: context.loc.signup_whatsapp_number,
@@ -127,7 +126,6 @@ class _SignupFormState extends State<SignupForm> {
                     textDirection: TextDirection.ltr,
                     validator: _requiredValidator,
                   ),
-                  SizedBox(height: AppHeight.h12),
                   CustomInputField(
                     controller: _nationalIdController,
                     title: context.loc.signup_national_id,
@@ -137,7 +135,6 @@ class _SignupFormState extends State<SignupForm> {
                     textDirection: TextDirection.ltr,
                     validator: _requiredValidator,
                   ),
-                  SizedBox(height: AppHeight.h12),
                   CustomInputField(
                     backgroundColor: AppColors.white,
                     controller: _emailController,

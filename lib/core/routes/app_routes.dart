@@ -46,7 +46,7 @@ final appRouter = GoRouter(
   debugLogDiagnostics: kDebugMode,
   initialLocation: const SplashRoute().location,
   routes: $appRoutes,
-  redirect: _authGuard,
+  //redirect: _authGuard,
 );
 
 Future<String?> _authGuard(BuildContext context, GoRouterState state) async {
