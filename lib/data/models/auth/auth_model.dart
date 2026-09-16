@@ -19,8 +19,8 @@ class AuthModel extends Equatable {
   final String? devCode;
   final User? user;
 
-  factory AuthModel.fromJson(Map<String, dynamic> json) =>
-      _$AuthModelFromJson(json);
+  factory AuthModel.fromJson(Object? json) =>
+      _$AuthModelFromJson(json as Map<String, dynamic>);
 
   @override
   List<Object?> get props => [
