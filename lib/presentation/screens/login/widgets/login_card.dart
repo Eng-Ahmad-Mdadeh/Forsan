@@ -37,8 +37,6 @@ class LoginCard extends StatelessWidget {
           context.pop();
         }
         if (state is LoginLoaded) {
-          print('ttt');
-          print(state.authModel?.data?.challengeId);
           context.read<CodeCheckCubit>().setChallengeId(
             state.authModel?.data?.challengeId,
           );
