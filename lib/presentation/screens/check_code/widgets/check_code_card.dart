@@ -10,7 +10,6 @@ import 'package:forsan/presentation/cubit/code_check/code_check_cubit.dart';
 import 'package:forsan/presentation/screens/check_code/widgets/check_code_actions.dart';
 import 'package:forsan/presentation/screens/check_code/widgets/check_code_card_title.dart';
 import 'package:forsan/presentation/screens/check_code/widgets/check_code_hint.dart';
-import 'package:forsan/presentation/screens/check_code/widgets/confirm_code_button.dart';
 import 'package:forsan/presentation/screens/check_code/widgets/verification_code_field.dart';
 import 'package:forsan/presentation/widgets/custom_snack_bar.dart';
 import 'package:forsan/presentation/widgets/loading_widget.dart';
@@ -81,17 +80,13 @@ class CheckCodeCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const CheckCodeCardTitle(),
-            VerificationCodeField(codeController: codeController),
+            VerificationCodeField(
+              codeController: codeController,
+              formKey: formKey,
+            ),
             const CheckCodeHint(),
             const CheckCodeActions(),
             SizedBox(height: AppHeight.h22),
-            // ConfirmCodeButton(
-            // onPressed: () => VerificationCodeField.submit(
-            //   context,
-            //   formKey: formKey,
-            //   code: codeController.text,
-            // ),
-            //),
           ],
         ),
       ),

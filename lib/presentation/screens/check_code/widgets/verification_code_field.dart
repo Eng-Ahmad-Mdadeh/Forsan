@@ -14,8 +14,13 @@ class VerificationCodeField extends StatelessWidget {
   static const int codeLength = 6;
 
   final TextEditingController codeController;
+  final GlobalKey<FormState> formKey;
 
-  const VerificationCodeField({super.key, required this.codeController});
+  const VerificationCodeField({
+    super.key,
+    required this.codeController,
+    required this.formKey,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +45,11 @@ class VerificationCodeField extends StatelessWidget {
           autofocus: true,
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          onCompleted: (code) => submit(
+            context,
+            formKey: formKey,
+            code: code,
+          ),
           validator: (value) => value?.length == codeLength
               ? null
               : 'يرجى إدخال رمز التحقق كاملاً',
