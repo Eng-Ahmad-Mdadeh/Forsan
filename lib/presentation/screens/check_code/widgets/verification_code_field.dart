@@ -11,6 +11,8 @@ import 'package:forsan/presentation/bloc/auth/check_code/check_code_bloc.dart';
 import 'package:forsan/presentation/cubit/code_check/code_check_cubit.dart';
 
 class VerificationCodeField extends StatelessWidget {
+  static const int codeLength = 6;
+
   final TextEditingController codeController;
 
   const VerificationCodeField({super.key, required this.codeController});
@@ -34,11 +36,13 @@ class VerificationCodeField extends StatelessWidget {
         padding: EdgeInsets.only(top: AppPaddingHeight.p20),
         child: Pinput(
           controller: codeController,
-          length: 4,
+          length: codeLength,
           autofocus: true,
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          validator: (value) => value?.length == 4 ? null : 'يرجى إدخال رمز التحقق كاملاً',
+          validator: (value) => value?.length == codeLength
+              ? null
+              : 'يرجى إدخال رمز التحقق كاملاً',
           defaultPinTheme: defaultTheme,
           focusedPinTheme: defaultTheme.copyWith(
             decoration: BoxDecoration(
@@ -58,7 +62,10 @@ class VerificationCodeField extends StatelessWidget {
   }
 
   static void submit(BuildContext context, {required GlobalKey<FormState> formKey, required String code}) {
-    if (!(formKey.currentState?.validate() ?? false) || code.length != 4) return;
+    if (!(formKey.currentState?.validate() ?? false) ||
+        code.length != codeLength) {
+      return;
+    }
     final state = context.read<CodeCheckCubit>().state;
     context.read<CheckCodeBloc>().add(
       CheckCodeEvent(
