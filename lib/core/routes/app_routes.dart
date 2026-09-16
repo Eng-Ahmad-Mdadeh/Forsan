@@ -12,6 +12,7 @@ import 'package:forsan/presentation/screens/create_order/create_new_order.dart';
 import 'package:forsan/presentation/screens/create_order/select_service_type.dart';
 import 'package:forsan/presentation/screens/documents/documents_screen.dart';
 import 'package:forsan/presentation/screens/edit_profile/edit_profile_screen.dart';
+import 'package:forsan/presentation/screens/frequently_asked_questions/f_q_screen.dart';
 import 'package:forsan/presentation/screens/home/home_screen.dart';
 import 'package:forsan/presentation/screens/invoices_and_payments/invoices_and_payments_screen.dart';
 import 'package:forsan/presentation/screens/login/login_screen.dart';
@@ -29,6 +30,7 @@ import 'package:forsan/presentation/screens/setting/setting_screen.dart';
 import 'package:forsan/presentation/screens/signup/signup_screen.dart';
 import 'package:forsan/presentation/screens/show_profile/show_profile_screen.dart';
 import 'package:forsan/presentation/screens/splash/splash_screen.dart';
+import 'package:forsan/presentation/screens/terms_and_conditions/terms_and_conditions_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../presentation/screens/complete_requirements/complete_requirements_screen.dart';
@@ -269,6 +271,8 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
           routes: [
             TypedGoRoute<SettingRoute>(path: 'setting'),
             TypedGoRoute<PrivacyPolicyRoute>(path: 'privacy_policy'),
+            TypedGoRoute<TermsAndConditionsRoute>(path: 'terms_and_conditions'),
+            TypedGoRoute<FQRoute>(path: 'fq'),
             TypedGoRoute<InvoicesAndPaymentsRoute>(
               path: 'invoices_and_payments',
               routes: [
@@ -391,6 +395,35 @@ class PrivacyPolicyRoute extends GoRouteData with $PrivacyPolicyRoute {
     return const PrivacyPolicyScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
+
+class TermsAndConditionsRoute extends GoRouteData with $TermsAndConditionsRoute {
+  const TermsAndConditionsRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  CustomTransitionPage<void> buildPage(
+      BuildContext context,
+      GoRouterState state,
+      ) {
+    return const TermsAndConditionsScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
+class FQRoute extends GoRouteData with $FQRoute {
+  const FQRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  CustomTransitionPage<void> buildPage(
+      BuildContext context,
+      GoRouterState state,
+      ) {
+    return const FQScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+
 
 class InvoicesAndPaymentsRoute extends GoRouteData
     with $InvoicesAndPaymentsRoute {

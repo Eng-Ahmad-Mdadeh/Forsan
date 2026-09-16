@@ -44,9 +44,9 @@ class MoreMenu extends StatelessWidget {
         if (state is LogoutLoaded) {
           const LoginRoute().go(context);
         } else if (state is LogoutFailed) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
         }
       },
       child: Builder(builder: (context) => _buildMenu(context)),
@@ -71,12 +71,16 @@ class MoreMenu extends StatelessWidget {
             item: _items[index],
             onTap: index == 0
                 ? () => const ShowProfileRoute().push(context)
-                : index == 7
-                ? () => const SettingRoute().push(context)
                 : index == 1
                 ? () => const InvoicesAndPaymentsRoute().push(context)
                 : index == 2
                 ? () => const PrivacyPolicyRoute().push(context)
+                : index == 3
+                ? () => const TermsAndConditionsRoute().push(context)
+                : index == 6
+                ? () => const FQRoute().push(context)
+                : index == 7
+                ? () => const SettingRoute().push(context)
                 : index == _items.length - 1
                 ? () => _showLogoutDialog(context)
                 : null,

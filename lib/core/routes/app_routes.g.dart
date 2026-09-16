@@ -392,6 +392,18 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
               factory: $PrivacyPolicyRoute._fromState,
             ),
             GoRouteData.$route(
+              path: 'terms_and_conditions',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: TermsAndConditionsRoute.$parentNavigatorKey,
+              factory: $TermsAndConditionsRoute._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'fq',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: FQRoute.$parentNavigatorKey,
+              factory: $FQRoute._fromState,
+            ),
+            GoRouteData.$route(
               path: 'invoices_and_payments',
               hasOverriddenOnExit: false,
               parentNavigatorKey: InvoicesAndPaymentsRoute.$parentNavigatorKey,
@@ -537,6 +549,47 @@ mixin $PrivacyPolicyRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/more/privacy_policy');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $TermsAndConditionsRoute on GoRouteData {
+  static TermsAndConditionsRoute _fromState(GoRouterState state) =>
+      const TermsAndConditionsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more/terms_and_conditions');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $FQRoute on GoRouteData {
+  static FQRoute _fromState(GoRouterState state) => const FQRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more/fq');
 
   @override
   void go(BuildContext context) => context.go(location);

@@ -8,14 +8,14 @@ import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
-class PrivacyPolicyCard extends StatefulWidget {
-  const PrivacyPolicyCard({super.key});
+class TermsAndConditionsCard extends StatefulWidget {
+  const TermsAndConditionsCard({super.key});
 
   @override
-  State<PrivacyPolicyCard> createState() => _PrivacyPolicyCardState();
+  State<TermsAndConditionsCard> createState() => _TermsAndConditionsCardState();
 }
 
-class _PrivacyPolicyCardState extends State<PrivacyPolicyCard> {
+class _TermsAndConditionsCardState extends State<TermsAndConditionsCard> {
   static const String _description =
       'من خلال دخولك أو وصولك أو استخدامك (من خلالك أو من '
       'خلال وكلائك أو موظفيك) إلى الموقع الإلكتروني maktab.sa '
@@ -82,7 +82,7 @@ class _PrivacyPolicyCardState extends State<PrivacyPolicyCard> {
                       top: AppPaddingHeight.p4,
                     ),
                     child: SectionTitle(
-                      text: context.loc.privacy_policy_section_title,
+                      text: 'الشروط و الأحكام',
                       textAlign: TextAlign.start,
                       color: AppColors.primary,
                       fontSize: AppFontSize.s14,
@@ -103,9 +103,9 @@ class _PrivacyPolicyCardState extends State<PrivacyPolicyCard> {
                       text: _isExpanded
                           ? _description
                           : _description.substring(
-                              0,
-                              _description.indexOf('توافق على هذه السياسة'),
-                            ),
+                        0,
+                        _description.indexOf('توافق على هذه السياسة'),
+                      ),
                       style: bodyStyle.copyWith(
                         fontSize: AppSize.s14,
                         fontWeight: AppFontWeight.regular,

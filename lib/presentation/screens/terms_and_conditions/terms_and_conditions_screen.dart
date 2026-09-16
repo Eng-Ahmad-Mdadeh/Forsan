@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
-import 'package:forsan/presentation/screens/privacy_policy/widgets/privacy_policy_card.dart';
+import 'package:forsan/presentation/screens/terms_and_conditions/widgets/terms_and_conditions_card.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
-class PrivacyPolicyScreen extends StatelessWidget {
-  const PrivacyPolicyScreen({super.key});
+class TermsAndConditionsScreen extends StatelessWidget {
+  const TermsAndConditionsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       backgroundColor: AppColors.white,
       appBar: CustomAppBar(
-        title: context.loc.privacy,
+        title: 'الشروط والأحكام',
         backgroundColor: AppColors.white,
         toolbarHeight: AppHeight.h70,
         showScrolledUnderElevation: false,
         showBackButton:true,
         titleSpacing: AppPaddingWidth.p8,
         titleWidget: SectionTitle(
-          text: context.loc.privacy,
+          text: 'الشروط والأحكام',
           color: AppColors.mainText,
           fontSize: AppFontSize.s18,
           fontWeight: AppFontWeight.bold,
@@ -33,8 +32,8 @@ class PrivacyPolicyScreen extends StatelessWidget {
           horizontal: AppPaddingWidth.p16,
         ),
         children: const [
-          PrivacyPolicyCard(),
-          PrivacyPolicyCard(),
+          TermsAndConditionsCard(),
+          TermsAndConditionsCard(),
         ],
       ),
     );
