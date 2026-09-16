@@ -39,6 +39,13 @@ class BaseModel<T> extends Equatable {
   factory BaseModel.fromJson(Map<String, dynamic> json, T Function(Object? json) fromJsonT) =>
       _$BaseModelFromJson(json, fromJsonT);
 
+  /// Creates a base model when an endpoint returns its payload directly
+  /// instead of nesting it under a `data` property.
+  factory BaseModel.fromDataJson(
+    Map<String, dynamic> json,
+    T Function(Object? json) fromJsonT,
+  ) => BaseModel(data: fromJsonT(json));
+
   @override
   List<Object?> get props => [
     success,
