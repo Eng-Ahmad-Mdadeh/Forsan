@@ -14,7 +14,7 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
   Future<Either<AppException, BaseModel<AuthModel>?>> login(AuthEntity data) {
     return postData(
       endpoint: ApiEndpoints.login,
-      // fromJsonT: AuthModel.fromJson,
+      fromJsonT: AuthModel.fromJsonObject,
       data: data.toJson(),
     );
   }
@@ -22,7 +22,7 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
   Future<Either<AppException, BaseModel<AuthModel>?>> checkCode(AuthEntity data) {
     return postData(
       endpoint: ApiEndpoints.checkCode,
-      fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
+      fromJsonT: AuthModel.fromJsonObject,
       data: data.toJson(),
     );
   }
@@ -30,9 +30,8 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
   Future<Either<AppException, BaseModel<AuthModel>?>> resendCode(AuthEntity data) {
     return postData(
       endpoint: ApiEndpoints.login,
-      // fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
+      fromJsonT: AuthModel.fromJsonObject,
       data: data.toJson(),
     );
   }
-
 }
