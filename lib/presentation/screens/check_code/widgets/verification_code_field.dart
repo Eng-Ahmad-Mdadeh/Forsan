@@ -14,13 +14,8 @@ class VerificationCodeField extends StatelessWidget {
   static const int codeLength = 6;
 
   final TextEditingController codeController;
-  final GlobalKey<FormState> formKey;
 
-  const VerificationCodeField({
-    super.key,
-    required this.codeController,
-    required this.formKey,
-  });
+  const VerificationCodeField({super.key, required this.codeController});
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +40,7 @@ class VerificationCodeField extends StatelessWidget {
           autofocus: true,
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          onCompleted: (code) => submit(
-            context,
-            formKey: formKey,
-            code: code,
-          ),
+          onCompleted: (code) => submit(context, code: code),
           validator: (value) => value?.length == codeLength
               ? null
               : 'يرجى إدخال رمز التحقق كاملاً',
@@ -71,11 +62,9 @@ class VerificationCodeField extends StatelessWidget {
     );
   }
 
-  static void submit(BuildContext context, {required GlobalKey<FormState> formKey, required String code}) {
-    if (!(formKey.currentState?.validate() ?? false) ||
-        code.length != codeLength) {
-      return;
-    }
+  static void submit(BuildContext context, {required String code}) {
+    if (code.length != codeLength) return;
+
     final state = context.read<CodeCheckCubit>().state;
     context.read<CheckCodeBloc>().add(
       CheckCodeEvent(

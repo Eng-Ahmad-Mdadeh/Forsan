@@ -80,10 +80,7 @@ class CheckCodeCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const CheckCodeCardTitle(),
-            VerificationCodeField(
-              codeController: codeController,
-              formKey: formKey,
-            ),
+            VerificationCodeField(codeController: codeController),
             const CheckCodeHint(),
             const CheckCodeActions(),
             SizedBox(height: AppHeight.h22),
