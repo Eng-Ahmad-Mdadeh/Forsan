@@ -14,8 +14,9 @@ class VerificationCodeField extends StatelessWidget {
   static const int codeLength = 6;
 
   final TextEditingController codeController;
+  final GlobalKey<FormState> formKey;
 
-  const VerificationCodeField({super.key, required this.codeController});
+  const VerificationCodeField({super.key, required this.codeController, required this.formKey});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class VerificationCodeField extends StatelessWidget {
         child: Pinput(
           controller: codeController,
           length: codeLength,
+          onSubmitted: (value) => VerificationCodeField.submit(context, formKey: formKey, code: value),
           autofocus: true,
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
