@@ -50,70 +50,76 @@ class _PrivacyPolicyCardState extends State<PrivacyPolicyCard> {
 
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: SectionCard(
-        showBorder: true,
-        borderRadius: BorderRadius.circular(AppRadius.r20),
-        padding: EdgeInsets.symmetric(
-          horizontal: AppPaddingWidth.p18,
-          vertical: AppPaddingHeight.p20,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: AppWidth.w4,
-                  height: AppHeight.h38,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(AppRadius.r4),
-                  ),
-                ),
-                SizedBox(width: AppWidth.w12),
-                Expanded(
-                  child: SectionTitle(
-                    text: context.loc.privacy_policy_section_title,
-                    textAlign: TextAlign.start,
-                    color: AppColors.primary,
-                    fontSize: AppFontSize.s18,
-                    fontWeight: AppFontWeight.bold,
-                    overflow: TextOverflow.visible,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: AppHeight.h12),
-            BodyTitle(
-              textAlign: TextAlign.start,
-              textSpan: TextSpan(
-                style: bodyStyle,
+      child: AnimatedSize(
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeInOut,
+        alignment: Alignment.topCenter,
+        child: SectionCard(
+          showBorder: true,
+          borderRadius: BorderRadius.circular(AppRadius.r20),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppPaddingWidth.p18,
+            vertical: AppPaddingHeight.p20,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextSpan(
-                    text: _isExpanded
-                        ? _description
-                        : _description.substring(
-                            0,
-                            _description.indexOf('توافق على هذه السياسة'),
-                          ),
-                  ),
-                  if (!_isExpanded) const TextSpan(text: '  '),
-                  if (!_isExpanded)
-                    TextSpan(
-                      text: context.loc.loadMore,
-                      style: bodyStyle.copyWith(
-                        color: AppColors.primary,
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppColors.primary,
-                      ),
-                      recognizer: _loadMoreRecognizer,
+                  Container(
+                    width: AppWidth.w4,
+                    height: AppHeight.h38,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(AppRadius.r4),
                     ),
+                  ),
+                  SizedBox(width: AppWidth.w12),
+                  Expanded(
+                    child: SectionTitle(
+                      text: context.loc.privacy_policy_section_title,
+                      textAlign: TextAlign.start,
+                      color: AppColors.primary,
+                      fontSize: AppFontSize.s18,
+                      fontWeight: AppFontWeight.bold,
+                      overflow: TextOverflow.visible,
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
+              SizedBox(height: AppHeight.h12),
+              BodyTitle(
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.visible,
+                textSpan: TextSpan(
+                  style: bodyStyle,
+                  children: [
+                    TextSpan(
+                      text: _isExpanded
+                          ? _description
+                          : _description.substring(
+                              0,
+                              _description.indexOf('توافق على هذه السياسة'),
+                            ),
+                    ),
+                    if (!_isExpanded) const TextSpan(text: '  '),
+                    if (!_isExpanded)
+                      TextSpan(
+                        text: context.loc.loadMore,
+                        style: bodyStyle.copyWith(
+                          color: AppColors.primary,
+                          decoration: TextDecoration.underline,
+                          decorationColor: AppColors.primary,
+                        ),
+                        recognizer: _loadMoreRecognizer,
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
