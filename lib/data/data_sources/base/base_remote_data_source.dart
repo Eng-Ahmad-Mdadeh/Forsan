@@ -14,8 +14,13 @@ abstract class BaseRemoteDataSource<T> {
     required String endpoint,
     Map<String, dynamic>? data,
     T Function(Object? json)? fromJsonT,
+    bool isFormData = true,
   }) async {
-    final response = await locator<NetworkHelper>().post(endpoint, data: data);
+    final response = await locator<NetworkHelper>().post(
+      endpoint,
+      data: data,
+      isFormDate: isFormData,
+    );
     return response.fold(
       (error) => Left(error),
       (result) {

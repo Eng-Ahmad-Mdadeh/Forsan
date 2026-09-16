@@ -29,8 +29,6 @@ class ContinueLoginButton extends StatelessWidget {
             final phone = cubitState.user?.phone ?? '';
             final dialCode = context.read<CodeCheckCubit>().state.dialCode;
             context.read<LoginCubit>().phoneChanged(phone);
-            print('ssssssssss');
-            print("$dialCode${phone.removeZero}");
             if (context.mounted) {
               context.read<LoginBloc>().add(
                 LoginEvent(

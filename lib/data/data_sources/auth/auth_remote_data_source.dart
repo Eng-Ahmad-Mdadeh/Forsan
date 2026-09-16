@@ -16,6 +16,7 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
       endpoint: '${ApiEndpoints.auth}${ApiEndpoints.sendOtp}',
       fromJsonT: AuthModel.fromJson,
       data: data.toJson(),
+      isFormData: false,
     );
   }
 
