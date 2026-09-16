@@ -22,9 +22,10 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
 
   Future<Either<AppException, BaseModel<AuthModel>?>> checkCode(AuthEntity data) {
     return postData(
-      endpoint: ApiEndpoints.checkCode,
+      endpoint: '${ApiEndpoints.auth}${ApiEndpoints.checkCode}',
       fromJsonT: AuthModel.fromJson,
       data: data.toJson(),
+      isFormData: false,
     );
   }
 

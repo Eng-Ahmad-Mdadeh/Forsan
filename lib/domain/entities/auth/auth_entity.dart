@@ -5,6 +5,7 @@ class AuthEntity extends Equatable {
   final String? phone;
   final String? typeMessage;
   final String? code;
+  final String? challengeId;
   final String? fcm;
   final bool? rememberMe;
 
@@ -12,6 +13,7 @@ class AuthEntity extends Equatable {
     this.phone,
     this.typeMessage,
     this.code,
+    this.challengeId,
     this.fcm,
     this.rememberMe,
   });
@@ -24,6 +26,7 @@ class AuthEntity extends Equatable {
       // if (typeMessage != null) 'type_message': 'sms',
       //if (typeMessage != null) 'type_message': typeMessage,
       if (code != null) 'code': code,
+      if (challengeId != null) 'challengeId': challengeId,
       // if (code != null) 'code': "4441",
       if (fcm != null) 'fcm_token': fcm,
     };
@@ -34,6 +37,7 @@ class AuthEntity extends Equatable {
     phone,
     typeMessage,
     code,
+    challengeId,
     fcm,
     rememberMe,
   ];

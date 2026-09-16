@@ -62,7 +62,7 @@ class VerificationCodeField extends StatelessWidget {
     final state = context.read<CodeCheckCubit>().state;
     context.read<CheckCodeBloc>().add(
       CheckCodeEvent(
-        AuthEntity(phone: '${state.dialCode}${state.phone.removeZero}', code: code, rememberMe: state.rememberMe),
+        AuthEntity(phone: '${state.dialCode}${state.phone.removeZero}', code: code, rememberMe: state.rememberMe,challengeId: ),
       ),
     );
   }

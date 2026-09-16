@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/resources/app_assets.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/presentation/bloc/auth/check_code/check_code_bloc.dart';
-import 'package:forsan/presentation/cubit/code_check/code_check_cubit.dart';
 import 'package:forsan/presentation/screens/check_code/widgets/check_code_card.dart';
 import 'package:forsan/presentation/widgets/image_view.dart';
 

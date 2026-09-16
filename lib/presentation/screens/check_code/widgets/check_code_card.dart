@@ -21,7 +21,11 @@ class CheckCodeCard extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController codeController;
 
-  const CheckCodeCard({super.key, required this.formKey, required this.codeController});
+  const CheckCodeCard({
+    super.key,
+    required this.formKey,
+    required this.codeController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,8 @@ class CheckCodeCard extends StatelessWidget {
         if (state is CheckCodeLoading) {
           showDialog(
             context: context,
-            builder: (context) => const PopScope(canPop: false, child: LoadingWidget(0)),
+            builder: (context) =>
+                const PopScope(canPop: false, child: LoadingWidget(0)),
           );
         }
         if (state is CheckCodeLoaded) {
@@ -80,16 +85,13 @@ class CheckCodeCard extends StatelessWidget {
             const CheckCodeHint(),
             const CheckCodeActions(),
             SizedBox(height: AppHeight.h22),
-            ConfirmCodeButton(
-              onPressed: (){
-                SignupRoute().go(context);
-              },
-              // onPressed: () => VerificationCodeField.submit(
-              //   context,
-              //   formKey: formKey,
-              //   code: codeController.text,
-              // ),
-            ),
+            // ConfirmCodeButton(
+            // onPressed: () => VerificationCodeField.submit(
+            //   context,
+            //   formKey: formKey,
+            //   code: codeController.text,
+            // ),
+            //),
           ],
         ),
       ),
