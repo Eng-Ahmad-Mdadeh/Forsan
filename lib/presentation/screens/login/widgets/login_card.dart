@@ -6,6 +6,7 @@ import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/presentation/bloc/auth/login/login_bloc.dart';
+import 'package:forsan/presentation/cubit/code_check/code_check_cubit.dart';
 import 'package:forsan/presentation/screens/login/widgets/auth_terms_footer.dart';
 import 'package:forsan/presentation/screens/login/widgets/continue_login_button.dart';
 import 'package:forsan/presentation/screens/login/widgets/phone_number_section.dart';
@@ -36,6 +37,9 @@ class LoginCard extends StatelessWidget {
           context.pop();
         }
         if (state is LoginLoaded) {
+          context.read<CodeCheckCubit>().setChallengeId(
+            state.authModel?.data?.challengeId,
+          );
           context.pop();
           CheckCodeRoute().push(context);
         }

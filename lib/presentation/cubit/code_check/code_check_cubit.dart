@@ -5,6 +5,7 @@ class CodeCheckState extends Equatable {
   const CodeCheckState({
     this.phone = '',
     this.dialCode = '+966',
+    this.challengeId,
     this.rememberMe = false,
     this.type = 'sms',
     required this.endDate,
@@ -12,12 +13,20 @@ class CodeCheckState extends Equatable {
 
   final String phone;
   final String dialCode;
+  final String? challengeId;
   final bool rememberMe;
   final String type;
   final DateTime endDate;
 
   @override
-  List<Object?> get props => [phone, dialCode, rememberMe, type, endDate];
+  List<Object?> get props => [
+    phone,
+    dialCode,
+    challengeId,
+    rememberMe,
+    type,
+    endDate,
+  ];
 }
 
 class CodeCheckCubit extends Cubit<CodeCheckState> {
@@ -28,14 +37,24 @@ class CodeCheckCubit extends Cubit<CodeCheckState> {
   bool get lessThan5 => state.endDate.difference(DateTime.now()).inSeconds < 5;
 
   void setPhone(String phone) => emit(_copy(phone: phone));
-  void setType(String type, String dialCode) => emit(_copy(type: type, dialCode: dialCode));
+  void setChallengeId(String? challengeId) =>
+      emit(_copy(challengeId: challengeId, updateChallengeId: true));
+  void setType(String type, String dialCode) =>
+      emit(_copy(type: type, dialCode: dialCode));
   void endTime() => emit(_copy(endDate: DateTime.now()));
   void resetTime() => emit(_copy(endDate: DateTime.now().add(const Duration(minutes: 2))));
 
-  CodeCheckState _copy({String? phone, String? dialCode, String? type, DateTime? endDate}) =>
-      CodeCheckState(
+  CodeCheckState _copy({
+    String? phone,
+    String? dialCode,
+    String? challengeId,
+    bool updateChallengeId = false,
+    String? type,
+    DateTime? endDate,
+  }) => CodeCheckState(
         phone: phone ?? state.phone,
         dialCode: dialCode ?? state.dialCode,
+        challengeId: updateChallengeId ? challengeId : state.challengeId,
         rememberMe: state.rememberMe,
         type: type ?? state.type,
         endDate: endDate ?? state.endDate,
