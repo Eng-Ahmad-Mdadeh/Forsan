@@ -16,7 +16,7 @@ class ApiEndpoints {
   //#region Email
   static const String email = '/email';
   static const String sendOtp = '/otp/request';
-  static const String verifyOtp = '/verify-otp';
+  static const String verifyOtp = '/otp/verify';
 
   //#endregion
 

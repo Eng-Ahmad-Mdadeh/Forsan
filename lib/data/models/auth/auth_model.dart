@@ -9,27 +9,19 @@ class AuthModel extends Equatable {
     required this.accessToken,
     required this.challengeId,
     required this.expiresIn,
-    required this.devCode,
     required this.user,
   });
 
   final String? accessToken;
   final String? challengeId;
   final int? expiresIn;
-  final String? devCode;
   final User? user;
 
-  factory AuthModel.fromJson(Object? json) =>
-      _$AuthModelFromJson(json as Map<String, dynamic>);
+  factory AuthModel.fromJson(Map<String, dynamic> json) => _$AuthModelFromJson(json);
 
   @override
   List<Object?> get props => [
-    accessToken,
-    challengeId,
-    expiresIn,
-    devCode,
-    user,
-  ];
+    accessToken, challengeId, expiresIn, user, ];
 }
 
 @JsonSerializable(createToJson: false)
@@ -49,5 +41,6 @@ class User extends Equatable {
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   @override
-  List<Object?> get props => [id, phone, fullName, role];
+  List<Object?> get props => [
+    id, phone, fullName, role, ];
 }

@@ -38,10 +38,11 @@ class VerificationCodeField extends StatelessWidget {
         child: Pinput(
           controller: codeController,
           length: codeLength,
-          onSubmitted: (value) => VerificationCodeField.submit(context, formKey: formKey, code: value),
+          onSubmitted: (value) => VerificationCodeField.submit(context, code: value),
           autofocus: true,
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          onCompleted: (code) => submit(context, code: code),
           validator: (value) => value?.length == codeLength
               ? null
               : 'يرجى إدخال رمز التحقق كاملاً',
@@ -63,12 +64,14 @@ class VerificationCodeField extends StatelessWidget {
     );
   }
 
-  static void submit(BuildContext context, {required GlobalKey<FormState> formKey, required String code}) {
-    if (!(formKey.currentState?.validate() ?? false) ||
-        code.length != codeLength) {
-      return;
-    }
+  static void submit(BuildContext context, {required String code}) {
+    if (code.length != codeLength) return;
+
+
     final state = context.read<CodeCheckCubit>().state;
+    print('rrrrrrrrrrrrrrrr');
+    print(state.challengeId);
+
     context.read<CheckCodeBloc>().add(
       CheckCodeEvent(
         AuthEntity(
