@@ -13,53 +13,46 @@ class ContactUsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        statusBarColor: AppColors.white,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light,
-      ),
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: AppColors.white,
+      appBar: CustomAppBar(
+        title: context.loc.contact_us,
         backgroundColor: AppColors.white,
-        appBar: CustomAppBar(
-          title: context.loc.contact_us,
-          backgroundColor: AppColors.white,
-          showBackButton: true,
-          showScrolledUnderElevation: false,
-          onTapBackButton: () => Navigator.maybePop(context),
-        ),
-        body: SafeArea(
-          top: false,
-          child: ListView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            padding: EdgeInsetsDirectional.fromSTEB(
-              AppPaddingWidth.p10,
-              AppPaddingHeight.p4,
-              AppPaddingWidth.p10,
-              AppPaddingHeight.p24,
-            ),
-            children: [
-              _ContactField(
-                title: context.loc.contact_name,
-                hintText: context.loc.contact_name_hint,
-                keyboardType: TextInputType.name,
-              ),
-              SizedBox(height: AppHeight.h8),
-              _ContactField(
-                title: context.loc.contact_email,
-                hintText: context.loc.contact_subject_hint,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(height: AppHeight.h8),
-              const _PhoneField(),
-              SizedBox(height: AppHeight.h8),
-              _ContactField(
-                title: context.loc.contact_message,
-                hintText: context.loc.contact_message_hint,
-                keyboardType: TextInputType.multiline,
-              ),
-            ],
+        titleSpacing:AppPaddingWidth.p16,
+        showBackButton: true,
+        showScrolledUnderElevation: false,
+      ),
+      body: SafeArea(
+        top: false,
+        child: ListView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          padding: EdgeInsetsDirectional.fromSTEB(
+            AppPaddingWidth.p16,
+            AppPaddingHeight.p16,
+            AppPaddingWidth.p16,
+            AppPaddingHeight.p24,
           ),
+          children: [
+            _ContactField(
+              title: context.loc.contact_name,
+              hintText: context.loc.contact_name_hint,
+              keyboardType: TextInputType.name,
+            ),
+            SizedBox(height: AppHeight.h8),
+            _ContactField(
+              title: context.loc.contact_email,
+              hintText: context.loc.contact_subject_hint,
+              keyboardType: TextInputType.emailAddress,
+            ),
+            SizedBox(height: AppHeight.h8),
+            const _PhoneField(),
+            SizedBox(height: AppHeight.h8),
+            _ContactField(
+              title: context.loc.contact_message,
+              hintText: context.loc.contact_message_hint,
+              keyboardType: TextInputType.multiline,
+            ),
+          ],
         ),
       ),
     );
@@ -81,6 +74,7 @@ class _ContactField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomInputField(
       title: title,
+      fontWeight:AppFontWeight.bold,
       hintText: hintText,
       height: AppHeight.h52,
       backgroundColor: AppColors.white,
@@ -102,7 +96,7 @@ class _PhoneField extends StatelessWidget {
         BodyTitle(
           text: context.loc.contact_phone,
           fontSize: AppFontSize.s14,
-          fontWeight: AppFontWeight.medium,
+          fontWeight: AppFontWeight.bold,
           color: AppColors.mainText,
         ),
         Directionality(

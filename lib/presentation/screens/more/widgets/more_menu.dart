@@ -77,6 +77,8 @@ class MoreMenu extends StatelessWidget {
                 ? () => const PrivacyPolicyRoute().push(context)
                 : index == 3
                 ? () => const TermsAndConditionsRoute().push(context)
+                : index == 5
+                ? () => const ContactUsRoute().push(context)
                 : index == 6
                 ? () => const FQRoute().push(context)
                 : index == 7
