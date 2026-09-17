@@ -63,6 +63,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contact_us => 'Contact Us';
 
   @override
+  String get contact_name => 'Name';
+
+  @override
+  String get contact_name_hint => 'Enter your name';
+
+  @override
+  String get contact_email => 'Email';
+
+  @override
+  String get contact_subject_hint => 'Enter the message subject';
+
+  @override
+  String get contact_phone => 'Mobile number';
+
+  @override
+  String get contact_phone_hint => '949 594 190';
+
+  @override
+  String get contact_message => 'Message';
+
+  @override
+  String get contact_message_hint => 'Write your inquiry here';
+
+  @override
   String get offers => 'Offers';
 
   @override

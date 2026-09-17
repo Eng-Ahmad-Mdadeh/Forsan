@@ -1,5 +1,13 @@
 {
   "contact_us": "اتصل بنا",
+  "contact_name": "الاسم",
+  "contact_name_hint": "ادخل الاسم",
+  "contact_email": "البريد الإلكتروني",
+  "contact_subject_hint": "ادخل موضوع الرسالة",
+  "contact_phone": "رقم الجوال",
+  "contact_phone_hint": "949 594 190",
+  "contact_message": "الرسالة",
+  "contact_message_hint": "اكتب استفسارك هنا",
   "login": "تسجيل الدخول",
   "logout": "تسجيل الخروج",
   "tap_back_again_to_leave": "انقر للرجوع مرة أخرى للخروج :)",

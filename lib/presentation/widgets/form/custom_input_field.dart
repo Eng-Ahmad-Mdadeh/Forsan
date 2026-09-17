@@ -30,6 +30,7 @@ class CustomInputField extends StatelessWidget {
   final bool showClock;
   final bool? isExpanded;
   final TextInputType? textInputType;
+  final Widget? prefix;
   final Widget? suffix;
   final int? maxLines;
   final int? maxLength;
@@ -64,6 +65,7 @@ class CustomInputField extends StatelessWidget {
     this.showFlag = false,
     this.showClock = false,
     this.textInputType,
+    this.prefix,
     this.suffix,
     this.maxLines,
     this.maxLength,
@@ -189,7 +191,7 @@ class CustomInputField extends StatelessWidget {
         borderSide: const BorderSide(color: AppColors.red),
       ),
       borderRadius: borderRadius ?? AppRadius.r7,
-      prefixIcon: showFlag
+      prefixIcon: prefix ?? (showFlag
           ? Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -216,7 +218,7 @@ class CustomInputField extends StatelessWidget {
                 SizedBox(width: AppWidth.w10),
               ],
             )
-          : null,
+          : null),
       suffixIcon:
           suffix ??
           (showRiyal

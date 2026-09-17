@@ -63,6 +63,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contact_us => 'اتصل بنا';
 
   @override
+  String get contact_name => 'الاسم';
+
+  @override
+  String get contact_name_hint => 'ادخل الاسم';
+
+  @override
+  String get contact_email => 'البريد الإلكتروني';
+
+  @override
+  String get contact_subject_hint => 'ادخل موضوع الرسالة';
+
+  @override
+  String get contact_phone => 'رقم الجوال';
+
+  @override
+  String get contact_phone_hint => '949 594 190';
+
+  @override
+  String get contact_message => 'الرسالة';
+
+  @override
+  String get contact_message_hint => 'اكتب استفسارك هنا';
+
+  @override
   String get offers => 'العروض';
 
   @override

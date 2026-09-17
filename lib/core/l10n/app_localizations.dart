@@ -200,6 +200,30 @@ abstract class AppLocalizations {
   /// **'Contact Us'**
   String get contact_us;
 
+  /// No description provided for @contact_name.
+  String get contact_name;
+
+  /// No description provided for @contact_name_hint.
+  String get contact_name_hint;
+
+  /// No description provided for @contact_email.
+  String get contact_email;
+
+  /// No description provided for @contact_subject_hint.
+  String get contact_subject_hint;
+
+  /// No description provided for @contact_phone.
+  String get contact_phone;
+
+  /// No description provided for @contact_phone_hint.
+  String get contact_phone_hint;
+
+  /// No description provided for @contact_message.
+  String get contact_message;
+
+  /// No description provided for @contact_message_hint.
+  String get contact_message_hint;
+
   /// No description provided for @offers.
   ///
   /// In en, this message translates to:
