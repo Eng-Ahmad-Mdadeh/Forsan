@@ -58,8 +58,7 @@ class _SignupFormState extends State<SignupForm> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              keyboardDismissBehavior:
-                  ScrollViewKeyboardDismissBehavior.onDrag,
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -72,69 +71,24 @@ class _SignupFormState extends State<SignupForm> {
                     validator: _requiredValidator,
                   ),
                   SizedBox(height: AppHeight.h12),
-                  CustomInputField(
-                    controller: _cityController,
-                    title: context.loc.signup_city_name,
-                    backgroundColor: AppColors.white,
-                    hintText: context.loc.signup_enter_city_name,
-                    textInputType: TextInputType.streetAddress,
-                    validator: _requiredValidator,
-                  ),
-
-                  CustomInputField(
-                    controller: _fatherNameController,
-                    title: context.loc.signup_father_name,
-                    backgroundColor: AppColors.white,
-                    hintText: context.loc.signup_enter_father_name,
-                    textInputType: TextInputType.name,
-                    validator: _requiredValidator,
-                  ),
 
                   SignupDropdownField(
                     title: context.loc.country,
                     hint: context.loc.signup_select_hint,
                     items: countries,
-                    onChanged: (value) => setState(
-                      () => _selectedCountry = value,
-                    ),
+                    onChanged: (value) =>
+                        setState(() => _selectedCountry = value),
                   ),
                   SizedBox(height: AppHeight.h12),
                   SignupDropdownField(
                     title: context.loc.signup_nationality,
                     hint: context.loc.signup_select_hint,
                     items: nationalities,
-                    onChanged: (value) => setState(
-                      () => _selectedNationality = value,
-                    ),
+                    onChanged: (value) =>
+                        setState(() => _selectedNationality = value),
                   ),
                   SizedBox(height: AppHeight.h12),
-                  CustomInputField(
-                    controller: _passportNumberController,
-                    title: context.loc.signup_passport_number,
-                    backgroundColor: AppColors.white,
-                    hintText: context.loc.signup_enter_passport_number,
-                    textInputType: TextInputType.text,
-                    textDirection: TextDirection.ltr,
-                    validator: _requiredValidator,
-                  ),
-                  CustomInputField(
-                    controller: _whatsappNumberController,
-                    title: context.loc.signup_whatsapp_number,
-                    backgroundColor: AppColors.white,
-                    hintText: context.loc.signup_enter_whatsapp_number,
-                    textInputType: TextInputType.phone,
-                    textDirection: TextDirection.ltr,
-                    validator: _requiredValidator,
-                  ),
-                  CustomInputField(
-                    controller: _nationalIdController,
-                    title: context.loc.signup_national_id,
-                    backgroundColor: AppColors.white,
-                    hintText: context.loc.signup_enter_national_id,
-                    textInputType: TextInputType.number,
-                    textDirection: TextDirection.ltr,
-                    validator: _requiredValidator,
-                  ),
+
                   CustomInputField(
                     backgroundColor: AppColors.white,
                     controller: _emailController,

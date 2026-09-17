@@ -25,7 +25,7 @@ class MoreMenu extends StatelessWidget {
     ),
     MoreMenuItem(icon: Icons.shield_outlined, title: 'سياسة الخصوصية'),
     MoreMenuItem(icon: Icons.gavel_outlined, title: 'الشروط والأحكام'),
-    MoreMenuItem(icon: Icons.gavel_outlined, title: 'أخلاق المسؤولية'),
+    MoreMenuItem(icon: Icons.gavel_outlined, title: 'إخلاء المسؤولية'),
     MoreMenuItem(icon: Icons.support_agent_outlined, title: 'الدعم الفني'),
     MoreMenuItem(icon: Icons.chat_outlined, title: 'الأسئلة الشائعة'),
     MoreMenuItem(icon: Icons.settings_outlined, title: 'الإعدادات'),

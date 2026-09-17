@@ -70,7 +70,7 @@ class _StatisticCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.r16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.homeSoftShadow.withOpacity(0.05),
+            color: AppColors.homeSoftShadow.withOpacity(0.02),
             blurRadius: AppRadius.r10,
             offset: Offset(0, AppHeight.h4),
           ),

@@ -57,10 +57,10 @@ class MoreTile extends StatelessWidget {
         ),
       ),
       trailing: Icon(
-        item.isDestructive
-            ? Icons.arrow_forward_rounded
-            : Icons.chevron_right_rounded,
-        color: foregroundColor,
+       // item.isDestructive
+            //? Icons.arrow_forward_rounded
+             Icons.chevron_right_rounded,
+        color: AppColors.black,
         size: AppSize.s24,
       ),
       onTap: onTap,

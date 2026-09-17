@@ -5,9 +5,6 @@ import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_values.dart';
 import '../../../widgets/custom_search.dart';
 
-
-
-/// The search and filter controls used at the top of the orders list.
 class OrdersSearchBar extends StatelessWidget {
   const OrdersSearchBar({
     super.key,
@@ -30,10 +27,10 @@ class OrdersSearchBar extends StatelessWidget {
           color: AppColors.white,
           hintText: 'ابحث برقم الطلب أو اسم الخدمة',
           hintColor: AppColors.grey,
-          borderRadius: AppRadius.r10,
+          borderRadius: AppRadius.r8,
         ),
       ),
-      SizedBox(width: AppWidth.w10),
+      SizedBox(width: AppWidth.w8),
       Semantics(
         button: true,
         label: 'تصفية الطلبات',
@@ -43,7 +40,7 @@ class OrdersSearchBar extends StatelessWidget {
           child: Material(
             color: AppColors.white,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.r10),
+              borderRadius: BorderRadius.circular(AppRadius.r8),
               side: const BorderSide(color: AppColors.greyDivider, width: 0.7),
             ),
             child: InkWell(

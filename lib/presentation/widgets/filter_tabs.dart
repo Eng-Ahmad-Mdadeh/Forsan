@@ -33,7 +33,7 @@ class FilterTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppHeight.h60,
+      height: AppHeight.h55,
       padding: EdgeInsetsDirectional.only(top: AppPaddingHeight.p6, bottom: AppPaddingHeight.p6),
       decoration: BoxDecoration(
         color: backgroundColor,

@@ -79,6 +79,8 @@ class HomeScreen extends StatelessWidget {
           const LatestOrderCard(),
           SizedBox(height: AppHeight.h20),
           const QuickActionsSection(),
+          SizedBox(height: AppHeight.h90),
+
         ],
       ),
     ),

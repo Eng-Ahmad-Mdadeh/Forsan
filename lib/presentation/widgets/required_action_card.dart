@@ -118,7 +118,7 @@ class RequiredActionCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadius.r20),
             boxShadow: [
               BoxShadow(
-                color: AppColors.homeSoftShadow,
+                color: AppColors.homeSoftShadow.withOpacity(0.08),
                 blurRadius: AppRadius.r10,
                 offset: Offset(0, AppHeight.h4),
               ),

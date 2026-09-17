@@ -97,6 +97,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
 
       actions:
+
           customActions ??
           (showSkipButton
               ? [
