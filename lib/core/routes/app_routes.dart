@@ -8,6 +8,7 @@ import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/core/utils/enums/enum_utils.dart';
 import 'package:forsan/data/data_sources/auth/auth_storage_data_source.dart';
 import 'package:forsan/presentation/screens/check_code/check_code_screen.dart';
+import 'package:forsan/presentation/screens/contact_us/contact_us_screen.dart';
 import 'package:forsan/presentation/screens/create_order/create_new_order.dart';
 import 'package:forsan/presentation/screens/create_order/select_service_type.dart';
 import 'package:forsan/presentation/screens/documents/documents_screen.dart';
@@ -272,6 +273,7 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
             TypedGoRoute<SettingRoute>(path: 'setting'),
             TypedGoRoute<PrivacyPolicyRoute>(path: 'privacy_policy'),
             TypedGoRoute<TermsAndConditionsRoute>(path: 'terms_and_conditions'),
+            TypedGoRoute<ContactUsRoute>(path: 'contact_us'),
             TypedGoRoute<FQRoute>(path: 'fq'),
             TypedGoRoute<InvoicesAndPaymentsRoute>(
               path: 'invoices_and_payments',
@@ -407,6 +409,19 @@ class TermsAndConditionsRoute extends GoRouteData with $TermsAndConditionsRoute 
       GoRouterState state,
       ) {
     return const TermsAndConditionsScreen().buildPage(pageAnimation: PageAnimation.fade);
+  }
+}
+class ContactUsRoute extends GoRouteData with $ContactUsRoute {
+  const ContactUsRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  CustomTransitionPage<void> buildPage(
+      BuildContext context,
+      GoRouterState state,
+      ) {
+    return const ContactUsScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
 

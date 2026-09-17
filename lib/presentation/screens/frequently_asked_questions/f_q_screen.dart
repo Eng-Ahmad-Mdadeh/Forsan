@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/cubit/frequently_asked_questions/frequently_asked_questions_cubit.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
+import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
-class FQScreen extends StatefulWidget {
+class FQScreen extends StatelessWidget {
   const FQScreen({super.key});
 
-  @override
-  State<FQScreen> createState() => _FQScreenState();
-}
-
-class _FQScreenState extends State<FQScreen> {
   static const List<_FrequentlyAskedQuestion> _questions = [
     _FrequentlyAskedQuestion(
       question: 'ما الفرق بين شراء عقار كامل والتملك الجزئي ؟',
@@ -36,48 +34,52 @@ class _FQScreenState extends State<FQScreen> {
     ),
   ];
 
-  int? _expandedQuestion = 0;
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: CustomAppBar(
-        title: 'الأسئلة الشائعة',
+    return BlocProvider(
+      create: (_) => FrequentlyAskedQuestionsCubit(),
+      child: Scaffold(
         backgroundColor: AppColors.white,
-        toolbarHeight: AppHeight.h70,
-        showScrolledUnderElevation: false,
-        showBackButton: true,
-        titleSpacing: AppPaddingWidth.p8,
-        titleWidget: SectionTitle(
-          text: 'الأسئلة الشائعة',
-          color: AppColors.mainText,
-          fontSize: AppFontSize.s18,
-          fontWeight: AppFontWeight.bold,
-        ),
-      ),
-      body: Directionality(
-        textDirection: TextDirection.rtl,
-        child: ListView.separated(
-          padding: EdgeInsets.fromLTRB(
-            AppPaddingWidth.p8,
-            AppPaddingHeight.p4,
-            AppPaddingWidth.p8,
-            AppPaddingHeight.p24,
+        appBar: CustomAppBar(
+          title: 'الأسئلة الشائعة',
+          backgroundColor: AppColors.white,
+          toolbarHeight: AppHeight.h70,
+          showScrolledUnderElevation: false,
+          showBackButton: true,
+          titleSpacing: AppPaddingWidth.p8,
+          titleWidget: SectionTitle(
+            text: 'الأسئلة الشائعة',
+            color: AppColors.mainText,
+            fontSize: AppFontSize.s18,
+            fontWeight: AppFontWeight.bold,
           ),
-          itemCount: _questions.length,
-          separatorBuilder: (_, _) => SizedBox(height: AppMarginHeight.m7),
-          itemBuilder: (context, index) {
-            return _QuestionCard(
-              question: _questions[index],
-              isExpanded: _expandedQuestion == index,
-              onTap: () {
-                setState(() {
-                  _expandedQuestion = _expandedQuestion == index ? null : index;
-                });
-              },
-            );
-          },
+        ),
+        body: Directionality(
+          textDirection: TextDirection.rtl,
+          child: BlocBuilder<FrequentlyAskedQuestionsCubit, int?>(
+            builder: (context, expandedQuestion) {
+              return ListView.separated(
+                padding: EdgeInsets.fromLTRB(
+                  AppPaddingWidth.p8,
+                  AppPaddingHeight.p4,
+                  AppPaddingWidth.p8,
+                  AppPaddingHeight.p24,
+                ),
+                itemCount: _questions.length,
+                separatorBuilder: (_, _) =>
+                    SizedBox(height: AppMarginHeight.m7),
+                itemBuilder: (context, index) {
+                  return _QuestionCard(
+                    question: _questions[index],
+                    isExpanded: expandedQuestion == index,
+                    onTap: () => context
+                        .read<FrequentlyAskedQuestionsCubit>()
+                        .toggleQuestion(index),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -134,15 +136,13 @@ class _QuestionCard extends StatelessWidget {
                       ),
                       SizedBox(width: AppMarginWidth.m10),
                       Expanded(
-                        child: Text(
-                          question.question,
-                          style: TextStyle(
-                            color: AppColors.mainText,
-                            fontFamily: AppFontFamily.tajawal,
-                            fontSize: AppFontSize.s14,
-                            fontWeight: AppFontWeight.medium,
-                            height: 1.45,
-                          ),
+                        child: BodyTitle(
+                          text: question.question,
+                          color: AppColors.mainText,
+                          fontSize: AppFontSize.s14,
+                          fontWeight: AppFontWeight.medium,
+                          height: 1.45,
+                          maxLines: 2,
                         ),
                       ),
                       SizedBox(width: AppMarginWidth.m8),
@@ -161,21 +161,19 @@ class _QuestionCard extends StatelessWidget {
                     firstChild: const SizedBox(width: double.infinity),
                     secondChild: Padding(
                       padding: EdgeInsetsDirectional.only(
-                        start: AppPaddingWidth.p20,
+                        start: AppPaddingWidth.p24,
                         end: AppPaddingWidth.p24,
                         top: AppPaddingHeight.p13,
                         bottom: AppPaddingHeight.p8,
                       ),
-                      child: Text(
-                        question.answer,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: AppColors.blackCow,
-                          fontFamily: AppFontFamily.tajawal,
-                          fontSize: AppFontSize.s14,
-                          fontWeight: AppFontWeight.regular,
-                          height: 1.9,
-                        ),
+                      child: BodyTitle(
+                        text: question.answer,
+                        textAlign: TextAlign.center,
+                        color: AppColors.blackCow,
+                        fontSize: AppFontSize.s13,
+                        fontWeight: AppFontWeight.regular,
+                        height: 1.9,
+                        maxLines: 10,
                       ),
                     ),
                     crossFadeState: isExpanded

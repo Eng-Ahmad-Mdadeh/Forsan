@@ -398,6 +398,12 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
               factory: $TermsAndConditionsRoute._fromState,
             ),
             GoRouteData.$route(
+              path: 'contact_us',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: ContactUsRoute.$parentNavigatorKey,
+              factory: $ContactUsRoute._fromState,
+            ),
+            GoRouteData.$route(
               path: 'fq',
               hasOverriddenOnExit: false,
               parentNavigatorKey: FQRoute.$parentNavigatorKey,
@@ -570,6 +576,27 @@ mixin $TermsAndConditionsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/more/terms_and_conditions');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $ContactUsRoute on GoRouteData {
+  static ContactUsRoute _fromState(GoRouterState state) =>
+      const ContactUsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more/contact_us');
 
   @override
   void go(BuildContext context) => context.go(location);
