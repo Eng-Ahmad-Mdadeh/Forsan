@@ -41,10 +41,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i244.AuthStorageDataSource>(
       () => _i244.AuthStorageDataSource(),
     );
+    gh.lazySingleton<_i1052.DeviceInfoHelper>(
+      () => _i1052.DeviceInfoHelper(),
+    );
     gh.factory<_i444.AuthRemoteDataSource>(
-      () => _i444.AuthRemoteDataSource(
-        deviceInfoHelper: gh<_i1052.DeviceInfoHelper>(),
-      ),
+      () => _i444.AuthRemoteDataSource(gh<_i1052.DeviceInfoHelper>()),
     );
     gh.factory<_i1064.IAuthRepository>(
       () => _i202.AuthRepository(
