@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/presentation/bloc/home/home_bloc.dart';
 import 'package:forsan/presentation/widgets/image_view.dart';
 import 'package:forsan/presentation/widgets/required_action_card.dart';
 import '../../../core/resources/app_assets.dart';
@@ -13,6 +15,30 @@ import 'widgets/quick_actions_section.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [BlocProvider<HomeBloc>(create: (context) => HomeBloc())],
+      child: BodyHomeScreen(),
+    );
+  }
+}
+
+class BodyHomeScreen extends StatefulWidget {
+  const BodyHomeScreen({super.key});
+
+  @override
+  State<BodyHomeScreen> createState() => _BodyHomeScreenState();
+}
+
+class _BodyHomeScreenState extends State<BodyHomeScreen> {
+
+  @override
+  void initState() {
+    context.read<HomeBloc>().add(HomeEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -63,8 +89,7 @@ class HomeScreen extends StatelessWidget {
             buttonText: 'استكمال المتطلبات',
             buttonColor: AppColors.primary,
             compact: true,
-            semanticsLabel:
-                'إجراء مطلوب على الطلب FR-2026-001259',
+            semanticsLabel: 'إجراء مطلوب على الطلب FR-2026-001259',
             illustration: ImageView(
               imagePath: AppAssets.addFile,
               width: AppWidth.w65,
@@ -80,7 +105,6 @@ class HomeScreen extends StatelessWidget {
           SizedBox(height: AppHeight.h20),
           const QuickActionsSection(),
           SizedBox(height: AppHeight.h90),
-
         ],
       ),
     ),
