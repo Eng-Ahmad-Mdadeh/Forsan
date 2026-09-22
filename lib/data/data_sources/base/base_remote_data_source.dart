@@ -110,17 +110,27 @@ class BaseRemoteDataSource<T> {
   Future<Either<AppException, BaseModel<T>?>> postData({
     String endpoint = '',
     Map<String, dynamic>? data,
-    bool isFormDate = false,
+    bool isFormData = false,
+    bool dataMayBeAtRoot = false,
     List<Map<String, dynamic>>? files,
     T Function(Object? json)? fromJsonT,
   }) async {
     try {
-      final response = await _networkHelper.post(baseEndpoint + endpoint, data: data, files: files, isFormDate: isFormDate);
+      final response = await _networkHelper.post(
+        baseEndpoint + endpoint,
+        data: data,
+        files: files,
+        isFormDate: isFormData,
+      );
       return response.fold(
         (e) => Left(e),
         (r) {
           if (fromJsonT == null) return const Right(null);
-          return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
+          return Right(
+            dataMayBeAtRoot
+                ? BaseModel<T>.fromJsonWithRootData(r.data!, fromJsonT)
+                : BaseModel<T>.fromJson(r.data!, fromJsonT),
+          );
         },
       );
     } on AppException catch (e, s) {
