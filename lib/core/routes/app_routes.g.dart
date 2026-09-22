@@ -9,7 +9,7 @@ part of 'app_routes.dart';
 List<RouteBase> get $appRoutes => [
   $splashRoute,
   $loginRoute,
-  $signupRoute,
+  $completeProfileRoute,
   $ordersDetailsRoute,
   $completeRequirementsRoute,
   $payRoute,
@@ -97,17 +97,18 @@ mixin $CheckCodeRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $signupRoute => GoRouteData.$route(
-  path: '/signup',
+RouteBase get $completeProfileRoute => GoRouteData.$route(
+  path: '/complete-profile',
   hasOverriddenOnExit: false,
-  factory: $SignupRoute._fromState,
+  factory: $CompleteProfileRoute._fromState,
 );
 
-mixin $SignupRoute on GoRouteData {
-  static SignupRoute _fromState(GoRouterState state) => const SignupRoute();
+mixin $CompleteProfileRoute on GoRouteData {
+  static CompleteProfileRoute _fromState(GoRouterState state) =>
+      const CompleteProfileRoute();
 
   @override
-  String get location => GoRouteData.$location('/signup');
+  String get location => GoRouteData.$location('/complete-profile');
 
   @override
   void go(BuildContext context) => context.go(location);

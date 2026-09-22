@@ -32,12 +32,12 @@ class _EditProfileFormState extends State<EditProfileForm> {
   @override
   Widget build(BuildContext context) {
     final countries = [
-      context.loc.signup_saudi_arabia,
-      context.loc.signup_kuwait,
+      context.loc.complete_profile_saudi_arabia,
+      context.loc.complete_profile_kuwait,
     ];
     final nationalities = [
-      context.loc.signup_saudi,
-      context.loc.signup_kuwaiti,
+      context.loc.complete_profile_saudi,
+      context.loc.complete_profile_kuwaiti,
     ];
 
     return Form(
@@ -55,7 +55,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                   CustomInputField(
                     controller: _fullNameController,
                     title: context.loc.full_name,
-                    hintText: context.loc.signup_enter_full_name,
+                    hintText: context.loc.complete_profile_enter_full_name,
                     textInputType: TextInputType.name,
                     backgroundColor: AppColors.white,
                     validator: (String? value) {
@@ -67,14 +67,14 @@ class _EditProfileFormState extends State<EditProfileForm> {
                   ),
                   EditProfileDropdown(
                     title: context.loc.country,
-                    hintText: context.loc.signup_select_hint,
+                    hintText: context.loc.complete_profile_select_hint,
                     items: countries,
                     onChanged: context.read<EditProfileCubit>().selectCountry,
                   ),
                   SizedBox(height: AppHeight.h18),
                   EditProfileDropdown(
-                    title: context.loc.signup_nationality,
-                    hintText: context.loc.signup_select_hint,
+                    title: context.loc.complete_profile_nationality,
+                    hintText: context.loc.complete_profile_select_hint,
                     items: nationalities,
                     onChanged:
                         context.read<EditProfileCubit>().selectNationality,
@@ -83,7 +83,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                   CustomInputField(
                     controller: _emailController,
                     title: context.loc.email,
-                    hintText: context.loc.signup_enter_email,
+                    hintText: context.loc.complete_profile_enter_email,
                     textInputType: TextInputType.emailAddress,
                     textDirection: TextDirection.ltr,
                     backgroundColor: AppColors.white,

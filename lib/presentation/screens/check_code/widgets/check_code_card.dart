@@ -40,7 +40,7 @@ class CheckCodeCard extends StatelessWidget {
         if (state is CheckCodeLoaded) {
           context.pop();
           if (context.mounted) {
-            SignupRoute().go(context);
+            CompleteProfileRoute().go(context);
           }
         }
         if (state is CheckCodeFailed && context.mounted) {

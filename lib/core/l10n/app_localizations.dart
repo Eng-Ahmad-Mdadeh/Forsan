@@ -1016,62 +1016,62 @@ abstract class AppLocalizations {
   /// **'Email'**
   String get email;
 
-  /// No description provided for @signup_account_information.
-  String get signup_account_information;
+  /// No description provided for @complete_profile_account_information.
+  String get complete_profile_account_information;
 
-  /// No description provided for @signup_enter_full_name.
-  String get signup_enter_full_name;
+  /// No description provided for @complete_profile_enter_full_name.
+  String get complete_profile_enter_full_name;
 
-  /// No description provided for @signup_city_name.
-  String get signup_city_name;
+  /// No description provided for @complete_profile_city_name.
+  String get complete_profile_city_name;
 
-  /// No description provided for @signup_enter_city_name.
-  String get signup_enter_city_name;
+  /// No description provided for @complete_profile_enter_city_name.
+  String get complete_profile_enter_city_name;
 
-  /// No description provided for @signup_father_name.
-  String get signup_father_name;
+  /// No description provided for @complete_profile_father_name.
+  String get complete_profile_father_name;
 
-  /// No description provided for @signup_enter_father_name.
-  String get signup_enter_father_name;
+  /// No description provided for @complete_profile_enter_father_name.
+  String get complete_profile_enter_father_name;
 
-  /// No description provided for @signup_passport_number.
-  String get signup_passport_number;
+  /// No description provided for @complete_profile_passport_number.
+  String get complete_profile_passport_number;
 
-  /// No description provided for @signup_enter_passport_number.
-  String get signup_enter_passport_number;
+  /// No description provided for @complete_profile_enter_passport_number.
+  String get complete_profile_enter_passport_number;
 
-  /// No description provided for @signup_whatsapp_number.
-  String get signup_whatsapp_number;
+  /// No description provided for @complete_profile_whatsapp_number.
+  String get complete_profile_whatsapp_number;
 
-  /// No description provided for @signup_enter_whatsapp_number.
-  String get signup_enter_whatsapp_number;
+  /// No description provided for @complete_profile_enter_whatsapp_number.
+  String get complete_profile_enter_whatsapp_number;
 
-  /// No description provided for @signup_national_id.
-  String get signup_national_id;
+  /// No description provided for @complete_profile_national_id.
+  String get complete_profile_national_id;
 
-  /// No description provided for @signup_enter_national_id.
-  String get signup_enter_national_id;
+  /// No description provided for @complete_profile_enter_national_id.
+  String get complete_profile_enter_national_id;
 
-  /// No description provided for @signup_nationality.
-  String get signup_nationality;
+  /// No description provided for @complete_profile_nationality.
+  String get complete_profile_nationality;
 
-  /// No description provided for @signup_select_hint.
-  String get signup_select_hint;
+  /// No description provided for @complete_profile_select_hint.
+  String get complete_profile_select_hint;
 
-  /// No description provided for @signup_enter_email.
-  String get signup_enter_email;
+  /// No description provided for @complete_profile_enter_email.
+  String get complete_profile_enter_email;
 
-  /// No description provided for @signup_saudi_arabia.
-  String get signup_saudi_arabia;
+  /// No description provided for @complete_profile_saudi_arabia.
+  String get complete_profile_saudi_arabia;
 
-  /// No description provided for @signup_kuwait.
-  String get signup_kuwait;
+  /// No description provided for @complete_profile_kuwait.
+  String get complete_profile_kuwait;
 
-  /// No description provided for @signup_saudi.
-  String get signup_saudi;
+  /// No description provided for @complete_profile_saudi.
+  String get complete_profile_saudi;
 
-  /// No description provided for @signup_kuwaiti.
-  String get signup_kuwaiti;
+  /// No description provided for @complete_profile_kuwaiti.
+  String get complete_profile_kuwaiti;
 
   /// No description provided for @gender.
   ///

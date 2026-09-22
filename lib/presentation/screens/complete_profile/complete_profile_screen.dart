@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
-import 'package:forsan/presentation/screens/signup/widgets/signup_form.dart';
+import 'package:forsan/presentation/screens/complete_profile/widgets/complete_profile_form.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 
-class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+class CompleteProfileScreen extends StatelessWidget {
+  const CompleteProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class SignupScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.white,
         appBar: CustomAppBar(
-          title: context.loc.signup_account_information,
+          title: context.loc.complete_profile_account_information,
           backgroundColor: AppColors.white,
           showBackButton: true,
           showScrolledUnderElevation: false,
@@ -34,7 +34,7 @@ class SignupScreen extends StatelessWidget {
               AppPaddingWidth.p16,
               AppPaddingHeight.p24,
             ),
-            child: const SignupForm(),
+            child: const CompleteProfileForm(),
           ),
         ),
       ),

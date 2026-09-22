@@ -8,6 +8,7 @@ import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/core/utils/enums/enum_utils.dart';
 import 'package:forsan/data/data_sources/auth/auth_storage_data_source.dart';
 import 'package:forsan/presentation/screens/check_code/check_code_screen.dart';
+import 'package:forsan/presentation/screens/complete_profile/complete_profile_screen.dart';
 import 'package:forsan/presentation/screens/contact_us/contact_us_screen.dart';
 import 'package:forsan/presentation/screens/create_order/create_new_order.dart';
 import 'package:forsan/presentation/screens/create_order/select_service_type.dart';
@@ -28,7 +29,6 @@ import 'package:forsan/presentation/screens/payment_methods/western_union/wester
 import 'package:forsan/presentation/screens/payments_details/payments_details_screen.dart';
 import 'package:forsan/presentation/screens/privacy_policy/privacy_policy_screen.dart';
 import 'package:forsan/presentation/screens/setting/setting_screen.dart';
-import 'package:forsan/presentation/screens/signup/signup_screen.dart';
 import 'package:forsan/presentation/screens/show_profile/show_profile_screen.dart';
 import 'package:forsan/presentation/screens/splash/splash_screen.dart';
 import 'package:forsan/presentation/screens/terms_and_conditions/terms_and_conditions_screen.dart';
@@ -62,7 +62,7 @@ Future<String?> _authGuard(BuildContext context, GoRouterState state) async {
   final publicLocations = <String>{
     const SplashRoute().location,
     const LoginRoute().location,
-    const SignupRoute().location,
+    const CompleteProfileRoute().location,
     const CheckCodeRoute().location,
   };
 
@@ -115,16 +115,18 @@ class CheckCodeRoute extends GoRouteData with $CheckCodeRoute {
   }
 }
 
-@TypedGoRoute<SignupRoute>(path: '/signup')
-class SignupRoute extends GoRouteData with $SignupRoute {
-  const SignupRoute();
+@TypedGoRoute<CompleteProfileRoute>(path: '/complete-profile')
+class CompleteProfileRoute extends GoRouteData with $CompleteProfileRoute {
+  const CompleteProfileRoute();
 
   @override
   CustomTransitionPage<void> buildPage(
     BuildContext context,
     GoRouterState state,
   ) {
-    return const SignupScreen().buildPage(pageAnimation: PageAnimation.fade);
+    return const CompleteProfileScreen().buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
   }
 }
 

@@ -488,61 +488,61 @@ class AppLocalizationsEn extends AppLocalizations {
   String get email => 'Email';
 
   @override
-  String get signup_account_information => 'Account information';
+  String get complete_profile_account_information => 'Account information';
 
   @override
-  String get signup_enter_full_name => 'Please enter your full name';
+  String get complete_profile_enter_full_name => 'Please enter your full name';
 
   @override
-  String get signup_city_name => 'City name';
+  String get complete_profile_city_name => 'City name';
 
   @override
-  String get signup_enter_city_name => 'Please enter the city name';
+  String get complete_profile_enter_city_name => 'Please enter the city name';
 
   @override
-  String get signup_father_name => "Father's name";
+  String get complete_profile_father_name => "Father's name";
 
   @override
-  String get signup_enter_father_name => "Please enter your father's name";
+  String get complete_profile_enter_father_name => "Please enter your father's name";
 
   @override
-  String get signup_passport_number => 'Passport number';
+  String get complete_profile_passport_number => 'Passport number';
 
   @override
-  String get signup_enter_passport_number => 'Please enter your passport number';
+  String get complete_profile_enter_passport_number => 'Please enter your passport number';
 
   @override
-  String get signup_whatsapp_number => 'WhatsApp number';
+  String get complete_profile_whatsapp_number => 'WhatsApp number';
 
   @override
-  String get signup_enter_whatsapp_number => 'Please enter your WhatsApp number';
+  String get complete_profile_enter_whatsapp_number => 'Please enter your WhatsApp number';
 
   @override
-  String get signup_national_id => 'National ID';
+  String get complete_profile_national_id => 'National ID';
 
   @override
-  String get signup_enter_national_id => 'Please enter your national ID';
+  String get complete_profile_enter_national_id => 'Please enter your national ID';
 
   @override
-  String get signup_nationality => 'Nationality';
+  String get complete_profile_nationality => 'Nationality';
 
   @override
-  String get signup_select_hint => 'Please select';
+  String get complete_profile_select_hint => 'Please select';
 
   @override
-  String get signup_enter_email => 'Please enter your email';
+  String get complete_profile_enter_email => 'Please enter your email';
 
   @override
-  String get signup_saudi_arabia => 'Saudi Arabia';
+  String get complete_profile_saudi_arabia => 'Saudi Arabia';
 
   @override
-  String get signup_kuwait => 'Kuwait';
+  String get complete_profile_kuwait => 'Kuwait';
 
   @override
-  String get signup_saudi => 'Saudi';
+  String get complete_profile_saudi => 'Saudi';
 
   @override
-  String get signup_kuwaiti => 'Kuwaiti';
+  String get complete_profile_kuwaiti => 'Kuwaiti';
 
   @override
   String get gender => 'Gender';

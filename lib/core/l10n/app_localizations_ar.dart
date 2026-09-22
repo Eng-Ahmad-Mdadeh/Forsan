@@ -486,61 +486,61 @@ class AppLocalizationsAr extends AppLocalizations {
   String get email => 'البريد الإلكتروني';
 
   @override
-  String get signup_account_information => 'معلومات الحساب';
+  String get complete_profile_account_information => 'معلومات الحساب';
 
   @override
-  String get signup_enter_full_name => 'يرجى إدخال الاسم الكامل';
+  String get complete_profile_enter_full_name => 'يرجى إدخال الاسم الكامل';
 
   @override
-  String get signup_city_name => 'اسم المدينة';
+  String get complete_profile_city_name => 'اسم المدينة';
 
   @override
-  String get signup_enter_city_name => 'يرجى إدخال اسم المدينة';
+  String get complete_profile_enter_city_name => 'يرجى إدخال اسم المدينة';
 
   @override
-  String get signup_father_name => 'اسم الأب';
+  String get complete_profile_father_name => 'اسم الأب';
 
   @override
-  String get signup_enter_father_name => 'يرجى إدخال اسم الأب';
+  String get complete_profile_enter_father_name => 'يرجى إدخال اسم الأب';
 
   @override
-  String get signup_passport_number => 'رقم جواز السفر';
+  String get complete_profile_passport_number => 'رقم جواز السفر';
 
   @override
-  String get signup_enter_passport_number => 'يرجى إدخال رقم جواز السفر';
+  String get complete_profile_enter_passport_number => 'يرجى إدخال رقم جواز السفر';
 
   @override
-  String get signup_whatsapp_number => 'رقم الواتس';
+  String get complete_profile_whatsapp_number => 'رقم الواتس';
 
   @override
-  String get signup_enter_whatsapp_number => 'يرجى إدخال رقم الواتس';
+  String get complete_profile_enter_whatsapp_number => 'يرجى إدخال رقم الواتس';
 
   @override
-  String get signup_national_id => 'الرقم الوطني';
+  String get complete_profile_national_id => 'الرقم الوطني';
 
   @override
-  String get signup_enter_national_id => 'يرجى إدخال الرقم الوطني';
+  String get complete_profile_enter_national_id => 'يرجى إدخال الرقم الوطني';
 
   @override
-  String get signup_nationality => 'الجنسية';
+  String get complete_profile_nationality => 'الجنسية';
 
   @override
-  String get signup_select_hint => 'يرجى الاختيار';
+  String get complete_profile_select_hint => 'يرجى الاختيار';
 
   @override
-  String get signup_enter_email => 'يرجى إدخال البريد الإلكتروني';
+  String get complete_profile_enter_email => 'يرجى إدخال البريد الإلكتروني';
 
   @override
-  String get signup_saudi_arabia => 'المملكة العربية السعودية';
+  String get complete_profile_saudi_arabia => 'المملكة العربية السعودية';
 
   @override
-  String get signup_kuwait => 'الكويت';
+  String get complete_profile_kuwait => 'الكويت';
 
   @override
-  String get signup_saudi => 'سعودي';
+  String get complete_profile_saudi => 'سعودي';
 
   @override
-  String get signup_kuwaiti => 'كويتي';
+  String get complete_profile_kuwaiti => 'كويتي';
 
   @override
   String get gender => 'الجنس';

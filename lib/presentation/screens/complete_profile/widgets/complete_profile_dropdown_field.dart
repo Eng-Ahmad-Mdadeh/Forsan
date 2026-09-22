@@ -5,8 +5,8 @@ import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 
-class SignupDropdownField extends StatelessWidget {
-  const SignupDropdownField({
+class CompleteProfileDropdownField extends StatelessWidget {
+  const CompleteProfileDropdownField({
     super.key,
     required this.title,
     required this.hint,
