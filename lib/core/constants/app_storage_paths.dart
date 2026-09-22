@@ -11,6 +11,7 @@ class AppStoragePaths {
   //#endregion
 
   //#region Lang
-  static const String lang = 'lang';
+  static const String settingsBox = 'settings';
+  static const String locale = 'locale';
   //#endregion
 }

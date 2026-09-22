@@ -14,7 +14,9 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../constants/api_endpoints.dart';
+import '../constants/app_storage_paths.dart';
 import '../exceptions/api_exception.dart';
+import 'local_storage_helper.dart';
 import '../utils/network_utils.dart';
 import 'dart:convert';
 
@@ -86,6 +88,19 @@ class NetworkHelper {
     return packageInfo.version;
   }
 
+  /// Fetches the currently selected language from local storage.
+  Future<String> getLanguage() async {
+    final result = await locator<LocalStorageHelper>().getValue(
+      AppStoragePaths.settingsBox,
+      AppStoragePaths.locale,
+    );
+
+    return result.fold((_) => 'ar', (value) {
+      final languageCode = value?.toString();
+      return languageCode == 'en' || languageCode == 'ar' ? languageCode! : 'ar';
+    });
+  }
+
   /// Executes a GET request with optional query parameters.
   Future<Either<ApiException, Response<Map<String, dynamic>>>> get(
     String url, {
@@ -94,13 +109,16 @@ class NetworkHelper {
   }) async {
     final token = await getToken();
     final version = await getVersion();
+    final language = await getLanguage();
 
     return _performRequest(() {
       return _dio.get(
         url,
         data: data,
         queryParameters: queryParams,
-        options: Options(headers: _buildHeaders(token, version)),
+        options: Options(
+          headers: _buildHeaders(token, version, language: language),
+        ),
       );
     });
   }
@@ -114,13 +132,21 @@ class NetworkHelper {
   }) async {
     final token = await getToken();
     final version = await getVersion();
+    final language = await getLanguage();
 
     final formData = isFormDate ? await _buildFormData(data, files) : data;
 
     return _performRequest(() {
       return _dio.post(
         url,
-        options: Options(headers: _buildHeaders(token, version, isMultipart: isFormDate)),
+        options: Options(
+          headers: _buildHeaders(
+            token,
+            version,
+            language: language,
+            isMultipart: isFormDate,
+          ),
+        ),
         data: formData,
       );
     });
@@ -134,13 +160,21 @@ class NetworkHelper {
   }) async {
     final token = await getToken();
     final version = await getVersion();
+    final language = await getLanguage();
 
     final formData = isFormDate ? await _buildFormData(data, files) : data;
 
     return _performRequest(() {
       return _dio.put(
         url,
-        options: Options(headers: _buildHeaders(token, version, isMultipart: isFormDate)),
+        options: Options(
+          headers: _buildHeaders(
+            token,
+            version,
+            language: language,
+            isMultipart: isFormDate,
+          ),
+        ),
         data: formData,
       );
     });
@@ -156,13 +190,21 @@ class NetworkHelper {
   }) async {
     final token = await getToken();
     final version = await getVersion();
+    final language = await getLanguage();
 
     final payload = isFormData ? await _buildFormData(data, files) : data;
 
     return _performRequest(() {
       return _dio.patch(
         url,
-        options: Options(headers: _buildHeaders(token, version, isMultipart: isFormData)),
+        options: Options(
+          headers: _buildHeaders(
+            token,
+            version,
+            language: language,
+            isMultipart: isFormData,
+          ),
+        ),
         data: payload,
         queryParameters: queryParams,
       );
@@ -210,6 +252,7 @@ class NetworkHelper {
   }) async {
     final token = await getToken();
     final version = await getVersion();
+    final language = await getLanguage();
 
     final payload = isFormData ? await _buildFormData(data, null) : data;
 
@@ -217,7 +260,14 @@ class NetworkHelper {
       return _dio.delete(
         url,
 
-        options: Options(headers: _buildHeaders(token, version, isMultipart: isFormData)),
+        options: Options(
+          headers: _buildHeaders(
+            token,
+            version,
+            language: language,
+            isMultipart: isFormData,
+          ),
+        ),
         data: payload,
         queryParameters: queryParams,
       );
@@ -373,9 +423,15 @@ class NetworkHelper {
   }
 
   /// Builds headers for requests.
-  Map<String, String> _buildHeaders(String? token, String? version, {bool isMultipart = false}) {
+  Map<String, String> _buildHeaders(
+    String? token,
+    String? version, {
+    required String language,
+    bool isMultipart = false,
+  }) {
     final headers = {
       'Accept': 'application/json',
+      'Accept-Language': language,
       if (isMultipart) 'Content-Type': 'multipart/form-data',
       if ((token ?? '').isNotEmpty) 'Authorization': 'Bearer $token',
       if ((version ?? '').isNotEmpty) 'version': '$version',
