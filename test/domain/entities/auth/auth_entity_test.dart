@@ -15,4 +15,16 @@ void main() {
       'challengeId': 'login-challenge',
     });
   });
+
+  test('includes the selected message type in the login request', () {
+    const entity = AuthEntity(
+      phone: '+963900000000',
+      typeMessage: 'whatsapp',
+    );
+
+    expect(entity.toJson(), {
+      'phone': '+963900000000',
+      'type_message': 'whatsapp',
+    });
+  });
 }

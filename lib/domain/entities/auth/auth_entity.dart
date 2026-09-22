@@ -48,7 +48,7 @@ class AuthEntity extends Equatable {
       if (nationality != null) 'nationality': nationality,
       if (whatsapp != null) 'whatsapp': whatsapp,
       if (nationalId != null) 'nationalId': nationalId,
-      //if (typeMessage != null) 'type_message': typeMessage,
+      if (typeMessage != null) 'type_message': typeMessage,
       if (code != null) 'code': code,
       if (challengeId != null) 'challengeId': challengeId,
       // if (code != null) 'code': "4441",

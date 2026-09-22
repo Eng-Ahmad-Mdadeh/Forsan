@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginCubitState> {
-  LoginCubit() : super(const LoginCubitState(user: null));
+  LoginCubit() : super(const LoginCubitState(user: null, messageType: 'sms'));
 
   void phoneChanged(String phone) => emit(
         state.copyWith(
@@ -19,5 +19,7 @@ class LoginCubit extends Cubit<LoginCubitState> {
         ),
       );
 
-
+  void messageTypeChanged(String messageType) => emit(
+        state.copyWith(messageType: messageType),
+      );
 }
