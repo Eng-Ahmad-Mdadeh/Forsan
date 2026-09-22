@@ -4,22 +4,16 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
-import 'package:forsan/presentation/cubit/setting/setting_cubit.dart';
-import 'package:forsan/presentation/cubit/setting/setting_state.dart';
+import 'package:forsan/presentation/cubit/language/language_cubit.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 
 void showLanguageSheet(BuildContext context) {
-  final settingCubit = context.read<SettingCubit>();
-
   showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     barrierColor: Colors.black.withValues(alpha: .55),
-    builder: (context) => BlocProvider.value(
-      value: settingCubit,
-      child: const _LanguageSheet(),
-    ),
+    builder: (context) => const _LanguageSheet(),
   );
 }
 
@@ -52,24 +46,24 @@ class _LanguageSheet extends StatelessWidget {
                   fontWeight: AppFontWeight.bold,
                 ),
                 SizedBox(height: AppHeight.h20),
-                BlocBuilder<SettingCubit, SettingState>(
-                  builder: (context, state) => Column(
+                BlocBuilder<LanguageCubit, Locale>(
+                  builder: (context, locale) => Column(
                     children: [
                       _LanguageOption(
                         label: 'العربية',
                         flag: '🇸🇦',
-                        selected: state.language == SettingLanguage.arabic,
-                        onTap: () => context.read<SettingCubit>().selectLanguage(
-                          SettingLanguage.arabic,
+                        selected: locale.languageCode == 'ar',
+                        onTap: () => context.read<LanguageCubit>().setLocale(
+                          const Locale('ar'),
                         ),
                       ),
                       SizedBox(height: AppHeight.h11),
                       _LanguageOption(
                         label: 'الانجليزية',
                         flag: '🇬🇧',
-                        selected: state.language == SettingLanguage.english,
-                        onTap: () => context.read<SettingCubit>().selectLanguage(
-                          SettingLanguage.english,
+                        selected: locale.languageCode == 'en',
+                        onTap: () => context.read<LanguageCubit>().setLocale(
+                          const Locale('en'),
                         ),
                       ),
                     ],

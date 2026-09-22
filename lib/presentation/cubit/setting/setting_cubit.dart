@@ -54,12 +54,6 @@ class SettingCubit extends Cubit<SettingState> {
     }
   }
 
-  void selectLanguage(SettingLanguage language) {
-    if (state.language == language) return;
-
-    emit(state.copyWith(language: language));
-  }
-
   Future<void> _loadBiometricPreference() async {
     final isEnabled = await _biometricLockService.isEnabled();
     if (isClosed) return;
