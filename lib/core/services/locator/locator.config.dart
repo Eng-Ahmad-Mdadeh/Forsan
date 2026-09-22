@@ -25,6 +25,7 @@ import '../../../domain/usecases/auth/login_usecase.dart' as _i895;
 import '../../../domain/usecases/auth/logout_usecase.dart' as _i596;
 import '../../../domain/usecases/auth/resend_code_usecase.dart' as _i968;
 import '../../../domain/usecases/i_use_case.dart' as _i795;
+import '../../helper/device_info_helper.dart' as _i1010;
 import '../../helper/local_storage_helper.dart' as _i218;
 import '../../helper/network_helper.dart' as _i779;
 
@@ -37,7 +38,12 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.factory<_i218.LocalStorageHelper>(() => _i218.LocalStorageHelper());
     gh.factory<_i779.NetworkHelper>(() => _i779.NetworkHelper());
-    gh.factory<_i444.AuthRemoteDataSource>(() => _i444.AuthRemoteDataSource());
+    gh.lazySingleton<_i1010.DeviceInfoHelper>(
+      () => _i1010.DeviceInfoHelper(),
+    );
+    gh.factory<_i444.AuthRemoteDataSource>(
+      () => _i444.AuthRemoteDataSource(gh<_i1010.DeviceInfoHelper>()),
+    );
     gh.factory<_i244.AuthStorageDataSource>(
       () => _i244.AuthStorageDataSource(),
     );
