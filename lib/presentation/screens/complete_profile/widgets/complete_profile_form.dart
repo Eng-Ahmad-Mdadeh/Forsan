@@ -6,6 +6,7 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/core/utils/enums/enum_utils.dart';
+import 'package:forsan/domain/entities/auth/auth_entity.dart';
 import 'package:forsan/presentation/bloc/auth/complete_profile/complete_profile_bloc.dart';
 import 'package:forsan/presentation/cubit/auth/complete_profile/complete_profile_cubit.dart';
 import 'package:forsan/presentation/screens/complete_profile/widgets/complete_profile_dropdown_field.dart';
@@ -43,10 +44,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           showDialog<void>(
             context: context,
             barrierDismissible: false,
-            builder: (_) => const PopScope(
-              canPop: false,
-              child: LoadingWidget(0),
-            ),
+            builder: (_) =>
+                const PopScope(canPop: false, child: LoadingWidget(0)),
           );
         } else if (state is CompleteProfileFailed) {
           Navigator.of(context, rootNavigator: true).pop();
@@ -163,6 +162,15 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     }
 
     final user = context.read<CompleteProfileCubit>().state.user;
-    context.read<CompleteProfileBloc>().add(CompleteProfileEvent(user));
+    context.read<CompleteProfileBloc>().add(
+      CompleteProfileEvent(
+        AuthEntity(
+          fullName: user.fullName,
+          email: user.email,
+          country: user.country,
+          nationality: user.nationality,
+        ),
+      ),
+    );
   }
 }

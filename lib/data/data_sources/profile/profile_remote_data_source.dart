@@ -16,8 +16,8 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<ProfileModel> {
   Future<Either<AppException, BaseModel<ProfileModel>?>> upDateProfile(
       AuthEntity data,
       ) {
-    return postData(
-      endpoint: '${ApiEndpoints.user}${ApiEndpoints.upDateProfile}',
+    return patchData(
+      endpoint: ApiEndpoints.upDateProfile,
       fromJsonT: (json) => ProfileModel.fromJson(json as Map<String, dynamic>),
       data: data.toJson(),
       isFormData: false,

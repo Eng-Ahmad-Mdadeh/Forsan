@@ -24,7 +24,7 @@ class ApiEndpoints {
   //#endregion
 
   //#region Profile
-  static const String upDateProfile = '/profile';
+  static const String upDateProfile = '/me';
   static const String banners = '/banners';
   static const String properties = '/properties';
   static const String bankAccounts = '/platform-bank-accounts';
