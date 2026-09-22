@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/bloc/auth/complete_profile/complete_profile_bloc.dart';
 import 'package:forsan/presentation/cubit/auth/complete_profile/complete_profile_cubit.dart';
 import 'package:forsan/presentation/screens/complete_profile/widgets/complete_profile_form.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
@@ -17,6 +18,9 @@ class CompleteProfileScreen extends StatelessWidget {
       providers: [
         BlocProvider<CompleteProfileCubit>(
           create: (context) => CompleteProfileCubit(),
+        ),
+        BlocProvider<CompleteProfileBloc>(
+          create: (context) => CompleteProfileBloc(),
         ),
       ],
       child: BodyCompleteProfileScreen(),
