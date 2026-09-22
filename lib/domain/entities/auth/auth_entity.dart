@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
-import 'package:injectable/injectable.dart';
+import 'package:forsan/core/utils/enums/enum_utils.dart';
 
 class AuthEntity extends Equatable {
   final String? phone;
   final String? fullName;
   final String? email;
-  final String? country;
+  final CountryCode? country;
   final String? city;
   final String? fatherName;
   final String? passportNumber;
-  final String? nationality;
+  final CountryCode? nationality;
   final String? whatsapp;
   final String? nationalId;
   final String? typeMessage;
@@ -41,11 +41,11 @@ class AuthEntity extends Equatable {
       if (phone != null) 'phone': phone,
       if (fullName != null) 'fullName': fullName,
       if (email != null) 'email': email,
-      if (country != null) 'country': country,
+      if (country != null) 'country': country!.apiValue,
       if (city != null) 'city': city,
       if (fatherName != null) 'fatherName': fatherName,
       if (passportNumber != null) 'passportNo': passportNumber,
-      if (nationality != null) 'nationality': nationality,
+      if (nationality != null) 'nationality': nationality!.apiValue,
       if (whatsapp != null) 'whatsapp': whatsapp,
       if (nationalId != null) 'nationalId': nationalId,
       if (typeMessage != null) 'channel': typeMessage,
