@@ -21,11 +21,11 @@ class ApiEndpoints {
 
   //#endregion
 
-  //#endregion
 
   //#region Profile
   static const String upDateProfile = '/me';
   static const String banners = '/banners';
+  static const String home = '/home';
   static const String properties = '/properties';
   static const String bankAccounts = '/platform-bank-accounts';
   static const String walletTopUpRequests = '/wallet-top-up-requests';
