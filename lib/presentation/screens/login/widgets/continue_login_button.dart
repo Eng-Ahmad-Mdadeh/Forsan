@@ -28,13 +28,16 @@ class ContinueLoginButton extends StatelessWidget {
 
             final phone = cubitState.user?.phone ?? '';
             final dialCode = context.read<CodeCheckCubit>().state.dialCode;
-            context.read<LoginCubit>().phoneChanged(phone);
+            context.read<CodeCheckCubit>().setType(
+              cubitState.messageType,
+              dialCode,
+            );
             if (context.mounted) {
               context.read<LoginBloc>().add(
                 LoginEvent(
                   AuthEntity(
                     phone: "$dialCode${phone.removeZero}",
-                    typeMessage: 'whatsapp',
+                    typeMessage: cubitState.messageType,
                   ),
                 ),
               );

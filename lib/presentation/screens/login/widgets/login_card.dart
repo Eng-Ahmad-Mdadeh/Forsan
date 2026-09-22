@@ -9,6 +9,7 @@ import 'package:forsan/presentation/bloc/auth/login/login_bloc.dart';
 import 'package:forsan/presentation/cubit/code_check/code_check_cubit.dart';
 import 'package:forsan/presentation/screens/login/widgets/auth_terms_footer.dart';
 import 'package:forsan/presentation/screens/login/widgets/continue_login_button.dart';
+import 'package:forsan/presentation/screens/login/widgets/login_message_type_actions.dart';
 import 'package:forsan/presentation/screens/login/widgets/phone_number_section.dart';
 import 'package:forsan/presentation/widgets/custom_snack_bar.dart';
 import 'package:forsan/presentation/widgets/loading_widget.dart';
@@ -71,7 +72,9 @@ class LoginCard extends StatelessWidget {
               const _WelcomeMessage(),
               SizedBox(height: AppHeight.h42),
               const PhoneNumberSection(),
-              SizedBox(height: AppHeight.h40),
+              SizedBox(height: AppHeight.h24),
+              const LoginMessageTypeActions(),
+              SizedBox(height: AppHeight.h24),
               ContinueLoginButton(loginFormKey: loginFormKey),
               SizedBox(height: AppHeight.h50),
               SectionTitle(

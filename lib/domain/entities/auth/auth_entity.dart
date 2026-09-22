@@ -51,7 +51,6 @@ class AuthEntity extends Equatable {
       if (typeMessage != null) 'channel': typeMessage,
       if (code != null) 'code': code,
       if (challengeId != null) 'challengeId': challengeId,
-      // if (code != null) 'code': "4441",
       if (fcm != null) 'fcm_token': fcm,
     };
   }
