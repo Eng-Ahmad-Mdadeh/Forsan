@@ -15,11 +15,9 @@ class HomeRemoteDataSource extends BaseRemoteDataSource<HomeModel> {
   HomeRemoteDataSource() : super(ApiEndpoints.user);
 
   Future<Either<AppException, BaseModel<HomeModel>?>> getHome() {
-    return patchData(
+    return fetchData(
       endpoint: ApiEndpoints.home,
       fromJsonT: (json) => HomeModel.fromJson(json as Map<String, dynamic>),
-      data: data.toJson(),
-      isFormData: false,
     );
   }
 }
