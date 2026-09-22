@@ -33,6 +33,7 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
       fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
       data: {...data.toJson(), 'device': deviceData},
       isFormData: false,
+      dataMayBeAtRoot: true,
     );
   }
 
