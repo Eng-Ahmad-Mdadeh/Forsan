@@ -10,7 +10,9 @@ import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
 
 class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
-  const HomeHeader({super.key});
+  const HomeHeader({super.key, this.greetingName});
+
+  final String? greetingName;
 
   @override
   Size get preferredSize => Size.fromHeight(AppHeight.h98);
@@ -54,7 +56,7 @@ class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SectionTitle(
-                    text: 'مرحباً سيد محمد',
+                    text: 'مرحباً ${greetingName ?? 'سيد محمد'}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     color: AppColors.mainText,

@@ -54,6 +54,8 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
         );
       }
 
+      final homeData = state is HomeLoaded ? state.homeModel?.data : null;
+
       return Skeletonizer(
         enableSwitchAnimation: true,
         effect: ShimmerEffect(
@@ -65,7 +67,7 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
         ),
         enabled: state is HomeLoading,
         child: Scaffold(
-          appBar: const HomeHeader(),
+          appBar: HomeHeader(greetingName: homeData?.greetingName),
           body: SafeArea(
             child: ListView(
               padding: EdgeInsets.fromLTRB(
