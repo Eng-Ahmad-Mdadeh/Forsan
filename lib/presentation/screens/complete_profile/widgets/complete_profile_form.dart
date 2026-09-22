@@ -3,6 +3,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/core/routes/app_routes.dart';
+import 'package:forsan/core/utils/enums/enum_utils.dart';
 import 'package:forsan/presentation/screens/complete_profile/widgets/complete_profile_dropdown_field.dart';
 import 'package:forsan/presentation/widgets/custom_submit_button.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
@@ -24,8 +25,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final _nationalIdController = TextEditingController();
   final _emailController = TextEditingController();
 
-  String? _selectedCountry;
-  String? _selectedNationality;
+  CountryCode? _selectedCountry;
+  CountryCode? _selectedNationality;
 
   @override
   void dispose() {
@@ -41,14 +42,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   @override
   Widget build(BuildContext context) {
-    final countries = [
-      context.loc.complete_profile_saudi_arabia,
-      context.loc.complete_profile_kuwait,
-    ];
-    final nationalities = [
-      context.loc.complete_profile_saudi,
-      context.loc.complete_profile_kuwaiti,
-    ];
+    const countries = CountryCode.values;
 
     return Form(
       key: _formKey,
@@ -82,7 +76,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                   CompleteProfileDropdownField(
                     title: context.loc.complete_profile_nationality,
                     hint: context.loc.complete_profile_select_hint,
-                    items: nationalities,
+                    items: countries,
                     onChanged: (value) =>
                         setState(() => _selectedNationality = value),
                   ),

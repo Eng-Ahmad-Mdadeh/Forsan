@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/utils/enums/enum_utils.dart';
 import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 
@@ -16,11 +17,16 @@ class CompleteProfileDropdownField extends StatelessWidget {
 
   final String title;
   final String hint;
-  final List<String> items;
-  final ValueChanged<String?> onChanged;
+  final List<CountryCode> items;
+  final ValueChanged<CountryCode?> onChanged;
 
   @override
   Widget build(BuildContext context) {
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    final itemNames = items
+        .map((country) => country.displayName(isArabic: isArabic))
+        .toList();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -33,7 +39,7 @@ class CompleteProfileDropdownField extends StatelessWidget {
         ),
         SizedBox(height: AppHeight.h4),
         CustomDropDownWidget(
-          items: items,
+          items: itemNames,
           isStringList: true,
           hintText: hint,
           color: AppColors.white,
@@ -42,7 +48,18 @@ class CompleteProfileDropdownField extends StatelessWidget {
           closedBorder: const Border.fromBorderSide(
             BorderSide(color: AppColors.greyDivider, width: .7),
           ),
-          onChanged: (value) => onChanged(value as String?),
+          onChanged: (value) {
+            final selectedName = value as String?;
+            onChanged(
+              selectedName == null
+                  ? null
+                  : items.firstWhere(
+                      (country) =>
+                          country.displayName(isArabic: isArabic) ==
+                          selectedName,
+                    ),
+            );
+          },
         ),
       ],
     );
