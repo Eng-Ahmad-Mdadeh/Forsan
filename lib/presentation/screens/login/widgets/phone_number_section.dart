@@ -109,7 +109,7 @@ class _PhoneNumberSectionState extends State<PhoneNumberSection> {
       ),
       onSelect: (country) {
         setState(() => _selectedCountry = country);
-        context.read<CodeCheckCubit>().setType('sms', '+${country.phoneCode}');
+        context.read<CodeCheckCubit>().setType('whatsapp', '+${country.phoneCode}');
       },
     );
   }

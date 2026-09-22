@@ -31,18 +31,26 @@ class CodeCheckState extends Equatable {
 
 class CodeCheckCubit extends Cubit<CodeCheckState> {
   CodeCheckCubit()
-    : super(CodeCheckState(endDate: DateTime.now().add(const Duration(minutes: 2))));
+    : super(
+        CodeCheckState(endDate: DateTime.now().add(const Duration(minutes: 2))),
+      );
 
   bool get done => !state.endDate.isAfter(DateTime.now());
+
   bool get lessThan5 => state.endDate.difference(DateTime.now()).inSeconds < 5;
 
   void setPhone(String phone) => emit(_copy(phone: phone));
+
   void setChallengeId(String? challengeId) =>
       emit(_copy(challengeId: challengeId, updateChallengeId: true));
+
   void setType(String type, String dialCode) =>
       emit(_copy(type: type, dialCode: dialCode));
+
   void endTime() => emit(_copy(endDate: DateTime.now()));
-  void resetTime() => emit(_copy(endDate: DateTime.now().add(const Duration(minutes: 2))));
+
+  void resetTime() =>
+      emit(_copy(endDate: DateTime.now().add(const Duration(minutes: 2))));
 
   CodeCheckState _copy({
     String? phone,
@@ -52,11 +60,11 @@ class CodeCheckCubit extends Cubit<CodeCheckState> {
     String? type,
     DateTime? endDate,
   }) => CodeCheckState(
-        phone: phone ?? state.phone,
-        dialCode: dialCode ?? state.dialCode,
-        challengeId: updateChallengeId ? challengeId : state.challengeId,
-        rememberMe: state.rememberMe,
-        type: type ?? state.type,
-        endDate: endDate ?? state.endDate,
-      );
+    phone: phone ?? state.phone,
+    dialCode: dialCode ?? state.dialCode,
+    challengeId: updateChallengeId ? challengeId : state.challengeId,
+    rememberMe: state.rememberMe,
+    type: type ?? state.type,
+    endDate: endDate ?? state.endDate,
+  );
 }
