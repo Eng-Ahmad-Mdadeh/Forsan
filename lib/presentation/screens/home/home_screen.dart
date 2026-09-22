@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/presentation/bloc/home/home_bloc.dart';
 import 'package:forsan/presentation/widgets/image_view.dart';
 import 'package:forsan/presentation/widgets/required_action_card.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../core/resources/app_assets.dart';
 import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/app_fonts.dart';
 import '../../../core/resources/app_values.dart';
 import '../../../core/routes/app_routes.dart';
+import '../../widgets/failure_screen.dart';
 import 'widgets/home_header.dart';
 import 'widgets/home_statistics_section.dart';
 import 'widgets/latest_order_card.dart';
@@ -33,7 +35,6 @@ class BodyHomeScreen extends StatefulWidget {
 }
 
 class _BodyHomeScreenState extends State<BodyHomeScreen> {
-
   @override
   void initState() {
     context.read<HomeBloc>().add(HomeEvent());
@@ -41,72 +42,98 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: const HomeHeader(),
-    body: SafeArea(
-      child: ListView(
-        padding: EdgeInsets.fromLTRB(
-          AppPaddingWidth.p16,
-          AppPaddingHeight.p20,
-          AppPaddingWidth.p16,
-          AppPaddingHeight.p24,
-        ),
-        children: [
-          Semantics(
-            image: true,
-            label: 'الصورة الرئيسية',
-            child: ImageView(
-              imagePath: AppAssets.appBanner,
-              key: const Key('home-main-image'),
-              width: double.infinity,
-              fit: BoxFit.fitWidth,
-            ),
+  Widget build(BuildContext context) => BlocBuilder<HomeBloc, IHomeState>(
+    builder: (context, state) {
+      if (state is HomeFailed) {
+        return Scaffold(
+          appBar: const HomeHeader(),
+          body: FailureScreen(
+            errorMessage: state.message,
+            onPressed: () => context.read<HomeBloc>().add(HomeEvent()),
           ),
-          SizedBox(height: AppHeight.h16),
-          RequiredActionCard(
-            titleSpan: TextSpan(
+        );
+      }
+
+      return Skeletonizer(
+        enableSwitchAnimation: true,
+        effect: ShimmerEffect(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          begin: AlignmentDirectional.centerStart,
+          end: AlignmentDirectional.centerEnd,
+          duration: const Duration(milliseconds: 500),
+        ),
+        enabled: state is HomeLoading,
+        child: Scaffold(
+          appBar: const HomeHeader(),
+          body: SafeArea(
+            child: ListView(
+              padding: EdgeInsets.fromLTRB(
+                AppPaddingWidth.p16,
+                AppPaddingHeight.p20,
+                AppPaddingWidth.p16,
+                AppPaddingHeight.p24,
+              ),
               children: [
-                TextSpan(
-                  text: 'إجراء مطلوب على الطلب ',
-                  style: TextStyle(
-                    color: AppColors.mainText,
-                    fontSize: AppFontSize.s12,
-                    fontWeight: AppFontWeight.regular,
+                Semantics(
+                  image: true,
+                  label: 'الصورة الرئيسية',
+                  child: ImageView(
+                    imagePath: AppAssets.appBanner,
+                    key: const Key('home-main-image'),
+                    width: double.infinity,
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
-                TextSpan(
-                  text: 'FR-2026-001259',
-                  style: TextStyle(
-                    color: AppColors.mainText,
-                    fontSize: AppFontSize.s12,
-                    fontWeight: AppFontWeight.bold,
+                SizedBox(height: AppHeight.h16),
+                RequiredActionCard(
+                  titleSpan: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'إجراء مطلوب على الطلب ',
+                        style: TextStyle(
+                          color: AppColors.mainText,
+                          fontSize: AppFontSize.s12,
+                          fontWeight: AppFontWeight.regular,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'FR-2026-001259',
+                        style: TextStyle(
+                          color: AppColors.mainText,
+                          fontSize: AppFontSize.s12,
+                          fontWeight: AppFontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
+                  message:
+                      'يرجى إرفاق المستندات المطلوبة لاستكمال\nمراجعة طلب تأسيس الشركة.',
+                  buttonText: 'استكمال المتطلبات',
+                  buttonColor: AppColors.primary,
+                  compact: true,
+                  semanticsLabel: 'إجراء مطلوب على الطلب FR-2026-001259',
+                  illustration: ImageView(
+                    imagePath: AppAssets.addFile,
+                    width: AppWidth.w65,
+                    fit: BoxFit.contain,
+                    excludeFromSemantics: true,
+                  ),
+                  onPressed: () =>
+                      const CompleteRequirementsRoute().push(context),
                 ),
+                SizedBox(height: AppHeight.h20),
+                const HomeStatisticsSection(),
+                SizedBox(height: AppHeight.h20),
+                const LatestOrderCard(),
+                SizedBox(height: AppHeight.h20),
+                const QuickActionsSection(),
+                SizedBox(height: AppHeight.h90),
               ],
             ),
-            message:
-                'يرجى إرفاق المستندات المطلوبة لاستكمال\nمراجعة طلب تأسيس الشركة.',
-            buttonText: 'استكمال المتطلبات',
-            buttonColor: AppColors.primary,
-            compact: true,
-            semanticsLabel: 'إجراء مطلوب على الطلب FR-2026-001259',
-            illustration: ImageView(
-              imagePath: AppAssets.addFile,
-              width: AppWidth.w65,
-              fit: BoxFit.contain,
-              excludeFromSemantics: true,
-            ),
-            onPressed: () => const CompleteRequirementsRoute().push(context),
           ),
-          SizedBox(height: AppHeight.h20),
-          const HomeStatisticsSection(),
-          SizedBox(height: AppHeight.h20),
-          const LatestOrderCard(),
-          SizedBox(height: AppHeight.h20),
-          const QuickActionsSection(),
-          SizedBox(height: AppHeight.h90),
-        ],
-      ),
-    ),
+        ),
+      );
+    },
   );
 }
