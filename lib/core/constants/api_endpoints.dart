@@ -3,7 +3,7 @@ class ApiEndpoints {
 
   //#region Base Url
   static const String baseUrl = 'https://api.forsan.sy/api';
-  static const String user = '/mobile/auth';
+  static const String user = '/mobile';
   static const String mediaUrl = 'http://backend-dev.tamleek.maktab.sa/media/';
 
   //#endregion
@@ -12,6 +12,7 @@ class ApiEndpoints {
   static const String auth = '/auth';
   static const String login = '/login';
   static const String checkCode = '/check-code';
+
 
   //#region Email
   static const String email = '/email';
@@ -23,7 +24,7 @@ class ApiEndpoints {
   //#endregion
 
   //#region Profile
-  static const String profile = '/profile';
+  static const String upDateProfile = '/profile';
   static const String banners = '/banners';
   static const String properties = '/properties';
   static const String bankAccounts = '/platform-bank-accounts';

@@ -1,25 +1,26 @@
-// import 'package:dartz/dartz.dart';
-// import 'package:injectable/injectable.dart';
-// import 'package:forsan/core/constants/api_endpoints.dart';
-// import 'package:forsan/core/exceptions/app_exception.dart';
-// import 'package:forsan/domain/entities/auth/auth_entity.dart';
-// import 'package:forsan/data/models/base/base_model.dart';
-// import 'package:forsan/data/data_sources/base/base_remote_data_source.dart';
-// import 'package:forsan/data/models/auth/auth_model.dart';
-//
-//
-// @Injectable()
-// class ProfileRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
-//   ProfileRemoteDataSource() : super();
-//
-//   Future<Either<AppException, BaseModel<AuthModel>?>> upDateProfile(
-//       AuthEntity data,
-//       ) {
-//     return postData(
-//       endpoint: '${ApiEndpoints.auth}${ApiEndpoints.verifyOtp}',
-//       fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
-//       data: data.toJson(),
-//       isFormData: false,
-//     );
-//   }
-// }
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+import 'package:forsan/core/constants/api_endpoints.dart';
+import 'package:forsan/core/exceptions/app_exception.dart';
+import 'package:forsan/domain/entities/auth/auth_entity.dart';
+import 'package:forsan/data/models/base/base_model.dart';
+import 'package:forsan/data/data_sources/base/base_remote_data_source.dart';
+import 'package:forsan/data/models/auth/auth_model.dart';
+
+import 'package:forsan/data/models/profile/profile_model.dart';
+
+@Injectable()
+class ProfileRemoteDataSource extends BaseRemoteDataSource<ProfileModel> {
+  ProfileRemoteDataSource() : super(ApiEndpoints.user);
+
+  Future<Either<AppException, BaseModel<ProfileModel>?>> upDateProfile(
+      AuthEntity data,
+      ) {
+    return postData(
+      endpoint: '${ApiEndpoints.user}${ApiEndpoints.upDateProfile}',
+      fromJsonT: (json) => ProfileModel.fromJson(json as Map<String, dynamic>),
+      data: data.toJson(),
+      isFormData: false,
+    );
+  }
+}

@@ -13,33 +13,46 @@ class CompleteProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => CompleteProfileCubit(),
-      child: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: const SystemUiOverlayStyle(
-          statusBarColor: AppColors.white,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CompleteProfileCubit>(
+          create: (context) => CompleteProfileCubit(),
         ),
-        child: Scaffold(
+      ],
+      child: BodyCompleteProfileScreen(),
+    );
+  }
+}
+
+class BodyCompleteProfileScreen extends StatelessWidget {
+  const BodyCompleteProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.white,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
+      child: Scaffold(
+        backgroundColor: AppColors.white,
+        appBar: CustomAppBar(
+          title: context.loc.complete_profile_account_information,
           backgroundColor: AppColors.white,
-          appBar: CustomAppBar(
-            title: context.loc.complete_profile_account_information,
-            backgroundColor: AppColors.white,
-            showBackButton: true,
-            showScrolledUnderElevation: false,
-            onTapBackButton: () => Navigator.maybePop(context),
-          ),
-          body: SafeArea(
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(
-                AppPaddingWidth.p16,
-                AppPaddingHeight.p12,
-                AppPaddingWidth.p16,
-                AppPaddingHeight.p24,
-              ),
-              child: const CompleteProfileForm(),
+          showBackButton: true,
+          showScrolledUnderElevation: false,
+          onTapBackButton: () => Navigator.maybePop(context),
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(
+              AppPaddingWidth.p16,
+              AppPaddingHeight.p12,
+              AppPaddingWidth.p16,
+              AppPaddingHeight.p24,
             ),
+            child: const CompleteProfileForm(),
           ),
         ),
       ),
