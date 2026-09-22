@@ -18,7 +18,7 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
 
   Future<Either<AppException, BaseModel<AuthModel>?>> login(AuthEntity data) {
     return postData(
-      endpoint: '${ApiEndpoints.auth}${ApiEndpoints.sendOtp}',
+      endpoint: '${ApiEndpoints.user}${ApiEndpoints.sendOtp}',
       fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
       data: data.toJson(),
       isFormData: false,
@@ -30,13 +30,15 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
     AuthEntity data,
   ) async {
     final deviceData = await _deviceInfoHelper.getDeviceData();
-
+    print('rrrrrr');
+    print({...data.toJson(), 'device': deviceData});
     return postData(
-      endpoint: '${ApiEndpoints.auth}${ApiEndpoints.verifyOtp}',
+      endpoint: '${ApiEndpoints.user}${ApiEndpoints.verifyOtp}',
       fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
       data: {...data.toJson(), 'device': deviceData},
       isFormData: false,
     );
+
   }
 
   Future<Either<AppException, BaseModel<AuthModel>?>> resendCode(

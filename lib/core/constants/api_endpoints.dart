@@ -3,7 +3,7 @@ class ApiEndpoints {
 
   //#region Base Url
   static const String baseUrl = 'https://api.forsan.sy/api';
-  static const String user = '/user';
+  static const String user = '/mobile/auth';
   static const String mediaUrl = 'http://backend-dev.tamleek.maktab.sa/media/';
 
   //#endregion
