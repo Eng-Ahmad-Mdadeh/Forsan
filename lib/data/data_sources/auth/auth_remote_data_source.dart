@@ -10,15 +10,13 @@ import 'package:forsan/data/models/base/base_model.dart';
 
 @Injectable()
 class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
-  AuthRemoteDataSource({DeviceInfoHelper? deviceInfoHelper})
-    : _deviceInfoHelper = deviceInfoHelper ?? DeviceInfoHelper(),
-      super(ApiEndpoints.auth);
+  AuthRemoteDataSource(this._deviceInfoHelper) : super(ApiEndpoints.user);
 
   final DeviceInfoHelper _deviceInfoHelper;
 
   Future<Either<AppException, BaseModel<AuthModel>?>> login(AuthEntity data) {
     return postData(
-      endpoint: '${ApiEndpoints.user}${ApiEndpoints.sendOtp}',
+      endpoint: ApiEndpoints.sendOtp,
       fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
       data: data.toJson(),
       isFormData: false,
@@ -30,15 +28,12 @@ class AuthRemoteDataSource extends BaseRemoteDataSource<AuthModel> {
     AuthEntity data,
   ) async {
     final deviceData = await _deviceInfoHelper.getDeviceData();
-    print('rrrrrr');
-    print({...data.toJson(), 'device': deviceData});
     return postData(
-      endpoint: '${ApiEndpoints.user}${ApiEndpoints.verifyOtp}',
+      endpoint: ApiEndpoints.verifyOtp,
       fromJsonT: (json) => AuthModel.fromJson(json as Map<String, dynamic>),
       data: {...data.toJson(), 'device': deviceData},
       isFormData: false,
     );
-
   }
 
   Future<Either<AppException, BaseModel<AuthModel>?>> resendCode(

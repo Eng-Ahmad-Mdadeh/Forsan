@@ -1,12 +1,18 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:injectable/injectable.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../utils/firebase_notifications_handler.dart';
 
+@lazySingleton
 class DeviceInfoHelper {
-  DeviceInfoHelper({
+  DeviceInfoHelper()
+    : _deviceInfoPlugin = DeviceInfoPlugin(),
+      _notificationsHandler = FirebaseNotificationsHandler();
+
+  DeviceInfoHelper.withDependencies({
     DeviceInfoPlugin? deviceInfoPlugin,
     FirebaseNotificationsHandler? notificationsHandler,
   }) : _deviceInfoPlugin = deviceInfoPlugin ?? DeviceInfoPlugin(),
