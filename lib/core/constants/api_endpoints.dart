@@ -11,38 +11,29 @@ class ApiEndpoints {
   //#region Auth
   static const String auth = '/auth';
   static const String login = '/login';
-  static const String checkCode = '/check-code';
-
+  //#endregion
 
   //#region Email
   static const String email = '/email';
   static const String sendOtp = '/otp/request';
   static const String verifyOtp = '/otp/verify';
-
   //#endregion
 
 
   //#region Profile
   static const String upDateProfile = '/me';
-  static const String banners = '/banners';
-  static const String home = '/home';
-  static const String serviceType = '/services/categories';
-  static const String bankAccounts = '/platform-bank-accounts';
-  static const String walletTopUpRequests = '/wallet-top-up-requests';
-  static const String walletTransactions = '/wallet-transactions';
-  static const String archive = '/archive';
-  static const String getMeta = '/meta';
-  static const String cms = '/cms';
-  static const String content = '/content';
-  static const String privacyPolicies = '/privacy-policies';
-  static const String termsAndConditions = '/terms-and-conditions';
-  static const String intellectualPropertyRights = '/intellectual-property-rights';
-  static const String successPartners = '/success-partners';
-  static const String notifications = '/notifications';
-  static const String markAsRead = '/mark-as-read';
-
-
   //#endregion
+
+
+  //#region Home
+  static const String home = '/home';
+  //#endregion
+
+  //#region order
+  static const String serviceType = '/services/categories';
+  static const String orderList = '/requests';
+  //#endregion
+
 
   //#region Media
   static const String media = '/media';
