@@ -92,7 +92,7 @@ class BaseRemoteDataSource<T> {
         (r) {
           final responseData = r.data;
           if (responseData == null) {
-            return Right<BaseModel<T>?>(null);
+            return Right<AppException, BaseModel<T>?>(null);
           }
 
           return Right(
