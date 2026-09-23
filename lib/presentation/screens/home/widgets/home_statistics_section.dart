@@ -9,28 +9,39 @@ class HomeStatisticsSection extends StatelessWidget {
   final HomeModel homeModel;
   const HomeStatisticsSection({super.key, required this.homeModel});
 
-  static const List<_StatisticItem> _items = [
-    _StatisticItem(
-      title: 'الطلبات النشطة',
-      value: '01',
-      icon:Icons.account_tree_outlined,
-    ),
-    _StatisticItem(
-      title: 'إجراءات مطلوبة',
-      value: '01',
-      icon: Icons.format_list_bulleted_rounded,
-    ),
-    _StatisticItem(
-      title: 'إجمالي المدفوع',
-      value: '2,522 ر.س',
-      icon: Icons.payments_outlined,
-    ),
-    _StatisticItem(
-      title: 'المبالغ المستحقة',
-      value: '2,522 ر.س',
-      icon: Icons.payments_outlined,
-    ),
-  ];
+  List<_StatisticItem> get _items {
+    final stats = homeModel.stats;
+
+    return [
+      _StatisticItem(
+        title: 'الطلبات النشطة',
+        value: '${stats?.activeRequests ?? 0}',
+        icon: Icons.account_tree_outlined,
+      ),
+      _StatisticItem(
+        title: 'إجراءات مطلوبة',
+        value: '${stats?.requiredActions ?? 0}',
+        icon: Icons.format_list_bulleted_rounded,
+      ),
+      _StatisticItem(
+        title: 'إجمالي المدفوع',
+        value: _formatAmount(stats?.totalPaid),
+        icon: Icons.payments_outlined,
+      ),
+      _StatisticItem(
+        title: 'المبالغ المستحقة',
+        value: _formatAmount(stats?.amountDue),
+        icon: Icons.payments_outlined,
+      ),
+    ];
+  }
+
+  String _formatAmount(AmountDue? amount) {
+    final value = amount?.amount ?? '0.00';
+    final currency = amount?.currency;
+
+    return currency == null || currency.isEmpty ? value : '$value $currency';
+  }
 
   @override
   Widget build(BuildContext context) => Directionality(
