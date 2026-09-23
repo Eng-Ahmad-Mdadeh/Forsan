@@ -40,7 +40,14 @@ class CheckCodeCard extends StatelessWidget {
         if (state is CheckCodeLoaded) {
           context.pop();
           if (context.mounted) {
-            CompleteProfileRoute().go(context);
+            final profileComplete =
+                state.authModel?.data?.user?.profileComplete ?? false;
+
+            if (profileComplete) {
+              const HomeRoute().go(context);
+            } else {
+              const CompleteProfileRoute().go(context);
+            }
           }
         }
         if (state is CheckCodeFailed && context.mounted) {
