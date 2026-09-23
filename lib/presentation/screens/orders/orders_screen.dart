@@ -1,13 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/core/resources/app_colors.dart';
+import 'package:forsan/core/resources/app_fonts.dart';
+import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/services/locator/locator.dart';
+import 'package:forsan/core/utils/pagination/pagination_scroll_mixin.dart';
+import 'package:forsan/data/models/base/base_model.dart';
+import 'package:forsan/data/models/order_list/order_list_model.dart';
+import 'package:forsan/domain/entities/order_list/order_list_entity.dart';
+import 'package:forsan/domain/usecases/i_use_case.dart';
+import 'package:forsan/presentation/bloc/order_list/order_list_bloc.dart';
 import 'package:forsan/presentation/screens/orders/widgets/orders_search_bar.dart';
 import 'package:icons_plus/icons_plus.dart';
-import '../../../core/resources/app_colors.dart';
-import '../../../core/resources/app_fonts.dart';
-import '../../../core/resources/app_values.dart';
-import '../../cubit/orders/orders_cubit.dart';
+import 'package:intl/intl.dart';
+
 import '../../widgets/custom_app_bar.dart';
-import '../../widgets/status_badge.dart';
 import '../../widgets/text/section_title.dart';
 import 'models/order_item.dart';
 import 'widgets/orders_list.dart';
@@ -18,7 +27,11 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-    create: (_) => OrdersCubit(),
+    create: (_) => OrderListBloc(
+      locator<IUseCase<BaseModel<OrderListModel>?, OrderListEntity>>(
+        instanceName: 'OrderList',
+      ),
+    )..add(const GetOrderListEvent(OrderListEntity())),
     child: const _OrdersView(),
   );
 }
@@ -30,53 +43,59 @@ class _OrdersView extends StatefulWidget {
   State<_OrdersView> createState() => _OrdersViewState();
 }
 
-class _OrdersViewState extends State<_OrdersView> {
-  static const _orders = [
-    OrderItem(
-      title: 'تأسيس شركة لشخص واحد',
-      number: 'FR-2026-00125925',
-      date: '20/05/2026',
-      consultant: 'أحمد إبراهيم',
-      status: StatusBadge.waitingDocuments,
-    ),
-    OrderItem(
-      title: 'تأسيس شركة لشخص واحد',
-      number: 'FR-2026-00125925',
-      date: '20/05/2026',
-      consultant: 'أحمد إبراهيم',
-      status: StatusBadge.underReview,
-    ),
-    OrderItem(
-      title: 'تأسيس شركة لشخص واحد',
-      number: 'FR-2026-00125925',
-      date: '20/05/2026',
-      consultant: 'أحمد إبراهيم',
-      status: StatusBadge.inProgress,
-    ),
-    OrderItem(
-      title: 'تأسيس شركة لشخص واحد',
-      number: 'FR-2026-00125925',
-      date: '20/05/2026',
-      consultant: 'أحمد إبراهيم',
-      status: StatusBadge.completed,
-    ),
+class _OrdersViewState extends State<_OrdersView>
+    with PaginationScrollMixin<_OrdersView> {
+  static const List<String?> _statuses = [
+    null,
+    'UNDER_REVIEW',
+    'WAITING_DOCUMENTS',
   ];
 
+  Timer? _searchDebounce;
   String _query = '';
+  int _selectedStatus = 0;
 
-  List<OrderItem> _visibleOrders(int selectedStatus) => _orders.where((order) {
-    final matchesStatus = switch (selectedStatus) {
-      1 => order.status == StatusBadge.underReview,
-      2 => order.status == StatusBadge.waitingDocuments,
-      _ => true,
-    };
-    final normalizedQuery = _query.trim().toLowerCase();
-    final matchesQuery =
-        normalizedQuery.isEmpty ||
-        order.title.toLowerCase().contains(normalizedQuery) ||
-        order.number.toLowerCase().contains(normalizedQuery);
-    return matchesStatus && matchesQuery;
-  }).toList();
+  OrderListEntity get _entity => OrderListEntity(
+    status: _statuses[_selectedStatus],
+    query: _query,
+  );
+
+  @override
+  bool get canLoadMore => context.read<OrderListBloc>().canLoadMore;
+
+  @override
+  bool get isLoadingMore => context.read<OrderListBloc>().isLoadingMore;
+
+  @override
+  void onLoadMore() {
+    context.read<OrderListBloc>().add(LoadMoreOrderListEvent(_entity));
+  }
+
+  @override
+  void dispose() {
+    _searchDebounce?.cancel();
+    super.dispose();
+  }
+
+  void _onSearchChanged(String query) {
+    _searchDebounce?.cancel();
+    _searchDebounce = Timer(const Duration(milliseconds: 400), () {
+      if (!mounted) return;
+      _query = query.trim();
+      _reloadOrders();
+    });
+  }
+
+  void _onStatusSelected(int index) {
+    if (index == _selectedStatus) return;
+
+    setState(() => _selectedStatus = index);
+    _reloadOrders();
+  }
+
+  void _reloadOrders() {
+    context.read<OrderListBloc>().add(GetOrderListEvent(_entity));
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -111,38 +130,97 @@ class _OrdersViewState extends State<_OrdersView> {
               0,
             ),
             child: OrdersSearchBar(
-              onSearchChanged: (query) => setState(() => _query = query),
+              onSearchChanged: _onSearchChanged,
               onFilterPressed: () {},
             ),
           ),
           SizedBox(height: AppHeight.h10),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
-            child: const OrdersStatusTabs(),
+          BlocBuilder<OrderListBloc, IOrderListState>(
+            buildWhen: (previous, current) => current is OrderListLoaded,
+            builder: (context, state) {
+              final counts = state is OrderListLoaded
+                  ? state.orderList?.counts
+                  : null;
+
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
+                child: OrdersStatusTabs(
+                  selectedIndex: _selectedStatus,
+                  onSelected: _onStatusSelected,
+                  allCount: counts?.all ?? 0,
+                  underReviewCount: counts?.underReview ?? 0,
+                  waitingDocumentsCount: counts?.waitingDocuments ?? 0,
+                ),
+              );
+            },
           ),
           Expanded(
-            child: BlocBuilder<OrdersCubit, int>(
-              builder: (context, selectedStatus) {
-                final visibleOrders = _visibleOrders(selectedStatus);
-      
-                return visibleOrders.isNotEmpty
-                    ? OrdersList(orders: visibleOrders)
-                    : const _EmptyState(
-                        icon: Icons.receipt_long_outlined,
-                        title: 'لا توجد طلبات بعد',
-                        message: 'ستظهر هنا جميع طلباتك وحالتها عند إضافتها.',
-                      );
+            child: BlocBuilder<OrderListBloc, IOrderListState>(
+              builder: (context, state) => switch (state) {
+                OrderListInitial() || OrderListLoading() => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                OrderListFailed(:final message) => _ErrorState(
+                  message: message,
+                  onRetry: _reloadOrders,
+                ),
+                OrderListLoaded(:final items) when items.isNotEmpty =>
+                  OrdersList(
+                    orders: items.map(_toOrderItem).toList(growable: false),
+                    controller: paginationScrollController,
+                  ),
+                OrderListLoaded() => const _EmptyState(
+                  icon: Icons.receipt_long_outlined,
+                  title: 'لا توجد طلبات بعد',
+                  message: 'ستظهر هنا جميع طلباتك وحالتها عند إضافتها.',
+                ),
               },
             ),
           ),
         ],
       ),
     ),
-    // floatingActionButton: FloatingActionButton.extended(
-    //   onPressed: () {},
-    //   icon: const Icon(Icons.add_rounded),
-    //   label: const Text('طلب جديد'),
-    // ),
+  );
+
+  OrderItem _toOrderItem(Item item) {
+    return OrderItem(
+      title: item.serviceName ?? '',
+      number: item.reference ?? '',
+      date: item.createdAt == null
+          ? ''
+          : DateFormat('dd/MM/yyyy').format(item.createdAt!.toLocal()),
+      consultant: _consultantName(item.consultant),
+      status: item.statusLabel ?? item.displayStatus ?? '',
+    );
+  }
+
+  String _consultantName(dynamic consultant) {
+    if (consultant is Map<String, dynamic>) {
+      return consultant['fullName']?.toString() ?? '';
+    }
+    return consultant?.toString() ?? '';
+  }
+}
+
+class _ErrorState extends StatelessWidget {
+  const _ErrorState({required this.message, required this.onRetry});
+
+  final String message;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) => Center(
+    child: Padding(
+      padding: EdgeInsets.all(AppPaddingWidth.p24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(message, textAlign: TextAlign.center),
+          SizedBox(height: AppHeight.h12),
+          FilledButton(onPressed: onRetry, child: const Text('إعادة المحاولة')),
+        ],
+      ),
+    ),
   );
 }
 

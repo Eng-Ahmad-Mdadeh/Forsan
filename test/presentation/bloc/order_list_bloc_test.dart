@@ -86,7 +86,11 @@ BaseModel<OrderListModel> _response({
         pageSize: 1,
         total: total,
       ),
-      counts: Counts(all: total, underReview: total),
+      counts: Counts(
+        all: total,
+        underReview: total,
+        waitingDocuments: 0,
+      ),
     ),
   );
 }
