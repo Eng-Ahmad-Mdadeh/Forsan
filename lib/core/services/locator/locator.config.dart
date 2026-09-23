@@ -18,23 +18,31 @@ import '../../../data/data_sources/auth/auth_storage_data_source.dart' as _i244;
 import '../../../data/data_sources/create_order/service_type/service_type_remote_data_source.dart'
     as _i619;
 import '../../../data/data_sources/home/home_remote_data_source.dart' as _i949;
+import '../../../data/data_sources/order_list/order_list_remote_data_source.dart'
+    as _i901;
 import '../../../data/data_sources/profile/profile_remote_data_source.dart'
     as _i265;
 import '../../../data/models/auth/auth_model.dart' as _i323;
 import '../../../data/models/base/base_model.dart' as _i480;
 import '../../../data/models/home/home_model.dart' as _i703;
+import '../../../data/models/order_list/order_list_model.dart' as _i902;
 import '../../../data/models/profile/profile_model.dart' as _i705;
 import '../../../data/models/service_type/service_type_model.dart' as _i964;
 import '../../../data/repositories/auth/auth_repository.dart' as _i202;
 import '../../../data/repositories/create_order/service_type/service_type_repository.dart'
     as _i254;
 import '../../../data/repositories/home/home_repository.dart' as _i13;
+import '../../../data/repositories/order_list/order_list_repository.dart'
+    as _i903;
 import '../../../data/repositories/profile/profile_repository.dart' as _i922;
 import '../../../domain/entities/auth/auth_entity.dart' as _i450;
+import '../../../domain/entities/order_list/order_list_entity.dart' as _i904;
 import '../../../domain/repositories/auth/i_auth_repository.dart' as _i1064;
 import '../../../domain/repositories/create_order/service_type/i_service_type_repository.dart'
     as _i637;
 import '../../../domain/repositories/home/i_home_repository.dart' as _i751;
+import '../../../domain/repositories/order_list/i_order_list_repository.dart'
+    as _i905;
 import '../../../domain/repositories/profile/i_profile_repository.dart'
     as _i1042;
 import '../../../domain/usecases/auth/check_code_usecase.dart' as _i298;
@@ -45,6 +53,7 @@ import '../../../domain/usecases/create_order/service_type/service_type_use_case
     as _i80;
 import '../../../domain/usecases/home/home_use_case.dart' as _i208;
 import '../../../domain/usecases/i_use_case.dart' as _i795;
+import '../../../domain/usecases/order_list/order_list_use_case.dart' as _i906;
 import '../../../domain/usecases/profile/profile_use_case.dart' as _i76;
 import '../../helper/device_info_helper.dart' as _i1052;
 import '../../helper/local_storage_helper.dart' as _i218;
@@ -66,12 +75,18 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i619.ServiceTypeRemoteDataSource(),
     );
     gh.factory<_i949.HomeRemoteDataSource>(() => _i949.HomeRemoteDataSource());
+    gh.factory<_i901.OrderListRemoteDataSource>(
+      () => _i901.OrderListRemoteDataSource(),
+    );
     gh.factory<_i265.ProfileRemoteDataSource>(
       () => _i265.ProfileRemoteDataSource(),
     );
     gh.lazySingleton<_i1052.DeviceInfoHelper>(() => _i1052.DeviceInfoHelper());
     gh.factory<_i751.IHomeRepository>(
       () => _i13.HomeRepository(gh<_i949.HomeRemoteDataSource>()),
+    );
+    gh.factory<_i905.IOrderListRepository>(
+      () => _i903.OrderListRepository(gh<_i901.OrderListRemoteDataSource>()),
     );
     gh.factory<_i637.IServiceTypeRepository>(
       () =>
@@ -92,6 +107,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i795.IUseCase<_i480.BaseModel<_i703.HomeModel>?, Null>>(
       () => _i208.HomeUseCase(gh<_i751.IHomeRepository>()),
       instanceName: 'Home',
+    );
+    gh.factory<
+      _i795.IUseCase<
+        _i480.BaseModel<_i902.OrderListModel>?,
+        _i904.OrderListEntity
+      >
+    >(
+      () => _i906.OrderListUseCase(gh<_i905.IOrderListRepository>()),
+      instanceName: 'OrderList',
     );
     gh.factory<_i1064.IAuthRepository>(
       () => _i202.AuthRepository(

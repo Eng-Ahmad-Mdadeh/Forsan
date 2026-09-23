@@ -1,11 +1,39 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/domain/entities/order_list/order_list_entity.dart';
 
-class OrdersCubit extends Cubit<int> {
-  OrdersCubit() : super(0);
+part 'orders_state.dart';
+
+class OrdersCubit extends Cubit<OrdersState> {
+  OrdersCubit() : super(const OrdersState());
+
+  static const List<String?> _statuses = [
+    null,
+    'UNDER_REVIEW',
+    'WAITING_DOCUMENTS',
+  ];
 
   void selectStatus(int index) {
-    if (index == state) return;
+    if (index < 0 ||
+        index >= _statuses.length ||
+        index == state.selectedStatus) {
+      return;
+    }
 
-    emit(index);
+    final entity = OrderListEntity(
+      status: _statuses[index],
+      query: state.entity.query,
+      pageSize: state.entity.pageSize,
+    );
+    emit(state.copyWith(selectedStatus: index, entity: entity));
+  }
+
+  void updateQuery(String query) {
+    final entity = OrderListEntity(
+      status: state.entity.status,
+      query: query.trim(),
+      pageSize: state.entity.pageSize,
+    );
+    emit(state.copyWith(entity: entity));
   }
 }

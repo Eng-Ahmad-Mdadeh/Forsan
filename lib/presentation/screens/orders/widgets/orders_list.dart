@@ -6,12 +6,18 @@ import '../models/order_item.dart';
 import '../../../widgets/order_card.dart';
 
 class OrdersList extends StatelessWidget {
-  const OrdersList({super.key, required this.orders});
+  const OrdersList({
+    super.key,
+    required this.orders,
+    this.controller,
+  });
 
   final List<OrderItem> orders;
+  final ScrollController? controller;
 
   @override
   Widget build(BuildContext context) => ListView.separated(
+    controller: controller,
     padding: EdgeInsets.fromLTRB(
       AppPaddingWidth.p16,
       AppPaddingHeight.p16,
