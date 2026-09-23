@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/data/models/home/home_model.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
 import '../../../widgets/text/body_title.dart';
 
 class HomeStatisticsSection extends StatelessWidget {
-  const HomeStatisticsSection({super.key});
+  final HomeModel homeModel;
+  const HomeStatisticsSection({super.key, required this.homeModel});
 
   static const List<_StatisticItem> _items = [
     _StatisticItem(

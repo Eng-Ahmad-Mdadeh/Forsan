@@ -88,6 +88,7 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
                   ),
                 ),
                 SizedBox(height: AppHeight.h16),
+                if(homeData?.requiredAction != null)
                 RequiredActionCard(
                   titleSpan: TextSpan(
                     children: [
@@ -100,7 +101,7 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
                         ),
                       ),
                       TextSpan(
-                        text: 'FR-2026-001259',
+                        text: homeData?.requiredAction?.reference ?? '',
                         style: TextStyle(
                           color: AppColors.mainText,
                           fontSize: AppFontSize.s12,
@@ -109,9 +110,8 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
                       ),
                     ],
                   ),
-                  message:
-                      'يرجى إرفاق المستندات المطلوبة لاستكمال\nمراجعة طلب تأسيس الشركة.',
-                  buttonText: 'استكمال المتطلبات',
+                  message: homeData?.requiredAction?.message ?? '',
+                  buttonText: homeData?.requiredAction?.actionLabel ??'',
                   buttonColor: AppColors.primary,
                   compact: true,
                   semanticsLabel: 'إجراء مطلوب على الطلب FR-2026-001259',
@@ -125,7 +125,7 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
                       const CompleteRequirementsRoute().push(context),
                 ),
                 SizedBox(height: AppHeight.h20),
-                const HomeStatisticsSection(),
+                 HomeStatisticsSection(homeModel: homeData!),
                 SizedBox(height: AppHeight.h20),
                 const LatestOrderCard(),
                 SizedBox(height: AppHeight.h20),
