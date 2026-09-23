@@ -15,6 +15,12 @@ class ServiceTypeRepository implements IServiceTypeRepository {
   @override
   Future<Either<AppException, BaseModel<List<ServiceTypeModel>>?>>
   getServiceTypes() async {
-    return _remoteDataSource.getServiceTypes();
+    final response = await _remoteDataSource.getServiceTypes();
+    return response.fold(
+          (l) async => Left(l),
+          (r) async {
+        return Right(r);
+      },
+    );
   }
 }

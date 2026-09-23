@@ -125,10 +125,12 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
                       const CompleteRequirementsRoute().push(context),
                 ),
                 SizedBox(height: AppHeight.h20),
-                HomeStatisticsSection(homeModel: homeData!),
-                SizedBox(height: AppHeight.h20),
-                if(homeData.currentRequest != null)
-                LatestOrderCard(homeModel: homeData),
+                if (homeData != null) ...[
+                  HomeStatisticsSection(homeModel: homeData),
+                  SizedBox(height: AppHeight.h20),
+                  if (homeData.currentRequest != null)
+                    LatestOrderCard(homeModel: homeData),
+                ],
                 SizedBox(height: AppHeight.h20),
                 const QuickActionsSection(),
                 SizedBox(height: AppHeight.h90),
