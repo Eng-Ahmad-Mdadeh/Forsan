@@ -23,7 +23,7 @@ class ServiceTypeBloc extends Bloc<IServiceTypeEvent, IServiceTypeState> {
     emit(ServiceTypeLoading());
     try {
       final result =
-          await locator<IUseCase<BaseModel<ServiceTypeModel>?, Null>>(
+          await locator<IUseCase<BaseModel<List<ServiceTypeModel>>?, Null>>(
             instanceName: 'ServiceType',
           )(null);
       result.fold(

@@ -6,15 +6,16 @@ import 'package:forsan/domain/repositories/create_order/service_type/i_service_t
 import 'package:forsan/domain/usecases/i_use_case.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(as: IUseCase<BaseModel<ServiceTypeModel>?, Null>)
+@Injectable(as: IUseCase<BaseModel<List<ServiceTypeModel>>?, Null>)
 @Named('ServiceType')
-class ServiceTypeUseCase implements IUseCase<BaseModel<ServiceTypeModel>?, Null> {
+class ServiceTypeUseCase
+    implements IUseCase<BaseModel<List<ServiceTypeModel>>?, Null> {
   final IServiceTypeRepository _repository;
 
   ServiceTypeUseCase(this._repository);
 
   @override
-  Future<Either<AppException, BaseModel<ServiceTypeModel>?>> call(Null n) {
+  Future<Either<AppException, BaseModel<List<ServiceTypeModel>>?>> call(Null n) {
     return _repository.getServiceTypes();
   }
 }

@@ -17,7 +17,7 @@ final class ServiceTypeLoading extends IServiceTypeState {
 final class ServiceTypeLoaded extends IServiceTypeState {
   const ServiceTypeLoaded({required this.serviceTypeModel});
 
-  final BaseModel<ServiceTypeModel>? serviceTypeModel;
+  final BaseModel<List<ServiceTypeModel>>? serviceTypeModel;
 
   @override
   List<Object?> get props => [serviceTypeModel];

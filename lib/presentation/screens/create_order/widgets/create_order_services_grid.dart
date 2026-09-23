@@ -4,40 +4,20 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/core/routes/app_routes.dart';
-import 'package:forsan/presentation/screens/create_order/models/service_type.dart';
+import 'package:forsan/data/models/service_type/service_type_model.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/service_card.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
 class CreateOrderServicesGrid extends StatelessWidget {
-  const CreateOrderServicesGrid({super.key});
+  const CreateOrderServicesGrid({
+    super.key,
+    required this.serviceTypes,
+  });
+
+  final List<ServiceTypeModel> serviceTypes;
 
   @override
   Widget build(BuildContext context) {
-    final services = [
-      ServiceType(context.loc.create_order_licensing, Icons.approval_outlined),
-      ServiceType(
-        context.loc.create_order_business_setup,
-        Icons.apartment_outlined,
-      ),
-      ServiceType(
-        context.loc.create_order_company_management,
-        Icons.business_center_outlined,
-      ),
-      ServiceType(
-        context.loc.create_order_property,
-        Icons.maps_home_work_outlined,
-      ),
-      ServiceType(
-        context.loc.create_order_investment,
-        Icons.account_balance_outlined,
-        enabled: false,
-      ),
-      ServiceType(
-        context.loc.create_order_expatriate_services,
-        Icons.public_rounded,
-      ),
-    ];
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -51,7 +31,7 @@ class CreateOrderServicesGrid extends StatelessWidget {
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: services.length,
+          itemCount: serviceTypes.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: AppWidth.w8,
@@ -59,7 +39,7 @@ class CreateOrderServicesGrid extends StatelessWidget {
             childAspectRatio: 1.58,
           ),
           itemBuilder: (context, index) => ServiceCard(
-            service: services[index],
+            service: serviceTypes[index],
             onTap: () => const CreateNewOrderRoute().push(context),
           ),
         ),

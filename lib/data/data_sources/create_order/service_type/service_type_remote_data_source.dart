@@ -7,15 +7,21 @@ import 'package:forsan/data/models/base/base_model.dart';
 import 'package:forsan/data/data_sources/base/base_remote_data_source.dart';
 
 @Injectable()
-class ServiceTypeRemoteDataSource extends BaseRemoteDataSource<ServiceTypeModel> {
+class ServiceTypeRemoteDataSource
+    extends BaseRemoteDataSource<List<ServiceTypeModel>> {
   ServiceTypeRemoteDataSource() : super(ApiEndpoints.user);
 
-  Future<Either<AppException, BaseModel<ServiceTypeModel>?>> getServiceType() {
+  Future<Either<AppException, BaseModel<List<ServiceTypeModel>>?>>
+  getServiceTypes() {
     return fetchData(
       endpoint: ApiEndpoints.serviceType,
-      dataMayBeAtRoot: true,
-      fromJsonT: (json) =>
-          ServiceTypeModel.fromJson(json as Map<String, dynamic>),
+      fromJsonT: (json) => (json as List<dynamic>)
+          .map(
+            (serviceType) => ServiceTypeModel.fromJson(
+              serviceType as Map<String, dynamic>,
+            ),
+          )
+          .toList(),
     );
   }
 }

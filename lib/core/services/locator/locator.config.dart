@@ -80,7 +80,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1042.IProfileRepository>(
       () => _i922.ProfileRepository(gh<_i265.ProfileRemoteDataSource>()),
     );
-    gh.factory<_i795.IUseCase<_i480.BaseModel<_i964.ServiceTypeModel>?, Null>>(
+    gh.factory<
+      _i795.IUseCase<_i480.BaseModel<List<_i964.ServiceTypeModel>>?, Null>
+    >(
       () => _i80.ServiceTypeUseCase(gh<_i637.IServiceTypeRepository>()),
       instanceName: 'ServiceType',
     );
