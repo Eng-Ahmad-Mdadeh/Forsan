@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:forsan/data/models/auth/auth_model.dart';
 import 'package:forsan/data/models/base/base_model.dart';
+import 'package:forsan/data/models/home/home_model.dart';
 
 void main() {
   AuthModel parseAuth(Object? json) =>
@@ -21,6 +22,20 @@ void main() {
       expect(response.data?.accessToken, 'otp-access-token');
       expect(response.data?.accessTokenExpiresIn, 3600);
       expect(response.data?.refreshToken, 'otp-refresh-token');
+    });
+
+    test('parses the home greeting returned at the response root', () {
+      final response = BaseModel<HomeModel>.fromJsonWithRootData(
+        {
+          'success': true,
+          'greetingName': 'أحمد',
+          'unreadNotifications': 2,
+        },
+        (json) => HomeModel.fromJson(json as Map<String, dynamic>),
+      );
+
+      expect(response.data?.greetingName, 'أحمد');
+      expect(response.data?.unreadNotifications, 2);
     });
 
     test('keeps parsing a nested data payload when it is present', () {

@@ -78,6 +78,7 @@ class BaseRemoteDataSource<T> {
     String endpoint = '',
     Map<String, dynamic>? queryParams,
     Map<String, dynamic>? data,
+    bool dataMayBeAtRoot = false,
     required T Function(Object? json) fromJsonT,
   }) async {
     try {
@@ -88,7 +89,11 @@ class BaseRemoteDataSource<T> {
       );
       return response.fold(
         (e) => Left(e),
-        (r) => Right(BaseModel<T>.fromJson(r.data!, fromJsonT)),
+        (r) => Right(
+          dataMayBeAtRoot
+              ? BaseModel<T>.fromJsonWithRootData(r.data!, fromJsonT)
+              : BaseModel<T>.fromJson(r.data!, fromJsonT),
+        ),
       );
     } on AppException catch (e, s) {
       log("############################# FETCH APP EXCEPTION ################################");
