@@ -1,34 +1,48 @@
 import 'package:equatable/equatable.dart';
+import 'package:forsan/data/models/pagination/page_pagination_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'order_list_model.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createFactory: false, createToJson: false)
 class OrderListModel extends Equatable {
-  OrderListModel({
-    required this.items,
-    required this.page,
-    required this.pageSize,
-    required this.total,
+  const OrderListModel({
+    required this.pagination,
     required this.counts,
   });
 
-  final List<Item>? items;
-  final int? page;
-  final int? pageSize;
-  final int? total;
+  final PagePaginationModel<Item> pagination;
   final Counts? counts;
 
-  factory OrderListModel.fromJson(Map<String, dynamic> json) => _$OrderListModelFromJson(json);
+  factory OrderListModel.fromJson(Map<String, dynamic> json) {
+    return OrderListModel(
+      pagination: PagePaginationModel<Item>.fromJson(
+        json,
+        (item) => Item.fromJson(item as Map<String, dynamic>),
+      ),
+      counts: json['counts'] == null
+          ? null
+          : Counts.fromJson(json['counts'] as Map<String, dynamic>),
+    );
+  }
+
+  OrderListModel copyWith({
+    PagePaginationModel<Item>? pagination,
+    Counts? counts,
+  }) {
+    return OrderListModel(
+      pagination: pagination ?? this.pagination,
+      counts: counts ?? this.counts,
+    );
+  }
 
   @override
-  List<Object?> get props => [
-    items, page, pageSize, total, counts, ];
+  List<Object?> get props => [pagination, counts];
 }
 
 @JsonSerializable(createToJson: false)
 class Counts extends Equatable {
-  Counts({
+  const Counts({
     required this.all,
     required this.underReview,
   });
@@ -47,7 +61,7 @@ class Counts extends Equatable {
 
 @JsonSerializable(createToJson: false)
 class Item extends Equatable {
-  Item({
+  const Item({
     required this.id,
     required this.reference,
     required this.serviceName,
