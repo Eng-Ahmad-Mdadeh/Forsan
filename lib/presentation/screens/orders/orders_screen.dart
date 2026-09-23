@@ -15,8 +15,10 @@ import 'package:forsan/presentation/bloc/order_list/order_list_bloc.dart';
 import 'package:forsan/presentation/screens/orders/widgets/orders_search_bar.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:intl/intl.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../widgets/custom_app_bar.dart';
+import '../../widgets/failure_screen.dart';
 import '../../widgets/text/section_title.dart';
 import 'models/order_item.dart';
 import 'widgets/orders_list.dart';
@@ -26,25 +28,29 @@ class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-    create: (_) => OrderListBloc(
-      locator<IUseCase<BaseModel<OrderListModel>?, OrderListEntity>>(
-        instanceName: 'OrderList',
+  Widget build(BuildContext context) => MultiBlocProvider(
+    providers: [
+      BlocProvider<OrderListBloc>(
+        create: (_) => OrderListBloc(
+          locator<IUseCase<BaseModel<OrderListModel>?, OrderListEntity>>(
+            instanceName: 'OrderList',
+          ),
+        ),
       ),
-    )..add(const GetOrderListEvent(OrderListEntity())),
-    child: const _OrdersView(),
+    ],
+    child: const BodyOrdersScreen(),
   );
 }
 
-class _OrdersView extends StatefulWidget {
-  const _OrdersView();
+class BodyOrdersScreen extends StatefulWidget {
+  const BodyOrdersScreen({super.key});
 
   @override
-  State<_OrdersView> createState() => _OrdersViewState();
+  State<BodyOrdersScreen> createState() => _BodyOrdersScreenState();
 }
 
-class _OrdersViewState extends State<_OrdersView>
-    with PaginationScrollMixin<_OrdersView> {
+class _BodyOrdersScreenState extends State<BodyOrdersScreen>
+    with PaginationScrollMixin<BodyOrdersScreen> {
   static const List<String?> _statuses = [
     null,
     'UNDER_REVIEW',
@@ -54,6 +60,30 @@ class _OrdersViewState extends State<_OrdersView>
   Timer? _searchDebounce;
   String _query = '';
   int _selectedStatus = 0;
+
+  static const List<OrderItem> _skeletonOrders = [
+    OrderItem(
+      title: 'تأسيس شركة جديدة',
+      number: 'FR-2026-000000',
+      date: '23/09/2026',
+      consultant: 'اسم المستشار',
+      status: 'قيد المراجعة',
+    ),
+    OrderItem(
+      title: 'تأسيس شركة جديدة',
+      number: 'FR-2026-000000',
+      date: '23/09/2026',
+      consultant: 'اسم المستشار',
+      status: 'قيد المراجعة',
+    ),
+    OrderItem(
+      title: 'تأسيس شركة جديدة',
+      number: 'FR-2026-000000',
+      date: '23/09/2026',
+      consultant: 'اسم المستشار',
+      status: 'قيد المراجعة',
+    ),
+  ];
 
   OrderListEntity get _entity => OrderListEntity(
     status: _statuses[_selectedStatus],
@@ -65,6 +95,14 @@ class _OrdersViewState extends State<_OrdersView>
 
   @override
   bool get isLoadingMore => context.read<OrderListBloc>().isLoadingMore;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<OrderListBloc>().add(
+      const GetOrderListEvent(OrderListEntity()),
+    );
+  }
 
   @override
   void onLoadMore() {
@@ -98,88 +136,110 @@ class _OrdersViewState extends State<_OrdersView>
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.white,
-    appBar: CustomAppBar(
-      title: 'طلباتي',
-      backgroundColor: AppColors.white,
-      toolbarHeight: AppHeight.h70,
-      showScrolledUnderElevation: false,
-      titleSpacing: AppPaddingWidth.p16,
-      titleWidget: SectionTitle(
-        text: 'طلباتي',
-        color: AppColors.mainText,
-        fontSize: AppFontSize.s18,
-        fontWeight: AppFontWeight.bold,
-      ),
-      customActions: [
-        HeaderIconButton(
-          icon: Iconsax.notification_outline,
-          onTap: () {},
-        ),
-      ],
-    ),
-    body: SafeArea(
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(
-              AppPaddingWidth.p16,
-              AppPaddingHeight.p20,
-              AppPaddingWidth.p16,
-              0,
-            ),
-            child: OrdersSearchBar(
-              onSearchChanged: _onSearchChanged,
-              onFilterPressed: () {},
-            ),
-          ),
-          SizedBox(height: AppHeight.h10),
-          BlocBuilder<OrderListBloc, IOrderListState>(
-            buildWhen: (previous, current) => current is OrderListLoaded,
-            builder: (context, state) {
-              final counts = state is OrderListLoaded
-                  ? state.orderList?.counts
-                  : null;
+  Widget build(BuildContext context) =>
+      BlocBuilder<OrderListBloc, IOrderListState>(
+        builder: (context, state) {
+          if (state is OrderListFailed) {
+            return Scaffold(
+              backgroundColor: AppColors.white,
+              appBar: _buildAppBar(),
+              body: FailureScreen(
+                errorMessage: state.message,
+                onPressed: _reloadOrders,
+              ),
+            );
+          }
 
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
-                child: OrdersStatusTabs(
-                  selectedIndex: _selectedStatus,
-                  onSelected: _onStatusSelected,
-                  allCount: counts?.all ?? 0,
-                  underReviewCount: counts?.underReview ?? 0,
-                  waitingDocumentsCount: counts?.waitingDocuments ?? 0,
-                ),
-              );
-            },
-          ),
-          Expanded(
-            child: BlocBuilder<OrderListBloc, IOrderListState>(
-              builder: (context, state) => switch (state) {
-                OrderListInitial() || OrderListLoading() => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-                OrderListFailed(:final message) => _ErrorState(
-                  message: message,
-                  onRetry: _reloadOrders,
-                ),
-                OrderListLoaded(:final items) when items.isNotEmpty =>
-                  OrdersList(
-                    orders: items.map(_toOrderItem).toList(growable: false),
-                    controller: paginationScrollController,
-                  ),
-                OrderListLoaded() => const _EmptyState(
-                  icon: Icons.receipt_long_outlined,
-                  title: 'لا توجد طلبات بعد',
-                  message: 'ستظهر هنا جميع طلباتك وحالتها عند إضافتها.',
-                ),
-              },
+          final loadedState = state is OrderListLoaded ? state : null;
+          final counts = loadedState?.orderList?.counts;
+          final isLoading =
+              state is OrderListInitial || state is OrderListLoading;
+          final orders = isLoading
+              ? _skeletonOrders
+              : loadedState?.items.map(_toOrderItem).toList(growable: false) ??
+                    const <OrderItem>[];
+
+          return Skeletonizer(
+            enableSwitchAnimation: true,
+            effect: ShimmerEffect(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              begin: AlignmentDirectional.centerStart,
+              end: AlignmentDirectional.centerEnd,
+              duration: const Duration(milliseconds: 500),
             ),
-          ),
-        ],
-      ),
+            enabled: isLoading,
+            child: Scaffold(
+              backgroundColor: AppColors.white,
+              appBar: _buildAppBar(),
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        AppPaddingWidth.p16,
+                        AppPaddingHeight.p20,
+                        AppPaddingWidth.p16,
+                        0,
+                      ),
+                      child: OrdersSearchBar(
+                        onSearchChanged: _onSearchChanged,
+                        onFilterPressed: () {},
+                      ),
+                    ),
+                    SizedBox(height: AppHeight.h10),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppPaddingWidth.p16,
+                      ),
+                      child: OrdersStatusTabs(
+                        selectedIndex: _selectedStatus,
+                        onSelected: _onStatusSelected,
+                        allCount: counts?.all ?? 0,
+                        underReviewCount: counts?.underReview ?? 0,
+                        waitingDocumentsCount:
+                            counts?.waitingDocuments ?? 0,
+                      ),
+                    ),
+                    Expanded(
+                      child: orders.isNotEmpty
+                          ? OrdersList(
+                              orders: orders,
+                              controller: paginationScrollController,
+                            )
+                          : const _EmptyState(
+                              icon: Icons.receipt_long_outlined,
+                              title: 'لا توجد طلبات بعد',
+                              message:
+                                  'ستظهر هنا جميع طلباتك وحالتها عند إضافتها.',
+                            ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+
+  CustomAppBar _buildAppBar() => CustomAppBar(
+    title: 'طلباتي',
+    backgroundColor: AppColors.white,
+    toolbarHeight: AppHeight.h70,
+    showScrolledUnderElevation: false,
+    titleSpacing: AppPaddingWidth.p16,
+    titleWidget: SectionTitle(
+      text: 'طلباتي',
+      color: AppColors.mainText,
+      fontSize: AppFontSize.s18,
+      fontWeight: AppFontWeight.bold,
     ),
+    customActions: [
+      HeaderIconButton(
+        icon: Iconsax.notification_outline,
+        onTap: () {},
+      ),
+    ],
   );
 
   OrderItem _toOrderItem(Item item) {
@@ -200,28 +260,6 @@ class _OrdersViewState extends State<_OrdersView>
     }
     return consultant?.toString() ?? '';
   }
-}
-
-class _ErrorState extends StatelessWidget {
-  const _ErrorState({required this.message, required this.onRetry});
-
-  final String message;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) => Center(
-    child: Padding(
-      padding: EdgeInsets.all(AppPaddingWidth.p24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(message, textAlign: TextAlign.center),
-          SizedBox(height: AppHeight.h12),
-          FilledButton(onPressed: onRetry, child: const Text('إعادة المحاولة')),
-        ],
-      ),
-    ),
-  );
 }
 
 class _EmptyState extends StatelessWidget {
