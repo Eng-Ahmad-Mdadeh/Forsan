@@ -21,42 +21,14 @@ final class OrderListLoading extends IOrderListState {
 final class OrderListLoaded extends IOrderListState {
   const OrderListLoaded({
     required this.orderList,
-    required this.hasMore,
-    this.isLoadingMore = false,
-    this.loadMoreError,
   });
 
   final OrderListModel? orderList;
-  final bool hasMore;
-  final bool isLoadingMore;
-  final String? loadMoreError;
 
   List<Item> get items => orderList?.pagination.items ?? const [];
 
-  OrderListLoaded copyWith({
-    OrderListModel? orderList,
-    bool? hasMore,
-    bool? isLoadingMore,
-    String? loadMoreError,
-    bool clearLoadMoreError = false,
-  }) {
-    return OrderListLoaded(
-      orderList: orderList ?? this.orderList,
-      hasMore: hasMore ?? this.hasMore,
-      isLoadingMore: isLoadingMore ?? false,
-      loadMoreError: clearLoadMoreError
-          ? null
-          : loadMoreError ?? this.loadMoreError,
-    );
-  }
-
   @override
-  List<Object?> get props => [
-    orderList,
-    hasMore,
-    isLoadingMore,
-    loadMoreError,
-  ];
+  List<Object?> get props => [orderList];
 }
 
 final class OrderListFailed extends IOrderListState {

@@ -14,6 +14,7 @@ class PagePaginationController<T, K> {
   int _currentPage = 0;
   int _pageSize = 0;
   int _total = 0;
+  bool _isLoadingMore = false;
 
   /// An unmodifiable view of the accumulated items.
   List<T> get items => List.unmodifiable(_items);
@@ -33,6 +34,9 @@ class PagePaginationController<T, K> {
   /// Whether there are more items that can be requested.
   bool get hasMore => _items.length < _total;
 
+  /// Whether a request for the next page is currently in progress.
+  bool get isLoadingMore => _isLoadingMore;
+
   /// Whether the controller currently holds no items.
   bool get isEmpty => _items.isEmpty;
 
@@ -42,7 +46,11 @@ class PagePaginationController<T, K> {
     _currentPage = 0;
     _pageSize = 0;
     _total = 0;
+    _isLoadingMore = false;
   }
+
+  /// Updates the loading state for the next page request.
+  void setLoadingMore(bool value) => _isLoadingMore = value;
 
   /// Replaces the current items and updates the pagination metadata.
   void replaceWith({

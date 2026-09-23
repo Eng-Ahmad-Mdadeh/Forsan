@@ -28,8 +28,7 @@ void main() {
         emitsInOrder([
           isA<OrderListLoading>(),
           isA<OrderListLoaded>()
-              .having((state) => state.items.length, 'items length', 1)
-              .having((state) => state.hasMore, 'has more', isTrue),
+              .having((state) => state.items.length, 'items length', 1),
         ]),
       );
 
@@ -37,6 +36,7 @@ void main() {
       await expectation;
 
       expect(useCase.params.single.page, 1);
+      expect(bloc.canLoadMore, isTrue);
     });
 
     test('loads the next page and emits accumulated unique items', () async {
@@ -58,19 +58,8 @@ void main() {
       final expectation = expectLater(
         bloc.stream,
         emitsInOrder([
-          isA<OrderListLoaded>().having(
-            (state) => state.isLoadingMore,
-            'is loading more',
-            isTrue,
-          ),
           isA<OrderListLoaded>()
-              .having((state) => state.items.length, 'items length', 2)
-              .having((state) => state.hasMore, 'has more', isFalse)
-              .having(
-                (state) => state.isLoadingMore,
-                'is loading more',
-                isFalse,
-              ),
+              .having((state) => state.items.length, 'items length', 2),
         ]),
       );
 
@@ -78,6 +67,8 @@ void main() {
       await expectation;
 
       expect(useCase.params.last.page, 2);
+      expect(bloc.canLoadMore, isFalse);
+      expect(bloc.isLoadingMore, isFalse);
     });
   });
 }

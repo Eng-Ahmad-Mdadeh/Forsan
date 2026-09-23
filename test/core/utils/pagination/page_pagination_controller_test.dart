@@ -12,6 +12,7 @@ void main() {
       expect(controller.total, 0);
       expect(controller.nextPage, 1);
       expect(controller.hasMore, isFalse);
+      expect(controller.isLoadingMore, isFalse);
       expect(controller.isEmpty, isTrue);
     });
 
@@ -65,6 +66,7 @@ void main() {
           pageSize: 20,
           total: 1,
         )
+        ..setLoadingMore(true)
         ..reset();
 
       expect(controller.items, isEmpty);
@@ -72,6 +74,7 @@ void main() {
       expect(controller.pageSize, 0);
       expect(controller.total, 0);
       expect(controller.nextPage, 1);
+      expect(controller.isLoadingMore, isFalse);
     });
   });
 }
