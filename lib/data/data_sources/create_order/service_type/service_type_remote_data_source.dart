@@ -15,6 +15,7 @@ class ServiceTypeRemoteDataSource
   getServiceTypes() {
     return fetchData(
       endpoint: ApiEndpoints.serviceType,
+      dataMayBeAtRoot: true,
       fromJsonT: (json) => (json as List<dynamic>)
           .map(
             (serviceType) => ServiceTypeModel.fromJson(

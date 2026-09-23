@@ -51,5 +51,14 @@ void main() {
 
       expect(response.data?.accessToken, 'nested-access-token');
     });
+
+    test('parses a list returned at the response root', () {
+      final response = BaseModel<List<String>>.fromJsonWithRootData(
+        ['business-formation', 'licensing'],
+        (json) => (json as List<dynamic>).cast<String>(),
+      );
+
+      expect(response.data, ['business-formation', 'licensing']);
+    });
   });
 }

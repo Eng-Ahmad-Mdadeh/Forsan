@@ -89,11 +89,21 @@ class BaseRemoteDataSource<T> {
       );
       return response.fold(
         (e) => Left(e),
-        (r) => Right(
-          dataMayBeAtRoot
-              ? BaseModel<T>.fromJsonWithRootData(r.data!, fromJsonT)
-              : BaseModel<T>.fromJson(r.data!, fromJsonT),
-        ),
+        (r) {
+          final responseData = r.data;
+          if (responseData == null) {
+            return Right<BaseModel<T>?>(null);
+          }
+
+          return Right(
+            dataMayBeAtRoot
+                ? BaseModel<T>.fromJsonWithRootData(responseData, fromJsonT)
+                : BaseModel<T>.fromJson(
+                    responseData as Map<String, dynamic>,
+                    fromJsonT,
+                  ),
+          );
+        },
       );
     } on AppException catch (e, s) {
       log("############################# FETCH APP EXCEPTION ################################");

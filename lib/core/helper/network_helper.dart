@@ -102,7 +102,7 @@ class NetworkHelper {
   }
 
   /// Executes a GET request with optional query parameters.
-  Future<Either<ApiException, Response<Map<String, dynamic>>>> get(
+  Future<Either<ApiException, Response<dynamic>>> get(
     String url, {
     Map<String, dynamic>? queryParams,
     dynamic data,
@@ -305,8 +305,8 @@ class NetworkHelper {
   }
 
   /// Performs an HTTP request and handles errors.
-  Future<Either<ApiException, Response<Map<String, dynamic>>>> _performRequest(
-    Future<Response<Map<String, dynamic>>> Function() request,
+  Future<Either<ApiException, Response<dynamic>>> _performRequest(
+    Future<Response<dynamic>> Function() request,
   ) async {
     if (await NetworkUtils.checkInternet()) {
       try {
