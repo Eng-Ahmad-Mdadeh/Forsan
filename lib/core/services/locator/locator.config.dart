@@ -15,6 +15,8 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../../data/data_sources/auth/auth_remote_data_source.dart' as _i444;
 import '../../../data/data_sources/auth/auth_storage_data_source.dart' as _i244;
+import '../../../data/data_sources/create_order/service_type/service_type_remote_data_source.dart'
+    as _i619;
 import '../../../data/data_sources/home/home_remote_data_source.dart' as _i949;
 import '../../../data/data_sources/profile/profile_remote_data_source.dart'
     as _i265;
@@ -22,11 +24,16 @@ import '../../../data/models/auth/auth_model.dart' as _i323;
 import '../../../data/models/base/base_model.dart' as _i480;
 import '../../../data/models/home/home_model.dart' as _i703;
 import '../../../data/models/profile/profile_model.dart' as _i705;
+import '../../../data/models/service_type/service_type_model.dart' as _i964;
 import '../../../data/repositories/auth/auth_repository.dart' as _i202;
+import '../../../data/repositories/create_order/service_type/service_type_repository.dart'
+    as _i254;
 import '../../../data/repositories/home/home_repository.dart' as _i13;
 import '../../../data/repositories/profile/profile_repository.dart' as _i922;
 import '../../../domain/entities/auth/auth_entity.dart' as _i450;
 import '../../../domain/repositories/auth/i_auth_repository.dart' as _i1064;
+import '../../../domain/repositories/create_order/service_type/i_service_type_repository.dart'
+    as _i637;
 import '../../../domain/repositories/home/i_home_repository.dart' as _i751;
 import '../../../domain/repositories/profile/i_profile_repository.dart'
     as _i1042;
@@ -34,6 +41,8 @@ import '../../../domain/usecases/auth/check_code_usecase.dart' as _i298;
 import '../../../domain/usecases/auth/login_usecase.dart' as _i895;
 import '../../../domain/usecases/auth/logout_usecase.dart' as _i596;
 import '../../../domain/usecases/auth/resend_code_usecase.dart' as _i968;
+import '../../../domain/usecases/create_order/service_type/service_type_use_case.dart'
+    as _i80;
 import '../../../domain/usecases/home/home_use_case.dart' as _i208;
 import '../../../domain/usecases/i_use_case.dart' as _i795;
 import '../../../domain/usecases/profile/profile_use_case.dart' as _i76;
@@ -53,6 +62,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i244.AuthStorageDataSource>(
       () => _i244.AuthStorageDataSource(),
     );
+    gh.factory<_i619.ServiceTypeRemoteDataSource>(
+      () => _i619.ServiceTypeRemoteDataSource(),
+    );
     gh.factory<_i949.HomeRemoteDataSource>(() => _i949.HomeRemoteDataSource());
     gh.factory<_i265.ProfileRemoteDataSource>(
       () => _i265.ProfileRemoteDataSource(),
@@ -61,8 +73,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i751.IHomeRepository>(
       () => _i13.HomeRepository(gh<_i949.HomeRemoteDataSource>()),
     );
+    gh.factory<_i637.IServiceTypeRepository>(
+      () =>
+          _i254.ServiceTypeRepository(gh<_i619.ServiceTypeRemoteDataSource>()),
+    );
     gh.factory<_i1042.IProfileRepository>(
       () => _i922.ProfileRepository(gh<_i265.ProfileRemoteDataSource>()),
+    );
+    gh.factory<_i795.IUseCase<_i480.BaseModel<_i964.ServiceTypeModel>?, Null>>(
+      () => _i80.ServiceTypeUseCase(gh<_i637.IServiceTypeRepository>()),
+      instanceName: 'ServiceType',
     );
     gh.factory<_i444.AuthRemoteDataSource>(
       () => _i444.AuthRemoteDataSource(gh<_i1052.DeviceInfoHelper>()),

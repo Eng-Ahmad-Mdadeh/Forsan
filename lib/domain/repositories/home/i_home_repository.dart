@@ -5,6 +5,4 @@ import 'package:forsan/data/models/base/base_model.dart';
 
 abstract interface class IHomeRepository {
   Future<Either<AppException, BaseModel<HomeModel>?>> getHome();
-
-
 }

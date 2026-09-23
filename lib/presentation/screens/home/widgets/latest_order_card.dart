@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:forsan/core/extension/date_time_extension.dart';
+import 'package:forsan/data/models/home/home_model.dart';
 
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
@@ -9,14 +11,15 @@ import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
 
 class LatestOrderCard extends StatelessWidget {
-  const LatestOrderCard({super.key});
+  final HomeModel homeModel;
+  const LatestOrderCard({super.key, required this.homeModel});
 
   @override
   Widget build(BuildContext context) => Directionality(
     textDirection: TextDirection.rtl,
     child: Semantics(
       container: true,
-      label: 'تفاصيل الطلب FR-2026-00125925، نسبة الإنجاز 50 بالمائة',
+      label: 'تفاصيل الطلب، نسبة الإنجاز ',
       child: Container(
         height: AppHeight.h160,
         padding: EdgeInsetsDirectional.only(
@@ -39,9 +42,9 @@ class LatestOrderCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Expanded(child: _OrderDetails()),
+            Expanded(child: _OrderDetails(homeModel)),
             SizedBox(width: AppWidth.w12),
-            const _OrderProgressAndAction(),
+            _OrderProgressAndAction(homeModel),
           ],
         ),
       ),
@@ -50,7 +53,8 @@ class LatestOrderCard extends StatelessWidget {
 }
 
 class _OrderDetails extends StatelessWidget {
-  const _OrderDetails();
+  final HomeModel homeModel;
+  const _OrderDetails(this.homeModel);
 
   @override
   Widget build(BuildContext context) => Column(
@@ -78,7 +82,7 @@ class _OrderDetails extends StatelessWidget {
           ),
           SizedBox(width: AppWidth.w6),
           BodyTitle(
-            text: 'بانتظار المستندات',
+            text: homeModel.currentRequest?.statusLabel??'',
             color: AppColors.secondary,
             fontSize: AppFontSize.s12,
             fontWeight: AppFontWeight.medium,
@@ -87,7 +91,7 @@ class _OrderDetails extends StatelessWidget {
       ),
       SizedBox(height: AppHeight.h7),
       SectionTitle(
-        text: 'تأسيس شركة لشخص واحد',
+        text: homeModel.currentRequest?.serviceName??'',
         color: AppColors.primaryDark,
         fontSize: AppFontSize.s14,
         fontWeight: AppFontWeight.bold,
@@ -95,7 +99,7 @@ class _OrderDetails extends StatelessWidget {
       ),
       SizedBox(height: AppHeight.h4),
       BodyTitle(
-        text: 'FR-2026-00125925',
+        text:homeModel.currentRequest?.reference??'',
         color: AppColors.secondaryText,
         fontSize: AppFontSize.s12,
         fontWeight: AppFontWeight.medium,
@@ -111,7 +115,10 @@ class _OrderDetails extends StatelessWidget {
           ),
           SizedBox(width: AppWidth.w2),
           BodyTitle(
-            text: '20/05/2026',
+            text:
+            homeModel.currentRequest?.createdAt
+                ?.formatWithPattern('dd/MM/yyyy') ??
+                '',
             color: AppColors.primaryDark,
             fontSize: AppFontSize.s11,
             fontWeight: AppFontWeight.medium,
@@ -128,7 +135,7 @@ class _OrderDetails extends StatelessWidget {
           ),
           SizedBox(width: AppWidth.w2),
           BodyTitle(
-            text: 'المستشار: أحمد إبراهيم',
+            text: homeModel.currentRequest?.consultant?.fullName ?? '',
             color: AppColors.primaryDark,
             fontSize: AppFontSize.s11,
             fontWeight: AppFontWeight.medium,
@@ -141,7 +148,9 @@ class _OrderDetails extends StatelessWidget {
 }
 
 class _OrderProgressAndAction extends StatelessWidget {
-  const _OrderProgressAndAction();
+  const _OrderProgressAndAction(this.homeModel);
+
+  final HomeModel homeModel;
 
   @override
   Widget build(BuildContext context) => SizedBox(
@@ -172,7 +181,7 @@ class _OrderProgressAndAction extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SectionTitle(
-                    text: '50%',
+                    text: '${homeModel.currentRequest?.progress ?? 0}%',
                     color: AppColors.mainText,
                     fontSize: AppFontSize.s24,
                     fontWeight: AppFontWeight.bold,
