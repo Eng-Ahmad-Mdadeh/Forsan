@@ -5,6 +5,7 @@ import 'package:forsan/data/models/base/base_model.dart';
 import 'package:forsan/data/models/order_list/order_list_model.dart';
 import 'package:forsan/data/data_sources/order_list/order_list_remote_data_source.dart';
 import 'package:forsan/domain/repositories/order_list/i_order_list_repository.dart';
+import 'package:forsan/domain/entities/order_list/order_list_entity.dart';
 
 @Injectable(as: IOrderListRepository)
 class OrderListRepository implements IOrderListRepository{
@@ -13,8 +14,10 @@ class OrderListRepository implements IOrderListRepository{
   OrderListRepository(this._remoteDataSource);
 
   @override
-  Future<Either<AppException, BaseModel<OrderListModel>?>> getOrderList() async {
-    final response = await _remoteDataSource.getOrderList();
+  Future<Either<AppException, BaseModel<OrderListModel>?>> getOrderList(
+    OrderListEntity entity,
+  ) async {
+    final response = await _remoteDataSource.getOrderList(entity);
     return response.fold(
           (l) async => Left(l),
           (r) async {
