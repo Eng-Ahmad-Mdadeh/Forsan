@@ -7,17 +7,18 @@ import 'package:forsan/data/data_sources/create_order/service_type/service_type_
 import 'package:forsan/domain/repositories/create_order/service_type/i_service_type_repository.dart';
 
 @Injectable(as: IServiceTypeRepository)
-class ServiceTypeRepository implements IServiceTypeRepository{
+class ServiceTypeRepository implements IServiceTypeRepository {
   final ServiceTypeRemoteDataSource _remoteDataSource;
 
   ServiceTypeRepository(this._remoteDataSource);
 
   @override
-  Future<Either<AppException, BaseModel<ServiceTypeModel>?>> getServiceType() async {
+  Future<Either<AppException, BaseModel<ServiceTypeModel>?>>
+  getServiceTypes() async {
     final response = await _remoteDataSource.getServiceType();
     return response.fold(
-          (l) async => Left(l),
-          (r) async {
+      (l) async => Left(l),
+      (r) async {
         return Right(r);
       },
     );
