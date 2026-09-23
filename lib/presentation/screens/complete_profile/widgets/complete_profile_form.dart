@@ -83,7 +83,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                           .fullNameChanged,
                       validator: _requiredValidator,
                     ),
-                    SizedBox(height: AppHeight.h12),
+
 
                     CompleteProfileDropdownField(
                       title: context.loc.country,
@@ -93,7 +93,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                           .read<CompleteProfileCubit>()
                           .countryChanged,
                     ),
-                    SizedBox(height: AppHeight.h12),
+                    SizedBox(height: AppHeight.h20),
                     CompleteProfileDropdownField(
                       title: context.loc.complete_profile_nationality,
                       hint: context.loc.complete_profile_select_hint,
@@ -102,7 +102,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                           .read<CompleteProfileCubit>()
                           .nationalityChanged,
                     ),
-                    SizedBox(height: AppHeight.h12),
+                    SizedBox(height: AppHeight.h20),
 
                     CustomInputField(
                       backgroundColor: AppColors.white,

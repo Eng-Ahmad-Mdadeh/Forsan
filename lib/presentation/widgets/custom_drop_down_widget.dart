@@ -128,6 +128,7 @@ class CustomDropDownWidget extends StatelessWidget {
                 ),
                 items: isStringList ? items : items!.map((e) => e.name!).toList(),
                 hintText: hintText,
+
               ),
             ),
     );

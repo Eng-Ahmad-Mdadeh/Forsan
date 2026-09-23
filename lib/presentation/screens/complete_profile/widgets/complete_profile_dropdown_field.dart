@@ -34,7 +34,7 @@ class CompleteProfileDropdownField extends StatelessWidget {
           text: title,
           textAlign: TextAlign.start,
           fontSize: AppFontSize.s15,
-          fontWeight: AppFontWeight.bold,
+          fontWeight: AppFontWeight.medium,
           color: AppColors.primaryDark,
         ),
         SizedBox(height: AppHeight.h4),
