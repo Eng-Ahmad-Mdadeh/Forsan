@@ -15,7 +15,7 @@ void main() {
 
     setUp(() {
       useCase = _OrderListUseCase();
-      bloc = OrderListBloc(useCase);
+      bloc = OrderListBloc(getOrderList: useCase);
     });
 
     tearDown(() => bloc.close());

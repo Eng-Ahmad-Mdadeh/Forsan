@@ -5,13 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
-import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/core/utils/pagination/pagination_scroll_mixin.dart';
-import 'package:forsan/data/models/base/base_model.dart';
 import 'package:forsan/data/models/order_list/order_list_model.dart';
-import 'package:forsan/domain/entities/order_list/order_list_entity.dart';
-import 'package:forsan/domain/usecases/i_use_case.dart';
 import 'package:forsan/presentation/bloc/order_list/order_list_bloc.dart';
+import 'package:forsan/presentation/cubit/orders/orders_cubit.dart';
 import 'package:forsan/presentation/screens/orders/widgets/orders_search_bar.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:intl/intl.dart';
@@ -31,12 +28,9 @@ class OrdersScreen extends StatelessWidget {
   Widget build(BuildContext context) => MultiBlocProvider(
     providers: [
       BlocProvider<OrderListBloc>(
-        create: (_) => OrderListBloc(
-          locator<IUseCase<BaseModel<OrderListModel>?, OrderListEntity>>(
-            instanceName: 'OrderList',
-          ),
-        ),
+        create: (_) => OrderListBloc(),
       ),
+      BlocProvider<OrdersCubit>(create: (_) => OrdersCubit()),
     ],
     child: const BodyOrdersScreen(),
   );
@@ -51,15 +45,7 @@ class BodyOrdersScreen extends StatefulWidget {
 
 class _BodyOrdersScreenState extends State<BodyOrdersScreen>
     with PaginationScrollMixin<BodyOrdersScreen> {
-  static const List<String?> _statuses = [
-    null,
-    'UNDER_REVIEW',
-    'WAITING_DOCUMENTS',
-  ];
-
   Timer? _searchDebounce;
-  String _query = '';
-  int _selectedStatus = 0;
 
   static const List<OrderItem> _skeletonOrders = [
     OrderItem(
@@ -85,11 +71,6 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
     ),
   ];
 
-  OrderListEntity get _entity => OrderListEntity(
-    status: _statuses[_selectedStatus],
-    query: _query,
-  );
-
   @override
   bool get canLoadMore => context.read<OrderListBloc>().canLoadMore;
 
@@ -100,13 +81,15 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
   void initState() {
     super.initState();
     context.read<OrderListBloc>().add(
-      const GetOrderListEvent(OrderListEntity()),
+      GetOrderListEvent(context.read<OrdersCubit>().entity),
     );
   }
 
   @override
   void onLoadMore() {
-    context.read<OrderListBloc>().add(LoadMoreOrderListEvent(_entity));
+    context.read<OrderListBloc>().add(
+      LoadMoreOrderListEvent(context.read<OrdersCubit>().entity),
+    );
   }
 
   @override
@@ -119,26 +102,30 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
     _searchDebounce?.cancel();
     _searchDebounce = Timer(const Duration(milliseconds: 400), () {
       if (!mounted) return;
-      _query = query.trim();
+      context.read<OrdersCubit>().updateQuery(query);
       _reloadOrders();
     });
   }
 
   void _onStatusSelected(int index) {
-    if (index == _selectedStatus) return;
+    final cubit = context.read<OrdersCubit>();
+    if (index == cubit.state) return;
 
-    setState(() => _selectedStatus = index);
+    cubit.selectStatus(index);
     _reloadOrders();
   }
 
   void _reloadOrders() {
-    context.read<OrderListBloc>().add(GetOrderListEvent(_entity));
+    context.read<OrderListBloc>().add(
+      GetOrderListEvent(context.read<OrdersCubit>().entity),
+    );
   }
 
   @override
-  Widget build(BuildContext context) =>
-      BlocBuilder<OrderListBloc, IOrderListState>(
-        builder: (context, state) {
+  Widget build(BuildContext context) => BlocBuilder<OrdersCubit, int>(
+    builder: (context, selectedStatus) =>
+        BlocBuilder<OrderListBloc, IOrderListState>(
+          builder: (context, state) {
           if (state is OrderListFailed) {
             return Scaffold(
               backgroundColor: AppColors.white,
@@ -193,7 +180,7 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
                         horizontal: AppPaddingWidth.p16,
                       ),
                       child: OrdersStatusTabs(
-                        selectedIndex: _selectedStatus,
+                        selectedIndex: selectedStatus,
                         onSelected: _onStatusSelected,
                         allCount: counts?.all ?? 0,
                         underReviewCount: counts?.underReview ?? 0,
@@ -219,8 +206,9 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
               ),
             ),
           );
-        },
-      );
+          },
+        ),
+  );
 
   CustomAppBar _buildAppBar() => CustomAppBar(
     title: 'طلباتي',
