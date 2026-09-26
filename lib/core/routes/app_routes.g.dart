@@ -125,34 +125,33 @@ mixin $CompleteProfileRoute on GoRouteData {
 }
 
 RouteBase get $ordersDetailsRoute => GoRouteData.$route(
-  path: '/order-details',
+  path: '/orders/:orderId',
   hasOverriddenOnExit: false,
   factory: $OrdersDetailsRoute._fromState,
 );
 
 mixin $OrdersDetailsRoute on GoRouteData {
   static OrdersDetailsRoute _fromState(GoRouterState state) =>
-      OrdersDetailsRoute(state.extra as OrderItem);
+      OrdersDetailsRoute(state.pathParameters['orderId']!);
 
   OrdersDetailsRoute get _self => this as OrdersDetailsRoute;
 
   @override
-  String get location => GoRouteData.$location('/order-details');
+  String get location =>
+      GoRouteData.$location('/orders/${Uri.encodeComponent(_self.orderId)}');
 
   @override
-  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+  void go(BuildContext context) => context.go(location);
 
   @override
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: _self.$extra);
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
   @override
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: _self.$extra);
+      context.pushReplacement(location);
 
   @override
-  void replace(BuildContext context) =>
-      context.replace(location, extra: _self.$extra);
+  void replace(BuildContext context) => context.replace(location);
 }
 
 RouteBase get $completeRequirementsRoute => GoRouteData.$route(

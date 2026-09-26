@@ -31,7 +31,7 @@ class OrdersList extends StatelessWidget {
       return OrderCard(
         order: order,
         detailsButtonText: 'تفاصيل الطلب',
-        onDetailsPressed: () => OrdersDetailsRoute(order).push(context),
+        onDetailsPressed: () => OrdersDetailsRoute(order.id).push(context),
       );
     },
   );

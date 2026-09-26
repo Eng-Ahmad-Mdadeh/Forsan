@@ -130,11 +130,11 @@ class CompleteProfileRoute extends GoRouteData with $CompleteProfileRoute {
   }
 }
 
-@TypedGoRoute<OrdersDetailsRoute>(path: '/order-details')
+@TypedGoRoute<OrdersDetailsRoute>(path: '/orders/:orderId')
 class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
-  const OrdersDetailsRoute(this.$extra);
+  const OrdersDetailsRoute(this.orderId);
 
-  final OrderItem $extra;
+  final String orderId;
 
   @override
   CustomTransitionPage<void> buildPage(
@@ -142,7 +142,7 @@ class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
     GoRouterState state,
   ) {
     return OrdersDetailsScreen(
-      order: $extra,
+      orderId: orderId,
     ).buildPage(pageAnimation: PageAnimation.fade);
   }
 }

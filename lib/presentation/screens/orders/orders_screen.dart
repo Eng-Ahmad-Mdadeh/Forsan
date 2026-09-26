@@ -49,6 +49,7 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
 
   static const List<OrderItem> _skeletonOrders = [
     OrderItem(
+      id: '1',
       title: 'تأسيس شركة جديدة',
       number: 'FR-2026-000000',
       date: '23/09/2026',
@@ -56,6 +57,7 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
       status: 'قيد المراجعة',
     ),
     OrderItem(
+      id: '2',
       title: 'تأسيس شركة جديدة',
       number: 'FR-2026-000000',
       date: '23/09/2026',
@@ -63,6 +65,7 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
       status: 'قيد المراجعة',
     ),
     OrderItem(
+      id: '3',
       title: 'تأسيس شركة جديدة',
       number: 'FR-2026-000000',
       date: '23/09/2026',
@@ -252,6 +255,7 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
 
   OrderItem _toOrderItem(Item item) {
     return OrderItem(
+      id: item.id ?? '',
       title: item.serviceName ?? '',
       number: item.reference ?? '',
       date: item.createdAt == null

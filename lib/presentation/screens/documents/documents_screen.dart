@@ -16,6 +16,7 @@ class DocumentsScreen extends StatelessWidget {
 
   static const _documents = [
     OrderItem(
+      id: '1',
       title: 'تأسيس شركة لشخص واحد',
       number: 'FR-2026-00125925',
       date: '20/05/2026',
