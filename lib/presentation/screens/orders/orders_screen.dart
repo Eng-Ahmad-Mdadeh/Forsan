@@ -172,6 +172,7 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
                       child: OrdersSearchBar(
                         onSearchChanged: _onSearchChanged,
                         onFilterPressed: () {},
+
                       ),
                     ),
                     SizedBox(height: AppHeight.h10),
