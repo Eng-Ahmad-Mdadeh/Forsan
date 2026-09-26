@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/data/models/order_list/order_list_model.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 import '../../../core/resources/app_colors.dart';
@@ -8,22 +9,23 @@ import '../../widgets/custom_app_bar.dart';
 import '../../widgets/status_badge.dart';
 import '../../widgets/text/section_title.dart';
 import '../document_details/document_details_screen.dart';
-import '../orders/models/order_item.dart';
 import 'widgets/document_order_card.dart';
 
 class DocumentsScreen extends StatelessWidget {
   const DocumentsScreen({super.key});
 
-  static const _documents = [
-    OrderItem(
-      id: '1',
-      title: 'تأسيس شركة لشخص واحد',
-      number: 'FR-2026-00125925',
-      date: '20/05/2026',
-      consultant: 'أحمد إبراهيم',
-      status: StatusBadge.waitingDocuments,
-    ),
-  ];
+  static final _document = Item(
+    id: '1',
+    reference: 'FR-2026-00125925',
+    serviceName: 'تأسيس شركة لشخص واحد',
+    categoryName: null,
+    status: null,
+    displayStatus: null,
+    statusLabel: StatusBadge.waitingDocuments,
+    progress: null,
+    createdAt: DateTime(2026, 5, 20),
+    consultant: 'أحمد إبراهيم',
+  );
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -55,10 +57,10 @@ class DocumentsScreen extends StatelessWidget {
           AppPaddingWidth.p16,
           AppPaddingHeight.p24,
         ),
-        itemCount: _documents.length,
+        itemCount: 1,
         separatorBuilder: (_, _) => SizedBox(height: AppHeight.h12),
         itemBuilder: (context, index) => DocumentOrderCard(
-          document: _documents[index],
+          item: _document,
           onDetailsPressed: () => Navigator.of(context).push(
             MaterialPageRoute<void>(
               builder: (_) => const DocumentDetailsScreen(

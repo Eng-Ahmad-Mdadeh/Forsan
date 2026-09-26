@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/data/models/order_details/order_details_model.dart';
 import 'package:forsan/presentation/widgets/status_badge.dart';
 import 'package:forsan/presentation/widgets/status_icon.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
@@ -8,18 +10,25 @@ import '../../../../core/resources/app_values.dart';
 import '../../../widgets/section_card.dart';
 import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
-import '../../orders/models/order_item.dart';
-
-
 class OrderDetailsHeaderCard extends StatelessWidget {
-  const OrderDetailsHeaderCard({super.key, required this.order});
+  const OrderDetailsHeaderCard({
+    super.key,
+    required this.item,
+  });
 
-  final OrderItem order;
+  final OrderDetailsModel item;
+
+  String get _title => item.serviceName ?? '';
+  String get _number => item.reference ?? '';
+  String get _status => item.statusLabel ?? item.displayStatus ?? '';
+  String get _date => item.createdAt == null
+      ? ''
+      : DateFormat('dd/MM/yyyy').format(item.createdAt!.toLocal());
 
   @override
   Widget build(BuildContext context) => Semantics(
     container: true,
-    label: '${order.title}، ${order.number}، ${order.status}',
+    label: '$_title، $_number، $_status',
     child: SectionCard(
       borderRadius:BorderRadius.circular(AppRadius.r10),
       padding: EdgeInsets.symmetric(
@@ -34,7 +43,7 @@ class OrderDetailsHeaderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SectionTitle(
-                  text: order.title,
+                  text: _title,
                   color: AppColors.primaryDark,
                   fontSize: AppFontSize.s14,
                   fontWeight: AppFontWeight.bold,
@@ -42,7 +51,7 @@ class OrderDetailsHeaderCard extends StatelessWidget {
                 ),
                 SizedBox(height: AppHeight.h4),
                 BodyTitle(
-                  text: order.number,
+                  text: _number,
                   color: AppColors.secondaryText,
                   fontSize: AppFontSize.s12,
                   fontWeight: AppFontWeight.medium,
@@ -58,7 +67,7 @@ class OrderDetailsHeaderCard extends StatelessWidget {
                     SizedBox(width: AppWidth.w4),
                     Flexible(
                       child: BodyTitle(
-                        text: 'تاريخ الطلب : ${order.date}',
+                        text: 'تاريخ الطلب : $_date',
                         color: AppColors.primaryDark,
                         fontSize: AppFontSize.s10,
                         fontWeight: AppFontWeight.medium,
@@ -73,9 +82,9 @@ class OrderDetailsHeaderCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              StatusBadge(status: order.status, showOuterCircle: false),
+              StatusBadge(status: _status, showOuterCircle: false),
               SizedBox(height: AppHeight.h14),
-              StatusIcon(status: order.status),
+              StatusIcon(status: _status),
             ],
           ),
         ],
