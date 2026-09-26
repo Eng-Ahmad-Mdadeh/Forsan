@@ -115,6 +115,7 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
                     children: [
                       OrderDetailsHeaderCard(order: order),
                       SizedBox(height: AppHeight.h16),
+                      if(details?.requiredAction == true)
                       RequiredActionCard(
                         title: context.loc.order_required_action,
                         message: context.loc.order_required_documents_message,
@@ -133,9 +134,10 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
                       SizedBox(height: AppHeight.h16),
                       const OrderStagesCard(),
                       SizedBox(height: AppHeight.h16),
+                      if(details?.attachments == true)
                       const OrderDocumentsCard(),
                       SizedBox(height: AppHeight.h16),
-                      const OrderAttachedDocumentsCard(),
+                      //const OrderAttachedDocumentsCard(),
                       SizedBox(height: AppHeight.h20),
                       Row(
                         children: [
