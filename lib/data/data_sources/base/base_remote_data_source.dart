@@ -78,6 +78,7 @@ class BaseRemoteDataSource<T> {
     String endpoint = '',
     Map<String, dynamic>? queryParams,
     Map<String, dynamic>? data,
+    String? authToken,
     bool dataMayBeAtRoot = false,
     required T Function(Object? json) fromJsonT,
   }) async {
@@ -86,6 +87,7 @@ class BaseRemoteDataSource<T> {
         baseEndpoint + endpoint,
         queryParams: queryParams,
         data: data,
+        authToken: authToken,
       );
       return response.fold(
         (e) => Left(e),

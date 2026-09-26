@@ -9,6 +9,7 @@ part of 'order_list_model.dart';
 Counts _$CountsFromJson(Map<String, dynamic> json) => Counts(
   all: (json['all'] as num?)?.toInt(),
   underReview: (json['UNDER_REVIEW'] as num?)?.toInt(),
+  waitingDocuments: (json['WAITING_DOCUMENTS'] as num?)?.toInt(),
 );
 
 Item _$ItemFromJson(Map<String, dynamic> json) => Item(

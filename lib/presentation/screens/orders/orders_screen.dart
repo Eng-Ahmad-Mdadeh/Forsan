@@ -1,13 +1,21 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/core/resources/app_colors.dart';
+import 'package:forsan/core/resources/app_fonts.dart';
+import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/utils/pagination/pagination_scroll_mixin.dart';
+import 'package:forsan/data/models/order_list/order_list_model.dart';
+import 'package:forsan/presentation/bloc/order_list/order_list_bloc.dart';
+import 'package:forsan/presentation/cubit/orders/orders_cubit.dart';
 import 'package:forsan/presentation/screens/orders/widgets/orders_search_bar.dart';
 import 'package:icons_plus/icons_plus.dart';
-import '../../../core/resources/app_colors.dart';
-import '../../../core/resources/app_fonts.dart';
-import '../../../core/resources/app_values.dart';
-import '../../cubit/orders/orders_cubit.dart';
+import 'package:intl/intl.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
 import '../../widgets/custom_app_bar.dart';
-import '../../widgets/status_badge.dart';
+import '../../widgets/failure_screen.dart';
 import '../../widgets/text/section_title.dart';
 import 'models/order_item.dart';
 import 'widgets/orders_list.dart';
@@ -17,133 +25,229 @@ class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-    create: (_) => OrdersCubit(),
-    child: const _OrdersView(),
+  Widget build(BuildContext context) => MultiBlocProvider(
+    providers: [
+      BlocProvider<OrderListBloc>(
+        create: (_) => OrderListBloc(),
+      ),
+      BlocProvider<OrdersCubit>(create: (_) => OrdersCubit()),
+    ],
+    child: const BodyOrdersScreen(),
   );
 }
 
-class _OrdersView extends StatefulWidget {
-  const _OrdersView();
+class BodyOrdersScreen extends StatefulWidget {
+  const BodyOrdersScreen({super.key});
 
   @override
-  State<_OrdersView> createState() => _OrdersViewState();
+  State<BodyOrdersScreen> createState() => _BodyOrdersScreenState();
 }
 
-class _OrdersViewState extends State<_OrdersView> {
-  static const _orders = [
+class _BodyOrdersScreenState extends State<BodyOrdersScreen>
+    with PaginationScrollMixin<BodyOrdersScreen> {
+  Timer? _searchDebounce;
+
+  static const List<OrderItem> _skeletonOrders = [
     OrderItem(
-      title: 'تأسيس شركة لشخص واحد',
-      number: 'FR-2026-00125925',
-      date: '20/05/2026',
-      consultant: 'أحمد إبراهيم',
-      status: StatusBadge.waitingDocuments,
+      title: 'تأسيس شركة جديدة',
+      number: 'FR-2026-000000',
+      date: '23/09/2026',
+      consultant: 'اسم المستشار',
+      status: 'قيد المراجعة',
     ),
     OrderItem(
-      title: 'تأسيس شركة لشخص واحد',
-      number: 'FR-2026-00125925',
-      date: '20/05/2026',
-      consultant: 'أحمد إبراهيم',
-      status: StatusBadge.underReview,
+      title: 'تأسيس شركة جديدة',
+      number: 'FR-2026-000000',
+      date: '23/09/2026',
+      consultant: 'اسم المستشار',
+      status: 'قيد المراجعة',
     ),
     OrderItem(
-      title: 'تأسيس شركة لشخص واحد',
-      number: 'FR-2026-00125925',
-      date: '20/05/2026',
-      consultant: 'أحمد إبراهيم',
-      status: StatusBadge.inProgress,
-    ),
-    OrderItem(
-      title: 'تأسيس شركة لشخص واحد',
-      number: 'FR-2026-00125925',
-      date: '20/05/2026',
-      consultant: 'أحمد إبراهيم',
-      status: StatusBadge.completed,
+      title: 'تأسيس شركة جديدة',
+      number: 'FR-2026-000000',
+      date: '23/09/2026',
+      consultant: 'اسم المستشار',
+      status: 'قيد المراجعة',
     ),
   ];
 
-  String _query = '';
-
-  List<OrderItem> _visibleOrders(int selectedStatus) => _orders.where((order) {
-    final matchesStatus = switch (selectedStatus) {
-      1 => order.status == StatusBadge.underReview,
-      2 => order.status == StatusBadge.waitingDocuments,
-      _ => true,
-    };
-    final normalizedQuery = _query.trim().toLowerCase();
-    final matchesQuery =
-        normalizedQuery.isEmpty ||
-        order.title.toLowerCase().contains(normalizedQuery) ||
-        order.number.toLowerCase().contains(normalizedQuery);
-    return matchesStatus && matchesQuery;
-  }).toList();
+  @override
+  bool get canLoadMore => context.read<OrderListBloc>().canLoadMore;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.white,
-    appBar: CustomAppBar(
-      title: 'طلباتي',
-      backgroundColor: AppColors.white,
-      toolbarHeight: AppHeight.h70,
-      showScrolledUnderElevation: false,
-      titleSpacing: AppPaddingWidth.p16,
-      titleWidget: SectionTitle(
-        text: 'طلباتي',
-        color: AppColors.mainText,
-        fontSize: AppFontSize.s18,
-        fontWeight: AppFontWeight.bold,
-      ),
-      customActions: [
-        HeaderIconButton(
-          icon: Iconsax.notification_outline,
-          onTap: () {},
+  bool get isLoadingMore => context.read<OrderListBloc>().isLoadingMore;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<OrderListBloc>().add(
+      GetOrderListEvent(context.read<OrdersCubit>().state.entity),
+    );
+  }
+
+  @override
+  void onLoadMore() {
+    context.read<OrderListBloc>().add(
+      LoadMoreOrderListEvent(context.read<OrdersCubit>().state.entity),
+    );
+  }
+
+  @override
+  void dispose() {
+    _searchDebounce?.cancel();
+    super.dispose();
+  }
+
+  void _onSearchChanged(String query) {
+    _searchDebounce?.cancel();
+    _searchDebounce = Timer(const Duration(milliseconds: 400), () {
+      if (!mounted) return;
+      context.read<OrdersCubit>().updateQuery(query);
+      _reloadOrders();
+    });
+  }
+
+  void _onStatusSelected(int index) {
+    final cubit = context.read<OrdersCubit>();
+    if (index == cubit.state.selectedStatus) return;
+
+    cubit.selectStatus(index);
+    _reloadOrders();
+  }
+
+  void _reloadOrders() {
+    context.read<OrderListBloc>().add(
+      GetOrderListEvent(context.read<OrdersCubit>().state.entity),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) => BlocBuilder<OrdersCubit, OrdersState>(
+    builder: (context, ordersState) =>
+        BlocBuilder<OrderListBloc, IOrderListState>(
+          builder: (context, state) {
+          if (state is OrderListFailed) {
+            return Scaffold(
+              backgroundColor: AppColors.white,
+              appBar: _buildAppBar(),
+              body: FailureScreen(
+                errorMessage: state.message,
+                onPressed: _reloadOrders,
+              ),
+            );
+          }
+
+          final loadedState = state is OrderListLoaded ? state : null;
+          final counts = loadedState?.orderList?.counts;
+          final isLoading =
+              state is OrderListInitial || state is OrderListLoading;
+          final orders = isLoading
+              ? _skeletonOrders
+              : loadedState?.items.map(_toOrderItem).toList(growable: false) ??
+                    const <OrderItem>[];
+
+          return Skeletonizer(
+            enableSwitchAnimation: true,
+            effect: ShimmerEffect(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              begin: AlignmentDirectional.centerStart,
+              end: AlignmentDirectional.centerEnd,
+              duration: const Duration(milliseconds: 500),
+            ),
+            enabled: isLoading,
+            child: Scaffold(
+              backgroundColor: AppColors.white,
+              appBar: _buildAppBar(),
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        AppPaddingWidth.p16,
+                        AppPaddingHeight.p20,
+                        AppPaddingWidth.p16,
+                        0,
+                      ),
+                      child: OrdersSearchBar(
+                        onSearchChanged: _onSearchChanged,
+                        onFilterPressed: () {},
+                      ),
+                    ),
+                    SizedBox(height: AppHeight.h10),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppPaddingWidth.p16,
+                      ),
+                      child: OrdersStatusTabs(
+                        selectedIndex: ordersState.selectedStatus,
+                        onSelected: _onStatusSelected,
+                        allCount: counts?.all ?? 0,
+                        underReviewCount: counts?.underReview ?? 0,
+                        waitingDocumentsCount:
+                            counts?.waitingDocuments ?? 0,
+                      ),
+                    ),
+                    Expanded(
+                      child: orders.isNotEmpty
+                          ? OrdersList(
+                              orders: orders,
+                              controller: paginationScrollController,
+                            )
+                          : const _EmptyState(
+                              icon: Icons.receipt_long_outlined,
+                              title: 'لا توجد طلبات بعد',
+                              message:
+                                  'ستظهر هنا جميع طلباتك وحالتها عند إضافتها.',
+                            ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+          },
         ),
-      ],
-    ),
-    body: SafeArea(
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(
-              AppPaddingWidth.p16,
-              AppPaddingHeight.p20,
-              AppPaddingWidth.p16,
-              0,
-            ),
-            child: OrdersSearchBar(
-              onSearchChanged: (query) => setState(() => _query = query),
-              onFilterPressed: () {},
-            ),
-          ),
-          SizedBox(height: AppHeight.h10),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p16),
-            child: const OrdersStatusTabs(),
-          ),
-          Expanded(
-            child: BlocBuilder<OrdersCubit, int>(
-              builder: (context, selectedStatus) {
-                final visibleOrders = _visibleOrders(selectedStatus);
-      
-                return visibleOrders.isNotEmpty
-                    ? OrdersList(orders: visibleOrders)
-                    : const _EmptyState(
-                        icon: Icons.receipt_long_outlined,
-                        title: 'لا توجد طلبات بعد',
-                        message: 'ستظهر هنا جميع طلباتك وحالتها عند إضافتها.',
-                      );
-              },
-            ),
-          ),
-        ],
-      ),
-    ),
-    // floatingActionButton: FloatingActionButton.extended(
-    //   onPressed: () {},
-    //   icon: const Icon(Icons.add_rounded),
-    //   label: const Text('طلب جديد'),
-    // ),
   );
+
+  CustomAppBar _buildAppBar() => CustomAppBar(
+    title: 'طلباتي',
+    backgroundColor: AppColors.white,
+    toolbarHeight: AppHeight.h70,
+    showScrolledUnderElevation: false,
+    titleSpacing: AppPaddingWidth.p16,
+    titleWidget: SectionTitle(
+      text: 'طلباتي',
+      color: AppColors.mainText,
+      fontSize: AppFontSize.s18,
+      fontWeight: AppFontWeight.bold,
+    ),
+    customActions: [
+      HeaderIconButton(
+        icon: Iconsax.notification_outline,
+        onTap: () {},
+      ),
+    ],
+  );
+
+  OrderItem _toOrderItem(Item item) {
+    return OrderItem(
+      title: item.serviceName ?? '',
+      number: item.reference ?? '',
+      date: item.createdAt == null
+          ? ''
+          : DateFormat('dd/MM/yyyy').format(item.createdAt!.toLocal()),
+      consultant: _consultantName(item.consultant),
+      status: item.statusLabel ?? item.displayStatus ?? '',
+    );
+  }
+
+  String _consultantName(dynamic consultant) {
+    if (consultant is Map<String, dynamic>) {
+      return consultant['fullName']?.toString() ?? '';
+    }
+    return consultant?.toString() ?? '';
+  }
 }
 
 class _EmptyState extends StatelessWidget {

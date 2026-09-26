@@ -106,8 +106,9 @@ class NetworkHelper {
     String url, {
     Map<String, dynamic>? queryParams,
     dynamic data,
+    String? authToken,
   }) async {
-    final token = await getToken();
+    final token = authToken ?? await getToken();
     final version = await getVersion();
     final language = await getLanguage();
 

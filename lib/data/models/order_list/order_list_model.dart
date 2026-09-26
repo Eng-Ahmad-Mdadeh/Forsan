@@ -45,6 +45,7 @@ class Counts extends Equatable {
   const Counts({
     required this.all,
     required this.underReview,
+    required this.waitingDocuments,
   });
 
   final int? all;
@@ -52,11 +53,14 @@ class Counts extends Equatable {
   @JsonKey(name: 'UNDER_REVIEW')
   final int? underReview;
 
+  @JsonKey(name: 'WAITING_DOCUMENTS')
+  final int? waitingDocuments;
+
   factory Counts.fromJson(Map<String, dynamic> json) => _$CountsFromJson(json);
 
   @override
   List<Object?> get props => [
-    all, underReview, ];
+    all, underReview, waitingDocuments, ];
 }
 
 @JsonSerializable(createToJson: false)

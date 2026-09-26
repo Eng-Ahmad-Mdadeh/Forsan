@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/core/utils/pagination/base_pagination_bloc.dart';
 import 'package:forsan/core/utils/pagination/page_pagination_controller.dart';
 import 'package:forsan/data/models/base/base_model.dart';
@@ -15,7 +16,14 @@ part 'order_list_state.dart';
 
 class OrderListBloc extends Bloc<IOrderListEvent, IOrderListState>
     with BasePaginationBloc<Item, String> {
-  OrderListBloc(this._getOrderList) : super(const OrderListInitial()) {
+  OrderListBloc({
+    IUseCase<BaseModel<OrderListModel>?, OrderListEntity>? getOrderList,
+  }) : _getOrderList =
+           getOrderList ??
+           locator<IUseCase<BaseModel<OrderListModel>?, OrderListEntity>>(
+             instanceName: 'OrderList',
+           ),
+       super(const OrderListInitial()) {
     on<GetOrderListEvent>(_getOrders);
     on<LoadMoreOrderListEvent>(_loadMore);
   }

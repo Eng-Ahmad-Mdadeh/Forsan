@@ -21,7 +21,11 @@ void main() {
       'page': 1,
       'pageSize': 20,
       'total': 1,
-      'counts': {'all': 1, 'UNDER_REVIEW': 1},
+      'counts': {
+        'all': 1,
+        'UNDER_REVIEW': 1,
+        'WAITING_DOCUMENTS': 0,
+      },
     });
 
     expect(model.pagination.items?.single.id, 'order-1');
@@ -30,5 +34,6 @@ void main() {
     expect(model.pagination.total, 1);
     expect(model.counts?.all, 1);
     expect(model.counts?.underReview, 1);
+    expect(model.counts?.waitingDocuments, 0);
   });
 }

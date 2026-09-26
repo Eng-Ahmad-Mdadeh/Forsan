@@ -15,7 +15,7 @@ void main() {
 
     setUp(() {
       useCase = _OrderListUseCase();
-      bloc = OrderListBloc(useCase);
+      bloc = OrderListBloc(getOrderList: useCase);
     });
 
     tearDown(() => bloc.close());
@@ -86,7 +86,11 @@ BaseModel<OrderListModel> _response({
         pageSize: 1,
         total: total,
       ),
-      counts: Counts(all: total, underReview: total),
+      counts: Counts(
+        all: total,
+        underReview: total,
+        waitingDocuments: 0,
+      ),
     ),
   );
 }
