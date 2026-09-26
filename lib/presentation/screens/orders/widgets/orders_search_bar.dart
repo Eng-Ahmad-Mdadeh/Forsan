@@ -10,11 +10,13 @@ class OrdersSearchBar extends StatelessWidget {
     super.key,
     this.controller,
     this.onSearchChanged,
+    this.onSearchSubmitted,
     required this.onFilterPressed,
   });
 
   final TextEditingController? controller;
   final ValueChanged<String>? onSearchChanged;
+  final ValueChanged<String>? onSearchSubmitted;
   final VoidCallback onFilterPressed;
 
   @override
@@ -24,6 +26,7 @@ class OrdersSearchBar extends StatelessWidget {
         child: CustomSearch(
           controller: controller,
           onChanged: onSearchChanged,
+          onFieldSubmitted: onSearchSubmitted,
           color: AppColors.white,
           hintText: 'ابحث برقم الطلب أو اسم الخدمة',
           hintColor: AppColors.grey,
