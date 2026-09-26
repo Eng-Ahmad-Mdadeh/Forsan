@@ -5,6 +5,7 @@ import 'package:forsan/data/models/order_details/order_details_model.dart';
 import 'package:forsan/domain/entities/order_details/order_details_entity.dart';
 import 'package:forsan/domain/repositories/order_details/i_order_details_repository.dart';
 import 'package:forsan/data/data_sources/order_details/order_details_remote_data_source.dart';
+import 'package:dartz/dartz.dart';
 
 @Injectable(as: IOrderDetailsRepository)
 class OrderDetailsRepository implements IOrderDetailsRepository{

@@ -1,5 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/presentation/bloc/order_details/order_details_bloc.dart';
 import 'package:forsan/presentation/screens/order_details/widgets/order_details_header_card.dart';
 import '../../../core/extension/localization_extension.dart';
 import '../../../core/resources/app_colors.dart';
@@ -18,9 +20,22 @@ import 'widgets/order_stages_card.dart';
 import 'widgets/order_summary_card.dart';
 
 class OrdersDetailsScreen extends StatelessWidget {
-  const OrdersDetailsScreen({super.key, required this.order});
+  const OrdersDetailsScreen({super.key});
 
-  final OrderItem order;
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [BlocProvider<OrderDetailsBloc>(create: (context) => OrderDetailsBloc())],
+      child: BodyOrdersDetailsScreen(),
+    );
+  }
+}
+
+
+class BodyOrdersDetailsScreen extends StatelessWidget {
+  const BodyOrdersDetailsScreen({super.key});
+
+
 
   @override
   Widget build(BuildContext context) => Scaffold(

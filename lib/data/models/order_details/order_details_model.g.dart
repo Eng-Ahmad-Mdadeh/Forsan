@@ -38,19 +38,6 @@ OrderDetailsModel _$OrderDetailsModelFromJson(Map<String, dynamic> json) =>
           : Actions.fromJson(json['actions'] as Map<String, dynamic>),
     );
 
-Actions _$ActionsFromJson(Map<String, dynamic> json) => Actions(
-  canAcceptQuote: json['canAcceptQuote'] as bool?,
-  canPay: json['canPay'] as bool?,
-  canUploadDocuments: json['canUploadDocuments'] as bool?,
-  canChat: json['canChat'] as bool?,
-);
-
-Customer _$CustomerFromJson(Map<String, dynamic> json) => Customer(
-  id: json['id'] as String?,
-  fullName: json['fullName'] as String?,
-  phone: json['phone'] as String?,
-);
-
 Payment _$PaymentFromJson(Map<String, dynamic> json) => Payment(
   total: json['total'],
   paid: json['paid'] == null
@@ -73,4 +60,17 @@ Stage _$StageFromJson(Map<String, dynamic> json) => Stage(
   description: json['description'] as String?,
   state: json['state'] as String?,
   date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
+);
+
+Customer _$CustomerFromJson(Map<String, dynamic> json) => Customer(
+  id: json['id'] as String?,
+  fullName: json['fullName'] as String?,
+  phone: json['phone'] as String?,
+);
+
+Actions _$ActionsFromJson(Map<String, dynamic> json) => Actions(
+  canAcceptQuote: json['canAcceptQuote'] as bool?,
+  canPay: json['canPay'] as bool?,
+  canUploadDocuments: json['canUploadDocuments'] as bool?,
+  canChat: json['canChat'] as bool?,
 );
