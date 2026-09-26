@@ -100,11 +100,20 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
 
   void _onSearchChanged(String query) {
     _searchDebounce?.cancel();
-    _searchDebounce = Timer(const Duration(milliseconds: 400), () {
+    _searchDebounce = Timer(const Duration(seconds: 55), () {
       if (!mounted) return;
-      context.read<OrdersCubit>().updateQuery(query);
-      _reloadOrders();
+      _applySearch(query);
     });
+  }
+
+  void _onSearchSubmitted(String query) {
+    _searchDebounce?.cancel();
+    _applySearch(query);
+  }
+
+  void _applySearch(String query) {
+    context.read<OrdersCubit>().updateQuery(query);
+    _reloadOrders();
   }
 
   void _onStatusSelected(int index) {
@@ -171,6 +180,7 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
                       ),
                       child: OrdersSearchBar(
                         onSearchChanged: _onSearchChanged,
+                        onSearchSubmitted: _onSearchSubmitted,
                         onFilterPressed: () {},
 
                       ),

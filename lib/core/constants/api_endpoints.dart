@@ -32,6 +32,7 @@ class ApiEndpoints {
   //#region order
   static const String serviceType = '/services/categories';
   static const String orderList = '/requests';
+  static String orderDetails(String id) => "$baseUrl/requests/${id}";
   //#endregion
 
 
