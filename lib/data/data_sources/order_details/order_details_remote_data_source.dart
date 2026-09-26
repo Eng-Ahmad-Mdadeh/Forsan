@@ -14,7 +14,7 @@ class OrderDetailsRemoteDataSource extends BaseRemoteDataSource<OrderDetailsMode
 
   Future<Either<AppException, BaseModel<OrderDetailsModel>?>> getOrderDetails(OrderDetailsEntity entity) {
     return fetchData(
-      endpoint: ApiEndpoints.orderDetails(entity),
+      endpoint: ApiEndpoints.orderDetails(entity.requestIdentifier),
       dataMayBeAtRoot: true,
       fromJsonT: (json) => OrderDetailsModel.fromJson(json as Map<String, dynamic>),
     );

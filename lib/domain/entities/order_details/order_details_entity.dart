@@ -6,13 +6,17 @@ class OrderDetailsEntity extends Equatable {
   final String? requestId;
   final String? requestReference;
 
+  String? get requestIdentifier {
+    final id = requestId?.trim();
+    if (id != null && id.isNotEmpty) return id;
+
+    final reference = requestReference?.trim();
+    return reference == null || reference.isEmpty ? null : reference;
+  }
+
   Map<String, dynamic> toJson() {
-    return {
-      if (requestId != null && requestId!.isNotEmpty)
-         'id': requestId,
-      if (requestReference != null && requestReference!.isNotEmpty)
-         'id': requestReference,
-    };
+    final identifier = requestIdentifier;
+    return {'id': ?identifier};
   }
 
   OrderDetailsEntity copyWith({String? requestId, String? requestReference}) {
