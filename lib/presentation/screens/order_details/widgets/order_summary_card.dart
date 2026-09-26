@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/data/models/order_details/order_details_model.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/extension/localization_extension.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
 import '../../../widgets/status_badge.dart';
-import '../../orders/models/order_item.dart';
 
 import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
@@ -13,23 +14,23 @@ import '../../../widgets/text/section_title.dart';
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
     super.key,
-    required this.order,
-    required this.submittedBy,
-    required this.service,
-    required this.fees,
+    required this.item,
   });
 
-  final OrderItem order;
-  final String submittedBy;
-  final String service;
-  final String fees;
+  final OrderDetailsModel item;
+
+  String get _number => item.reference ?? '';
+  String get _status => item.statusLabel ?? item.displayStatus ?? '';
+  String get _date => item.createdAt == null
+      ? ''
+      : DateFormat('dd/MM/yyyy').format(item.createdAt!.toLocal());
 
   @override
   Widget build(BuildContext context) => Directionality(
     textDirection: TextDirection.rtl,
     child: Semantics(
       container: true,
-      label: '${context.loc.order_summary} ${order.number}',
+      label: '${context.loc.order_summary} $_number',
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: AppColors.white,
@@ -55,41 +56,41 @@ class OrderSummaryCard extends StatelessWidget {
                     _OrderSummaryRow(
                       icon: Icons.tag_rounded,
                       label: context.loc.order_number,
-                      value: order.number,
+                      value: _number,
                     ),
                     _OrderSummaryRow(
                       icon: Icons.person_outline_rounded,
                       label: context.loc.order_submitter,
-                      value: submittedBy,
+                      value: item.applicantName ?? '',
                     ),
                     _OrderSummaryRow(
                       icon: Icons.calendar_today_outlined,
                       label: context.loc.order_date,
-                      value: order.date,
+                      value: _date,
                     ),
                     _OrderSummaryRow(
                       icon: Icons.radio_button_checked_rounded,
                       label: context.loc.order_status,
                       valueWidget: StatusBadge(
-                        status: order.status,
+                        status: _status,
                         showOuterCircle: false,
                       ),
                     ),
                     _OrderSummaryRow(
                       icon: Icons.work_outline_rounded,
                       label: context.loc.order_service,
-                      value: service,
+                      value: item.categoryName ?? '',
                     ),
                     _OrderSummaryRow(
                       icon: Icons.grid_view_rounded,
                       label: context.loc.order_service_type,
-                      value: order.title,
+                      value: item.serviceName ?? '',
                       showDivider: false,
                     ),
                     _OrderSummaryRow(
                       icon: Icons.payments_outlined,
                       label: context.loc.order_fees,
-                      value: fees,
+                      value: item.payment?.total?.toString() ?? '',
                       showDivider: false,
                     ),
                   ],

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/data/models/order_list/order_list_model.dart';
 
-import '../../orders/models/order_item.dart';
 import '../../../widgets/order_card.dart';
 
 class DocumentOrderCard extends StatelessWidget {
   const DocumentOrderCard({
     super.key,
-    required this.document,
+    required this.item,
     this.onDetailsPressed,
   });
 
-  final OrderItem document;
+  final Item item;
   final VoidCallback? onDetailsPressed;
 
   @override
   Widget build(BuildContext context) => OrderCard(
-    order: document,
+    item: item,
     detailsButtonText: 'تفاصيل ',
     onDetailsPressed: onDetailsPressed,
   );

@@ -1,9 +1,12 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/data/models/order_details/order_details_model.dart';
 import 'package:forsan/domain/entities/order_details/order_details_entity.dart';
 import 'package:forsan/presentation/bloc/order_details/order_details_bloc.dart';
 import 'package:forsan/presentation/screens/order_details/widgets/order_details_header_card.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
 import '../../../core/extension/localization_extension.dart';
 import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/app_fonts.dart';
@@ -11,44 +14,71 @@ import '../../../core/resources/app_values.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
+import '../../widgets/failure_screen.dart';
 import '../../widgets/required_action_card.dart';
 import '../../widgets/text/body_title.dart';
 import '../../widgets/text/section_title.dart';
-import '../orders/models/order_item.dart';
 import 'widgets/order_attached_documents_card.dart';
 import 'widgets/order_documents_card.dart';
 import 'widgets/order_stages_card.dart';
 import 'widgets/order_summary_card.dart';
 
 class OrdersDetailsScreen extends StatelessWidget {
-  final String orderId;
-
   const OrdersDetailsScreen({super.key, required this.orderId});
 
+  final String orderId;
+
   @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [BlocProvider<OrderDetailsBloc>(create: (context) => OrderDetailsBloc())],
-      child: BodyOrdersDetailsScreen(orderId:orderId),
-    );
-  }
+  Widget build(BuildContext context) => BlocProvider<OrderDetailsBloc>(
+    create: (_) => OrderDetailsBloc(),
+    child: BodyOrdersDetailsScreen(orderId: orderId),
+  );
 }
 
-
 class BodyOrdersDetailsScreen extends StatefulWidget {
-  final String orderId;
   const BodyOrdersDetailsScreen({super.key, required this.orderId});
 
+  final String orderId;
+
   @override
-  State<BodyOrdersDetailsScreen> createState() => _BodyOrdersDetailsScreenState();
+  State<BodyOrdersDetailsScreen> createState() =>
+      _BodyOrdersDetailsScreenState();
 }
 
 class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
+  static final OrderDetailsModel _skeletonOrder = OrderDetailsModel(
+    id: '',
+    reference: 'FR-2026-000000',
+    serviceName: 'تأسيس شركة جديدة',
+    categoryName: 'خدمات الشركات',
+    status: null,
+    displayStatus: null,
+    statusLabel: 'قيد المراجعة',
+    progress: null,
+    createdAt: DateTime(2026, 9, 23),
+    consultant: 'اسم المستشار',
+    customer: null,
+    applicantName: 'اسم مقدم الطلب',
+    requiredAction: null,
+    payment: null,
+    stages: null,
+    requiredDocuments: null,
+    attachments: null,
+    actions: null,
+  );
+
   @override
   void initState() {
-    context.read<OrderDetailsBloc>().add(OrderDetailsEvent(OrderDetailsEntity(requestId:widget.orderId)));
     super.initState();
+    _loadOrderDetails();
   }
+
+  void _loadOrderDetails() {
+    context.read<OrderDetailsBloc>().add(
+      OrderDetailsEvent(OrderDetailsEntity(requestId: widget.orderId)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppColors.white,
@@ -64,99 +94,123 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
         fontWeight: AppFontWeight.bold,
       ),
     ),
-    body: SafeArea(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(
-          AppPaddingWidth.p16,
-          AppPaddingHeight.p16,
-          AppPaddingWidth.p16,
-          AppPaddingHeight.p20,
-        ),
-        child: Column(
-          children: [
-            OrderDetailsHeaderCard(order: order),
-            SizedBox(height: AppHeight.h16),
-            RequiredActionCard(
-              title: context.loc.order_required_action,
-              message: context.loc.order_required_documents_message,
-              buttonText: context.loc.order_complete_requirements,
-              semanticsLabel: context.loc.order_required_action,
-              onPressed: () => CompleteRequirementsRoute().push(context),
-            ),
-            SizedBox(height: AppHeight.h16),
-            OrderSummaryCard(
-              order: order,
-              submittedBy: context.loc.order_submitter_abroad,
-              service: context.loc.order_business_establishment,
-              fees: context.loc.order_fees_after_review,
-            ),
-            SizedBox(height: AppHeight.h16),
-            const OrderStagesCard(),
-            SizedBox(height: AppHeight.h16),
-            const OrderDocumentsCard(),
-            SizedBox(height: AppHeight.h16),
-            const OrderAttachedDocumentsCard(),
-            SizedBox(height: AppHeight.h20),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomElevatedButton(
-                    height: AppHeight.h52,
-                    color: AppColors.homeSupportAction,
-                    borderRadius: AppRadius.r12,
-                    onPressed: () {
-                      PayRoute().push(context);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.check_rounded,
-                          color: AppColors.white,
-                          size: AppSize.s15,
-                        ),
-                        SizedBox(width: AppWidth.w5),
-                        BodyTitle(
-                          text: context.loc.order_approve_and_pay,
-                          color: AppColors.white,
-                          fontSize: AppFontSize.s12,
-                        ),
-                      ],
-                    ),
+    body: BlocBuilder<OrderDetailsBloc, IOrderDetailsState>(
+      builder: (context, state) {
+        if (state is OrderDetailsFailed) {
+          return FailureScreen(
+            errorMessage: state.message,
+            onPressed: _loadOrderDetails,
+          );
+        }
+
+        final isLoading =
+            state is OrderDetailsInitial || state is OrderDetailsLoading;
+        final order = state is OrderDetailsLoaded
+            ? state.orderDetailsModel?.data ?? _skeletonOrder
+            : _skeletonOrder;
+
+        return Skeletonizer(
+          enabled: isLoading,
+          enableSwitchAnimation: true,
+          effect: ShimmerEffect(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            begin: AlignmentDirectional.centerStart,
+            end: AlignmentDirectional.centerEnd,
+            duration: const Duration(milliseconds: 500),
+          ),
+          child: SafeArea(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.fromLTRB(
+                AppPaddingWidth.p16,
+                AppPaddingHeight.p16,
+                AppPaddingWidth.p16,
+                AppPaddingHeight.p20,
+              ),
+              child: Column(
+                children: [
+                  OrderDetailsHeaderCard(item: order),
+                  SizedBox(height: AppHeight.h16),
+                  RequiredActionCard(
+                    title: context.loc.order_required_action,
+                    message: context.loc.order_required_documents_message,
+                    buttonText: context.loc.order_complete_requirements,
+                    semanticsLabel: context.loc.order_required_action,
+                    onPressed: () =>
+                        const CompleteRequirementsRoute().push(context),
                   ),
-                ),
-                SizedBox(width: AppWidth.w7),
-                Expanded(
-                  child: CustomElevatedButton(
-                    height: AppHeight.h52,
-                    color: AppColors.primary,
-                    borderRadius: AppRadius.r12,
-                    onPressed: () {},
-                    padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p14),
-                    child: Row(
-                      children: [
-                        Icon(
-                          FluentIcons.chat_multiple_24_filled,
-                          color: AppColors.white,
-                          size: AppSize.s15,
-                        ),
-                        SizedBox(width: AppWidth.w5),
-                        Flexible(
-                          child: BodyTitle(
-                            text: context.loc.order_contact_consultant,
-                            color: AppColors.white,
-                            fontSize: AppFontSize.s12,
+                  SizedBox(height: AppHeight.h16),
+                  OrderSummaryCard(item: order),
+                  SizedBox(height: AppHeight.h16),
+                  const OrderStagesCard(),
+                  SizedBox(height: AppHeight.h16),
+                  const OrderDocumentsCard(),
+                  SizedBox(height: AppHeight.h16),
+                  const OrderAttachedDocumentsCard(),
+                  SizedBox(height: AppHeight.h20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomElevatedButton(
+                          height: AppHeight.h52,
+                          color: AppColors.homeSupportAction,
+                          borderRadius: AppRadius.r12,
+                          onPressed: () => const PayRoute().push(context),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.check_rounded,
+                                color: AppColors.white,
+                                size: AppSize.s15,
+                              ),
+                              SizedBox(width: AppWidth.w5),
+                              BodyTitle(
+                                text: context.loc.order_approve_and_pay,
+                                color: AppColors.white,
+                                fontSize: AppFontSize.s12,
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(width: AppWidth.w7),
+                      Expanded(
+                        child: CustomElevatedButton(
+                          height: AppHeight.h52,
+                          color: AppColors.primary,
+                          borderRadius: AppRadius.r12,
+                          onPressed: () {},
+                          padding: EdgeInsets.symmetric(
+                            horizontal: AppPaddingWidth.p14,
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                FluentIcons.chat_multiple_24_filled,
+                                color: AppColors.white,
+                                size: AppSize.s15,
+                              ),
+                              SizedBox(width: AppWidth.w5),
+                              Flexible(
+                                child: BodyTitle(
+                                  text: context.loc.order_contact_consultant,
+                                  color: AppColors.white,
+                                  fontSize: AppFontSize.s12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     ),
   );
 }

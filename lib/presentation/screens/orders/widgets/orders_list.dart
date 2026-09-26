@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/data/models/order_list/order_list_model.dart';
 
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/resources/app_values.dart';
-import '../models/order_item.dart';
 import '../../../widgets/order_card.dart';
 
 class OrdersList extends StatelessWidget {
@@ -12,7 +12,7 @@ class OrdersList extends StatelessWidget {
     this.controller,
   });
 
-  final List<OrderItem> orders;
+  final List<Item> orders;
   final ScrollController? controller;
 
   @override
@@ -29,10 +29,11 @@ class OrdersList extends StatelessWidget {
     itemBuilder: (context, index) {
       final order = orders[index];
       return OrderCard(
-        order: order,
+        item: order,
         detailsButtonText: 'تفاصيل الطلب',
-        onDetailsPressed: () => OrdersDetailsRoute(order.id).push(context),
+        onDetailsPressed: () => OrdersDetailsRoute(order.id ?? '').push(context),
       );
     },
   );
+
 }
