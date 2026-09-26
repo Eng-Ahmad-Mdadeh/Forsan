@@ -8,8 +8,16 @@ part of 'order_list_model.dart';
 
 Counts _$CountsFromJson(Map<String, dynamic> json) => Counts(
   all: (json['all'] as num?)?.toInt(),
+  draft: (json['DRAFT'] as num?)?.toInt(),
   underReview: (json['UNDER_REVIEW'] as num?)?.toInt(),
-  waitingDocuments: (json['WAITING_DOCUMENTS'] as num?)?.toInt(),
+  awaitingDocuments: (json['AWAITING_DOCUMENTS'] as num?)?.toInt(),
+  quoteReady: (json['QUOTE_READY'] as num?)?.toInt(),
+  awaitingPayment: (json['AWAITING_PAYMENT'] as num?)?.toInt(),
+  paymentUnderReview: (json['PAYMENT_UNDER_REVIEW'] as num?)?.toInt(),
+  inProgress: (json['IN_PROGRESS'] as num?)?.toInt(),
+  delivered: (json['DELIVERED'] as num?)?.toInt(),
+  completed: (json['COMPLETED'] as num?)?.toInt(),
+  cancelled: (json['CANCELLED'] as num?)?.toInt(),
 );
 
 Item _$ItemFromJson(Map<String, dynamic> json) => Item(

@@ -44,23 +44,66 @@ class OrderListModel extends Equatable {
 class Counts extends Equatable {
   const Counts({
     required this.all,
+    required this.draft,
     required this.underReview,
-    required this.waitingDocuments,
+    required this.awaitingDocuments,
+    required this.quoteReady,
+    required this.awaitingPayment,
+    required this.paymentUnderReview,
+    required this.inProgress,
+    required this.delivered,
+    required this.completed,
+    required this.cancelled,
   });
 
   final int? all;
 
+  @JsonKey(name: 'DRAFT')
+  final int? draft;
+
   @JsonKey(name: 'UNDER_REVIEW')
   final int? underReview;
 
-  @JsonKey(name: 'WAITING_DOCUMENTS')
-  final int? waitingDocuments;
+  @JsonKey(name: 'AWAITING_DOCUMENTS')
+  final int? awaitingDocuments;
+
+  @JsonKey(name: 'QUOTE_READY')
+  final int? quoteReady;
+
+  @JsonKey(name: 'AWAITING_PAYMENT')
+  final int? awaitingPayment;
+
+  @JsonKey(name: 'PAYMENT_UNDER_REVIEW')
+  final int? paymentUnderReview;
+
+  @JsonKey(name: 'IN_PROGRESS')
+  final int? inProgress;
+
+  @JsonKey(name: 'DELIVERED')
+  final int? delivered;
+
+  @JsonKey(name: 'COMPLETED')
+  final int? completed;
+
+  @JsonKey(name: 'CANCELLED')
+  final int? cancelled;
 
   factory Counts.fromJson(Map<String, dynamic> json) => _$CountsFromJson(json);
 
   @override
   List<Object?> get props => [
-    all, underReview, waitingDocuments, ];
+    all,
+    draft,
+    underReview,
+    awaitingDocuments,
+    quoteReady,
+    awaitingPayment,
+    paymentUnderReview,
+    inProgress,
+    delivered,
+    completed,
+    cancelled,
+  ];
 }
 
 @JsonSerializable(createToJson: false)

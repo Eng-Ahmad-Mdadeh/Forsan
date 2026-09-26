@@ -88,8 +88,16 @@ BaseModel<OrderListModel> _response({
       ),
       counts: Counts(
         all: total,
+        draft: 0,
         underReview: total,
-        waitingDocuments: 0,
+        awaitingDocuments: 0,
+        quoteReady: 0,
+        awaitingPayment: 0,
+        paymentUnderReview: 0,
+        inProgress: 0,
+        delivered: 0,
+        completed: 0,
+        cancelled: 0,
       ),
     ),
   );

@@ -9,8 +9,16 @@ class OrdersCubit extends Cubit<OrdersState> {
 
   static const List<String?> _statuses = [
     null,
+    'DRAFT',
     'UNDER_REVIEW',
-    'WAITING_DOCUMENTS',
+    'AWAITING_DOCUMENTS',
+    'QUOTE_READY',
+    'AWAITING_PAYMENT',
+    'PAYMENT_UNDER_REVIEW',
+    'IN_PROGRESS',
+    'DELIVERED',
+    'COMPLETED',
+    'CANCELLED',
   ];
 
   void selectStatus(int index) {
