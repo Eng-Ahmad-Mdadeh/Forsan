@@ -11,13 +11,11 @@ import 'package:forsan/presentation/bloc/order_list/order_list_bloc.dart';
 import 'package:forsan/presentation/cubit/orders/orders_cubit.dart';
 import 'package:forsan/presentation/screens/orders/widgets/orders_search_bar.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/failure_screen.dart';
 import '../../widgets/text/section_title.dart';
-import 'models/order_item.dart';
 import 'widgets/orders_list.dart';
 import 'widgets/orders_status_tabs.dart';
 
@@ -47,31 +45,23 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
     with PaginationScrollMixin<BodyOrdersScreen> {
   Timer? _searchDebounce;
 
-  static const List<OrderItem> _skeletonOrders = [
-    OrderItem(
-      id: '1',
-      title: 'تأسيس شركة جديدة',
-      number: 'FR-2026-000000',
-      date: '23/09/2026',
-      consultant: 'اسم المستشار',
-      status: 'قيد المراجعة',
-    ),
-    OrderItem(
-      id: '2',
-      title: 'تأسيس شركة جديدة',
-      number: 'FR-2026-000000',
-      date: '23/09/2026',
-      consultant: 'اسم المستشار',
-      status: 'قيد المراجعة',
-    ),
-    OrderItem(
-      id: '3',
-      title: 'تأسيس شركة جديدة',
-      number: 'FR-2026-000000',
-      date: '23/09/2026',
-      consultant: 'اسم المستشار',
-      status: 'قيد المراجعة',
-    ),
+  static const Item _skeletonOrder = Item(
+    id: '',
+    reference: 'FR-2026-000000',
+    serviceName: 'تأسيس شركة جديدة',
+    categoryName: null,
+    status: null,
+    displayStatus: null,
+    statusLabel: 'قيد المراجعة',
+    progress: null,
+    createdAt: null,
+    consultant: 'اسم المستشار',
+  );
+
+  static const List<Item> _skeletonOrders = [
+    _skeletonOrder,
+    _skeletonOrder,
+    _skeletonOrder,
   ];
 
   @override
@@ -155,8 +145,7 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
               state is OrderListInitial || state is OrderListLoading;
           final orders = isLoading
               ? _skeletonOrders
-              : loadedState?.items.map(_toOrderItem).toList(growable: false) ??
-                    const <OrderItem>[];
+              : loadedState?.items ?? const <Item>[];
 
           return Skeletonizer(
             enableSwitchAnimation: true,
@@ -253,25 +242,6 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
     ],
   );
 
-  OrderItem _toOrderItem(Item item) {
-    return OrderItem(
-      id: item.id ?? '',
-      title: item.serviceName ?? '',
-      number: item.reference ?? '',
-      date: item.createdAt == null
-          ? ''
-          : DateFormat('dd/MM/yyyy').format(item.createdAt!.toLocal()),
-      consultant: _consultantName(item.consultant),
-      status: item.statusLabel ?? item.displayStatus ?? '',
-    );
-  }
-
-  String _consultantName(dynamic consultant) {
-    if (consultant is Map<String, dynamic>) {
-      return consultant['fullName']?.toString() ?? '';
-    }
-    return consultant?.toString() ?? '';
-  }
 }
 
 class _EmptyState extends StatelessWidget {

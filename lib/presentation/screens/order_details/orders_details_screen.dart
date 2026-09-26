@@ -14,7 +14,6 @@ import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/required_action_card.dart';
 import '../../widgets/text/body_title.dart';
 import '../../widgets/text/section_title.dart';
-import '../orders/models/order_item.dart';
 import 'widgets/order_attached_documents_card.dart';
 import 'widgets/order_documents_card.dart';
 import 'widgets/order_stages_card.dart';
@@ -64,17 +63,28 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
         fontWeight: AppFontWeight.bold,
       ),
     ),
-    body: SafeArea(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(
-          AppPaddingWidth.p16,
-          AppPaddingHeight.p16,
-          AppPaddingWidth.p16,
-          AppPaddingHeight.p20,
-        ),
-        child: Column(
+    body: BlocBuilder<OrderDetailsBloc, IOrderDetailsState>(
+      builder: (context, state) {
+        final order = state is OrderDetailsLoaded
+            ? state.orderDetailsModel?.data
+            : null;
+        if (order == null) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        return SafeArea(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.fromLTRB(
+              AppPaddingWidth.p16,
+              AppPaddingHeight.p16,
+              AppPaddingWidth.p16,
+              AppPaddingHeight.p20,
+            ),
+            child: Column(
           children: [
-            OrderDetailsHeaderCard(order: order),
+            OrderDetailsHeaderCard(
+              item: order,
+            ),
             SizedBox(height: AppHeight.h16),
             RequiredActionCard(
               title: context.loc.order_required_action,
@@ -85,10 +95,7 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
             ),
             SizedBox(height: AppHeight.h16),
             OrderSummaryCard(
-              order: order,
-              submittedBy: context.loc.order_submitter_abroad,
-              service: context.loc.order_business_establishment,
-              fees: context.loc.order_fees_after_review,
+              item: order,
             ),
             SizedBox(height: AppHeight.h16),
             const OrderStagesCard(),
@@ -155,8 +162,10 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
               ],
             ),
           ],
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     ),
   );
 }

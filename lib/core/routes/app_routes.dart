@@ -21,7 +21,6 @@ import 'package:forsan/presentation/screens/login/login_screen.dart';
 import 'package:forsan/presentation/screens/more/more_screen.dart';
 import 'package:forsan/presentation/screens/orders/orders_screen.dart';
 import 'package:forsan/presentation/screens/order_details/orders_details_screen.dart';
-import 'package:forsan/presentation/screens/orders/models/order_item.dart';
 import 'package:forsan/presentation/screens/pay/pay_screen.dart';
 import 'package:forsan/presentation/screens/payment_methods/bank_transfer/bank_transfer_screen.dart';
 import 'package:forsan/presentation/screens/payment_methods/sham_cash/sham_cash_screen.dart';
