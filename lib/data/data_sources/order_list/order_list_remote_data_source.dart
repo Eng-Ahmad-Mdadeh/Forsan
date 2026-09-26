@@ -17,7 +17,7 @@ class OrderListRemoteDataSource extends BaseRemoteDataSource<OrderListModel> {
     OrderListEntity entity,
   ) {
     return fetchData(
-      endpoint: ApiEndpoints.orderDetails(),
+      endpoint: ApiEndpoints.orderList,
       queryParams: entity.toJson(),
       dataMayBeAtRoot: true,
       fromJsonT: (json) => OrderListModel.fromJson(json as Map<String, dynamic>),

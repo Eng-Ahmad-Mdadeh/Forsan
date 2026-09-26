@@ -13,8 +13,13 @@ class OrderDetailsRemoteDataSource extends BaseRemoteDataSource<OrderDetailsMode
   OrderDetailsRemoteDataSource() : super(ApiEndpoints.user);
 
   Future<Either<AppException, BaseModel<OrderDetailsModel>?>> getOrderDetails(OrderDetailsEntity entity) {
+    final requestIdentifier = entity.requestIdentifier;
+    if (requestIdentifier == null) {
+      return Future.value(Left(AppException('A request ID or reference is required')));
+    }
+
     return fetchData(
-      endpoint: ApiEndpoints.orderDetails(entity),
+      endpoint: ApiEndpoints.orderDetails(requestIdentifier),
       dataMayBeAtRoot: true,
       fromJsonT: (json) => OrderDetailsModel.fromJson(json as Map<String, dynamic>),
     );
