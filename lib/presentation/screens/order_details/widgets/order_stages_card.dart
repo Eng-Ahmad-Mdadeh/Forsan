@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/data/models/order_details/order_details_model.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/extension/localization_extension.dart';
 import '../../../../core/resources/app_colors.dart';
@@ -8,104 +10,51 @@ import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
 
 class OrderStagesCard extends StatelessWidget {
-  const OrderStagesCard({super.key});
+  const OrderStagesCard({super.key, required this.stages});
+
+  final List<Stage> stages;
 
   @override
   Widget build(BuildContext context) {
-    final stages = [
-      _OrderStageItem(
-        title: context.loc.order_stage_received_title,
-        description: context.loc.order_stage_received_description,
-        date: context.loc.order_stage_sample_date,
-        isCompleted: true,
-      ),
-      _OrderStageItem(
-        title: context.loc.order_stage_review_title,
-        description: context.loc.order_stage_review_description,
-        date: context.loc.order_stage_sample_date,
-        isCompleted: true,
-        isCurrent: true,
-      ),
-      _OrderStageItem(
-        title: context.loc.order_stage_documents_title,
-        description: context.loc.order_stage_documents_description,
-      ),
-      _OrderStageItem(
-        title: context.loc.order_stage_quote_title,
-        description: context.loc.order_stage_quote_description,
-      ),
-      _OrderStageItem(
-        title: context.loc.order_stage_payment_title,
-        description: context.loc.order_stage_payment_description,
-      ),
-      _OrderStageItem(
-        title: context.loc.order_stage_execution_title,
-        description: context.loc.order_stage_execution_description,
-      ),
-      _OrderStageItem(
-        title: context.loc.order_stage_completion_title,
-        description: context.loc.order_stage_completion_description,
-      ),
-    ];
-
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Semantics(
-        container: true,
-        label: context.loc.order_stages,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(AppRadius.r12),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.homeSoftShadow.withOpacity(0.06),
-                blurRadius: AppRadius.r7,
-                offset: Offset(0, AppHeight.h2),
-              ),
-            ],
+    return Semantics(
+      container: true,
+      label: context.loc.order_stages,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(AppRadius.r12),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.homeSoftShadow.withOpacity(0.06),
+              blurRadius: AppRadius.r7,
+              offset: Offset(0, AppHeight.h2),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+            AppPaddingWidth.p16,
+            AppPaddingHeight.p18,
+            AppPaddingWidth.p16,
+            AppPaddingHeight.p16,
           ),
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(
-              AppPaddingWidth.p16,
-              AppPaddingHeight.p18,
-              AppPaddingWidth.p16,
-              AppPaddingHeight.p16,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _OrderStagesHeader(title: context.loc.order_stages),
-                SizedBox(height: AppHeight.h14),
-                for (var index = 0; index < stages.length; index++)
-                  _OrderStageRow(
-                    stage: stages[index],
-                    isFirst: index == 0,
-                    isLast: index == stages.length - 1,
-                  ),
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _OrderStagesHeader(title: context.loc.order_stages),
+              SizedBox(height: AppHeight.h14),
+              for (var index = 0; index < stages.length; index++)
+                _OrderStageRow(
+                  stage: stages[index],
+                  isFirst: index == 0,
+                  isLast: index == stages.length - 1,
+                ),
+            ],
           ),
         ),
       ),
     );
   }
-}
-
-class _OrderStageItem {
-  const _OrderStageItem({
-    required this.title,
-    required this.description,
-    this.date,
-    this.isCompleted = false,
-    this.isCurrent = false,
-  });
-
-  final String title;
-  final String description;
-  final String? date;
-  final bool isCompleted;
-  final bool isCurrent;
 }
 
 class _OrderStagesHeader extends StatelessWidget {
@@ -139,7 +88,6 @@ class _OrderStagesHeader extends StatelessWidget {
           fontWeight: AppFontWeight.bold,
         ),
       ),
-
     ],
   );
 }
@@ -151,7 +99,7 @@ class _OrderStageRow extends StatelessWidget {
     required this.isLast,
   });
 
-  final _OrderStageItem stage;
+  final Stage stage;
   final bool isFirst;
   final bool isLast;
 
@@ -180,7 +128,7 @@ class _OrderStageRow extends StatelessWidget {
                 height: AppHeight.h16,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: stage.isCurrent ? AppColors.light : AppColors.none,
+                  color: _isCurrent ? AppColors.light : AppColors.none,
                 ),
                 alignment: Alignment.center,
                 child: Container(
@@ -188,7 +136,7 @@ class _OrderStageRow extends StatelessWidget {
                   height: AppHeight.h10,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: stage.isCompleted
+                    color: _isCompleted
                         ? AppColors.homeSupportAction
                         : AppColors.mainTextLightActive,
                   ),
@@ -209,7 +157,7 @@ class _OrderStageRow extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SectionTitle(
-                        text: stage.title,
+                        text: stage.title ?? '',
                         color: AppColors.mainText,
                         fontSize: AppFontSize.s13,
                         fontWeight: AppFontWeight.bold,
@@ -218,7 +166,9 @@ class _OrderStageRow extends StatelessWidget {
                     if (stage.date != null) ...[
                       SizedBox(width: AppWidth.w8),
                       BodyTitle(
-                        text: stage.date!,
+                        text: DateFormat(
+                          'dd/MM/yyyy',
+                        ).format(stage.date!.toLocal()),
                         textAlign: TextAlign.right,
                         color: AppColors.secondaryNormal,
                         fontSize: AppFontSize.s12,
@@ -230,7 +180,7 @@ class _OrderStageRow extends StatelessWidget {
                 ),
                 SizedBox(height: AppHeight.h4),
                 BodyTitle(
-                  text: stage.description,
+                  text: stage.description ?? '',
                   color: AppColors.greyText,
                   fontSize: AppFontSize.s12,
                   fontWeight: AppFontWeight.regular,
@@ -244,4 +194,11 @@ class _OrderStageRow extends StatelessWidget {
       ],
     ),
   );
+
+  bool get _isCurrent => stage.state?.toLowerCase() == 'current';
+
+  bool get _isCompleted {
+    final state = stage.state?.toLowerCase();
+    return state == 'completed' || state == 'current';
+  }
 }

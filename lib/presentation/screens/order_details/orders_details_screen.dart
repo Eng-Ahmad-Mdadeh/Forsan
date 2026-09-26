@@ -57,6 +57,17 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
     consultant: 'اسم المستشار',
     status: 'قيد المراجعة',
   );
+  static final List<Stage> _skeletonStages = List.generate(
+    7,
+    (index) => Stage(
+      key: 'stage-$index',
+      title: 'مرحلة الطلب',
+      description: 'وصف مرحلة الطلب الحالية وتفاصيلها',
+      state: index == 0 ? 'current' : 'pending',
+      date: index == 0 ? DateTime(2026, 9, 23) : null,
+    ),
+    growable: false,
+  );
 
   @override
   void initState() {
@@ -89,6 +100,9 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
               ? state.orderDetailsModel?.data
               : null;
           final order = details == null ? _skeletonOrder : _toOrderItem(details);
+          final stages = isLoading
+              ? _skeletonStages
+              : details?.stages ?? const <Stage>[];
 
           return Skeletonizer(
             enableSwitchAnimation: true,
@@ -132,72 +146,97 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
                         fees: context.loc.order_fees_after_review,
                       ),
                       SizedBox(height: AppHeight.h16),
-                      const OrderStagesCard(),
+                      OrderStagesCard(stages: stages),
                       SizedBox(height: AppHeight.h16),
                       if(details?.attachments == true)
                       const OrderDocumentsCard(),
                       SizedBox(height: AppHeight.h16),
                       //const OrderAttachedDocumentsCard(),
                       SizedBox(height: AppHeight.h20),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CustomElevatedButton(
-                              height: AppHeight.h52,
-                              color: AppColors.homeSupportAction,
-                              borderRadius: AppRadius.r12,
-                              onPressed: () {
-                                const PayRoute().push(context);
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.check_rounded,
-                                    color: AppColors.white,
-                                    size: AppSize.s15,
-                                  ),
-                                  SizedBox(width: AppWidth.w5),
-                                  BodyTitle(
-                                    text: context.loc.order_approve_and_pay,
-                                    color: AppColors.white,
-                                    fontSize: AppFontSize.s12,
-                                  ),
-                                ],
-                              ),
+                      CustomElevatedButton(
+                        height: AppHeight.h52,
+                        color: AppColors.primary,
+                        borderRadius: AppRadius.r12,
+                        onPressed: () {},
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppPaddingWidth.p14,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              FluentIcons.chat_multiple_24_filled,
+                              color: AppColors.white,
+                              size: AppSize.s15,
                             ),
-                          ),
-                          SizedBox(width: AppWidth.w7),
-                          Expanded(
-                            child: CustomElevatedButton(
-                              height: AppHeight.h52,
-                              color: AppColors.primary,
-                              borderRadius: AppRadius.r12,
-                              onPressed: () {},
-                              padding: EdgeInsets.symmetric(
-                                horizontal: AppPaddingWidth.p14,
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    FluentIcons.chat_multiple_24_filled,
-                                    color: AppColors.white,
-                                    size: AppSize.s15,
-                                  ),
-                                  SizedBox(width: AppWidth.w5),
-                                  Flexible(
-                                    child: BodyTitle(
-                                      text: context.loc.order_contact_consultant,
-                                      color: AppColors.white,
-                                      fontSize: AppFontSize.s12,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            SizedBox(width: AppWidth.w5),
+                            BodyTitle(
+                              text: context.loc.order_contact_consultant,
+                              color: AppColors.white,
+                              fontSize: AppFontSize.s12,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
+                      // Row(
+                      //   children: [
+                      //     // Expanded(
+                      //     //   child: CustomElevatedButton(
+                      //     //     height: AppHeight.h52,
+                      //     //     color: AppColors.homeSupportAction,
+                      //     //     borderRadius: AppRadius.r12,
+                      //     //     onPressed: () {
+                      //     //       const PayRoute().push(context);
+                      //     //     },
+                      //     //     child: Row(
+                      //     //       mainAxisAlignment: MainAxisAlignment.center,
+                      //     //       children: [
+                      //     //         Icon(
+                      //     //           Icons.check_rounded,
+                      //     //           color: AppColors.white,
+                      //     //           size: AppSize.s15,
+                      //     //         ),
+                      //     //         SizedBox(width: AppWidth.w5),
+                      //     //         BodyTitle(
+                      //     //           text: context.loc.order_approve_and_pay,
+                      //     //           color: AppColors.white,
+                      //     //           fontSize: AppFontSize.s12,
+                      //     //         ),
+                      //     //       ],
+                      //     //     ),
+                      //     //   ),
+                      //     // ),
+                      //     SizedBox(width: AppWidth.w7),
+                      //     Expanded(
+                      //       child: CustomElevatedButton(
+                      //         height: AppHeight.h52,
+                      //         color: AppColors.primary,
+                      //         borderRadius: AppRadius.r12,
+                      //         onPressed: () {},
+                      //         padding: EdgeInsets.symmetric(
+                      //           horizontal: AppPaddingWidth.p14,
+                      //         ),
+                      //         child: Row(
+                      //           children: [
+                      //             Icon(
+                      //               FluentIcons.chat_multiple_24_filled,
+                      //               color: AppColors.white,
+                      //               size: AppSize.s15,
+                      //             ),
+                      //             SizedBox(width: AppWidth.w5),
+                      //             Flexible(
+                      //               child: BodyTitle(
+                      //                 text: context.loc.order_contact_consultant,
+                      //                 color: AppColors.white,
+                      //                 fontSize: AppFontSize.s12,
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),

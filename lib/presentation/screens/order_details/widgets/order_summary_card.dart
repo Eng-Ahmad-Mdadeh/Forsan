@@ -60,7 +60,7 @@ class OrderSummaryCard extends StatelessWidget {
                     _OrderSummaryRow(
                       icon: Icons.person_outline_rounded,
                       label: context.loc.order_submitter,
-                      value: submittedBy,
+                      value: '',
                     ),
                     _OrderSummaryRow(
                       icon: Icons.calendar_today_outlined,
