@@ -102,15 +102,16 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
           );
         }
 
-        final steps = orderStepsState.orderStepsModel?.data?.steps ??
-            const <StepModel>[];
+        final steps =
+            orderStepsState.orderStepsModel?.data?.steps ?? const <StepModel>[];
 
         if (steps.isEmpty) {
           return Scaffold(
             backgroundColor: AppColors.white,
             appBar: _buildAppBar(context),
             body: FailureScreen(
-              errorMessage: orderStepsState.orderStepsModel?.message ??
+              errorMessage:
+                  orderStepsState.orderStepsModel?.message ??
                   context.loc.no_data_available,
               onPressed: _loadOrderSteps,
             ),
@@ -147,7 +148,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                       onPageChanged: context.read<NewOrderCubit>().changeStep,
                       children: [
                         EstablishmentTypeStep(
-                          step: steps.first,
+                          step: steps[0],
                           selectedValue: state.establishmentType,
                           onChanged: context
                               .read<NewOrderCubit>()
@@ -157,10 +158,10 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                               .read<NewOrderCubit>()
                               .selectApplicantType,
                         ),
-                        const ApplicantStep(),
+                        ApplicantStep(step: steps[1]),
                         const ProposedCompanyInfoStep(),
                         const OwnershipStructureStep(),
-                         ActivityStep(),
+                        ActivityStep(),
                         DocumentsStep(),
                         ReviewStep(
                           onEditStep: (step) => _goToStep(context, step),

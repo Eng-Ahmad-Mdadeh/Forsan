@@ -6,6 +6,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
 import 'package:forsan/presentation/widgets/custom_check_box.dart';
 import 'package:forsan/presentation/widgets/custom_text_from_field.dart';
@@ -16,7 +17,9 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class ApplicantStep extends StatefulWidget {
-  const ApplicantStep({super.key});
+  final StepModel step;
+
+  const ApplicantStep({super.key, required this.step});
 
   @override
   State<ApplicantStep> createState() => _ApplicantStepState();
@@ -25,103 +28,104 @@ class ApplicantStep extends StatefulWidget {
 class _ApplicantStepState extends State<ApplicantStep> {
   Country _selectedCountry = Country.parse('SY');
 
-
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return ListView(
       padding: EdgeInsets.symmetric(
         horizontal: AppPaddingWidth.p16,
         vertical: AppPaddingHeight.p8,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Iconsax.personalcard_outline,
-                size: AppSize.s16,
-                color: AppColors.secondary,
-              ),
-              SizedBox(width: AppWidth.w4),
-              Expanded(
-                child: SectionTitle(
-                  text: context.loc.new_order_contact_identity_title,
-                  color: AppColors.primaryDark,
-                  fontSize: AppFontSize.s14,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Iconsax.personalcard_outline,
+                  size: AppSize.s16,
+                  color: AppColors.secondary,
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: AppHeight.h8),
-          BodyTitle(
-            text: context.loc.new_order_contact_identity_description,
-            color: AppColors.secondaryText,
-            fontSize: AppFontSize.s12,
-            fontWeight: AppFontWeight.regular,
-            maxLines: 2,
-          ),
-          SizedBox(height: AppHeight.h8),
-          CustomInputField(
-            title: context.loc.new_order_full_name,
-            hintText: context.loc.new_order_full_name_hint,
-            fontSize: AppFontSize.s16,
-            textInputType: TextInputType.name,
-            backgroundColor: AppColors.white,
-          ),
-          SizedBox(height: AppHeight.h8),
-          CustomInputField(
-            title: context.loc.new_order_father_name,
-            hintText: context.loc.new_order_father_name_hint,
-            fontSize: AppFontSize.s16,
-            backgroundColor: AppColors.white,
-          ),
-          SizedBox(height: AppHeight.h8),
-          _buildDropdown(
-            context,
-            label: context.loc.new_order_nationality,
-            items: [context.loc.new_order_male, context.loc.new_order_female],
-          ),
-          SizedBox(height: AppHeight.h8),
-          CustomInputField(
-            title: context.loc.new_order_passport_number_optional,
-            hintText: context.loc.new_order_passport_number_hint,
-            fontSize: AppFontSize.s16,
-            backgroundColor: AppColors.white,
-          ),
-          SizedBox(height: AppHeight.h10),
-          CustomInputField(
-            title: context.loc.new_order_national_id,
-            hintText: context.loc.new_order_national_id_hint,
-            textInputType: TextInputType.number,
-            fontSize: AppFontSize.s16,
-            backgroundColor: AppColors.white,
-          ),
+                SizedBox(width: AppWidth.w4),
+                Expanded(
+                  child: SectionTitle(
+                    text: context.loc.new_order_contact_identity_title,
+                    color: AppColors.primaryDark,
+                    fontSize: AppFontSize.s14,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: AppHeight.h8),
+            BodyTitle(
+              text: context.loc.new_order_contact_identity_description,
+              color: AppColors.secondaryText,
+              fontSize: AppFontSize.s12,
+              fontWeight: AppFontWeight.regular,
+              maxLines: 2,
+            ),
+            SizedBox(height: AppHeight.h8),
+            CustomInputField(
+              title: context.loc.new_order_full_name,
+              hintText: context.loc.new_order_full_name_hint,
+              fontSize: AppFontSize.s16,
+              textInputType: TextInputType.name,
+              backgroundColor: AppColors.white,
+            ),
+            SizedBox(height: AppHeight.h8),
+            CustomInputField(
+              title: context.loc.new_order_father_name,
+              hintText: context.loc.new_order_father_name_hint,
+              fontSize: AppFontSize.s16,
+              backgroundColor: AppColors.white,
+            ),
+            SizedBox(height: AppHeight.h8),
+            _buildDropdown(
+              context,
+              label: context.loc.new_order_nationality,
+              items: [context.loc.new_order_male, context.loc.new_order_female],
+            ),
+            SizedBox(height: AppHeight.h8),
+            CustomInputField(
+              title: context.loc.new_order_passport_number_optional,
+              hintText: context.loc.new_order_passport_number_hint,
+              fontSize: AppFontSize.s16,
+              backgroundColor: AppColors.white,
+            ),
+            SizedBox(height: AppHeight.h10),
+            CustomInputField(
+              title: context.loc.new_order_national_id,
+              hintText: context.loc.new_order_national_id_hint,
+              textInputType: TextInputType.number,
+              fontSize: AppFontSize.s16,
+              backgroundColor: AppColors.white,
+            ),
 
-          SizedBox(height: AppHeight.h8),
-          _buildPhoneField(
-            context,
-            label: context.loc.new_order_mobile_number,
-            hint: context.loc.new_order_mobile_number_hint,
-          ),
-          SizedBox(height: AppHeight.h8),
-          _buildPhoneField(
-            context,
-            label: context.loc.new_order_whatsapp_number,
-            hint: context.loc.new_order_whatsapp_number_hint,
-          ),
-          SizedBox(height: AppHeight.h8),
-          CustomInputField(
-            title: context.loc.new_order_email,
-            hintText: context.loc.new_order_email_hint,
-            fontSize: AppFontSize.s16,
-            textInputType: TextInputType.emailAddress,
-            backgroundColor: AppColors.white,
-          ),
-          SizedBox(height: AppHeight.h24),
-          _buildDelegationSection(context),
-        ],
-      ),
+            SizedBox(height: AppHeight.h8),
+            _buildPhoneField(
+              context,
+              label: context.loc.new_order_mobile_number,
+              hint: context.loc.new_order_mobile_number_hint,
+            ),
+            SizedBox(height: AppHeight.h8),
+            _buildPhoneField(
+              context,
+              label: context.loc.new_order_whatsapp_number,
+              hint: context.loc.new_order_whatsapp_number_hint,
+            ),
+            SizedBox(height: AppHeight.h8),
+            CustomInputField(
+              title: context.loc.new_order_email,
+              hintText: context.loc.new_order_email_hint,
+              fontSize: AppFontSize.s16,
+              textInputType: TextInputType.emailAddress,
+              backgroundColor: AppColors.white,
+            ),
+            SizedBox(height: AppHeight.h24),
+          ],
+        ),
+        _buildDelegationSection(context),
+      ],
     );
   }
 
@@ -156,12 +160,12 @@ class _ApplicantStepState extends State<ApplicantStep> {
         ),
         SizedBox(height: AppHeight.h8),
         Container(
-          height:AppHeight.h60,
+          height: AppHeight.h60,
           padding: EdgeInsets.all(AppPaddingWidth.p6),
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(AppRadius.r10),
-            boxShadow:  [
+            boxShadow: [
               BoxShadow(
                 color: AppColors.homeSoftShadow.withOpacity(0.05),
                 blurRadius: 12,
@@ -199,7 +203,9 @@ class _ApplicantStepState extends State<ApplicantStep> {
                     ),
                     SizedBox(height: AppHeight.h6),
                     BodyTitle(
-                      text: context.loc.new_order_representative_details_description,
+                      text: context
+                          .loc
+                          .new_order_representative_details_description,
                       color: AppColors.secondaryText,
                       fontSize: AppFontSize.s10,
                       fontWeight: AppFontWeight.regular,
@@ -219,10 +225,10 @@ class _ApplicantStepState extends State<ApplicantStep> {
   }
 
   Widget _buildDropdown(
-      BuildContext context, {
-        required String label,
-        required List<String> items,
-      }) {
+    BuildContext context, {
+    required String label,
+    required List<String> items,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -251,10 +257,10 @@ class _ApplicantStepState extends State<ApplicantStep> {
   }
 
   Widget _buildPhoneField(
-      BuildContext context, {
-        required String label,
-        required String hint,
-      }) {
+    BuildContext context, {
+    required String label,
+    required String hint,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -341,7 +347,10 @@ class _CountryDialCode extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(country.flagEmoji, style: TextStyle(fontSize: AppFontSize.s20)),
+            Text(
+              country.flagEmoji,
+              style: TextStyle(fontSize: AppFontSize.s20),
+            ),
             SizedBox(width: AppWidth.w5),
             BodyTitle(
               text: '+${country.phoneCode}',
@@ -355,7 +364,11 @@ class _CountryDialCode extends StatelessWidget {
               color: AppColors.greyText,
             ),
             SizedBox(width: AppWidth.w5),
-            Container(width: 1, height: AppHeight.h24, color: AppColors.lightGrey),
+            Container(
+              width: 1,
+              height: AppHeight.h24,
+              color: AppColors.lightGrey,
+            ),
           ],
         ),
       ),
