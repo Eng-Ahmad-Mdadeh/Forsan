@@ -63,90 +63,91 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: CustomAppBar(
-        title: context.loc.new_order_title,
+    return BlocBuilder<NewOrderCubit, NewOrderState>(
+      builder: (context, state) => Scaffold(
         backgroundColor: AppColors.white,
-        showBackButton: true,
-        showScrolledUnderElevation: false,
-        onTapBackButton: state.currentStep == 0
-            ? () => Navigator.of(context).pop()
-            : () => _goToStep(context, state.currentStep - 1),
-        customActions: [
-          HeaderIconButton(
-            icon: Icons.close_rounded,
-            onTap: () => Navigator.of(context).pop(),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                AppPaddingWidth.p20,
-                AppPaddingHeight.p18,
-                AppPaddingWidth.p20,
-                AppPaddingHeight.p14,
-              ),
-              child: OrderStepIndicator(currentStep: state.currentStep),
-            ),
-            Expanded(
-              child: PageView(
-                key: const Key('new_order_page_view'),
-                controller: _pageController,
-                onPageChanged: context.read<NewOrderCubit>().changeStep,
-                children: [
-                  EstablishmentTypeStep(
-                    selectedValue: state.establishmentType,
-                    onChanged: context
-                        .read<NewOrderCubit>()
-                        .selectEstablishmentType,
-                    selectedApplicantValue: state.applicantType,
-                    onApplicantChanged: context
-                        .read<NewOrderCubit>()
-                        .selectApplicantType,
-                  ),
-                  const ApplicantStep(),
-                  const ProposedCompanyInfoStep(),
-                  const OwnershipStructureStep(),
-                  ActivityStep(),
-                  DocumentsStep(),
-                  ReviewStep(onEditStep: (step) => _goToStep(context, step)),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                AppPaddingWidth.p16,
-                AppPaddingHeight.p8,
-                AppPaddingWidth.p16,
-                AppPaddingHeight.p16,
-              ),
-              child: CustomElevatedButton(
-                key: const Key('new_order_next_button'),
-                width: double.infinity,
-                height: AppHeight.h50,
-                color: AppColors.primary,
-                onPressed: () {
-                  if (state.currentStep < NewOrderCubit.lastStep) {
-                    _goToStep(context, state.currentStep + 1);
-                  }
-                },
-                child: BodyTitle(
-                  text: state.currentStep == NewOrderCubit.lastStep
-                      ? context.loc.new_order_submit
-                      : context.loc.new_order_next,
-                  color: AppColors.white,
-                  fontWeight: AppFontWeight.semiBold,
-                ),
-              ),
+        appBar: CustomAppBar(
+          title: context.loc.new_order_title,
+          backgroundColor: AppColors.white,
+          showBackButton: true,
+          showScrolledUnderElevation: false,
+          onTapBackButton: state.currentStep == 0
+              ? () => Navigator.of(context).pop()
+              : () => _goToStep(context, state.currentStep - 1),
+          customActions: [
+            HeaderIconButton(
+              icon: Icons.close_rounded,
+              onTap: () => Navigator.of(context).pop(),
             ),
           ],
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                  AppPaddingWidth.p20,
+                  AppPaddingHeight.p18,
+                  AppPaddingWidth.p20,
+                  AppPaddingHeight.p14,
+                ),
+                child: OrderStepIndicator(currentStep: state.currentStep),
+              ),
+              Expanded(
+                child: PageView(
+                  key: const Key('new_order_page_view'),
+                  controller: _pageController,
+                  onPageChanged: context.read<NewOrderCubit>().changeStep,
+                  children: [
+                    EstablishmentTypeStep(
+                      selectedValue: state.establishmentType,
+                      onChanged: context
+                          .read<NewOrderCubit>()
+                          .selectEstablishmentType,
+                      selectedApplicantValue: state.applicantType,
+                      onApplicantChanged: context
+                          .read<NewOrderCubit>()
+                          .selectApplicantType,
+                    ),
+                    const ApplicantStep(),
+                    const ProposedCompanyInfoStep(),
+                    const OwnershipStructureStep(),
+                    ActivityStep(),
+                    DocumentsStep(),
+                    ReviewStep(onEditStep: (step) => _goToStep(context, step)),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                  AppPaddingWidth.p16,
+                  AppPaddingHeight.p8,
+                  AppPaddingWidth.p16,
+                  AppPaddingHeight.p16,
+                ),
+                child: CustomElevatedButton(
+                  key: const Key('new_order_next_button'),
+                  width: double.infinity,
+                  height: AppHeight.h50,
+                  color: AppColors.primary,
+                  onPressed: () {
+                    if (state.currentStep < NewOrderCubit.lastStep) {
+                      _goToStep(context, state.currentStep + 1);
+                    }
+                  },
+                  child: BodyTitle(
+                    text: state.currentStep == NewOrderCubit.lastStep
+                        ? context.loc.new_order_submit
+                        : context.loc.new_order_next,
+                    color: AppColors.white,
+                    fontWeight: AppFontWeight.semiBold,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
