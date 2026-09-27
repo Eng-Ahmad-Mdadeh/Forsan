@@ -78,17 +78,17 @@ PurpleOption _$PurpleOptionFromJson(Map<String, dynamic> json) => PurpleOption(
   value: json['value'] as String?,
 );
 
-PurpleValidation _$PurpleValidationFromJson(Map<String, dynamic> json) =>
-    PurpleValidation(
-      max: (json['max'] as num?)?.toInt(),
-      min: (json['min'] as num?)?.toInt(),
-    );
-
 FluffyOption _$FluffyOptionFromJson(Map<String, dynamic> json) => FluffyOption(
   label: json['label'] as String?,
   value: json['value'] as String?,
   description: json['description'] as String?,
 );
+
+PurpleValidation _$PurpleValidationFromJson(Map<String, dynamic> json) =>
+    PurpleValidation(
+      max: (json['max'] as num?)?.toInt(),
+      min: (json['min'] as num?)?.toInt(),
+    );
 
 FluffyValidation _$FluffyValidationFromJson(Map<String, dynamic> json) =>
     FluffyValidation(

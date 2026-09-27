@@ -22,6 +22,8 @@ import '../../../data/data_sources/order_details/order_details_remote_data_sourc
     as _i588;
 import '../../../data/data_sources/order_list/order_list_remote_data_source.dart'
     as _i734;
+import '../../../data/data_sources/order_steps/order_steps_remote_data_source.dart'
+    as _i984;
 import '../../../data/data_sources/profile/profile_remote_data_source.dart'
     as _i265;
 import '../../../data/models/auth/auth_model.dart' as _i323;
@@ -29,6 +31,7 @@ import '../../../data/models/base/base_model.dart' as _i480;
 import '../../../data/models/home/home_model.dart' as _i703;
 import '../../../data/models/order_details/order_details_model.dart' as _i80;
 import '../../../data/models/order_list/order_list_model.dart' as _i1016;
+import '../../../data/models/order_steps/order_steps_model.dart' as _i196;
 import '../../../data/models/profile/profile_model.dart' as _i705;
 import '../../../data/models/service_type/service_type_model.dart' as _i964;
 import '../../../data/repositories/auth/auth_repository.dart' as _i202;
@@ -39,11 +42,14 @@ import '../../../data/repositories/order_details/order_details_repository.dart'
     as _i664;
 import '../../../data/repositories/order_list/order_list_repository.dart'
     as _i258;
+import '../../../data/repositories/order_steps/order_steps_repository.dart'
+    as _i1001;
 import '../../../data/repositories/profile/profile_repository.dart' as _i922;
 import '../../../domain/entities/auth/auth_entity.dart' as _i450;
 import '../../../domain/entities/order_details/order_details_entity.dart'
     as _i513;
 import '../../../domain/entities/order_list/order_list_entity.dart' as _i729;
+import '../../../domain/entities/order_steps/order_steps_entity.dart' as _i503;
 import '../../../domain/repositories/auth/i_auth_repository.dart' as _i1064;
 import '../../../domain/repositories/create_order/service_type/i_service_type_repository.dart'
     as _i637;
@@ -52,6 +58,8 @@ import '../../../domain/repositories/order_details/i_order_details_repository.da
     as _i122;
 import '../../../domain/repositories/order_list/i_order_list_repository.dart'
     as _i601;
+import '../../../domain/repositories/order_steps/i_order_steps_repository.dart'
+    as _i372;
 import '../../../domain/repositories/profile/i_profile_repository.dart'
     as _i1042;
 import '../../../domain/usecases/auth/check_code_usecase.dart' as _i298;
@@ -65,6 +73,8 @@ import '../../../domain/usecases/i_use_case.dart' as _i795;
 import '../../../domain/usecases/order_details/order_details_use_case.dart'
     as _i675;
 import '../../../domain/usecases/order_list/order_list_use_case.dart' as _i72;
+import '../../../domain/usecases/order_steps/order_steps_use_case.dart'
+    as _i1032;
 import '../../../domain/usecases/profile/profile_use_case.dart' as _i76;
 import '../../helper/device_info_helper.dart' as _i1052;
 import '../../helper/local_storage_helper.dart' as _i218;
@@ -92,6 +102,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i734.OrderListRemoteDataSource>(
       () => _i734.OrderListRemoteDataSource(),
     );
+    gh.factory<_i984.OrderStepsRemoteDataSource>(
+      () => _i984.OrderStepsRemoteDataSource(),
+    );
     gh.factory<_i265.ProfileRemoteDataSource>(
       () => _i265.ProfileRemoteDataSource(),
     );
@@ -115,6 +128,9 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i254.ServiceTypeRepository(gh<_i619.ServiceTypeRemoteDataSource>()),
     );
+    gh.factory<_i372.IOrderStepsRepository>(
+      () => _i1001.OrderStepsRepository(gh<_i984.OrderStepsRemoteDataSource>()),
+    );
     gh.factory<_i1042.IProfileRepository>(
       () => _i922.ProfileRepository(gh<_i265.ProfileRemoteDataSource>()),
     );
@@ -126,6 +142,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i444.AuthRemoteDataSource>(
       () => _i444.AuthRemoteDataSource(gh<_i1052.DeviceInfoHelper>()),
+    );
+    gh.factory<
+      _i795.IUseCase<
+        _i480.BaseModel<_i196.OrderStepsModel>?,
+        _i503.OrderStepsEntity
+      >
+    >(
+      () => _i1032.OrderStepsUseCase(gh<_i372.IOrderStepsRepository>()),
+      instanceName: 'OrderSteps',
     );
     gh.factory<_i122.IOrderDetailsRepository>(
       () => _i664.OrderDetailsRepository(
