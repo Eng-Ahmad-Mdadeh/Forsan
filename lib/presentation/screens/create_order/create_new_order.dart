@@ -4,6 +4,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
 import 'package:forsan/presentation/bloc/order_steps/order_steps_bloc.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
@@ -17,6 +18,8 @@ import 'package:forsan/presentation/screens/create_order/steps_widgets/proposed_
 import 'package:forsan/presentation/screens/create_order/steps_widgets/review_step.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
+import 'package:forsan/presentation/widgets/failure_screen.dart';
+import 'package:forsan/presentation/widgets/loading_widget.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 
 class CreateNewOrderScreen extends StatelessWidget {
@@ -49,6 +52,12 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
   final PageController _pageController = PageController();
 
   @override
+  void initState() {
+    super.initState();
+    _loadOrderSteps();
+  }
+
+  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
@@ -63,93 +72,138 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     );
   }
 
+  void _loadOrderSteps() {
+    context.read<OrderStepsBloc>().add(
+      OrderStepsEvent(CreateOrderEntity(serviceSlug: widget.serviceSlug)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NewOrderCubit, NewOrderState>(
-      builder: (context, state) => Scaffold(
-        backgroundColor: AppColors.white,
-        appBar: CustomAppBar(
-          title: context.loc.new_order_title,
-          backgroundColor: AppColors.white,
-          showBackButton: true,
-          showScrolledUnderElevation: false,
-          onTapBackButton: state.currentStep == 0
-              ? () => Navigator.of(context).pop()
-              : () => _goToStep(context, state.currentStep - 1),
-          customActions: [
-            HeaderIconButton(
-              icon: Icons.close_rounded,
-              onTap: () => Navigator.of(context).pop(),
+    return BlocBuilder<OrderStepsBloc, IOrderStepsState>(
+      builder: (context, orderStepsState) {
+        if (orderStepsState is OrderStepsFailed) {
+          return Scaffold(
+            backgroundColor: AppColors.white,
+            appBar: _buildAppBar(context),
+            body: FailureScreen(
+              errorMessage: orderStepsState.message,
+              onPressed: _loadOrderSteps,
             ),
-          ],
-        ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(
-                  AppPaddingWidth.p20,
-                  AppPaddingHeight.p18,
-                  AppPaddingWidth.p20,
-                  AppPaddingHeight.p14,
-                ),
-                child: OrderStepIndicator(currentStep: state.currentStep),
-              ),
-              Expanded(
-                child: PageView(
-                  key: const Key('new_order_page_view'),
-                  controller: _pageController,
-                  onPageChanged: context.read<NewOrderCubit>().changeStep,
-                  children: [
-                    EstablishmentTypeStep(
-                      selectedValue: state.establishmentType,
-                      onChanged: context
-                          .read<NewOrderCubit>()
-                          .selectEstablishmentType,
-                      selectedApplicantValue: state.applicantType,
-                      onApplicantChanged: context
-                          .read<NewOrderCubit>()
-                          .selectApplicantType,
+          );
+        }
+
+        if (orderStepsState is! OrderStepsLoaded) {
+          return Scaffold(
+            backgroundColor: AppColors.white,
+            appBar: _buildAppBar(context),
+            body: const SafeArea(child: LoadingWidget(0)),
+          );
+        }
+
+        final stepTitles = orderStepsState.orderStepsModel?.data?.steps
+            ?.map((step) => step.title?.trim() ?? '')
+            .toList();
+
+        return BlocBuilder<NewOrderCubit, NewOrderState>(
+          builder: (context, state) => Scaffold(
+            backgroundColor: AppColors.white,
+            appBar: _buildAppBar(context, state: state),
+            body: SafeArea(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      AppPaddingWidth.p20,
+                      AppPaddingHeight.p18,
+                      AppPaddingWidth.p20,
+                      AppPaddingHeight.p14,
                     ),
-                    const ApplicantStep(),
-                    const ProposedCompanyInfoStep(),
-                    const OwnershipStructureStep(),
-                    ActivityStep(),
-                    DocumentsStep(),
-                    ReviewStep(onEditStep: (step) => _goToStep(context, step)),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(
-                  AppPaddingWidth.p16,
-                  AppPaddingHeight.p8,
-                  AppPaddingWidth.p16,
-                  AppPaddingHeight.p16,
-                ),
-                child: CustomElevatedButton(
-                  key: const Key('new_order_next_button'),
-                  width: double.infinity,
-                  height: AppHeight.h50,
-                  color: AppColors.primary,
-                  onPressed: () {
-                    if (state.currentStep < NewOrderCubit.lastStep) {
-                      _goToStep(context, state.currentStep + 1);
-                    }
-                  },
-                  child: BodyTitle(
-                    text: state.currentStep == NewOrderCubit.lastStep
-                        ? context.loc.new_order_submit
-                        : context.loc.new_order_next,
-                    color: AppColors.white,
-                    fontWeight: AppFontWeight.semiBold,
+                    child: OrderStepIndicator(
+                      currentStep: state.currentStep,
+                      stepTitles: stepTitles,
+                    ),
                   ),
-                ),
+                  Expanded(
+                    child: PageView(
+                      key: const Key('new_order_page_view'),
+                      controller: _pageController,
+                      onPageChanged: context.read<NewOrderCubit>().changeStep,
+                      children: [
+                        EstablishmentTypeStep(
+                          selectedValue: state.establishmentType,
+                          onChanged: context
+                              .read<NewOrderCubit>()
+                              .selectEstablishmentType,
+                          selectedApplicantValue: state.applicantType,
+                          onApplicantChanged: context
+                              .read<NewOrderCubit>()
+                              .selectApplicantType,
+                        ),
+                        const ApplicantStep(),
+                        const ProposedCompanyInfoStep(),
+                        const OwnershipStructureStep(),
+                        ActivityStep(),
+                        DocumentsStep(),
+                        ReviewStep(
+                          onEditStep: (step) => _goToStep(context, step),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      AppPaddingWidth.p16,
+                      AppPaddingHeight.p8,
+                      AppPaddingWidth.p16,
+                      AppPaddingHeight.p16,
+                    ),
+                    child: CustomElevatedButton(
+                      key: const Key('new_order_next_button'),
+                      width: double.infinity,
+                      height: AppHeight.h50,
+                      color: AppColors.primary,
+                      onPressed: () {
+                        if (state.currentStep < NewOrderCubit.lastStep) {
+                          _goToStep(context, state.currentStep + 1);
+                        }
+                      },
+                      child: BodyTitle(
+                        text: state.currentStep == NewOrderCubit.lastStep
+                            ? context.loc.new_order_submit
+                            : context.loc.new_order_next,
+                        color: AppColors.white,
+                        fontWeight: AppFontWeight.semiBold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
+        );
+      },
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar(
+    BuildContext context, {
+    NewOrderState? state,
+  }) {
+    return CustomAppBar(
+      title: context.loc.new_order_title,
+      backgroundColor: AppColors.white,
+      showBackButton: true,
+      showScrolledUnderElevation: false,
+      onTapBackButton: state == null || state.currentStep == 0
+          ? () => Navigator.of(context).pop()
+          : () => _goToStep(context, state.currentStep - 1),
+      customActions: [
+        HeaderIconButton(
+          icon: Icons.close_rounded,
+          onTap: () => Navigator.of(context).pop(),
         ),
-      ),
+      ],
     );
   }
 }

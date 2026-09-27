@@ -6,20 +6,33 @@ import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 
 class OrderStepIndicator extends StatelessWidget {
-  const OrderStepIndicator({super.key, required this.currentStep});
+  const OrderStepIndicator({
+    super.key,
+    required this.currentStep,
+    this.stepTitles,
+  });
 
   final int currentStep;
+  final List<String>? stepTitles;
 
   @override
   Widget build(BuildContext context) {
+    final defaultLabels = [
+      context.loc.new_order_step_establishment,
+      context.loc.new_order_step_applicant,
+      context.loc.new_order_step_company_info,
+      context.loc.new_order_step_partners,
+      context.loc.new_order_step_activity,
+      context.loc.new_order_step_documents,
+      context.loc.new_order_step_review,
+    ];
     final labels = [
-      context.loc.new_order_step_establishment, // index 0 (خطوة 1)
-      context.loc.new_order_step_applicant,     // index 1 (خطوة 2)
-      context.loc.new_order_step_company_info,  // index 2 (خطوة 3)
-      context.loc.new_order_step_partners,      // index 3 (خطوة 4)
-      context.loc.new_order_step_activity,      // index 4 (خطوة 5)
-      context.loc.new_order_step_documents,                               // index 5 (خطوة 6)
-      context.loc.new_order_step_review,                                // index 6 (خطوة 7)
+      for (var index = 0; index < defaultLabels.length; index++)
+        if (index < (stepTitles?.length ?? 0) &&
+            stepTitles![index].isNotEmpty)
+          stepTitles![index]
+        else
+          defaultLabels[index],
     ];
 
     // معادلة حساب بداية المجموعة (visibleStart):
