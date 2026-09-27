@@ -166,7 +166,13 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                               .read<NewOrderCubit>()
                               .updateFormValue,
                         ),
-                        OwnershipStructureStep(step: steps[3]),
+                        OwnershipStructureStep(
+                          step: steps[3],
+                          selectedValues: state.formValues,
+                          onFieldChanged: context
+                              .read<NewOrderCubit>()
+                              .updateFormValue,
+                        ),
                         ActivityStep(),
                         DocumentsStep(),
                         ReviewStep(

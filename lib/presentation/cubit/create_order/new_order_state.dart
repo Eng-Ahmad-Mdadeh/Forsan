@@ -14,14 +14,14 @@ class NewOrderState extends Equatable {
   final String establishmentType;
   final String applicantType;
   final List<PlatformFile> documents;
-  final Map<String, String> formValues;
+  final Map<String, dynamic> formValues;
 
   NewOrderState copyWith({
     int? currentStep,
     String? establishmentType,
     String? applicantType,
     List<PlatformFile>? documents,
-    Map<String, String>? formValues,
+    Map<String, dynamic>? formValues,
   }) {
     return NewOrderState(
       currentStep: currentStep ?? this.currentStep,

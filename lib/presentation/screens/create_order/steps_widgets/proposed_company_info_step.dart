@@ -13,8 +13,8 @@ import 'package:icons_plus/icons_plus.dart';
 
 class ProposedCompanyInfoStep extends StatelessWidget {
   final StepModel step;
-  final Map<String, String> selectedValues;
-  final void Function(String fieldId, String value) onFieldChanged;
+  final Map<String, dynamic> selectedValues;
+  final void Function(String fieldId, dynamic value) onFieldChanged;
 
   const ProposedCompanyInfoStep({
     super.key,
