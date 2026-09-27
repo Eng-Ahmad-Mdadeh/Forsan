@@ -30,106 +30,112 @@ class _ApplicantStepState extends State<ApplicantStep> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    final sections = widget.step.sections ?? const <Section>[];
+
+    return ListView.separated(
       padding: EdgeInsets.symmetric(
         horizontal: AppPaddingWidth.p16,
         vertical: AppPaddingHeight.p8,
       ),
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Iconsax.personalcard_outline,
-                  size: AppSize.s16,
-                  color: AppColors.secondary,
-                ),
-                SizedBox(width: AppWidth.w4),
-                Expanded(
-                  child: SectionTitle(
-                    text: context.loc.new_order_contact_identity_title,
-                    color: AppColors.primaryDark,
-                    fontSize: AppFontSize.s14,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: AppHeight.h8),
-            BodyTitle(
-              text: context.loc.new_order_contact_identity_description,
-              color: AppColors.secondaryText,
-              fontSize: AppFontSize.s12,
-              fontWeight: AppFontWeight.regular,
-              maxLines: 2,
-            ),
-            SizedBox(height: AppHeight.h8),
-            CustomInputField(
-              title: context.loc.new_order_full_name,
-              hintText: context.loc.new_order_full_name_hint,
-              fontSize: AppFontSize.s16,
-              textInputType: TextInputType.name,
-              backgroundColor: AppColors.white,
-            ),
-            SizedBox(height: AppHeight.h8),
-            CustomInputField(
-              title: context.loc.new_order_father_name,
-              hintText: context.loc.new_order_father_name_hint,
-              fontSize: AppFontSize.s16,
-              backgroundColor: AppColors.white,
-            ),
-            SizedBox(height: AppHeight.h8),
-            _buildDropdown(
-              context,
-              label: context.loc.new_order_nationality,
-              items: [context.loc.new_order_male, context.loc.new_order_female],
-            ),
-            SizedBox(height: AppHeight.h8),
-            CustomInputField(
-              title: context.loc.new_order_passport_number_optional,
-              hintText: context.loc.new_order_passport_number_hint,
-              fontSize: AppFontSize.s16,
-              backgroundColor: AppColors.white,
-            ),
-            SizedBox(height: AppHeight.h10),
-            CustomInputField(
-              title: context.loc.new_order_national_id,
-              hintText: context.loc.new_order_national_id_hint,
-              textInputType: TextInputType.number,
-              fontSize: AppFontSize.s16,
-              backgroundColor: AppColors.white,
-            ),
+      itemCount: sections.length,
+      itemBuilder: (_, index) {
+        final section = sections[index];
 
-            SizedBox(height: AppHeight.h8),
-            _buildPhoneField(
-              context,
-              label: context.loc.new_order_mobile_number,
-              hint: context.loc.new_order_mobile_number_hint,
+        if (section.id == 'local-representative') {
+          return _buildDelegationSection(context, section);
+        }
+
+        return _buildApplicantSection(context, section);
+      },
+      separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
+    );
+  }
+
+  Widget _buildApplicantSection(BuildContext context, Section section) {
+    final fields = section.fields ?? const <SectionField>[];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Icon(
+              Iconsax.personalcard_outline,
+              size: AppSize.s16,
+              color: AppColors.secondary,
             ),
-            SizedBox(height: AppHeight.h8),
-            _buildPhoneField(
-              context,
-              label: context.loc.new_order_whatsapp_number,
-              hint: context.loc.new_order_whatsapp_number_hint,
+            SizedBox(width: AppWidth.w4),
+            Expanded(
+              child: SectionTitle(
+                text: section.title?.trim() ??
+                    context.loc.new_order_contact_identity_title,
+                color: AppColors.primaryDark,
+                fontSize: AppFontSize.s14,
+              ),
             ),
-            SizedBox(height: AppHeight.h8),
-            CustomInputField(
-              title: context.loc.new_order_email,
-              hintText: context.loc.new_order_email_hint,
-              fontSize: AppFontSize.s16,
-              textInputType: TextInputType.emailAddress,
-              backgroundColor: AppColors.white,
-            ),
-            SizedBox(height: AppHeight.h24),
           ],
         ),
-        _buildDelegationSection(context),
+        SizedBox(height: AppHeight.h8),
+        BodyTitle(
+          text: section.description?.trim() ??
+              context.loc.new_order_contact_identity_description,
+          color: AppColors.secondaryText,
+          fontSize: AppFontSize.s12,
+          fontWeight: AppFontWeight.regular,
+          maxLines: 2,
+        ),
+        SizedBox(height: AppHeight.h8),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: fields.length,
+          itemBuilder: (_, index) => _buildField(context, fields[index]),
+          separatorBuilder: (_, _) => SizedBox(height: AppHeight.h8),
+        ),
       ],
     );
   }
 
-  Widget _buildDelegationSection(BuildContext context) {
+  Widget _buildField(BuildContext context, SectionField field) {
+    final label = field.label?.trim() ?? '';
+    final hint = field.placeholder?.trim() ?? '';
+
+    switch (field.type) {
+      case 'select':
+        return _buildDropdown(
+          context,
+          label: label,
+          hint: hint,
+          items: (field.options ?? const <FluffyOption>[])
+              .map((option) => option.label?.trim() ?? '')
+              .where((option) => option.isNotEmpty)
+              .toList(growable: false),
+        );
+      case 'phone':
+        return _buildPhoneField(context, label: label, hint: hint);
+      default:
+        return CustomInputField(
+          title: label,
+          hintText: hint,
+          fontSize: AppFontSize.s16,
+          textInputType: _textInputType(field),
+          backgroundColor: AppColors.white,
+        );
+    }
+  }
+
+  TextInputType _textInputType(SectionField field) {
+    if (field.type == 'email') return TextInputType.emailAddress;
+    if (field.id == 'nationalId') return TextInputType.number;
+    if (field.id == 'fullName' || field.id == 'fatherName') {
+      return TextInputType.name;
+    }
+    return TextInputType.text;
+  }
+
+  Widget _buildDelegationSection(BuildContext context, Section section) {
+    final field = section.fields?.firstOrNull;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -142,7 +148,8 @@ class _ApplicantStepState extends State<ApplicantStep> {
             ),
             SizedBox(width: AppWidth.w4),
             BodyTitle(
-              text: context.loc.new_order_delegation_in_syria,
+              text: section.title?.trim() ??
+                  context.loc.new_order_delegation_in_syria,
               color: AppColors.primaryDark,
               fontSize: AppFontSize.s14,
               fontWeight: AppFontWeight.bold,
@@ -151,7 +158,8 @@ class _ApplicantStepState extends State<ApplicantStep> {
         ),
         SizedBox(height: AppHeight.h8),
         BodyTitle(
-          text: context.loc.new_order_delegation_in_syria_description,
+          text: section.description?.trim() ??
+              context.loc.new_order_delegation_in_syria_description,
           textAlign: TextAlign.center,
           color: AppColors.secondaryText,
           fontSize: AppFontSize.s12,
@@ -195,7 +203,8 @@ class _ApplicantStepState extends State<ApplicantStep> {
                   children: [
                     SizedBox(height: AppHeight.h6),
                     BodyTitle(
-                      text: context.loc.new_order_has_representative_in_syria,
+                      text: field?.label?.trim() ??
+                          context.loc.new_order_has_representative_in_syria,
                       color: AppColors.mainText,
                       fontSize: AppFontSize.s12,
                       fontWeight: AppFontWeight.bold,
@@ -203,9 +212,9 @@ class _ApplicantStepState extends State<ApplicantStep> {
                     ),
                     SizedBox(height: AppHeight.h6),
                     BodyTitle(
-                      text: context
-                          .loc
-                          .new_order_representative_details_description,
+                      text: field?.hint?.trim() ??
+                          context.loc
+                              .new_order_representative_details_description,
                       color: AppColors.secondaryText,
                       fontSize: AppFontSize.s10,
                       fontWeight: AppFontWeight.regular,
@@ -227,6 +236,7 @@ class _ApplicantStepState extends State<ApplicantStep> {
   Widget _buildDropdown(
     BuildContext context, {
     required String label,
+    required String hint,
     required List<String> items,
   }) {
     return Column(
@@ -243,7 +253,7 @@ class _ApplicantStepState extends State<ApplicantStep> {
         CustomDropDownWidget(
           items: items,
           isStringList: true,
-          hintText: context.loc.new_order_select_hint,
+          hintText: hint.isEmpty ? context.loc.new_order_select_hint : hint,
           color: AppColors.white,
           height: AppHeight.h50,
           borderRadius: AppRadius.r7,
