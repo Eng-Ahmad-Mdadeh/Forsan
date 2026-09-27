@@ -103,8 +103,6 @@ FluffyValidation _$FluffyValidationFromJson(Map<String, dynamic> json) =>
     );
 
 VisibleIf _$VisibleIfFromJson(Map<String, dynamic> json) => VisibleIf(
-  visibleIfIn: (json['in'] as List<dynamic>?)
-      ?.map((e) => e as String)
-      .toList(),
+  visibleIfIn: (json['in'] as List<dynamic>?)?.map((e) => e as String).toList(),
   field: json['field'] as String?,
 );
