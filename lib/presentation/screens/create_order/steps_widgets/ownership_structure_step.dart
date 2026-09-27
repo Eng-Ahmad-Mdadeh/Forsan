@@ -3,6 +3,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
@@ -11,7 +12,8 @@ import 'package:forsan/presentation/widgets/text/section_title.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class OwnershipStructureStep extends StatelessWidget {
-  const OwnershipStructureStep({super.key});
+  final StepModel step;
+  const OwnershipStructureStep({super.key, required this.step});
 
   @override
   Widget build(BuildContext context) {
