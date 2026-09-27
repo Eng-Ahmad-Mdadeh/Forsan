@@ -5,7 +5,7 @@ import 'package:forsan/data/models/base/base_model.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/data/data_sources/order_steps/order_steps_remote_data_source.dart';
 import 'package:forsan/domain/repositories/order_steps/i_order_steps_repository.dart';
-import 'package:forsan/domain/entities/order_steps/order_steps_entity.dart';
+import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
 
 
 
@@ -17,7 +17,7 @@ class OrderStepsRepository implements IOrderStepsRepository{
 
   @override
   Future<Either<AppException, BaseModel<OrderStepsModel>?>> getOrderSteps(
-      OrderStepsEntity entity,
+      CreateOrderEntity entity,
       ) async {
     final response = await _remoteDataSource.getOrderSteps(entity);
     return response.fold(

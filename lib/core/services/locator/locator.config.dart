@@ -46,10 +46,11 @@ import '../../../data/repositories/order_steps/order_steps_repository.dart'
     as _i1001;
 import '../../../data/repositories/profile/profile_repository.dart' as _i922;
 import '../../../domain/entities/auth/auth_entity.dart' as _i450;
+import '../../../domain/entities/create_order/create_order_entity.dart'
+    as _i232;
 import '../../../domain/entities/order_details/order_details_entity.dart'
     as _i513;
 import '../../../domain/entities/order_list/order_list_entity.dart' as _i729;
-import '../../../domain/entities/order_steps/order_steps_entity.dart' as _i503;
 import '../../../domain/repositories/auth/i_auth_repository.dart' as _i1064;
 import '../../../domain/repositories/create_order/service_type/i_service_type_repository.dart'
     as _i637;
@@ -146,7 +147,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<
       _i795.IUseCase<
         _i480.BaseModel<_i196.OrderStepsModel>?,
-        _i503.OrderStepsEntity
+        _i232.CreateOrderEntity
       >
     >(
       () => _i1032.OrderStepsUseCase(gh<_i372.IOrderStepsRepository>()),

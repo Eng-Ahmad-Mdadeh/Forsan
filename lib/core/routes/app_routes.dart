@@ -225,7 +225,7 @@ class WesternUnionRoute extends GoRouteData with $WesternUnionRoute {
 
 @TypedGoRoute<SelectServiceTypeRoute>(
   path: '/select_service_type',
-  routes: [TypedGoRoute<CreateNewOrderRoute>(path: 'create_new_order')],
+  routes: [TypedGoRoute<CreateNewOrderRoute>(path: 'create_new_order/:serviceSlug')],
 )
 class SelectServiceTypeRoute extends GoRouteData with $SelectServiceTypeRoute {
   const SelectServiceTypeRoute();
@@ -242,14 +242,16 @@ class SelectServiceTypeRoute extends GoRouteData with $SelectServiceTypeRoute {
 }
 
 class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
-  const CreateNewOrderRoute();
+  final String serviceSlug;
+
+  const CreateNewOrderRoute( this.serviceSlug);
 
   @override
   CustomTransitionPage<void> buildPage(
     BuildContext context,
     GoRouterState state,
   ) {
-    return const CreateNewOrderScreen().buildPage(
+    return CreateNewOrderScreen(serviceSlug: serviceSlug).buildPage(
       pageAnimation: PageAnimation.fade,
     );
   }

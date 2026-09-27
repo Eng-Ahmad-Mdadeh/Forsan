@@ -7,7 +7,7 @@ sealed class IOrderStepsEvent extends Equatable {
 final class OrderStepsEvent extends IOrderStepsEvent {
   const OrderStepsEvent(this.entity);
 
-  final OrderStepsEntity entity;
+  final CreateOrderEntity entity;
 
   @override
   List<Object?> get props => [entity];

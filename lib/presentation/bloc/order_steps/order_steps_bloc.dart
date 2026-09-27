@@ -1,12 +1,11 @@
+import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/data/models/base/base_model.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
-import 'package:forsan/domain/entities/order_steps/order_steps_entity.dart';
 import 'package:forsan/domain/usecases/i_use_case.dart';
 
 part 'order_steps_event.dart';
@@ -25,7 +24,7 @@ class OrderStepsBloc extends Bloc<IOrderStepsEvent, IOrderStepsState> {
     try {
       final result =
           await locator<
-            IUseCase<BaseModel<OrderStepsModel>?, OrderStepsEntity>
+            IUseCase<BaseModel<OrderStepsModel>?, CreateOrderEntity>
           >(instanceName: 'OrderSteps')(event.entity);
       result.fold(
         (failure) => emit(OrderStepsFailed(failure.message)),

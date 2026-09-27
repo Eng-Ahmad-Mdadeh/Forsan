@@ -19,7 +19,8 @@ import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 
 class CreateNewOrderScreen extends StatefulWidget {
-  const CreateNewOrderScreen({super.key});
+  final String serviceSlug;
+  const CreateNewOrderScreen({super.key, required this.serviceSlug});
 
   @override
   State<CreateNewOrderScreen> createState() => _CreateNewOrderScreenState();

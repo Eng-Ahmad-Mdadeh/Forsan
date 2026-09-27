@@ -1,8 +1,8 @@
 
 import 'package:equatable/equatable.dart';
 
-class OrderStepsEntity extends Equatable {
-  const OrderStepsEntity({
+class CreateOrderEntity extends Equatable {
+  const CreateOrderEntity({
     this.serviceSlug,
 
   });
@@ -16,11 +16,11 @@ class OrderStepsEntity extends Equatable {
     };
   }
 
-  OrderStepsEntity copyWith({
+  CreateOrderEntity copyWith({
     String? serviceSlug,
 
   }) {
-    return OrderStepsEntity(
+    return CreateOrderEntity(
       serviceSlug: serviceSlug ?? this.serviceSlug,
 
     );

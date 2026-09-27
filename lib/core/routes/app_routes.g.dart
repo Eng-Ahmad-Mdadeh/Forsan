@@ -292,7 +292,7 @@ RouteBase get $selectServiceTypeRoute => GoRouteData.$route(
   factory: $SelectServiceTypeRoute._fromState,
   routes: [
     GoRouteData.$route(
-      path: 'create_new_order',
+      path: 'create_new_order/:serviceSlug',
       hasOverriddenOnExit: false,
       factory: $CreateNewOrderRoute._fromState,
     ),
@@ -322,11 +322,14 @@ mixin $SelectServiceTypeRoute on GoRouteData {
 
 mixin $CreateNewOrderRoute on GoRouteData {
   static CreateNewOrderRoute _fromState(GoRouterState state) =>
-      const CreateNewOrderRoute();
+      CreateNewOrderRoute(state.pathParameters['serviceSlug']!);
+
+  CreateNewOrderRoute get _self => this as CreateNewOrderRoute;
 
   @override
-  String get location =>
-      GoRouteData.$location('/select_service_type/create_new_order');
+  String get location => GoRouteData.$location(
+    '/select_service_type/create_new_order/${Uri.encodeComponent(_self.serviceSlug)}',
+  );
 
   @override
   void go(BuildContext context) => context.go(location);
