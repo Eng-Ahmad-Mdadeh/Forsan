@@ -199,6 +199,6 @@ class _OrderStageRow extends StatelessWidget {
 
   bool get _isCompleted {
     final state = stage.state?.toLowerCase();
-    return state == 'completed' || state == 'current';
+    return state == 'done' || state == 'current';
   }
 }

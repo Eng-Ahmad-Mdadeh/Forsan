@@ -46,10 +46,7 @@ class BodyOrdersDetailsScreen extends StatefulWidget {
 }
 
 class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
-  static const _statusesWithoutAttachedDocuments = {
-    'AWAITING_DOCUMENTS',
-    'UNDER_REVIEW',
-  };
+
 
   static final OrderDetailsModel _skeletonOrder = OrderDetailsModel(
     id: '',
@@ -115,8 +112,7 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
             : _skeletonOrder;
         final canPay = order.actions?.canPay == true;
         final canChat = order.actions?.canChat == true;
-        final showAttachedDocuments = !_statusesWithoutAttachedDocuments
-            .contains(order.status?.trim().toUpperCase());
+
 
         return Skeletonizer(
           enabled: isLoading,
@@ -155,7 +151,7 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
                   OrderStagesCard(stages: order.stages ?? []),
                   SizedBox(height: AppHeight.h16),
                   const OrderDocumentsCard(),
-                  if (showAttachedDocuments) ...[
+                  if (order.displayStatus!='AWAITING_DOCUMENTS'&&order.displayStatus!='UNDER_REVIEW') ...[
                     SizedBox(height: AppHeight.h16),
                     const OrderAttachedDocumentsCard(),
                   ],
@@ -188,8 +184,7 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
                               ),
                             ),
                           ),
-                        if (canPay && canChat)
-                          SizedBox(width: AppWidth.w7),
+                        if (canPay && canChat) SizedBox(width: AppWidth.w7),
                         if (canChat)
                           Expanded(
                             child: CustomElevatedButton(
