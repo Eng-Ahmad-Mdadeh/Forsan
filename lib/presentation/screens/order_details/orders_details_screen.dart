@@ -192,6 +192,7 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
                                 horizontal: AppPaddingWidth.p14,
                               ),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
                                     FluentIcons.chat_multiple_24_filled,
