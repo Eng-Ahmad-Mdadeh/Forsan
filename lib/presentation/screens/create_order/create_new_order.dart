@@ -131,6 +131,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                       onPageChanged: context.read<NewOrderCubit>().changeStep,
                       children: [
                         EstablishmentTypeStep(
+                          step: orderStepsState.orderStepsModel.data.steps[state.currentStep] ,
                           selectedValue: state.establishmentType,
                           onChanged: context
                               .read<NewOrderCubit>()
@@ -143,7 +144,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                         const ApplicantStep(),
                         const ProposedCompanyInfoStep(),
                         const OwnershipStructureStep(),
-                        ActivityStep(),
+                         ActivityStep(),
                         DocumentsStep(),
                         ReviewStep(
                           onEditStep: (step) => _goToStep(context, step),
