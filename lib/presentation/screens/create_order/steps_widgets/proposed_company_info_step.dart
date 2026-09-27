@@ -3,6 +3,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
@@ -11,7 +12,9 @@ import 'package:forsan/presentation/widgets/text/section_title.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class ProposedCompanyInfoStep extends StatefulWidget {
-  const ProposedCompanyInfoStep({super.key});
+  final StepModel step;
+
+  const ProposedCompanyInfoStep({super.key, required this.step});
 
   @override
   State<ProposedCompanyInfoStep> createState() => _ProposedCompanyInfoStepState();
