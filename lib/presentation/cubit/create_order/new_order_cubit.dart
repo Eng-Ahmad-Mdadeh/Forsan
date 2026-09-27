@@ -31,7 +31,7 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     emit(state.copyWith(applicantType: type));
   }
 
-  void updateFormValue(String fieldId, String value) {
+  void updateFormValue(String fieldId, dynamic value) {
     if (state.formValues[fieldId] == value) return;
 
     emit(state.copyWith(formValues: {...state.formValues, fieldId: value}));
