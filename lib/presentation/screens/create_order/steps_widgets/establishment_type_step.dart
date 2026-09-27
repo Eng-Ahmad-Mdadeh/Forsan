@@ -3,8 +3,8 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/order_option_card.dart';
-import 'package:forsan/data/models/order_steps/order_steps_model.dart' as order_steps;
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
@@ -20,7 +20,7 @@ class EstablishmentTypeStep extends StatelessWidget {
     required this.step
   });
 
-  final Step step;
+  final StepModel step;
   final String selectedValue;
   final ValueChanged<String> onChanged;
   final String selectedApplicantValue;
@@ -109,7 +109,7 @@ class EstablishmentTypeStep extends StatelessWidget {
               SizedBox(width: AppWidth.w4),
               Expanded(
                 child: SectionTitle(
-                  text: context.loc.new_order_establishment_title,
+                  text: step.title,
                   color: AppColors.primaryDark,
                   fontSize: AppFontSize.s14,
                 ),
@@ -125,13 +125,13 @@ class EstablishmentTypeStep extends StatelessWidget {
             maxLines: 2,
           ),
           SizedBox(height: AppHeight.h10),
-          for (final option in options) ...[
+          for (final field in step.sections![0].fields) ...[
             OrderOptionCard(
-              title: option.title,
-              description: option.description,
-              icon: option.icon,
-              selected: selectedValue == option.value,
-              onTap: () => onChanged(option.value),
+              title: field.title,
+              description: field.description,
+              icon: field.icon,
+              selected: selectedValue == field.value,
+              onTap: () => onChanged(field.value),
             ),
             SizedBox(height: AppHeight.h10),
           ],
@@ -162,17 +162,17 @@ class EstablishmentTypeStep extends StatelessWidget {
             maxLines: 2,
           ),
 
-          for (final option in applicantOptions) ...[
-            OrderOptionCard(
-              title: option.title,
-              description: option.description,
-              icon: option.icon,
-              height: AppHeight.h80,
-              selected: selectedApplicantValue == option.value,
-              onTap: () => onApplicantChanged(option.value),
-            ),
-            SizedBox(height: AppHeight.h10),
-          ],
+          // for (final option in applicantOptions) ...[
+          //   OrderOptionCard(
+          //     title: option.title,
+          //     description: option.description,
+          //     icon: option.icon,
+          //     height: AppHeight.h80,
+          //     selected: selectedApplicantValue == option.value,
+          //     onTap: () => onApplicantChanged(option.value),
+          //   ),
+          //   SizedBox(height: AppHeight.h10),
+          // ],
         ],
       ),
     );

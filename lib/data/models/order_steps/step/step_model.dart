@@ -1,8 +1,8 @@
 part of '../order_steps_model.dart';
 
 @JsonSerializable(createToJson: false)
-class Step extends Equatable {
-  Step({
+class StepModel extends Equatable {
+  StepModel({
     required this.title,
     required this.number,
     required this.sections,
@@ -12,7 +12,7 @@ class Step extends Equatable {
   final int? number;
   final List<Section>? sections;
 
-  factory Step.fromJson(Map<String, dynamic> json) => _$StepFromJson(json);
+  factory StepModel.fromJson(Map<String, dynamic> json) => _$StepModelFromJson(json);
 
   @override
   List<Object?> get props => [

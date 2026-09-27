@@ -10,7 +10,7 @@ OrderStepsModel _$OrderStepsModelFromJson(Map<String, dynamic> json) =>
     OrderStepsModel(
       serviceSlug: json['serviceSlug'] as String?,
       steps: (json['steps'] as List<dynamic>?)
-          ?.map((e) => Step.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => StepModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       version: (json['version'] as num?)?.toInt(),
       agreements: (json['agreements'] as List<dynamic>?)
@@ -21,7 +21,7 @@ OrderStepsModel _$OrderStepsModelFromJson(Map<String, dynamic> json) =>
 Agreement _$AgreementFromJson(Map<String, dynamic> json) =>
     Agreement(id: json['id'] as String?, label: json['label'] as String?);
 
-Step _$StepFromJson(Map<String, dynamic> json) => Step(
+StepModel _$StepModelFromJson(Map<String, dynamic> json) => StepModel(
   title: json['title'] as String?,
   number: (json['number'] as num?)?.toInt(),
   sections: (json['sections'] as List<dynamic>?)

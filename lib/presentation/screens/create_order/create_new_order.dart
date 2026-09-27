@@ -4,6 +4,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
 import 'package:forsan/presentation/bloc/order_steps/order_steps_bloc.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
@@ -101,9 +102,24 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
           );
         }
 
-        final stepTitles = orderStepsState.orderStepsModel?.data?.steps
-            ?.map((step) => step.title?.trim() ?? '')
-            .toList();
+        final steps = orderStepsState.orderStepsModel?.data?.steps ??
+            const <StepModel>[];
+
+        if (steps.isEmpty) {
+          return Scaffold(
+            backgroundColor: AppColors.white,
+            appBar: _buildAppBar(context),
+            body: FailureScreen(
+              errorMessage: orderStepsState.orderStepsModel?.message ??
+                  context.loc.no_data_available,
+              onPressed: _loadOrderSteps,
+            ),
+          );
+        }
+
+        final stepTitles = steps
+            .map((step) => step.title?.trim() ?? '')
+            .toList(growable: false);
 
         return BlocBuilder<NewOrderCubit, NewOrderState>(
           builder: (context, state) => Scaffold(
@@ -131,7 +147,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                       onPageChanged: context.read<NewOrderCubit>().changeStep,
                       children: [
                         EstablishmentTypeStep(
-                          step: orderStepsState.orderStepsModel.data.steps[state.currentStep] ,
+                          step: steps.first,
                           selectedValue: state.establishmentType,
                           onChanged: context
                               .read<NewOrderCubit>()
