@@ -4,6 +4,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/bloc/order_steps/order_steps_bloc.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/activity_step.dart';
@@ -18,15 +19,33 @@ import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 
-class CreateNewOrderScreen extends StatefulWidget {
+class CreateNewOrderScreen extends StatelessWidget {
   final String serviceSlug;
+
   const CreateNewOrderScreen({super.key, required this.serviceSlug});
 
   @override
-  State<CreateNewOrderScreen> createState() => _CreateNewOrderScreenState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<OrderStepsBloc>(create: (_) => OrderStepsBloc()),
+        BlocProvider<NewOrderCubit>(create: (_) => NewOrderCubit()),
+      ],
+      child: BodyCreateNewOrderScreen(serviceSlug: serviceSlug),
+    );
+  }
 }
 
-class _CreateNewOrderScreenState extends State<CreateNewOrderScreen> {
+class BodyCreateNewOrderScreen extends StatefulWidget {
+  final String serviceSlug;
+
+  const BodyCreateNewOrderScreen({super.key, required this.serviceSlug});
+
+  @override
+  State<BodyCreateNewOrderScreen> createState() => _CreateNewOrderScreenState();
+}
+
+class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
   final PageController _pageController = PageController();
 
   @override
@@ -44,17 +63,9 @@ class _CreateNewOrderScreenState extends State<CreateNewOrderScreen> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => NewOrderCubit(),
-      child: BlocBuilder<NewOrderCubit, NewOrderState>(
-        builder: (context, state) => _buildScreen(context, state),
-      ),
-    );
-  }
-
-  Widget _buildScreen(BuildContext context, NewOrderState state) {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: CustomAppBar(
@@ -92,20 +103,20 @@ class _CreateNewOrderScreenState extends State<CreateNewOrderScreen> {
                 children: [
                   EstablishmentTypeStep(
                     selectedValue: state.establishmentType,
-                    onChanged:
-                        context.read<NewOrderCubit>().selectEstablishmentType,
+                    onChanged: context
+                        .read<NewOrderCubit>()
+                        .selectEstablishmentType,
                     selectedApplicantValue: state.applicantType,
-                    onApplicantChanged:
-                        context.read<NewOrderCubit>().selectApplicantType,
+                    onApplicantChanged: context
+                        .read<NewOrderCubit>()
+                        .selectApplicantType,
                   ),
                   const ApplicantStep(),
                   const ProposedCompanyInfoStep(),
                   const OwnershipStructureStep(),
                   ActivityStep(),
                   DocumentsStep(),
-                  ReviewStep(
-                    onEditStep: (step) => _goToStep(context, step),
-                  ),
+                  ReviewStep(onEditStep: (step) => _goToStep(context, step)),
                 ],
               ),
             ),
