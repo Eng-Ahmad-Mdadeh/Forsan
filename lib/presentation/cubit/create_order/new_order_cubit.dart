@@ -31,6 +31,12 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     emit(state.copyWith(applicantType: type));
   }
 
+  void updateFormValue(String fieldId, String value) {
+    if (state.formValues[fieldId] == value) return;
+
+    emit(state.copyWith(formValues: {...state.formValues, fieldId: value}));
+  }
+
   Future<int> pickDocuments() async {
     final documents = await _filePickerHelper.pickDocuments();
     return addDocuments(documents);

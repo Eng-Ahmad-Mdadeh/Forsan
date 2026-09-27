@@ -11,22 +11,21 @@ import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-class ProposedCompanyInfoStep extends StatefulWidget {
+class ProposedCompanyInfoStep extends StatelessWidget {
   final StepModel step;
+  final Map<String, String> selectedValues;
+  final void Function(String fieldId, String value) onFieldChanged;
 
-  const ProposedCompanyInfoStep({super.key, required this.step});
-
-  @override
-  State<ProposedCompanyInfoStep> createState() =>
-      _ProposedCompanyInfoStepState();
-}
-
-class _ProposedCompanyInfoStepState extends State<ProposedCompanyInfoStep> {
-  final Map<String, String> _selectedValues = {};
+  const ProposedCompanyInfoStep({
+    super.key,
+    required this.step,
+    required this.selectedValues,
+    required this.onFieldChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final sections = widget.step.sections ?? const <Section>[];
+    final sections = step.sections ?? const <Section>[];
 
     return ListView.separated(
       padding: EdgeInsets.fromLTRB(
@@ -102,7 +101,7 @@ class _ProposedCompanyInfoStepState extends State<ProposedCompanyInfoStep> {
     if (controllingField == null) return true;
 
     return (condition.visibleIfIn ?? const <String>[])
-        .contains(_selectedValues[controllingField]);
+        .contains(selectedValues[controllingField]);
   }
 
   Widget _buildField(BuildContext context, SectionField field) {
@@ -197,10 +196,13 @@ class _ProposedCompanyInfoStepState extends State<ProposedCompanyInfoStep> {
             final selectedOption = options.where(
               (option) => option.label?.trim() == selectedLabel,
             );
-            setState(() {
-              _selectedValues[field.id ?? ''] =
-                  selectedOption.firstOrNull?.value ?? selectedLabel.toString();
-            });
+            final fieldId = field.id;
+            if (fieldId == null) return;
+
+            onFieldChanged(
+              fieldId,
+              selectedOption.firstOrNull?.value ?? selectedLabel.toString(),
+            );
           },
         ),
       ],

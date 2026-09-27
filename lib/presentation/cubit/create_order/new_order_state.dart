@@ -7,24 +7,28 @@ class NewOrderState extends Equatable {
     this.establishmentType = 'one_person',
     this.applicantType = ' ',
     this.documents = const [],
+    this.formValues = const {},
   });
 
   final int currentStep;
   final String establishmentType;
   final String applicantType;
   final List<PlatformFile> documents;
+  final Map<String, String> formValues;
 
   NewOrderState copyWith({
     int? currentStep,
     String? establishmentType,
     String? applicantType,
     List<PlatformFile>? documents,
+    Map<String, String>? formValues,
   }) {
     return NewOrderState(
       currentStep: currentStep ?? this.currentStep,
       establishmentType: establishmentType ?? this.establishmentType,
       applicantType: applicantType ?? this.applicantType,
       documents: documents ?? this.documents,
+      formValues: formValues ?? this.formValues,
     );
   }
 
@@ -34,5 +38,6 @@ class NewOrderState extends Equatable {
         establishmentType,
         applicantType,
         documents,
+        formValues,
       ];
 }

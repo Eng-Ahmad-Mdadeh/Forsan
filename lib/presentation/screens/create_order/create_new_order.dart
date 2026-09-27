@@ -159,7 +159,13 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                               .selectApplicantType,
                         ),
                         ApplicantStep(step: steps[1]),
-                        ProposedCompanyInfoStep(step: steps[2]),
+                        ProposedCompanyInfoStep(
+                          step: steps[2],
+                          selectedValues: state.formValues,
+                          onFieldChanged: context
+                              .read<NewOrderCubit>()
+                              .updateFormValue,
+                        ),
                         const OwnershipStructureStep(),
                         ActivityStep(),
                         DocumentsStep(),

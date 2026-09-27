@@ -4,6 +4,7 @@ part of '../order_steps_model.dart';
 class VisibleIf extends Equatable {
   VisibleIf({required this.visibleIfIn, required this.field});
 
+  @JsonKey(name: 'in')
   final List<String>? visibleIfIn;
   final String? field;
 
