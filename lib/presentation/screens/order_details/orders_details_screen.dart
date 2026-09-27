@@ -108,6 +108,8 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
         final order = state is OrderDetailsLoaded
             ? state.orderDetailsModel?.data ?? _skeletonOrder
             : _skeletonOrder;
+        final canPay = order.actions?.canPay == true;
+        final canChat = order.actions?.canChat == true;
 
         return Skeletonizer(
           enabled: isLoading,
@@ -131,81 +133,87 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
                 children: [
                   OrderDetailsHeaderCard(item: order),
                   SizedBox(height: AppHeight.h16),
-                  if(order.requiredAction != null)
-                  RequiredActionCard(
-                    title: context.loc.order_required_action,
-                    message: context.loc.order_required_documents_message,
-                    buttonText: context.loc.order_complete_requirements,
-                    semanticsLabel: context.loc.order_required_action,
-                    onPressed: () =>
-                        const CompleteRequirementsRoute().push(context),
-                  ),
+                  if (order.requiredAction != null)
+                    RequiredActionCard(
+                      title: context.loc.order_required_action,
+                      message: context.loc.order_required_documents_message,
+                      buttonText: context.loc.order_complete_requirements,
+                      semanticsLabel: context.loc.order_required_action,
+                      onPressed: () =>
+                          const CompleteRequirementsRoute().push(context),
+                    ),
                   SizedBox(height: AppHeight.h16),
                   OrderSummaryCard(item: order),
                   SizedBox(height: AppHeight.h16),
-                   OrderStagesCard(stages:order.stages?? [],),
+                  OrderStagesCard(stages: order.stages ?? []),
                   SizedBox(height: AppHeight.h16),
                   const OrderDocumentsCard(),
                   SizedBox(height: AppHeight.h16),
                   const OrderAttachedDocumentsCard(),
-                  SizedBox(height: AppHeight.h20),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomElevatedButton(
-                          height: AppHeight.h52,
-                          color: AppColors.homeSupportAction,
-                          borderRadius: AppRadius.r12,
-                          onPressed: () => const PayRoute().push(context),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.check_rounded,
-                                color: AppColors.white,
-                                size: AppSize.s15,
+                  if (canPay || canChat) ...[
+                    SizedBox(height: AppHeight.h20),
+                    Row(
+                      children: [
+                        if (canPay)
+                          Expanded(
+                            child: CustomElevatedButton(
+                              height: AppHeight.h52,
+                              color: AppColors.homeSupportAction,
+                              borderRadius: AppRadius.r12,
+                              onPressed: () => const PayRoute().push(context),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.check_rounded,
+                                    color: AppColors.white,
+                                    size: AppSize.s15,
+                                  ),
+                                  SizedBox(width: AppWidth.w5),
+                                  BodyTitle(
+                                    text: context.loc.order_approve_and_pay,
+                                    color: AppColors.white,
+                                    fontSize: AppFontSize.s12,
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: AppWidth.w5),
-                              BodyTitle(
-                                text: context.loc.order_approve_and_pay,
-                                color: AppColors.white,
-                                fontSize: AppFontSize.s12,
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(width: AppWidth.w7),
-                      Expanded(
-                        child: CustomElevatedButton(
-                          height: AppHeight.h52,
-                          color: AppColors.primary,
-                          borderRadius: AppRadius.r12,
-                          onPressed: () {},
-                          padding: EdgeInsets.symmetric(
-                            horizontal: AppPaddingWidth.p14,
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                FluentIcons.chat_multiple_24_filled,
-                                color: AppColors.white,
-                                size: AppSize.s15,
+                        if (canPay && canChat)
+                          SizedBox(width: AppWidth.w7),
+                        if (canChat)
+                          Expanded(
+                            child: CustomElevatedButton(
+                              height: AppHeight.h52,
+                              color: AppColors.primary,
+                              borderRadius: AppRadius.r12,
+                              onPressed: () {},
+                              padding: EdgeInsets.symmetric(
+                                horizontal: AppPaddingWidth.p14,
                               ),
-                              SizedBox(width: AppWidth.w5),
-                              Flexible(
-                                child: BodyTitle(
-                                  text: context.loc.order_contact_consultant,
-                                  color: AppColors.white,
-                                  fontSize: AppFontSize.s12,
-                                ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    FluentIcons.chat_multiple_24_filled,
+                                    color: AppColors.white,
+                                    size: AppSize.s15,
+                                  ),
+                                  SizedBox(width: AppWidth.w5),
+                                  Flexible(
+                                    child: BodyTitle(
+                                      text:
+                                          context.loc.order_contact_consultant,
+                                      color: AppColors.white,
+                                      fontSize: AppFontSize.s12,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ],
               ),
             ),
