@@ -17,33 +17,54 @@ class ProposedCompanyInfoStep extends StatefulWidget {
   const ProposedCompanyInfoStep({super.key, required this.step});
 
   @override
-  State<ProposedCompanyInfoStep> createState() => _ProposedCompanyInfoStepState();
+  State<ProposedCompanyInfoStep> createState() =>
+      _ProposedCompanyInfoStepState();
 }
 
 class _ProposedCompanyInfoStepState extends State<ProposedCompanyInfoStep> {
+  final Map<String, String> _selectedValues = {};
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    final sections = widget.step.sections ?? const <Section>[];
+
+    return ListView.separated(
       padding: EdgeInsets.fromLTRB(
         AppPaddingWidth.p16,
         AppPaddingHeight.p8,
         AppPaddingWidth.p16,
         AppPaddingHeight.p24,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+      itemCount: sections.length,
+      itemBuilder: (_, index) => _buildSection(context, sections[index]),
+      separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
+    );
+  }
+
+  Widget _buildSection(BuildContext context, Section section) {
+    final title = section.title?.trim() ?? '';
+    final description = section.description?.trim() ?? '';
+    final fields = (section.fields ?? const <SectionField>[])
+        .where(_isFieldVisible)
+        .toList(growable: false);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (title.isNotEmpty) ...[
           Row(
             children: [
               Icon(
-                Iconsax.personalcard_outline,
+                section.id == 'company-location'
+                    ? Iconsax.location_outline
+                    : Iconsax.personalcard_outline,
                 size: AppSize.s16,
                 color: AppColors.secondary,
               ),
               SizedBox(width: AppWidth.w4),
               Expanded(
                 child: SectionTitle(
-                  text: context.loc.new_order_proposed_company_info_title,
+                  text: title,
                   color: AppColors.primaryDark,
                   fontSize: AppFontSize.s14,
                 ),
@@ -51,95 +72,87 @@ class _ProposedCompanyInfoStepState extends State<ProposedCompanyInfoStep> {
             ],
           ),
           SizedBox(height: AppHeight.h8),
+        ],
+        if (description.isNotEmpty) ...[
           BodyTitle(
-            text: context.loc.new_order_proposed_company_info_description,
+            text: description,
             color: AppColors.secondaryText,
             fontSize: AppFontSize.s12,
             fontWeight: AppFontWeight.regular,
-          ),
-          SizedBox(height: AppHeight.h10),
-          CustomInputField(
-            title: context.loc.new_order_proposed_company_name,
-            hintText: context.loc.new_order_proposed_company_name_hint,
-            fontSize: AppFontSize.s14,
-            backgroundColor: AppColors.white,
+            maxLines: 2,
           ),
           SizedBox(height: AppHeight.h8),
-          CustomInputField(
-            title: context.loc.new_order_second_proposed_company_name_optional,
-            hintText: context.loc.new_order_second_proposed_company_name_hint,
-            fontSize: AppFontSize.s16,
-            backgroundColor: AppColors.white,
+        ],
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: fields.length,
+          itemBuilder: (_, index) => _buildField(context, fields[index]),
+          separatorBuilder: (_, _) => SizedBox(height: AppHeight.h8),
+        ),
+      ],
+    );
+  }
+
+  bool _isFieldVisible(SectionField field) {
+    final condition = field.visibleIf;
+    if (condition == null) return true;
+
+    final controllingField = condition.field;
+    if (controllingField == null) return true;
+
+    return (condition.visibleIfIn ?? const <String>[])
+        .contains(_selectedValues[controllingField]);
+  }
+
+  Widget _buildField(BuildContext context, SectionField field) {
+    final label = field.label?.trim() ?? '';
+    final hint = field.placeholder?.trim() ?? '';
+
+    switch (field.type) {
+      case 'select':
+        return _buildDropdown(context, field: field, label: label, hint: hint);
+      case 'info':
+        return _buildInfoField(label);
+      default:
+        return CustomInputField(
+          title: label,
+          hintText: hint,
+          fontSize: AppFontSize.s16,
+          textInputType: field.id == 'englishName'
+              ? TextInputType.name
+              : TextInputType.text,
+          backgroundColor: AppColors.white,
+        );
+    }
+  }
+
+  Widget _buildInfoField(String text) {
+    return SectionCard(
+      margin: EdgeInsets.zero,
+      padding: EdgeInsets.symmetric(
+        horizontal: AppPaddingWidth.p12,
+        vertical: AppPaddingHeight.p10,
+      ),
+      borderRadius: BorderRadius.circular(AppRadius.r7),
+      backgroundColor: AppColors.light,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.info_outline_rounded,
+            color: AppColors.primaryDark,
+            size: AppSize.s20,
           ),
-          SizedBox(height: AppHeight.h8),
-          CustomInputField(
-            title: context.loc.new_order_third_proposed_company_name_optional,
-            hintText: context.loc.new_order_third_proposed_company_name_hint,
-            fontSize: AppFontSize.s16,
-            backgroundColor: AppColors.white,
-          ),
-          SizedBox(height: AppHeight.h8),
-          CustomInputField(
-            title: context.loc.new_order_company_name_english_optional,
-            hintText: context.loc.new_order_company_name_english_hint,
-            fontSize: AppFontSize.s16,
-            backgroundColor: AppColors.white,
-          ),
-          SizedBox(height: AppHeight.h8),
-          _buildDropdown(
-            context,
-            label: context.loc.new_order_governorate,
-            items: const [],
-          ),
-          SizedBox(height: AppHeight.h8),
-          CustomInputField(
-            title: context.loc.new_order_city_or_area,
-            hintText: context.loc.new_order_city_or_area_hint,
-            fontSize: AppFontSize.s16,
-            backgroundColor: AppColors.white,
-          ),
-          SizedBox(height: AppHeight.h8),
-          _buildDropdown(
-            context,
-            label: context.loc.new_order_has_headquarters_currently,
-            items: [context.loc.new_order_yes, context.loc.new_order_no],
-          ),
-          SizedBox(height: AppHeight.h8),
-          CustomInputField(
-            title: context.loc.new_order_headquarters_address,
-            hintText: context.loc.new_order_headquarters_address_hint,
-            fontSize: AppFontSize.s16,
-            backgroundColor: AppColors.white,
-          ),
-          SizedBox(height: AppHeight.h16),
-          SectionCard(
-            margin: EdgeInsets.zero,
-            padding: EdgeInsets.symmetric(
-              horizontal: AppPaddingWidth.p12,
-              vertical: AppPaddingHeight.p10,
-            ),
-            borderRadius: BorderRadius.circular(AppRadius.r7),
-            backgroundColor: AppColors.light,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.info_outline_rounded,
-                  color: AppColors.primaryDark,
-                  size: AppSize.s20,
-                ),
-                SizedBox(width: AppWidth.w8),
-                Expanded(
-                  child: BodyTitle(
-                    text: context.loc.new_order_trade_name_approval_notice,
-                    color: AppColors.secondaryText,
-                    fontSize: AppFontSize.s12,
-                    fontWeight: AppFontWeight.regular,
-                    textAlign: TextAlign.start,
-                    maxLines: 2,
-                  ),
-                ),
-              ],
+          SizedBox(width: AppWidth.w8),
+          Expanded(
+            child: BodyTitle(
+              text: text,
+              color: AppColors.secondaryText,
+              fontSize: AppFontSize.s12,
+              fontWeight: AppFontWeight.regular,
+              textAlign: TextAlign.start,
+              maxLines: 2,
             ),
           ),
         ],
@@ -149,9 +162,16 @@ class _ProposedCompanyInfoStepState extends State<ProposedCompanyInfoStep> {
 
   Widget _buildDropdown(
     BuildContext context, {
+    required SectionField field,
     required String label,
-    required List<String> items,
+    required String hint,
   }) {
+    final options = field.options ?? const <FluffyOption>[];
+    final items = options
+        .map((option) => option.label?.trim() ?? '')
+        .where((option) => option.isNotEmpty)
+        .toList(growable: false);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -166,14 +186,22 @@ class _ProposedCompanyInfoStepState extends State<ProposedCompanyInfoStep> {
         CustomDropDownWidget(
           items: items,
           isStringList: true,
-          hintText: context.loc.new_order_select_hint,
+          hintText: hint.isEmpty ? context.loc.new_order_select_hint : hint,
           color: AppColors.white,
           height: AppHeight.h50,
           borderRadius: AppRadius.r7,
           closedBorder: const Border.fromBorderSide(
             BorderSide(color: AppColors.greyDivider, width: .7),
           ),
-          onChanged: (_) {},
+          onChanged: (selectedLabel) {
+            final selectedOption = options.where(
+              (option) => option.label?.trim() == selectedLabel,
+            );
+            setState(() {
+              _selectedValues[field.id ?? ''] =
+                  selectedOption.firstOrNull?.value ?? selectedLabel.toString();
+            });
+          },
         ),
       ],
     );
