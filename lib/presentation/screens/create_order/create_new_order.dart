@@ -13,7 +13,7 @@ import 'package:forsan/presentation/screens/create_order/steps_widgets/activity_
 import 'package:forsan/presentation/screens/create_order/steps_widgets/applicant_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/documents_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/establishment_type_step.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/order_step_indicator.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_step_indicator.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/ownership_structure_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/proposed_company_info_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/review_step.dart';

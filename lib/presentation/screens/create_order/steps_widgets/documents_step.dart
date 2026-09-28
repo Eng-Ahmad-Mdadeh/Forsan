@@ -9,8 +9,8 @@ import 'package:forsan/presentation/screens/create_order/widgets/order_info_card
 import 'package:forsan/presentation/screens/create_order/widgets/order_section_header.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/document_requirement_card.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/uploaded_document_card.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/document_requirement_card.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/uploaded_document_card.dart';
 import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';

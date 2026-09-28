@@ -4,7 +4,7 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/order_option_card.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_option_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
