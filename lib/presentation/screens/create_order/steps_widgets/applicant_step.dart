@@ -15,8 +15,15 @@ import 'package:icons_plus/icons_plus.dart';
 
 class ApplicantStep extends StatelessWidget {
   final StepModel step;
+  final Map<String, dynamic> selectedValues;
+  final void Function(String fieldId, dynamic value) onFieldChanged;
 
-  const ApplicantStep({super.key, required this.step});
+  const ApplicantStep({
+    super.key,
+    required this.step,
+    required this.selectedValues,
+    required this.onFieldChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -95,21 +102,39 @@ class ApplicantStep extends StatelessWidget {
         return OrderFormDropdown<String?>(
           label: label,
           hint: hint,
+          value: selectedValues[field.id],
           options: (field.options ?? const <FluffyOption>[])
               .map((option) => OrderDropdownOption(
                     label: option.label?.trim() ?? '',
                     value: option.value,
                   ))
               .toList(growable: false),
-          onChanged: (_) {},
+          onChanged: (value) {
+            if (field.id != null) onFieldChanged(field.id!, value);
+          },
         );
       case 'phone':
-        return OrderPhoneField(label: label, hint: hint);
-      default:
-        return OrderFormInputField(
+        return OrderPhoneField(
+          key: ValueKey(field.id),
           label: label,
           hint: hint,
+          value: selectedValues[field.id]?.toString(),
+          onChanged: (value) {
+            if (field.id != null) onFieldChanged(field.id!, value);
+          },
+        );
+      default:
+        return OrderFormInputField(
+          key: ValueKey(field.id),
+          type: field.type,
+          label: label,
+          hint: hint,
+          value: selectedValues[field.id],
+          isRequired: field.required ?? false,
           keyboardType: _textInputType(field),
+          onChanged: (value) {
+            if (field.id != null) onFieldChanged(field.id!, value);
+          },
         );
     }
   }
@@ -227,7 +252,12 @@ class ApplicantStep extends StatelessWidget {
             ),
           ),
           SizedBox(width: AppWidth.w8),
-          CustomCheckBox(),
+          CustomCheckBox(
+            value: selectedValues[field.id] == true,
+            onChanged: (value) {
+              if (field.id != null) onFieldChanged(field.id!, value);
+            },
+          ),
         ],
       ),
     );

@@ -152,7 +152,12 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                           selectedValues: state.orderEntity.formValues,
                           onFieldChanged: context.read<NewOrderCubit>().updateFormValue,
                         ),
-                        ApplicantStep(step: steps[1]),
+                        ApplicantStep(
+                          step: steps[1],
+                          selectedValues: state.orderEntity.formValues,
+                          onFieldChanged:
+                              context.read<NewOrderCubit>().updateFormValue,
+                        ),
                         ProposedCompanyInfoStep(
                           step: steps[2],
                           selectedValues: state.orderEntity.formValues,

@@ -223,20 +223,6 @@ class ActivityStep extends StatelessWidget {
       onFieldChanged(repeaterId, updated);
     }
 
-    if (field.type == 'select') {
-      return OrderFormDropdown<dynamic>(
-        label: showLabel ? field.label : null,
-        hint: field.placeholder,
-        options: (field.options ?? const <PurpleOption>[])
-            .map((option) => OrderDropdownOption(
-                  label: option.label?.trim() ?? '',
-                  value: option.value,
-                ))
-            .toList(),
-        value: entry[field.id],
-        onChanged: update,
-      );
-    }
 
     return OrderFormInputField(
       key: ValueKey('$repeaterId-$index-${field.id}'),
