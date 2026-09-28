@@ -5,6 +5,7 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
+import 'package:forsan/presentation/bloc/create_order/upload_file/upload_file_bloc.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_info_card.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_section_header.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
@@ -15,17 +16,38 @@ import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:mime/mime.dart';
 
-class DocumentsStep extends StatefulWidget {
+class DocumentsStep extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
+  final StepModel step;
+
   const DocumentsStep({super.key, required this.formKey, required this.step});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UploadFileBloc>(create: (_) => UploadFileBloc()),
+      ],
+      child: BodyDocumentsStep(formKey: formKey, step: step),
+    );
+  }
+}
+
+class BodyDocumentsStep extends StatefulWidget {
+  const BodyDocumentsStep({
+    super.key,
+    required this.formKey,
+    required this.step,
+  });
 
   final GlobalKey<FormState> formKey;
   final StepModel step;
 
   @override
-  State<DocumentsStep> createState() => _DocumentsStepState();
+  State<BodyDocumentsStep> createState() => _DocumentsStepState();
 }
 
-class _DocumentsStepState extends State<DocumentsStep> {
+class _DocumentsStepState extends State<BodyDocumentsStep> {
   String? _expandedRequirementId;
 
   Future<void> _pickDocument(
@@ -37,9 +59,11 @@ class _DocumentsStepState extends State<DocumentsStep> {
     final normalizedTypes = acceptedTypes
         .map((type) => type.toLowerCase())
         .toSet();
-    final imageTypes = normalizedTypes.where(
-      (type) => lookupMimeType('file.$type')?.startsWith('image/') == true,
-    ).toSet();
+    final imageTypes = normalizedTypes
+        .where(
+          (type) => lookupMimeType('file.$type')?.startsWith('image/') == true,
+        )
+        .toSet();
     final fileTypes = normalizedTypes.difference(imageTypes);
     final source = fileTypes.isNotEmpty && imageTypes.isNotEmpty
         ? await _selectDocumentSource(context)
@@ -76,34 +100,33 @@ class _DocumentsStepState extends State<DocumentsStep> {
     );
   }
 
-  Future<_DocumentSource?> _selectDocumentSource(
-    BuildContext context,
-  ) => showModalBottomSheet<_DocumentSource>(
-    context: context,
-    backgroundColor: AppColors.white,
-    builder: (context) => SafeArea(
-      child: Wrap(
-        children: [
-          ListTile(
-            leading: const Icon(
-              Icons.insert_drive_file_outlined,
-              color: AppColors.primary,
-            ),
-            title: BodyTitle(text: context.loc.documents),
-            onTap: () => Navigator.pop(context, _DocumentSource.file),
+  Future<_DocumentSource?> _selectDocumentSource(BuildContext context) =>
+      showModalBottomSheet<_DocumentSource>(
+        context: context,
+        backgroundColor: AppColors.white,
+        builder: (context) => SafeArea(
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: const Icon(
+                  Icons.insert_drive_file_outlined,
+                  color: AppColors.primary,
+                ),
+                title: BodyTitle(text: context.loc.documents),
+                onTap: () => Navigator.pop(context, _DocumentSource.file),
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.image_outlined,
+                  color: AppColors.primary,
+                ),
+                title: BodyTitle(text: context.loc.image),
+                onTap: () => Navigator.pop(context, _DocumentSource.image),
+              ),
+            ],
           ),
-          ListTile(
-            leading: const Icon(
-              Icons.image_outlined,
-              color: AppColors.primary,
-            ),
-            title: BodyTitle(text: context.loc.image),
-            onTap: () => Navigator.pop(context, _DocumentSource.image),
-          ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -124,11 +147,8 @@ class _DocumentsStepState extends State<DocumentsStep> {
           ),
           itemCount: sections.length,
           separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
-          itemBuilder: (_, index) => _buildSection(
-            context,
-            sections[index],
-            state,
-          ),
+          itemBuilder: (_, index) =>
+              _buildSection(context, sections[index], state),
         ),
       ),
     );
@@ -154,12 +174,7 @@ class _DocumentsStepState extends State<DocumentsStep> {
           description: description,
         ),
         for (var index = 0; index < fileFields.length; index++) ...[
-          _buildDocumentRequirement(
-            context,
-            fileFields[index],
-            index,
-            state,
-          ),
+          _buildDocumentRequirement(context, fileFields[index], index, state),
           if (index < fileFields.length - 1) SizedBox(height: AppHeight.h10),
         ],
         for (final field in infoFields) ...[
@@ -185,10 +200,11 @@ class _DocumentsStepState extends State<DocumentsStep> {
         ? field.id!.trim()
         : '${field.label ?? 'document'}-$index';
     final document = state.orderEntity.requirementDocuments[requirementId];
-    final acceptedTypes = field.validation?.acceptedTypes ??
+    final acceptedTypes =
+        field.validation?.acceptedTypes ??
         AppFileConstraints.documentExtensions;
-    final maxSize = field.validation?.maxSize ??
-        AppFileConstraints.maxDocumentSizeInBytes;
+    final maxSize =
+        field.validation?.maxSize ?? AppFileConstraints.maxDocumentSizeInBytes;
     final isExpanded = _expandedRequirementId == requirementId;
 
     return FormField<bool>(
@@ -200,49 +216,45 @@ class _DocumentsStepState extends State<DocumentsStep> {
       builder: (formField) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-        DocumentRequirementCard(
-          title:
-              '${field.label?.trim() ?? ''}${field.required == true ? ' *' : ''}',
-          availability: field.required == true
-              ? context.loc.new_order_document_required_when_available
-              : context.loc.new_order_document_if_available,
-          icon: _fileIcon(field.id, index),
-          onTap: () => setState(() {
-            _expandedRequirementId = isExpanded ? null : requirementId;
-          }),
-        ),
-        if (document != null) ...[
-          SizedBox(height: AppHeight.h10),
-          UploadedDocumentCard(
-            document: document,
-            onRemove: () => context
-                .read<NewOrderCubit>()
-                .removeDocumentForRequirement(requirementId),
+          DocumentRequirementCard(
+            title:
+                '${field.label?.trim() ?? ''}${field.required == true ? ' *' : ''}',
+            availability: field.required == true
+                ? context.loc.new_order_document_required_when_available
+                : context.loc.new_order_document_if_available,
+            icon: _fileIcon(field.id, index),
+            onTap: () => setState(() {
+              _expandedRequirementId = isExpanded ? null : requirementId;
+            }),
           ),
-        ] else if (isExpanded) ...[
-          SizedBox(height: AppHeight.h10),
-          DocumentSection(
-            image: null,
-            onTap: () => _pickDocument(
-              context,
-              requirementId,
-              acceptedTypes,
-              maxSize,
+          if (document != null) ...[
+            SizedBox(height: AppHeight.h10),
+            UploadedDocumentCard(
+              document: document,
+              onRemove: () => context
+                  .read<NewOrderCubit>()
+                  .removeDocumentForRequirement(requirementId),
             ),
-            paddingTop: AppPaddingHeight.p1,
-            uploadLabel: context.loc.new_order_upload_tap,
-            uploadHint: _uploadHint(context, [field]),
-          ),
+          ] else if (isExpanded) ...[
+            SizedBox(height: AppHeight.h10),
+            DocumentSection(
+              image: null,
+              onTap: () =>
+                  _pickDocument(context, requirementId, acceptedTypes, maxSize),
+              paddingTop: AppPaddingHeight.p1,
+              uploadLabel: context.loc.new_order_upload_tap,
+              uploadHint: _uploadHint(context, [field]),
+            ),
+          ],
+          if (formField.hasError) ...[
+            SizedBox(height: AppHeight.h6),
+            BodyTitle(
+              text: formField.errorText!,
+              color: AppColors.red,
+              fontSize: AppFontSize.s12,
+            ),
+          ],
         ],
-        if (formField.hasError) ...[
-          SizedBox(height: AppHeight.h6),
-          BodyTitle(
-            text: formField.errorText!,
-            color: AppColors.red,
-            fontSize: AppFontSize.s12,
-          ),
-        ],
-      ],
       ),
     );
   }

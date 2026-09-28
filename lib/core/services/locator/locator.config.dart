@@ -79,7 +79,7 @@ import '../../../domain/usecases/create_order/create_order_use_case.dart'
 import '../../../domain/usecases/create_order/service_type/service_type_use_case.dart'
     as _i80;
 import '../../../domain/usecases/create_order/upload_file_use_case.dart'
-    as _i900;
+    as _i391;
 import '../../../domain/usecases/home/home_use_case.dart' as _i208;
 import '../../../domain/usecases/i_use_case.dart' as _i795;
 import '../../../domain/usecases/order_details/order_details_use_case.dart'
@@ -163,12 +163,6 @@ extension GetItInjectableX on _i174.GetIt {
       instanceName: 'CreateOrder',
     );
     gh.factory<
-      _i795.IUseCase<_i480.BaseModel<void>?, _i232.CreateOrderEntity>
-    >(
-      () => _i900.UploadFileUseCase(gh<_i352.ICreateOrderRepository>()),
-      instanceName: 'uploadFile',
-    );
-    gh.factory<
       _i795.IUseCase<_i480.BaseModel<List<_i964.ServiceTypeModel>>?, Null>
     >(
       () => _i80.ServiceTypeUseCase(gh<_i637.IServiceTypeRepository>()),
@@ -185,6 +179,10 @@ extension GetItInjectableX on _i174.GetIt {
     >(
       () => _i1032.OrderStepsUseCase(gh<_i372.IOrderStepsRepository>()),
       instanceName: 'OrderSteps',
+    );
+    gh.factory<_i795.IUseCase<_i480.BaseModel<void>?, _i232.CreateOrderEntity>>(
+      () => _i391.UploadFileUseCase(gh<_i352.ICreateOrderRepository>()),
+      instanceName: 'uploadFile',
     );
     gh.factory<_i122.IOrderDetailsRepository>(
       () => _i664.OrderDetailsRepository(
