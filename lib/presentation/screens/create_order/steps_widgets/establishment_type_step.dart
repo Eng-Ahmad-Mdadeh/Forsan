@@ -11,23 +11,17 @@ import 'package:forsan/presentation/widgets/text/section_title.dart';
 class EstablishmentTypeStep extends StatelessWidget {
   const EstablishmentTypeStep({
     super.key,
-    required this.selectedValue,
-    required this.onChanged,
-    required this.selectedApplicantValue,
-    required this.onApplicantChanged,
     required this.step,
+    required this.selectedValues,
+    required this.onFieldChanged,
   });
 
   final StepModel step;
-  final String selectedValue;
-  final ValueChanged<String> onChanged;
-  final String selectedApplicantValue;
-  final ValueChanged<String> onApplicantChanged;
+  final Map<String, dynamic> selectedValues;
+  final void Function(String fieldId, dynamic value) onFieldChanged;
 
   @override
   Widget build(BuildContext context) {
-
-
     return ListView.separated(
       padding: EdgeInsets.fromLTRB(
         AppPaddingWidth.p10,
@@ -48,10 +42,8 @@ class EstablishmentTypeStep extends StatelessWidget {
           fallbackDescription: isEstablishmentSection
               ? context.loc.new_order_establishment_description
               : context.loc.new_order_applicant_role_description,
-          selectedValue:
-              isEstablishmentSection ? selectedValue : selectedApplicantValue,
-          onChanged:
-              isEstablishmentSection ? onChanged : onApplicantChanged,
+          selectedValues: selectedValues,
+          onFieldChanged: onFieldChanged,
         );
       },
       separatorBuilder: (_, _) => SizedBox(height: AppHeight.h10),
@@ -64,15 +56,15 @@ class _OrderSection extends StatelessWidget {
     required this.section,
     required this.icon,
     required this.fallbackDescription,
-    required this.selectedValue,
-    required this.onChanged,
+    required this.selectedValues,
+    required this.onFieldChanged,
   });
 
   final Section section;
   final IconData icon;
   final String fallbackDescription;
-  final String selectedValue;
-  final ValueChanged<String> onChanged;
+  final Map<String, dynamic> selectedValues;
+  final void Function(String fieldId, dynamic value) onFieldChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -113,8 +105,11 @@ class _OrderSection extends StatelessWidget {
           itemBuilder: (_, index) => _OrderField(
             field: fields[index],
             icon: icon,
-            selectedValue: selectedValue,
-            onChanged: onChanged,
+            selectedValue: selectedValues[fields[index].id],
+            onChanged: (value) {
+              final fieldId = fields[index].id;
+              if (fieldId != null) onFieldChanged(fieldId, value);
+            },
           ),
           separatorBuilder: (_, _) => SizedBox(height: AppHeight.h10),
         ),
@@ -133,7 +128,7 @@ class _OrderField extends StatelessWidget {
 
   final SectionField field;
   final IconData icon;
-  final String selectedValue;
+  final dynamic selectedValue;
   final ValueChanged<String> onChanged;
 
   @override

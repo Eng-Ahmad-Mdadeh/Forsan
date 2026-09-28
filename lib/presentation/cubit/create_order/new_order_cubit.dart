@@ -27,26 +27,6 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     );
   }
 
-  void selectEstablishmentType(String type) {
-    if (type == state.orderEntity.establishmentType) return;
-
-    emit(
-      state.copyWith(
-        orderEntity: state.orderEntity.copyWith(establishmentType: type),
-      ),
-    );
-  }
-
-  void selectApplicantType(String type) {
-    if (type == state.orderEntity.applicantType) return;
-
-    emit(
-      state.copyWith(
-        orderEntity: state.orderEntity.copyWith(applicantType: type),
-      ),
-    );
-  }
-
   void updateFormValue(String fieldId, dynamic value) {
     final formValues = state.orderEntity.formValues;
     if (formValues[fieldId] == value) return;

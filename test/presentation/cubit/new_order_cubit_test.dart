@@ -8,17 +8,16 @@ void main() {
       final cubit = NewOrderCubit();
 
       cubit.changeStep(2);
-      cubit.selectEstablishmentType('company');
-      cubit.selectApplicantType('representative');
+      cubit.updateFormValue('establishmentType', 'company');
+      cubit.updateFormValue('applicantType', 'representative');
       cubit.updateFormValue('commercialName', 'Forsan');
 
       expect(cubit.state.orderEntity.currentStep, 2);
-      expect(cubit.state.orderEntity.establishmentType, 'company');
-      expect(cubit.state.orderEntity.applicantType, 'representative');
-      expect(
-        cubit.state.orderEntity.formValues,
-        containsPair('commercialName', 'Forsan'),
-      );
+      expect(cubit.state.orderEntity.formValues, {
+        'establishmentType': 'company',
+        'applicantType': 'representative',
+        'commercialName': 'Forsan',
+      });
 
       cubit.close();
     });

@@ -149,15 +149,10 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                       children: [
                         EstablishmentTypeStep(
                           step: steps[0],
-                          selectedValue: state.orderEntity.establishmentType,
-                          onChanged: context
+                          selectedValues: state.orderEntity.formValues,
+                          onFieldChanged: context
                               .read<NewOrderCubit>()
-                              .selectEstablishmentType,
-                          selectedApplicantValue:
-                              state.orderEntity.applicantType,
-                          onApplicantChanged: context
-                              .read<NewOrderCubit>()
-                              .selectApplicantType,
+                              .updateFormValue,
                         ),
                         ApplicantStep(step: steps[1]),
                         ProposedCompanyInfoStep(
@@ -184,6 +179,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                         DocumentsStep(step: steps[5]),
                         ReviewStep(
                           step: steps[6],
+                          establishmentStep: steps[0],
                           agreement: orderStepsState.orderStepsModel?.data?.agreements??[],
                           onEditStep: (step) => _goToStep(context, step),
                         ),

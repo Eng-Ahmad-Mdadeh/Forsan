@@ -17,16 +17,19 @@ class ReviewStep extends StatelessWidget {
     super.key,
     required this.onEditStep,
     required this.step,
+    required this.establishmentStep,
     required this.agreement,
   });
 
   final ValueChanged<int> onEditStep;
   final StepModel step;
+  final StepModel establishmentStep;
   final List<AgreementModel> agreement;
 
   @override
   Widget build(BuildContext context) {
     final state = context.watch<NewOrderCubit>().state;
+    final formValues = state.orderEntity.formValues;
     final sections = step.sections ?? const <Section>[];
     final reviewSection = sections.isEmpty ? null : sections.first;
     final sectionTitle = reviewSection?.title?.trim() ?? '';
@@ -52,14 +55,20 @@ class ReviewStep extends StatelessWidget {
             label: context.loc.new_order_establishment_title,
             value: _establishmentTypeLabel(
               context,
-              state.orderEntity.establishmentType,
+              _sectionValue(
+                isEstablishmentSection: true,
+                formValues: formValues,
+              ),
             ),
           ),
           (
             label: context.loc.new_order_applicant_role_title,
             value: _applicantTypeLabel(
               context,
-              state.orderEntity.applicantType,
+              _sectionValue(
+                isEstablishmentSection: false,
+                formValues: formValues,
+              ),
             ),
           ),
         ],
@@ -155,6 +164,26 @@ class ReviewStep extends StatelessWidget {
       separatorBuilder: (_, __) => SizedBox(height: AppHeight.h14),
       itemBuilder: (_, index) => cards[index],
     );
+  }
+
+  String _sectionValue({
+    required bool isEstablishmentSection,
+    required Map<String, dynamic> formValues,
+  }) {
+    final sections = establishmentStep.sections ?? const <Section>[];
+    final matchingSections = sections.where(
+      (section) =>
+          (section.id == 'establishment-type') == isEstablishmentSection,
+    );
+    if (matchingSections.isEmpty) return '';
+
+    final fields = matchingSections.first.fields ?? const <SectionField>[];
+    for (final field in fields) {
+      final value = formValues[field.id];
+      if (value != null) return value.toString();
+    }
+
+    return '';
   }
 
   String _establishmentTypeLabel(BuildContext context, String value) {
