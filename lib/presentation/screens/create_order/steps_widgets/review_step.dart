@@ -27,7 +27,13 @@ class ReviewStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<NewOrderCubit>().state;
+    final sections = step.sections ?? const <Section>[];
+    final reviewSection = sections.isEmpty ? null : sections.first;
+    final title = reviewSection?.title?.trim() ?? step.title?.trim() ?? '';
+    final description = reviewSection?.description?.trim() ?? '';
     final cards = <Widget>[
+      if (title.isNotEmpty || description.isNotEmpty)
+        _ReviewIntroduction(title: title, description: description),
       ReviewSectionCard(
         title: context.loc.new_order_step_establishment,
         icon: Icons.grid_view_rounded,
@@ -155,6 +161,50 @@ class ReviewStep extends StatelessWidget {
       'company_representative' => context.loc.new_order_company_representative,
       _ => context.loc.new_order_select_hint,
     };
+  }
+}
+
+class _ReviewIntroduction extends StatelessWidget {
+  const _ReviewIntroduction({required this.title, required this.description});
+
+  final String title;
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (title.isNotEmpty) ...[
+          Row(
+            children: [
+              Icon(
+                Icons.fact_check_outlined,
+                size: AppSize.s16,
+                color: AppColors.secondary,
+              ),
+              SizedBox(width: AppWidth.w4),
+              Expanded(
+                child: SectionTitle(
+                  text: title,
+                  color: AppColors.primaryDark,
+                  fontSize: AppFontSize.s14,
+                ),
+              ),
+            ],
+          ),
+          if (description.isNotEmpty) SizedBox(height: AppHeight.h8),
+        ],
+        if (description.isNotEmpty)
+          BodyTitle(
+            text: description,
+            color: AppColors.secondaryText,
+            fontSize: AppFontSize.s12,
+            fontWeight: AppFontWeight.regular,
+            maxLines: 3,
+          ),
+      ],
+    );
   }
 }
 
