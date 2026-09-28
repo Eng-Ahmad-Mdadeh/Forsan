@@ -199,15 +199,21 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                       height: AppHeight.h50,
                       color: AppColors.primary,
                       onPressed: () {
-                        final cubit = context.read<NewOrderCubit>().state;
-                        print('eeeeeeeeeeee');
-                        print(cubit.orderEntity);
-                        if (state.orderEntity.currentStep <
-                            NewOrderCubit.lastStep) {
-                          _goToStep(
-                            context,
-                            state.orderEntity.currentStep + 1,
+                        final currentStep = state.orderEntity.currentStep;
+
+                        if (currentStep == 0) {
+                          context.read<CreateOrderBloc>().add(
+                            CreateOrderEvent(
+                              CreateOrderEntity(
+                                serviceSlug: widget.serviceSlug,
+                                formValues: state.orderEntity.formValues,
+                              ),
+                            ),
                           );
+                        }
+
+                        if (currentStep < NewOrderCubit.lastStep) {
+                          _goToStep(context, currentStep + 1);
                         }
                       },
                       child: BodyTitle(
