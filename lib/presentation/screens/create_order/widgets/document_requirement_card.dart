@@ -12,15 +12,18 @@ class DocumentRequirementCard extends StatelessWidget {
     required this.title,
     required this.availability,
     required this.icon,
+    required this.onTap,
   });
 
   final String title;
   final String availability;
   final IconData icon;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return SectionCard(
+      onTap: onTap,
       margin: EdgeInsets.zero,
       padding: EdgeInsets.symmetric(
         horizontal: AppPaddingWidth.p16,

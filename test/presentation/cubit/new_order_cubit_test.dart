@@ -51,5 +51,36 @@ void main() {
 
       cubit.close();
     });
+
+    test('associates one document with its requirement', () {
+      final cubit = NewOrderCubit();
+      final firstDocument = PlatformFile(name: 'identity.pdf', size: 100);
+      final replacementDocument = PlatformFile(
+        name: 'new-identity.pdf',
+        size: 100,
+      );
+
+      cubit.addDocuments([firstDocument], requirementId: 'idCopy');
+
+      expect(cubit.state.orderEntity.documents, [firstDocument]);
+      expect(
+        cubit.state.orderEntity.requirementDocuments['idCopy'],
+        firstDocument,
+      );
+
+      cubit.addDocuments([replacementDocument], requirementId: 'idCopy');
+
+      expect(cubit.state.orderEntity.documents, [replacementDocument]);
+      expect(
+        cubit.state.orderEntity.requirementDocuments['idCopy'],
+        replacementDocument,
+      );
+
+      cubit.removeDocument(replacementDocument);
+      expect(cubit.state.orderEntity.documents, isEmpty);
+      expect(cubit.state.orderEntity.requirementDocuments, isEmpty);
+
+      cubit.close();
+    });
   });
 }

@@ -45,20 +45,45 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     return addDocuments(documents);
   }
 
-  int addDocuments(List<PlatformFile> documents) {
+  Future<int> pickDocumentForRequirement(String requirementId) async {
+    final documents = await _filePickerHelper.pickDocuments(
+      allowMultiple: false,
+    );
+    return addDocuments(documents, requirementId: requirementId);
+  }
+
+  int addDocuments(
+    List<PlatformFile> documents, {
+    String? requirementId,
+  }) {
     final validDocuments = documents.where(
       (document) => document.isValidDocument,
-    );
+    ).toList();
     final rejectedDocuments = documents.length - validDocuments.length;
 
     if (validDocuments.isNotEmpty) {
+      final selectedDocument = validDocuments.first;
+      final requirementDocuments = {
+        ...state.orderEntity.requirementDocuments,
+        if (requirementId != null) requirementId: selectedDocument,
+      };
+      final currentDocuments = requirementId == null
+          ? state.orderEntity.documents
+          : state.orderEntity.documents.where(
+              (document) =>
+                  document !=
+                  state.orderEntity.requirementDocuments[requirementId],
+            );
       emit(
         state.copyWith(
           orderEntity: state.orderEntity.copyWith(
             documents: [
-              ...state.orderEntity.documents,
-              ...validDocuments,
+              ...currentDocuments,
+              ...(requirementId == null
+                  ? validDocuments
+                  : [selectedDocument]),
             ],
+            requirementDocuments: requirementDocuments,
           ),
         ),
       );
@@ -70,9 +95,15 @@ class NewOrderCubit extends Cubit<NewOrderState> {
   void removeDocument(PlatformFile document) {
     final documents = List<PlatformFile>.of(state.orderEntity.documents)
       ..remove(document);
+    final requirementDocuments = Map<String, PlatformFile>.of(
+      state.orderEntity.requirementDocuments,
+    )..removeWhere((_, value) => value == document);
     emit(
       state.copyWith(
-        orderEntity: state.orderEntity.copyWith(documents: documents),
+        orderEntity: state.orderEntity.copyWith(
+          documents: documents,
+          requirementDocuments: requirementDocuments,
+        ),
       ),
     );
   }

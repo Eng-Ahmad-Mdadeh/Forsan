@@ -7,12 +7,14 @@ class CreateOrderEntity extends Equatable {
     this.formValues = const {},
     this.currentStep = 0,
     this.documents = const [],
+    this.requirementDocuments = const {},
   });
 
   final String? serviceSlug;
   final Map<String, dynamic> formValues;
   final int currentStep;
   final List<PlatformFile> documents;
+  final Map<String, PlatformFile> requirementDocuments;
 
   Map<String, dynamic> toJson() {
     return {
@@ -26,12 +28,14 @@ class CreateOrderEntity extends Equatable {
     Map<String, dynamic>? formValues,
     int? currentStep,
     List<PlatformFile>? documents,
+    Map<String, PlatformFile>? requirementDocuments,
   }) {
     return CreateOrderEntity(
       serviceSlug: serviceSlug ?? this.serviceSlug,
       formValues: formValues ?? this.formValues,
       currentStep: currentStep ?? this.currentStep,
       documents: documents ?? this.documents,
+      requirementDocuments: requirementDocuments ?? this.requirementDocuments,
     );
   }
 
@@ -41,5 +45,6 @@ class CreateOrderEntity extends Equatable {
     formValues,
     currentStep,
     documents,
+    requirementDocuments,
   ];
 }

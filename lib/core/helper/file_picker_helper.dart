@@ -3,12 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:forsan/core/resources/app_values.dart';
 
 class FilePickerHelper {
-  Future<List<PlatformFile>> pickDocuments() async {
+  Future<List<PlatformFile>> pickDocuments({bool allowMultiple = true}) async {
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: AppFileConstraints.documentExtensions,
-        allowMultiple: true,
+        allowMultiple: allowMultiple,
       );
 
       return result?.files ?? [];

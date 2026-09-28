@@ -13,15 +13,26 @@ import 'package:forsan/presentation/screens/create_order/widgets/document_requir
 import 'package:forsan/presentation/screens/create_order/widgets/uploaded_document_card.dart';
 import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
-import 'package:forsan/presentation/widgets/text/section_title.dart';
 
-class DocumentsStep extends StatelessWidget {
+class DocumentsStep extends StatefulWidget {
   const DocumentsStep({super.key, required this.step});
 
   final StepModel step;
 
-  Future<void> _pickDocuments(BuildContext context) async {
-    final rejectedDocuments = await context.read<NewOrderCubit>().pickDocuments();
+  @override
+  State<DocumentsStep> createState() => _DocumentsStepState();
+}
+
+class _DocumentsStepState extends State<DocumentsStep> {
+  String? _expandedRequirementId;
+
+  Future<void> _pickDocument(
+    BuildContext context,
+    String requirementId,
+  ) async {
+    final rejectedDocuments = await context
+        .read<NewOrderCubit>()
+        .pickDocumentForRequirement(requirementId);
 
     if (!context.mounted || rejectedDocuments == 0) return;
 
@@ -39,7 +50,7 @@ class DocumentsStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sections = step.sections ?? const <Section>[];
+    final sections = widget.step.sections ?? const <Section>[];
 
     return BlocBuilder<NewOrderCubit, NewOrderState>(
       buildWhen: (previous, current) =>
@@ -82,43 +93,13 @@ class DocumentsStep extends StatelessWidget {
           description: description,
         ),
         for (var index = 0; index < fileFields.length; index++) ...[
-          DocumentRequirementCard(
-            title: fileFields[index].label?.trim() ?? '',
-            availability: fileFields[index].required == true
-                ? context.loc.new_order_document_required_when_available
-                : context.loc.new_order_document_if_available,
-            icon: _fileIcon(fileFields[index].id, index),
+          _buildDocumentRequirement(
+            context,
+            fileFields[index],
+            index,
+            state,
           ),
           if (index < fileFields.length - 1) SizedBox(height: AppHeight.h10),
-        ],
-        if (fileFields.isNotEmpty) ...[
-          SizedBox(height: AppHeight.h24),
-          SectionTitle(
-            text: context.loc.new_order_attachments,
-            color: AppColors.mainText,
-            fontSize: AppFontSize.s14,
-            textAlign: TextAlign.start,
-          ),
-          DocumentSection(
-            image: null,
-            onTap: () => _pickDocuments(context),
-            paddingTop: AppPaddingHeight.p1,
-            uploadLabel: context.loc.new_order_upload_tap,
-            uploadHint: _uploadHint(context, fileFields),
-          ),
-          if (state.orderEntity.documents.isNotEmpty) ...[
-            SizedBox(height: AppHeight.h20),
-            for (final document in state.orderEntity.documents)
-              Padding(
-                padding: EdgeInsets.only(bottom: AppPaddingHeight.p16),
-                child: UploadedDocumentCard(
-                  document: document,
-                  onRemove: () => context
-                      .read<NewOrderCubit>()
-                      .removeDocument(document),
-                ),
-              ),
-          ],
         ],
         for (final field in infoFields) ...[
           SizedBox(height: AppHeight.h26),
@@ -127,6 +108,52 @@ class DocumentsStep extends StatelessWidget {
             backgroundColor: AppColors.goldBackGround,
             textColor: AppColors.mainText,
             iconColor: AppColors.mainText,
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildDocumentRequirement(
+    BuildContext context,
+    SectionField field,
+    int index,
+    NewOrderState state,
+  ) {
+    final requirementId = field.id?.trim().isNotEmpty == true
+        ? field.id!.trim()
+        : '${field.label ?? 'document'}-$index';
+    final document = state.orderEntity.requirementDocuments[requirementId];
+    final isExpanded = _expandedRequirementId == requirementId;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        DocumentRequirementCard(
+          title: field.label?.trim() ?? '',
+          availability: field.required == true
+              ? context.loc.new_order_document_required_when_available
+              : context.loc.new_order_document_if_available,
+          icon: _fileIcon(field.id, index),
+          onTap: () => setState(() {
+            _expandedRequirementId = isExpanded ? null : requirementId;
+          }),
+        ),
+        if (document != null) ...[
+          SizedBox(height: AppHeight.h10),
+          UploadedDocumentCard(
+            document: document,
+            onRemove: () =>
+                context.read<NewOrderCubit>().removeDocument(document),
+          ),
+        ] else if (isExpanded) ...[
+          SizedBox(height: AppHeight.h10),
+          DocumentSection(
+            image: null,
+            onTap: () => _pickDocument(context, requirementId),
+            paddingTop: AppPaddingHeight.p1,
+            uploadLabel: context.loc.new_order_upload_tap,
+            uploadHint: _uploadHint(context, [field]),
           ),
         ],
       ],
@@ -163,9 +190,10 @@ class DocumentsStep extends StatelessWidget {
     final formattedSize = sizeInMegabytes == sizeInMegabytes.roundToDouble()
         ? sizeInMegabytes.toInt().toString()
         : sizeInMegabytes.toStringAsFixed(1);
-    final extensions = acceptedTypes.map((type) => type.toUpperCase()).join(', ');
+    final extensions = acceptedTypes
+        .map((type) => type.toUpperCase())
+        .join(', ');
 
     return '$formattedSize MB - $extensions';
   }
-
 }
