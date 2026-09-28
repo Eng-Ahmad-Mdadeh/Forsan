@@ -6,6 +6,7 @@ import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
+import 'package:forsan/presentation/bloc/create_order/create_order_bloc.dart';
 import 'package:forsan/presentation/bloc/order_steps/order_steps_bloc.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
@@ -33,6 +34,7 @@ class CreateNewOrderScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<OrderStepsBloc>(create: (_) => OrderStepsBloc()),
+        BlocProvider<CreateOrderBloc>(create: (_) => CreateOrderBloc()),
         BlocProvider<NewOrderCubit>(create: (_) => NewOrderCubit()),
       ],
       child: BodyCreateNewOrderScreen(serviceSlug: serviceSlug),
@@ -145,6 +147,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                     child: PageView(
                       key: const Key('new_order_page_view'),
                       controller: _pageController,
+                      physics: const NeverScrollableScrollPhysics(),
                       onPageChanged: context.read<NewOrderCubit>().changeStep,
                       children: [
                         EstablishmentTypeStep(
