@@ -239,8 +239,9 @@ class ApplicantStep extends StatelessWidget {
               children: [
                 SizedBox(height: AppHeight.h6),
                 BodyTitle(
-                  text: field.label?.trim() ??
-                      context.loc.new_order_has_representative_in_syria,
+                  text:
+                      '${field.label?.trim() ?? context.loc.new_order_has_representative_in_syria}'
+                      '${field.required == true ? ' *' : ''}',
                   color: AppColors.mainText,
                   fontSize: AppFontSize.s12,
                   fontWeight: AppFontWeight.bold,

@@ -201,7 +201,8 @@ class _DocumentsStepState extends State<DocumentsStep> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
         DocumentRequirementCard(
-          title: field.label?.trim() ?? '',
+          title:
+              '${field.label?.trim() ?? ''}${field.required == true ? ' *' : ''}',
           availability: field.required == true
               ? context.loc.new_order_document_required_when_available
               : context.loc.new_order_document_if_available,

@@ -45,12 +45,27 @@ class _OrderPhoneFieldState extends State<OrderPhoneField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        BodyTitle(
-          text: widget.label,
-          textAlign: TextAlign.start,
-          fontSize: AppFontSize.s14,
-          fontWeight: AppFontWeight.medium,
-          color: AppColors.mainText,
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: widget.label,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: AppColors.mainText,
+                  fontSize: AppFontSize.s14,
+                  fontWeight: AppFontWeight.medium,
+                ),
+              ),
+              if (widget.isRequired)
+                TextSpan(
+                  text: ' *',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppColors.red,
+                    fontSize: AppFontSize.s18,
+                  ),
+                ),
+            ],
+          ),
         ),
         SizedBox(height: AppHeight.h4),
         Directionality(

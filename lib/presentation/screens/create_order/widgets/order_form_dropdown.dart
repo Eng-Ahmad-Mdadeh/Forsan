@@ -50,12 +50,27 @@ class OrderFormDropdown<T> extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
         if (trimmedLabel.isNotEmpty) ...[
-          BodyTitle(
-            text: trimmedLabel,
-            textAlign: TextAlign.start,
-            color: AppColors.mainText,
-            fontSize: AppFontSize.s14,
-            fontWeight: AppFontWeight.medium,
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: trimmedLabel,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppColors.mainText,
+                    fontSize: AppFontSize.s14,
+                    fontWeight: AppFontWeight.medium,
+                  ),
+                ),
+                if (isRequired)
+                  TextSpan(
+                    text: ' *',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.red,
+                      fontSize: AppFontSize.s18,
+                    ),
+                  ),
+              ],
+            ),
           ),
           SizedBox(height: AppHeight.h4),
         ],

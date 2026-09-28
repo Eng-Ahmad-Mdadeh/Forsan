@@ -154,6 +154,31 @@ class _OrderField extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            if (field.label?.trim().isNotEmpty == true) ...[
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: field.label!.trim(),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: AppColors.mainText,
+                        fontSize: AppFontSize.s14,
+                        fontWeight: AppFontWeight.medium,
+                      ),
+                    ),
+                    if (field.required == true)
+                      TextSpan(
+                        text: ' *',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.red,
+                          fontSize: AppFontSize.s18,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              SizedBox(height: AppHeight.h6),
+            ],
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
