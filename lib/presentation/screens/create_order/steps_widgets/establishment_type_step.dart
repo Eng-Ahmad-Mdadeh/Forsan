@@ -11,42 +11,47 @@ import 'package:forsan/presentation/widgets/text/section_title.dart';
 class EstablishmentTypeStep extends StatelessWidget {
   const EstablishmentTypeStep({
     super.key,
+    required this.formKey,
     required this.step,
     required this.selectedValues,
     required this.onFieldChanged,
   });
 
+  final GlobalKey<FormState> formKey;
   final StepModel step;
   final Map<String, dynamic> selectedValues;
   final void Function(String fieldId, dynamic value) onFieldChanged;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: EdgeInsets.fromLTRB(
-        AppPaddingWidth.p10,
-        AppPaddingHeight.p8,
-        AppPaddingWidth.p10,
-        AppPaddingHeight.p16,
-      ),
-      itemCount: step.sections?.length ?? 0,
-      itemBuilder: (_, index) {
-        final section = step.sections![index];
-        final isEstablishmentSection = section.id == 'establishment-type';
+    return Form(
+      key: formKey,
+      child: ListView.separated(
+        padding: EdgeInsets.fromLTRB(
+          AppPaddingWidth.p10,
+          AppPaddingHeight.p8,
+          AppPaddingWidth.p10,
+          AppPaddingHeight.p16,
+        ),
+        itemCount: step.sections?.length ?? 0,
+        itemBuilder: (_, index) {
+          final section = step.sections![index];
+          final isEstablishmentSection = section.id == 'establishment-type';
 
-        return _OrderSection(
-          section: section,
-          icon: isEstablishmentSection
-              ? Icons.grid_view_rounded
-              : Icons.person_outline_rounded,
-          fallbackDescription: isEstablishmentSection
-              ? context.loc.new_order_establishment_description
-              : context.loc.new_order_applicant_role_description,
-          selectedValues: selectedValues,
-          onFieldChanged: onFieldChanged,
-        );
-      },
-      separatorBuilder: (_, _) => SizedBox(height: AppHeight.h10),
+          return _OrderSection(
+            section: section,
+            icon: isEstablishmentSection
+                ? Icons.grid_view_rounded
+                : Icons.person_outline_rounded,
+            fallbackDescription: isEstablishmentSection
+                ? context.loc.new_order_establishment_description
+                : context.loc.new_order_applicant_role_description,
+            selectedValues: selectedValues,
+            onFieldChanged: onFieldChanged,
+          );
+        },
+        separatorBuilder: (_, _) => SizedBox(height: AppHeight.h10),
+      ),
     );
   }
 }
@@ -137,22 +142,49 @@ class _OrderField extends StatelessWidget {
         .where((option) => option.value != null)
         .toList(growable: false);
 
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: options.length,
-      itemBuilder: (_, index) {
-        final option = options[index];
+    return FormField<String>(
+      key: ValueKey('${field.id}:$selectedValue'),
+      initialValue: selectedValue is String ? selectedValue : null,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) => value == null || value.trim().isEmpty
+          ? context.loc.complete_profile_required_field
+          : null,
+      builder: (formField) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: options.length,
+              itemBuilder: (_, index) {
+                final option = options[index];
 
-        return OrderOptionCard(
-          title: option.label?.trim() ?? '',
-          description: option.description?.trim() ?? '',
-          icon: icon,
-          selected: selectedValue == option.value,
-          onTap: () => onChanged(option.value!),
+                return OrderOptionCard(
+                  title: option.label?.trim() ?? '',
+                  description: option.description?.trim() ?? '',
+                  icon: icon,
+                  selected: formField.value == option.value,
+                  onTap: () {
+                    formField.didChange(option.value);
+                    onChanged(option.value!);
+                  },
+                );
+              },
+              separatorBuilder: (_, _) => SizedBox(height: AppHeight.h10),
+            ),
+            if (formField.hasError) ...[
+              SizedBox(height: AppHeight.h6),
+              BodyTitle(
+                text: formField.errorText!,
+                color: AppColors.red,
+                fontSize: AppFontSize.s12,
+                fontWeight: AppFontWeight.regular,
+              ),
+            ],
+          ],
         );
       },
-      separatorBuilder: (_, _) => SizedBox(height: AppHeight.h10),
     );
   }
 }

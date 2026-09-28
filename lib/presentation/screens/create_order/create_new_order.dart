@@ -55,6 +55,7 @@ class BodyCreateNewOrderScreen extends StatefulWidget {
 
 class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
   final PageController _pageController = PageController();
+  final GlobalKey<FormState> _establishmentFormKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -81,25 +82,6 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     context.read<OrderStepsBloc>().add(
       OrderStepsEvent(CreateOrderEntity(slug: widget.serviceSlug)),
     );
-  }
-
-  bool _hasSelectedEstablishmentAndApplicantRole(
-    StepModel step,
-    Map<String, dynamic> formValues,
-  ) {
-    final sections = step.sections ?? const <Section>[];
-    if (sections.isEmpty) return false;
-
-    return sections.every((section) {
-      final fields = section.fields ?? const <SectionField>[];
-      return fields.isNotEmpty && fields.every((field) {
-        final fieldId = field.id;
-        if (fieldId == null) return false;
-
-        final value = formValues[fieldId];
-        return value != null && (value is! String || value.trim().isNotEmpty);
-      });
-    });
   }
 
   @override
@@ -204,6 +186,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                             .changeStep,
                         children: [
                           EstablishmentTypeStep(
+                            formKey: _establishmentFormKey,
                             step: steps[0],
                             selectedValues: state.orderEntity.formValues,
                             onFieldChanged: context
@@ -269,10 +252,9 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                           final currentStep = state.orderEntity.currentStep;
 
                           if (currentStep == 0) {
-                            if (!_hasSelectedEstablishmentAndApplicantRole(
-                              steps[0],
-                              state.orderEntity.formValues,
-                            )) {
+                            if (!(_establishmentFormKey.currentState
+                                    ?.validate() ??
+                                false)) {
                               showCustomSnackBar(
                                 context: context,
                                 title: context.loc.error,
