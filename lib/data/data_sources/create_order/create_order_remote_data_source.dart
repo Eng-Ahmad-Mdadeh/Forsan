@@ -20,13 +20,11 @@ class CreateOrderRemoteDataSource extends BaseRemoteDataSource<CreateOrderModel>
     );
   }
 
-  Future<Either<AppException, BaseModel<CreateOrderModel>?>> uploadFile(CreateOrderEntity data) {
+  Future<Either<AppException, BaseModel<void>?>> uploadFile(CreateOrderEntity data) {
     return postData(
       endpoint: ApiEndpoints.uploadFile(id),
       dataMayBeAtRoot: true,
-      data: data.toJson(),
       files: data.requirementDocuments,
-      fromJsonT: (json) => CreateOrderModel.fromJson(json as Map<String, dynamic>),
     );
   }
 }
