@@ -22,12 +22,14 @@ class OrderFormDropdown<T> extends StatelessWidget {
     this.label,
     this.hint,
     this.value,
+    this.isRequired = false,
   });
 
   final String? label;
   final String? hint;
   final List<OrderDropdownOption<T>> options;
   final T? value;
+  final bool isRequired;
   final ValueChanged<T> onChanged;
 
   @override
@@ -39,9 +41,14 @@ class OrderFormDropdown<T> extends StatelessWidget {
     final trimmedLabel = label?.trim() ?? '';
     final trimmedHint = hint?.trim() ?? '';
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
+    return FormField<T>(
+      initialValue: value,
+      validator: (value) => isRequired && value == null
+          ? context.loc.complete_profile_required_field
+          : null,
+      builder: (formField) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
         if (trimmedLabel.isNotEmpty) ...[
           BodyTitle(
             text: trimmedLabel,
@@ -69,10 +76,20 @@ class OrderFormDropdown<T> extends StatelessWidget {
             final match = visibleOptions.where(
               (option) => option.label == selectedLabel,
             );
-            if (match.isNotEmpty) onChanged(match.first.value);
+            if (match.isNotEmpty) {
+              formField.didChange(match.first.value);
+              onChanged(match.first.value);
+            }
           },
         ),
-      ],
+          if (formField.hasError)
+            BodyTitle(
+              text: formField.errorText!,
+              color: AppColors.red,
+              fontSize: AppFontSize.s12,
+            ),
+        ],
+      ),
     );
   }
 }

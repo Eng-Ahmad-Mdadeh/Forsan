@@ -16,19 +16,23 @@ import 'package:icons_plus/icons_plus.dart';
 class OwnershipStructureStep extends StatelessWidget {
   const OwnershipStructureStep({
     super.key,
+    required this.formKey,
     required this.step,
     required this.selectedValues,
     required this.onFieldChanged,
   });
 
   final StepModel step;
+  final GlobalKey<FormState> formKey;
   final Map<String, dynamic> selectedValues;
   final void Function(String fieldId, dynamic value) onFieldChanged;
 
   @override
   Widget build(BuildContext context) {
     final sections = step.sections ?? const <Section>[];
-    return ListView.separated(
+    return Form(
+      key: formKey,
+      child: ListView.separated(
       padding: EdgeInsets.fromLTRB(
         AppPaddingWidth.p16,
         AppPaddingHeight.p8,
@@ -37,7 +41,8 @@ class OwnershipStructureStep extends StatelessWidget {
       ),
       itemCount: sections.length,
       separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
-      itemBuilder: (_, index) => _buildSection(context, sections[index]),
+        itemBuilder: (_, index) => _buildSection(context, sections[index]),
+      ),
     );
   }
 
@@ -96,6 +101,7 @@ class OwnershipStructureStep extends StatelessWidget {
                   ))
               .toList(),
           value: selectedValues[field.id],
+          isRequired: field.required ?? false,
           onChanged: (value) {
             if (field.id != null) onFieldChanged(field.id!, value);
           },
@@ -230,6 +236,7 @@ class OwnershipStructureStep extends StatelessWidget {
                 ))
             .toList(),
         value: entry[field.id],
+        isRequired: field.required ?? false,
         onChanged: update,
       );
     }

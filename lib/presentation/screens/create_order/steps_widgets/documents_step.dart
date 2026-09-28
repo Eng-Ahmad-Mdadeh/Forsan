@@ -16,8 +16,9 @@ import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:mime/mime.dart';
 
 class DocumentsStep extends StatefulWidget {
-  const DocumentsStep({super.key, required this.step});
+  const DocumentsStep({super.key, required this.formKey, required this.step});
 
+  final GlobalKey<FormState> formKey;
   final StepModel step;
 
   @override
@@ -108,23 +109,26 @@ class _DocumentsStepState extends State<DocumentsStep> {
   Widget build(BuildContext context) {
     final sections = widget.step.sections ?? const <Section>[];
 
-    return BlocBuilder<NewOrderCubit, NewOrderState>(
-      buildWhen: (previous, current) =>
-          previous.orderEntity.requirementDocuments !=
-          current.orderEntity.requirementDocuments,
-      builder: (context, state) => ListView.separated(
-        padding: EdgeInsets.fromLTRB(
-          AppPaddingWidth.p16,
-          AppPaddingHeight.p8,
-          AppPaddingWidth.p16,
-          AppPaddingHeight.p50,
-        ),
-        itemCount: sections.length,
-        separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
-        itemBuilder: (_, index) => _buildSection(
-          context,
-          sections[index],
-          state,
+    return Form(
+      key: widget.formKey,
+      child: BlocBuilder<NewOrderCubit, NewOrderState>(
+        buildWhen: (previous, current) =>
+            previous.orderEntity.requirementDocuments !=
+            current.orderEntity.requirementDocuments,
+        builder: (context, state) => ListView.separated(
+          padding: EdgeInsets.fromLTRB(
+            AppPaddingWidth.p16,
+            AppPaddingHeight.p8,
+            AppPaddingWidth.p16,
+            AppPaddingHeight.p50,
+          ),
+          itemCount: sections.length,
+          separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
+          itemBuilder: (_, index) => _buildSection(
+            context,
+            sections[index],
+            state,
+          ),
         ),
       ),
     );
@@ -187,9 +191,15 @@ class _DocumentsStepState extends State<DocumentsStep> {
         AppFileConstraints.maxDocumentSizeInBytes;
     final isExpanded = _expandedRequirementId == requirementId;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
+    return FormField<bool>(
+      key: ValueKey('$requirementId-${document?.path}'),
+      initialValue: document != null,
+      validator: (hasDocument) => field.required == true && hasDocument != true
+          ? context.loc.complete_profile_required_field
+          : null,
+      builder: (formField) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
         DocumentRequirementCard(
           title: field.label?.trim() ?? '',
           availability: field.required == true
@@ -223,7 +233,16 @@ class _DocumentsStepState extends State<DocumentsStep> {
             uploadHint: _uploadHint(context, [field]),
           ),
         ],
+        if (formField.hasError) ...[
+          SizedBox(height: AppHeight.h6),
+          BodyTitle(
+            text: formField.errorText!,
+            color: AppColors.red,
+            fontSize: AppFontSize.s12,
+          ),
+        ],
       ],
+      ),
     );
   }
 

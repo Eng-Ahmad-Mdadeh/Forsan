@@ -9,11 +9,13 @@ import 'package:icons_plus/icons_plus.dart';
 
 class ProposedCompanyInfoStep extends StatelessWidget {
   final StepModel step;
+  final GlobalKey<FormState> formKey;
   final Map<String, dynamic> selectedValues;
   final void Function(String fieldId, dynamic value) onFieldChanged;
 
   const ProposedCompanyInfoStep({
     super.key,
+    required this.formKey,
     required this.step,
     required this.selectedValues,
     required this.onFieldChanged,
@@ -23,7 +25,9 @@ class ProposedCompanyInfoStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final sections = step.sections ?? const <Section>[];
 
-    return ListView.separated(
+    return Form(
+      key: formKey,
+      child: ListView.separated(
       padding: EdgeInsets.fromLTRB(
         AppPaddingWidth.p16,
         AppPaddingHeight.p8,
@@ -32,7 +36,8 @@ class ProposedCompanyInfoStep extends StatelessWidget {
       ),
       itemCount: sections.length,
       itemBuilder: (_, index) => _buildSection(sections[index]),
-      separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
+        separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
+      ),
     );
   }
 
@@ -87,6 +92,7 @@ class ProposedCompanyInfoStep extends StatelessWidget {
           label: label,
           hint: hint,
           value: selectedValues[field.id],
+          isRequired: field.required ?? false,
           options: (field.options ?? const <FluffyOption>[])
               .map(
                 (option) => OrderDropdownOption(
@@ -107,6 +113,7 @@ class ProposedCompanyInfoStep extends StatelessWidget {
           label: label,
           hint: hint,
           value: selectedValues[field.id],
+          isRequired: field.required ?? false,
           keyboardType: field.id == 'englishName'
               ? TextInputType.name
               : TextInputType.text,

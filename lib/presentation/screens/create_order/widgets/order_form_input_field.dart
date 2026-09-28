@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
@@ -42,6 +43,11 @@ class OrderFormInputField extends StatelessWidget {
       maxLines: isTextArea ? 4 : 1,
       maxLength: maxLength,
       isExpanded: isTextArea,
+      validator: isRequired
+          ? (value) => value == null || value.trim().isEmpty
+                ? context.loc.complete_profile_required_field
+                : null
+          : null,
       onChanged: onChanged,
     );
   }

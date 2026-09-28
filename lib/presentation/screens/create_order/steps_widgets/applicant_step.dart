@@ -15,11 +15,13 @@ import 'package:icons_plus/icons_plus.dart';
 
 class ApplicantStep extends StatelessWidget {
   final StepModel step;
+  final GlobalKey<FormState> formKey;
   final Map<String, dynamic> selectedValues;
   final void Function(String fieldId, dynamic value) onFieldChanged;
 
   const ApplicantStep({
     super.key,
+    required this.formKey,
     required this.step,
     required this.selectedValues,
     required this.onFieldChanged,
@@ -29,7 +31,9 @@ class ApplicantStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final sections = step.sections ?? const <Section>[];
 
-    return ListView.separated(
+    return Form(
+      key: formKey,
+      child: ListView.separated(
       padding: EdgeInsets.symmetric(
         horizontal: AppPaddingWidth.p16,
         vertical: AppPaddingHeight.p8,
@@ -44,7 +48,8 @@ class ApplicantStep extends StatelessWidget {
 
         return _buildApplicantSection(context, section);
       },
-      separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
+        separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
+      ),
     );
   }
 
@@ -103,6 +108,7 @@ class ApplicantStep extends StatelessWidget {
           label: label,
           hint: hint,
           value: selectedValues[field.id],
+          isRequired: field.required ?? false,
           options: (field.options ?? const <FluffyOption>[])
               .map((option) => OrderDropdownOption(
                     label: option.label?.trim() ?? '',
@@ -119,6 +125,7 @@ class ApplicantStep extends StatelessWidget {
           label: label,
           hint: hint,
           value: selectedValues[field.id]?.toString(),
+          isRequired: field.required ?? false,
           onChanged: (value) {
             if (field.id != null) onFieldChanged(field.id!, value);
           },

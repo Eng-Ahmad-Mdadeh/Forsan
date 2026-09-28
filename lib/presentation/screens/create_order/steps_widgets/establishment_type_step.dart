@@ -146,7 +146,8 @@ class _OrderField extends StatelessWidget {
       key: ValueKey('${field.id}:$selectedValue'),
       initialValue: selectedValue is String ? selectedValue : null,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (value) => value == null || value.trim().isEmpty
+      validator: (value) =>
+          field.required == true && (value == null || value.trim().isEmpty)
           ? context.loc.complete_profile_required_field
           : null,
       builder: (formField) {

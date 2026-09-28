@@ -55,7 +55,10 @@ class BodyCreateNewOrderScreen extends StatefulWidget {
 
 class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
   final PageController _pageController = PageController();
-  final GlobalKey<FormState> _establishmentFormKey = GlobalKey<FormState>();
+  final List<GlobalKey<FormState>> _stepFormKeys = List.generate(
+    6,
+    (_) => GlobalKey<FormState>(),
+  );
 
   @override
   void initState() {
@@ -186,7 +189,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                             .changeStep,
                         children: [
                           EstablishmentTypeStep(
-                            formKey: _establishmentFormKey,
+                            formKey: _stepFormKeys[0],
                             step: steps[0],
                             selectedValues: state.orderEntity.formValues,
                             onFieldChanged: context
@@ -194,6 +197,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                                 .updateFormValue,
                           ),
                           ApplicantStep(
+                            formKey: _stepFormKeys[1],
                             step: steps[1],
                             selectedValues: state.orderEntity.formValues,
                             onFieldChanged: context
@@ -201,6 +205,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                                 .updateFormValue,
                           ),
                           ProposedCompanyInfoStep(
+                            formKey: _stepFormKeys[2],
                             step: steps[2],
                             selectedValues: state.orderEntity.formValues,
                             onFieldChanged: context
@@ -208,6 +213,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                                 .updateFormValue,
                           ),
                           OwnershipStructureStep(
+                            formKey: _stepFormKeys[3],
                             step: steps[3],
                             selectedValues: state.orderEntity.formValues,
                             onFieldChanged: context
@@ -215,13 +221,17 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                                 .updateFormValue,
                           ),
                           ActivityStep(
+                            formKey: _stepFormKeys[4],
                             step: steps[4],
                             selectedValues: state.orderEntity.formValues,
                             onFieldChanged: context
                                 .read<NewOrderCubit>()
                                 .updateFormValue,
                           ),
-                          DocumentsStep(step: steps[5]),
+                          DocumentsStep(
+                            formKey: _stepFormKeys[5],
+                            step: steps[5],
+                          ),
                           ReviewStep(
                             step: steps[6],
                             establishmentStep: steps[0],
@@ -251,20 +261,22 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                         onPressed: () {
                           final currentStep = state.orderEntity.currentStep;
 
-                          if (currentStep == 0) {
-                            if (!(_establishmentFormKey.currentState
-                                    ?.validate() ??
-                                false)) {
-                              showCustomSnackBar(
-                                context: context,
-                                title: context.loc.error,
-                                message:
-                                    context.loc.complete_profile_required_field,
-                                contentType: ContentType.failure,
-                              );
-                              return;
-                            }
+                          if (currentStep < _stepFormKeys.length &&
+                              !(_stepFormKeys[currentStep]
+                                      .currentState
+                                      ?.validate() ??
+                                  false)) {
+                            showCustomSnackBar(
+                              context: context,
+                              title: context.loc.error,
+                              message:
+                                  context.loc.complete_profile_required_field,
+                              contentType: ContentType.failure,
+                            );
+                            return;
+                          }
 
+                          if (currentStep == 0) {
                             context.read<CreateOrderBloc>().add(
                               CreateOrderEvent(
                                 CreateOrderEntity(

@@ -14,12 +14,14 @@ import 'package:icons_plus/icons_plus.dart';
 class ActivityStep extends StatelessWidget {
   const ActivityStep({
     super.key,
+    required this.formKey,
     required this.step,
     required this.selectedValues,
     required this.onFieldChanged,
   });
 
   final StepModel step;
+  final GlobalKey<FormState> formKey;
   final Map<String, dynamic> selectedValues;
   final void Function(String fieldId, dynamic value) onFieldChanged;
 
@@ -27,7 +29,9 @@ class ActivityStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final sections = step.sections ?? const <Section>[];
 
-    return ListView.separated(
+    return Form(
+      key: formKey,
+      child: ListView.separated(
       padding: EdgeInsets.fromLTRB(
         AppPaddingWidth.p16,
         AppPaddingHeight.p8,
@@ -36,7 +40,8 @@ class ActivityStep extends StatelessWidget {
       ),
       itemCount: sections.length,
       separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
-      itemBuilder: (_, index) => _buildSection(sections[index]),
+        itemBuilder: (_, index) => _buildSection(sections[index]),
+      ),
     );
   }
 
@@ -77,6 +82,7 @@ class ActivityStep extends StatelessWidget {
                   ))
               .toList(),
           value: selectedValues[field.id],
+          isRequired: field.required ?? false,
           onChanged: (value) {
             if (field.id != null) onFieldChanged(field.id!, value);
           },

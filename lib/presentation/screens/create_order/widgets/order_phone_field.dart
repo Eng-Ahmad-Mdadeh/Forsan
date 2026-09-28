@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/presentation/widgets/custom_text_from_field.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -16,6 +17,7 @@ class OrderPhoneField extends StatefulWidget {
     this.initialCountryCode = 'SY',
     this.value,
     this.onChanged,
+    this.isRequired = false,
   });
 
   final String label;
@@ -23,6 +25,7 @@ class OrderPhoneField extends StatefulWidget {
   final String initialCountryCode;
   final String? value;
   final ValueChanged<String>? onChanged;
+  final bool isRequired;
 
   @override
   State<OrderPhoneField> createState() => _OrderPhoneFieldState();
@@ -62,6 +65,11 @@ class _OrderPhoneFieldState extends State<OrderPhoneField> {
             fontSize: AppFontSize.s16,
             hintText: widget.hint,
             initialValue: widget.value,
+            validator: widget.isRequired
+                ? (value) => value == null || value.trim().isEmpty
+                      ? context.loc.complete_profile_required_field
+                      : null
+                : null,
             onChanged: widget.onChanged,
             hintColor: AppColors.grey,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
