@@ -150,31 +150,23 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                         EstablishmentTypeStep(
                           step: steps[0],
                           selectedValues: state.orderEntity.formValues,
-                          onFieldChanged: context
-                              .read<NewOrderCubit>()
-                              .updateFormValue,
+                          onFieldChanged: context.read<NewOrderCubit>().updateFormValue,
                         ),
                         ApplicantStep(step: steps[1]),
                         ProposedCompanyInfoStep(
                           step: steps[2],
                           selectedValues: state.orderEntity.formValues,
-                          onFieldChanged: context
-                              .read<NewOrderCubit>()
-                              .updateFormValue,
+                          onFieldChanged: context.read<NewOrderCubit>().updateFormValue,
                         ),
                         OwnershipStructureStep(
                           step: steps[3],
                           selectedValues: state.orderEntity.formValues,
-                          onFieldChanged: context
-                              .read<NewOrderCubit>()
-                              .updateFormValue,
+                          onFieldChanged: context.read<NewOrderCubit>().updateFormValue,
                         ),
                         ActivityStep(
                           step: steps[4],
                           selectedValues: state.orderEntity.formValues,
-                          onFieldChanged: context
-                              .read<NewOrderCubit>()
-                              .updateFormValue,
+                          onFieldChanged: context.read<NewOrderCubit>().updateFormValue,
                         ),
                         DocumentsStep(step: steps[5]),
                         ReviewStep(
