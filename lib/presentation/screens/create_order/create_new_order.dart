@@ -173,7 +173,13 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                               .read<NewOrderCubit>()
                               .updateFormValue,
                         ),
-                        ActivityStep(),
+                        ActivityStep(
+                          step: steps[4],
+                          selectedValues: state.formValues,
+                          onFieldChanged: context
+                              .read<NewOrderCubit>()
+                              .updateFormValue,
+                        ),
                         DocumentsStep(),
                         ReviewStep(
                           onEditStep: (step) => _goToStep(context, step),
