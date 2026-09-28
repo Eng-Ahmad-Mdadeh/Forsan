@@ -26,7 +26,11 @@ void main() {
       final expectation = expectLater(
         bloc.stream,
         emitsInOrder([
-          isA<UploadFileLoading>(),
+          isA<UploadFileLoading>().having(
+            (state) => state.requirementId,
+            'requirementId',
+            'document-1',
+          ),
           isA<UploadFileLoaded>().having(
             (state) => state.response,
             'response',
@@ -35,7 +39,9 @@ void main() {
         ]),
       );
 
-      bloc.add(const UploadFileEvent(entity));
+      bloc.add(
+        const UploadFileEvent(entity, requirementId: 'document-1'),
+      );
       await expectation;
 
       expect(useCase.params, [entity]);
@@ -57,7 +63,9 @@ void main() {
         ]),
       );
 
-      bloc.add(const UploadFileEvent(entity));
+      bloc.add(
+        const UploadFileEvent(entity, requirementId: 'document-1'),
+      );
       await expectation;
     });
   });

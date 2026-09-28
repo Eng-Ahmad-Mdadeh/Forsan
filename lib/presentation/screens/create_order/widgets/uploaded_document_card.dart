@@ -15,7 +15,7 @@ class UploadedDocumentCard extends StatelessWidget {
   });
 
   final PlatformFile document;
-  final VoidCallback onRemove;
+  final VoidCallback? onRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class UploadedDocumentCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       padding: EdgeInsets.symmetric(
         horizontal: AppPaddingWidth.p16,
-       // vertical: AppPaddingHeight.p10,
+        // vertical: AppPaddingHeight.p10,
       ),
       borderRadius: BorderRadius.circular(AppRadius.r16),
       child: Row(

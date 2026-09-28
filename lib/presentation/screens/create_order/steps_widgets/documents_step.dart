@@ -56,6 +56,11 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
     List<String> acceptedTypes,
     int maxSize,
   ) async {
+    if (context.read<UploadFileBloc>().state is UploadFileLoading) return;
+
+    final cubit = context.read<NewOrderCubit>();
+    final previousDocument =
+        cubit.state.orderEntity.requirementDocuments[requirementId];
     final normalizedTypes = acceptedTypes
         .map((type) => type.toLowerCase())
         .toSet();
@@ -72,7 +77,6 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
         : _DocumentSource.file;
     if (!context.mounted || source == null) return;
 
-    final cubit = context.read<NewOrderCubit>();
     final rejectedDocuments = source == _DocumentSource.image
         ? await cubit.pickImageForRequirement(
             context,
@@ -86,7 +90,23 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
             maxSize: maxSize,
           );
 
-    if (!context.mounted || rejectedDocuments == 0) return;
+    if (!context.mounted) return;
+
+    final selectedDocument =
+        cubit.state.orderEntity.requirementDocuments[requirementId];
+    if (rejectedDocuments == 0 &&
+        selectedDocument != null &&
+        selectedDocument != previousDocument) {
+      final orderEntity = cubit.state.orderEntity.copyWith(
+        requirementDocuments: {requirementId: selectedDocument},
+      );
+      context.read<UploadFileBloc>().add(
+        UploadFileEvent(orderEntity, requirementId: requirementId),
+      );
+      return;
+    }
+
+    if (rejectedDocuments == 0) return;
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -134,21 +154,41 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
 
     return Form(
       key: widget.formKey,
-      child: BlocBuilder<NewOrderCubit, NewOrderState>(
-        buildWhen: (previous, current) =>
-            previous.orderEntity.requirementDocuments !=
-            current.orderEntity.requirementDocuments,
-        builder: (context, state) => ListView.separated(
-          padding: EdgeInsets.fromLTRB(
-            AppPaddingWidth.p16,
-            AppPaddingHeight.p8,
-            AppPaddingWidth.p16,
-            AppPaddingHeight.p50,
+      child: BlocConsumer<UploadFileBloc, IUploadFileState>(
+        listener: (context, uploadState) {
+          if (uploadState is UploadFileFailed) {
+            context.read<NewOrderCubit>().removeDocumentForRequirement(
+              uploadState.requirementId,
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: BodyTitle(
+                  text: uploadState.message,
+                  color: AppColors.white,
+                  fontWeight: AppFontWeight.regular,
+                ),
+                backgroundColor: AppColors.red,
+              ),
+            );
+          }
+        },
+        builder: (context, uploadState) =>
+            BlocBuilder<NewOrderCubit, NewOrderState>(
+          buildWhen: (previous, current) =>
+              previous.orderEntity.requirementDocuments !=
+              current.orderEntity.requirementDocuments,
+          builder: (context, state) => ListView.separated(
+            padding: EdgeInsets.fromLTRB(
+              AppPaddingWidth.p16,
+              AppPaddingHeight.p8,
+              AppPaddingWidth.p16,
+              AppPaddingHeight.p50,
+            ),
+            itemCount: sections.length,
+            separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
+            itemBuilder: (_, index) =>
+                _buildSection(context, sections[index], state, uploadState),
           ),
-          itemCount: sections.length,
-          separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
-          itemBuilder: (_, index) =>
-              _buildSection(context, sections[index], state),
         ),
       ),
     );
@@ -158,6 +198,7 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
     BuildContext context,
     Section section,
     NewOrderState state,
+    IUploadFileState uploadState,
   ) {
     final title = section.title?.trim() ?? '';
     final description = section.description?.trim() ?? '';
@@ -174,7 +215,13 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
           description: description,
         ),
         for (var index = 0; index < fileFields.length; index++) ...[
-          _buildDocumentRequirement(context, fileFields[index], index, state),
+          _buildDocumentRequirement(
+            context,
+            fileFields[index],
+            index,
+            state,
+            uploadState,
+          ),
           if (index < fileFields.length - 1) SizedBox(height: AppHeight.h10),
         ],
         for (final field in infoFields) ...[
@@ -195,6 +242,7 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
     SectionField field,
     int index,
     NewOrderState state,
+    IUploadFileState uploadState,
   ) {
     final requirementId = field.id?.trim().isNotEmpty == true
         ? field.id!.trim()
@@ -206,6 +254,8 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
     final maxSize =
         field.validation?.maxSize ?? AppFileConstraints.maxDocumentSizeInBytes;
     final isExpanded = _expandedRequirementId == requirementId;
+    final isLoading = uploadState is UploadFileLoading &&
+        uploadState.requirementId == requirementId;
 
     return FormField<bool>(
       key: ValueKey('$requirementId-${document?.path}'),
@@ -223,6 +273,7 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
                 ? context.loc.new_order_document_required_when_available
                 : context.loc.new_order_document_if_available,
             icon: _fileIcon(field.id, index),
+            isLoading: isLoading,
             onTap: () => setState(() {
               _expandedRequirementId = isExpanded ? null : requirementId;
             }),
@@ -231,9 +282,11 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
             SizedBox(height: AppHeight.h10),
             UploadedDocumentCard(
               document: document,
-              onRemove: () => context
-                  .read<NewOrderCubit>()
-                  .removeDocumentForRequirement(requirementId),
+              onRemove: isLoading
+                  ? null
+                  : () => context
+                      .read<NewOrderCubit>()
+                      .removeDocumentForRequirement(requirementId),
             ),
           ] else if (isExpanded) ...[
             SizedBox(height: AppHeight.h10),

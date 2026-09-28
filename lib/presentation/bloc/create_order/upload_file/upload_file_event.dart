@@ -5,10 +5,11 @@ sealed class IUploadFileEvent extends Equatable {
 }
 
 final class UploadFileEvent extends IUploadFileEvent {
-  const UploadFileEvent(this.entity);
+  const UploadFileEvent(this.entity, {required this.requirementId});
 
   final CreateOrderEntity entity;
+  final String requirementId;
 
   @override
-  List<Object?> get props => [entity];
+  List<Object?> get props => [entity, requirementId];
 }

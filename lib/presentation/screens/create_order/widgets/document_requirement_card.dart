@@ -13,12 +13,14 @@ class DocumentRequirementCard extends StatelessWidget {
     required this.availability,
     required this.icon,
     required this.onTap,
+    this.isLoading = false,
   });
 
   final String title;
   final String availability;
   final IconData icon;
   final VoidCallback onTap;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,17 @@ class DocumentRequirementCard extends StatelessWidget {
             ),
           ),
           SizedBox(width: AppWidth.w12),
+          if (isLoading) ...[
+            SizedBox(
+              width: AppSize.s18,
+              height: AppSize.s18,
+              child: const CircularProgressIndicator(
+                strokeWidth: 2,
+                color: AppColors.primary,
+              ),
+            ),
+            SizedBox(width: AppWidth.w8),
+          ],
           BodyTitle(
             text: availability,
             color: AppColors.secondary,

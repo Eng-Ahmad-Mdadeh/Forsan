@@ -29,17 +29,32 @@ class UploadFileBloc extends Bloc<IUploadFileEvent, IUploadFileState> {
     UploadFileEvent event,
     Emitter<IUploadFileState> emit,
   ) async {
-    emit(const UploadFileLoading());
+    emit(UploadFileLoading(requirementId: event.requirementId));
 
     try {
       final result = await _uploadFile(event.entity);
       result.fold(
-        (failure) => emit(UploadFileFailed(failure.message)),
-        (response) => emit(UploadFileLoaded(response: response)),
+        (failure) => emit(
+          UploadFileFailed(
+            failure.message,
+            requirementId: event.requirementId,
+          ),
+        ),
+        (response) => emit(
+          UploadFileLoaded(
+            response: response,
+            requirementId: event.requirementId,
+          ),
+        ),
       );
     } catch (error, stackTrace) {
       log(error.toString(), stackTrace: stackTrace);
-      emit(UploadFileFailed(error.toString()));
+      emit(
+        UploadFileFailed(
+          error.toString(),
+          requirementId: event.requirementId,
+        ),
+      );
     }
   }
 }

@@ -12,26 +12,33 @@ final class UploadFileInitial extends IUploadFileState {
 }
 
 final class UploadFileLoading extends IUploadFileState {
-  const UploadFileLoading();
+  const UploadFileLoading({required this.requirementId});
+
+  final String requirementId;
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [requirementId];
 }
 
 final class UploadFileLoaded extends IUploadFileState {
-  const UploadFileLoaded({required this.response});
+  const UploadFileLoaded({
+    required this.response,
+    required this.requirementId,
+  });
 
   final BaseModel<void>? response;
+  final String requirementId;
 
   @override
-  List<Object?> get props => [response];
+  List<Object?> get props => [response, requirementId];
 }
 
 final class UploadFileFailed extends IUploadFileState {
-  const UploadFileFailed(this.message);
+  const UploadFileFailed(this.message, {required this.requirementId});
 
   final String message;
+  final String requirementId;
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, requirementId];
 }
