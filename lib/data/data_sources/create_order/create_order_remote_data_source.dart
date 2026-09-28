@@ -26,17 +26,26 @@ class CreateOrderRemoteDataSource
 
   Future<Either<AppException, BaseModel<void>?>> uploadFile(
     CreateOrderEntity data,
-  ) {
+  ) async {
+    for (final entry in data.requirementDocuments.entries) {
+      final path = entry.value.path;
+      if (path == null) continue;
 
-    final List<Map<String, dynamic>> files = data.requirementDocuments.entries
-        .where((entry) => entry.value.path != null)
-        .map((entry) => {'field_name': entry.key, 'path': entry.value.path!})
-        .toList();
+      // The files endpoint accepts one document per request. `fieldId` identifies
+      // the requirement, while the binary itself must use the `file` part name.
+      final response = await postData(
+        endpoint: ApiEndpoints.uploadFile(data.orderId!),
+        data: {'fieldId': entry.key},
+        isFormData: true,
+        dataMayBeAtRoot: true,
+        files: [
+          {'field_name': 'file', 'path': path},
+        ],
+      );
 
-    return postData(
-      endpoint: ApiEndpoints.uploadFile(data.orderId!),
-      dataMayBeAtRoot: true,
-      files: files,
-    );
+      if (response.isLeft()) return response;
+    }
+
+    return const Right(null);
   }
 }
