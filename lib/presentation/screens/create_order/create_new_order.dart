@@ -83,6 +83,25 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     );
   }
 
+  bool _hasSelectedEstablishmentAndApplicantRole(
+    StepModel step,
+    Map<String, dynamic> formValues,
+  ) {
+    final sections = step.sections ?? const <Section>[];
+    if (sections.isEmpty) return false;
+
+    return sections.every((section) {
+      final fields = section.fields ?? const <SectionField>[];
+      return fields.isNotEmpty && fields.every((field) {
+        final fieldId = field.id;
+        if (fieldId == null) return false;
+
+        final value = formValues[fieldId];
+        return value != null && (value is! String || value.trim().isNotEmpty);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OrderStepsBloc, IOrderStepsState>(
@@ -250,6 +269,20 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                           final currentStep = state.orderEntity.currentStep;
 
                           if (currentStep == 0) {
+                            if (!_hasSelectedEstablishmentAndApplicantRole(
+                              steps[0],
+                              state.orderEntity.formValues,
+                            )) {
+                              showCustomSnackBar(
+                                context: context,
+                                title: context.loc.error,
+                                message:
+                                    context.loc.complete_profile_required_field,
+                                contentType: ContentType.failure,
+                              );
+                              return;
+                            }
+
                             context.read<CreateOrderBloc>().add(
                               CreateOrderEvent(
                                 CreateOrderEntity(
