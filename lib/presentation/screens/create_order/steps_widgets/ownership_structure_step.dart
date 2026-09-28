@@ -96,8 +96,15 @@ class OwnershipStructureStep extends StatelessWidget {
   bool _isVisible(SectionField field) {
     final condition = field.visibleIf;
     if (condition?.field == null) return true;
-    return (condition!.visibleIfIn ?? const <String>[])
-        .contains(selectedValues[condition.field]);
+
+    // Keep the repeater's add action available before the controlling select
+    // has a value. Once a value is selected, follow the backend visibility
+    // rule (for example, selecting a one-person company hides partner fields).
+    final controllingValue = selectedValues[condition!.field];
+    if (field.type == 'repeater' && controllingValue == null) return true;
+
+    return (condition.visibleIfIn ?? const <String>[])
+        .contains(controllingValue);
   }
 
   Widget _buildField(BuildContext context, SectionField field) {
