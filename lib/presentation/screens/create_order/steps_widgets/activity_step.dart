@@ -6,7 +6,6 @@ import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
-import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -177,34 +176,54 @@ class ActivityStep extends StatelessWidget {
     int index,
   ) {
     final entry = entries[index];
+    final fields = repeater.fields ?? const <FieldField>[];
+    final title = fields.isEmpty ? '' : fields.first.label?.trim() ?? '';
 
-    return SectionCard(
-      margin: EdgeInsets.zero,
-      padding: EdgeInsets.all(AppPaddingWidth.p16),
-      borderRadius: BorderRadius.circular(AppRadius.r8),
-      backgroundColor: AppColors.goldBackGround.withOpacity(0.4),
-      child: Column(
-        children: [
-          Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: IconButton(
-              onPressed: () {
-                final updated = [...entries]..removeAt(index);
-                onFieldChanged(repeater.id!, updated);
-              },
-              icon: Icon(
-                Icons.delete_outline_rounded,
-                color: AppColors.red,
-                size: AppSize.s20,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: BodyTitle(
+                text: title,
+                color: AppColors.mainText,
+                fontSize: AppFontSize.s14,
+                fontWeight: AppFontWeight.medium,
               ),
             ),
-          ),
-          for (final field in repeater.fields ?? const <FieldField>[]) ...[
-            _buildRepeatedField(repeater.id!, field, entries, index, entry),
-            SizedBox(height: AppHeight.h8),
+            SizedBox(
+              width: AppWidth.w24,
+              height: AppHeight.h24,
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: () {
+                  final updated = [...entries]..removeAt(index);
+                  onFieldChanged(repeater.id!, updated);
+                },
+                icon: Icon(
+                  Icons.delete_outline_rounded,
+                  color: AppColors.red,
+                  size: AppSize.s20,
+                ),
+              ),
+            ),
           ],
+        ),
+        SizedBox(height: AppHeight.h4),
+        for (var fieldIndex = 0; fieldIndex < fields.length; fieldIndex++) ...[
+          _buildRepeatedField(
+            repeater.id!,
+            fields[fieldIndex],
+            entries,
+            index,
+            entry,
+            showLabel: fieldIndex > 0,
+          ),
+          if (fieldIndex < fields.length - 1) SizedBox(height: AppHeight.h8),
         ],
-      ),
+      ],
     );
   }
 
@@ -213,8 +232,9 @@ class ActivityStep extends StatelessWidget {
     FieldField field,
     List<Map<String, dynamic>> entries,
     int index,
-    Map<String, dynamic> entry,
-  ) {
+    Map<String, dynamic> entry, {
+    required bool showLabel,
+  }) {
     void update(dynamic value) {
       if (field.id == null) return;
       final updated = entries.map((item) => Map<String, dynamic>.from(item)).toList();
@@ -224,7 +244,7 @@ class ActivityStep extends StatelessWidget {
 
     if (field.type == 'select') {
       return _dropdown(
-        label: field.label,
+        label: showLabel ? field.label : null,
         placeholder: field.placeholder,
         options: (field.options ?? const <PurpleOption>[])
             .map((option) => _Option(option.label, option.value))
@@ -237,11 +257,12 @@ class ActivityStep extends StatelessWidget {
     return _inputField(
       key: ValueKey('$repeaterId-$index-${field.id}'),
       type: field.type,
-      label: field.label,
+      label: showLabel ? field.label : null,
       placeholder: field.placeholder,
       isRequired: field.required,
       value: entry[field.id],
-      maxLength: field.validation?.max,
+      maxLength:
+          field.validation?.max ?? (field.type == 'textarea' ? 100 : null),
       onChanged: update,
     );
   }
