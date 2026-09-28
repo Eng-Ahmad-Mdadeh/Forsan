@@ -62,17 +62,6 @@ class OrderOptionCard extends StatelessWidget {
                     )
                   : null,
               borderRadius: radius,
-              // border: Border.all(color: AppColors.lightGrey),
-              // boxShadow: selected
-              //     ? null
-              //     : [
-              //         BoxShadow(
-              //           color: Colors.red,
-              //           blurRadius: 15,
-              //           spreadRadius: 5,
-              //           offset: const Offset(0, 0),
-              //         ),
-              //       ],
             ),
             child: InkWell(
               onTap: onTap,

@@ -72,8 +72,9 @@ class ProposedCompanyInfoStep extends StatelessWidget {
     final controllingField = condition.field;
     if (controllingField == null) return true;
 
-    return (condition.visibleIfIn ?? const <String>[])
-        .contains(selectedValues[controllingField]);
+    return (condition.visibleIfIn ?? const <String>[]).contains(
+      selectedValues[controllingField],
+    );
   }
 
   Widget _buildField(SectionField field) {
@@ -87,10 +88,12 @@ class ProposedCompanyInfoStep extends StatelessWidget {
           hint: hint,
           value: selectedValues[field.id],
           options: (field.options ?? const <FluffyOption>[])
-              .map((option) => OrderDropdownOption(
-                    label: option.label?.trim() ?? '',
-                    value: option.value,
-                  ))
+              .map(
+                (option) => OrderDropdownOption(
+                  label: option.label?.trim() ?? '',
+                  value: option.value,
+                ),
+              )
               .toList(),
           onChanged: (value) {
             if (field.id != null) onFieldChanged(field.id!, value);
@@ -108,5 +111,4 @@ class ProposedCompanyInfoStep extends StatelessWidget {
         );
     }
   }
-
 }

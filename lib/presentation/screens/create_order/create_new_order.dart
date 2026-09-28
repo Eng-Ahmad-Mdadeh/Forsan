@@ -191,6 +191,9 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                       height: AppHeight.h50,
                       color: AppColors.primary,
                       onPressed: () {
+                        final cubit = context.read<NewOrderCubit>().state;
+                        print('eeeeeeeeeeee');
+                        print(cubit.orderEntity);
                         if (state.orderEntity.currentStep <
                             NewOrderCubit.lastStep) {
                           _goToStep(
