@@ -36,22 +36,6 @@ void main() {
       cubit.close();
     });
 
-    test('stores and removes valid documents in CreateOrderEntity', () {
-      final cubit = NewOrderCubit();
-      final document = PlatformFile(
-        name: 'license.pdf',
-        size: 100,
-      );
-
-      expect(cubit.addDocuments([document]), 0);
-      expect(cubit.state.orderEntity.documents, [document]);
-
-      cubit.removeDocument(document);
-      expect(cubit.state.orderEntity.documents, isEmpty);
-
-      cubit.close();
-    });
-
     test('associates one document with its requirement', () {
       final cubit = NewOrderCubit();
       final firstDocument = PlatformFile(name: 'identity.pdf', size: 100);
@@ -60,24 +44,27 @@ void main() {
         size: 100,
       );
 
-      cubit.addDocuments([firstDocument], requirementId: 'idCopy');
+      cubit.addDocumentForRequirement(
+        [firstDocument],
+        requirementId: 'idCopy',
+      );
 
-      expect(cubit.state.orderEntity.documents, [firstDocument]);
       expect(
         cubit.state.orderEntity.requirementDocuments['idCopy'],
         firstDocument,
       );
 
-      cubit.addDocuments([replacementDocument], requirementId: 'idCopy');
+      cubit.addDocumentForRequirement(
+        [replacementDocument],
+        requirementId: 'idCopy',
+      );
 
-      expect(cubit.state.orderEntity.documents, [replacementDocument]);
       expect(
         cubit.state.orderEntity.requirementDocuments['idCopy'],
         replacementDocument,
       );
 
-      cubit.removeDocument(replacementDocument);
-      expect(cubit.state.orderEntity.documents, isEmpty);
+      cubit.removeDocumentForRequirement('idCopy');
       expect(cubit.state.orderEntity.requirementDocuments, isEmpty);
 
       cubit.close();

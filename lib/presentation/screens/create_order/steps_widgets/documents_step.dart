@@ -54,7 +54,8 @@ class _DocumentsStepState extends State<DocumentsStep> {
 
     return BlocBuilder<NewOrderCubit, NewOrderState>(
       buildWhen: (previous, current) =>
-          previous.orderEntity.documents != current.orderEntity.documents,
+          previous.orderEntity.requirementDocuments !=
+          current.orderEntity.requirementDocuments,
       builder: (context, state) => ListView.separated(
         padding: EdgeInsets.fromLTRB(
           AppPaddingWidth.p16,
@@ -143,8 +144,9 @@ class _DocumentsStepState extends State<DocumentsStep> {
           SizedBox(height: AppHeight.h10),
           UploadedDocumentCard(
             document: document,
-            onRemove: () =>
-                context.read<NewOrderCubit>().removeDocument(document),
+            onRemove: () => context
+                .read<NewOrderCubit>()
+                .removeDocumentForRequirement(requirementId),
           ),
         ] else if (isExpanded) ...[
           SizedBox(height: AppHeight.h10),

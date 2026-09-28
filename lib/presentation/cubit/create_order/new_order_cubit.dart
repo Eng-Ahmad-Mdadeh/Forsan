@@ -40,21 +40,16 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     );
   }
 
-  Future<int> pickDocuments() async {
-    final documents = await _filePickerHelper.pickDocuments();
-    return addDocuments(documents);
-  }
-
   Future<int> pickDocumentForRequirement(String requirementId) async {
     final documents = await _filePickerHelper.pickDocuments(
       allowMultiple: false,
     );
-    return addDocuments(documents, requirementId: requirementId);
+    return addDocumentForRequirement(documents, requirementId: requirementId);
   }
 
-  int addDocuments(
+  int addDocumentForRequirement(
     List<PlatformFile> documents, {
-    String? requirementId,
+    required String requirementId,
   }) {
     final validDocuments = documents.where(
       (document) => document.isValidDocument,
@@ -65,24 +60,11 @@ class NewOrderCubit extends Cubit<NewOrderState> {
       final selectedDocument = validDocuments.first;
       final requirementDocuments = {
         ...state.orderEntity.requirementDocuments,
-        if (requirementId != null) requirementId: selectedDocument,
+        requirementId: selectedDocument,
       };
-      final currentDocuments = requirementId == null
-          ? state.orderEntity.documents
-          : state.orderEntity.documents.where(
-              (document) =>
-                  document !=
-                  state.orderEntity.requirementDocuments[requirementId],
-            );
       emit(
         state.copyWith(
           orderEntity: state.orderEntity.copyWith(
-            documents: [
-              ...currentDocuments,
-              ...(requirementId == null
-                  ? validDocuments
-                  : [selectedDocument]),
-            ],
             requirementDocuments: requirementDocuments,
           ),
         ),
@@ -92,16 +74,13 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     return rejectedDocuments;
   }
 
-  void removeDocument(PlatformFile document) {
-    final documents = List<PlatformFile>.of(state.orderEntity.documents)
-      ..remove(document);
+  void removeDocumentForRequirement(String requirementId) {
     final requirementDocuments = Map<String, PlatformFile>.of(
       state.orderEntity.requirementDocuments,
-    )..removeWhere((_, value) => value == document);
+    )..remove(requirementId);
     emit(
       state.copyWith(
         orderEntity: state.orderEntity.copyWith(
-          documents: documents,
           requirementDocuments: requirementDocuments,
         ),
       ),
