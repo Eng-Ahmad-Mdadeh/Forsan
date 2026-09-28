@@ -1,7 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:forsan/core/extension/file_type_extension.dart';
 import 'package:forsan/core/helper/file_picker_helper.dart';
 import 'package:forsan/core/helper/media_picker_helper.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
@@ -49,19 +48,27 @@ class NewOrderCubit extends Cubit<NewOrderState> {
 
   Future<int> pickDocumentForRequirement(
     String requirementId, {
-    List<String> allowedExtensions = const ['pdf'],
+    required List<String> allowedExtensions,
+    required int maxSize,
   }) async {
     final documents = await _filePickerHelper.pickDocuments(
       allowMultiple: false,
       allowedExtensions: allowedExtensions,
     );
-    return addDocumentForRequirement(documents, requirementId: requirementId);
+    return addDocumentForRequirement(
+      documents,
+      requirementId: requirementId,
+      acceptedTypes: allowedExtensions,
+      maxSize: maxSize,
+    );
   }
 
   Future<int> pickImageForRequirement(
     BuildContext context,
-    String requirementId,
-  ) async {
+    String requirementId, {
+    required List<String> acceptedTypes,
+    required int maxSize,
+  }) async {
     final image = await _mediaPickerHelper.pickImageFile(context);
     if (image == null) return 0;
 
@@ -73,16 +80,24 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     return addDocumentForRequirement(
       [document],
       requirementId: requirementId,
+      acceptedTypes: acceptedTypes,
+      maxSize: maxSize,
     );
   }
 
   int addDocumentForRequirement(
     List<PlatformFile> documents, {
     required String requirementId,
+    required List<String> acceptedTypes,
+    required int maxSize,
   }) {
-    final validDocuments = documents.where(
-      (document) => document.isValidDocument,
-    ).toList();
+    final normalizedTypes = acceptedTypes
+        .map((type) => type.toLowerCase())
+        .toSet();
+    final validDocuments = documents.where((document) {
+      final extension = document.extension?.toLowerCase() ?? '';
+      return normalizedTypes.contains(extension) && document.size <= maxSize;
+    }).toList();
     final rejectedDocuments = documents.length - validDocuments.length;
 
     if (validDocuments.isNotEmpty) {

@@ -13,6 +13,7 @@ import 'package:forsan/presentation/screens/create_order/widgets/document_requir
 import 'package:forsan/presentation/screens/create_order/widgets/uploaded_document_card.dart';
 import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
+import 'package:mime/mime.dart';
 
 class DocumentsStep extends StatefulWidget {
   const DocumentsStep({super.key, required this.step});
@@ -30,29 +31,34 @@ class _DocumentsStepState extends State<DocumentsStep> {
     BuildContext context,
     String requirementId,
     List<String> acceptedTypes,
+    int maxSize,
   ) async {
     final normalizedTypes = acceptedTypes
         .map((type) => type.toLowerCase())
         .toSet();
-    final acceptsPdf = normalizedTypes.contains('pdf');
-    final acceptsImages = normalizedTypes.any(
-      (type) => const {'jpg', 'jpeg', 'png'}.contains(type),
-    );
-    final source = acceptsPdf && acceptsImages
+    final imageTypes = normalizedTypes.where(
+      (type) => lookupMimeType('file.$type')?.startsWith('image/') == true,
+    ).toSet();
+    final fileTypes = normalizedTypes.difference(imageTypes);
+    final source = fileTypes.isNotEmpty && imageTypes.isNotEmpty
         ? await _selectDocumentSource(context)
-        : acceptsImages
+        : imageTypes.isNotEmpty
         ? _DocumentSource.image
         : _DocumentSource.file;
     if (!context.mounted || source == null) return;
 
     final cubit = context.read<NewOrderCubit>();
     final rejectedDocuments = source == _DocumentSource.image
-        ? await cubit.pickImageForRequirement(context, requirementId)
+        ? await cubit.pickImageForRequirement(
+            context,
+            requirementId,
+            acceptedTypes: imageTypes.toList(),
+            maxSize: maxSize,
+          )
         : await cubit.pickDocumentForRequirement(
             requirementId,
-            allowedExtensions: acceptsPdf
-                ? const ['pdf']
-                : acceptedTypes,
+            allowedExtensions: fileTypes.toList(),
+            maxSize: maxSize,
           );
 
     if (!context.mounted || rejectedDocuments == 0) return;
@@ -176,7 +182,9 @@ class _DocumentsStepState extends State<DocumentsStep> {
         : '${field.label ?? 'document'}-$index';
     final document = state.orderEntity.requirementDocuments[requirementId];
     final acceptedTypes = field.validation?.acceptedTypes ??
-        const <String>['pdf', 'jpg', 'png'];
+        AppFileConstraints.documentExtensions;
+    final maxSize = field.validation?.maxSize ??
+        AppFileConstraints.maxDocumentSizeInBytes;
     final isExpanded = _expandedRequirementId == requirementId;
 
     return Column(
@@ -208,6 +216,7 @@ class _DocumentsStepState extends State<DocumentsStep> {
               context,
               requirementId,
               acceptedTypes,
+              maxSize,
             ),
             paddingTop: AppPaddingHeight.p1,
             uploadLabel: context.loc.new_order_upload_tap,

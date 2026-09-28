@@ -47,6 +47,8 @@ void main() {
       cubit.addDocumentForRequirement(
         [firstDocument],
         requirementId: 'idCopy',
+        acceptedTypes: const ['pdf'],
+        maxSize: 1024,
       );
 
       expect(
@@ -57,6 +59,8 @@ void main() {
       cubit.addDocumentForRequirement(
         [replacementDocument],
         requirementId: 'idCopy',
+        acceptedTypes: const ['pdf'],
+        maxSize: 1024,
       );
 
       expect(
@@ -66,6 +70,26 @@ void main() {
 
       cubit.removeDocumentForRequirement('idCopy');
       expect(cubit.state.orderEntity.requirementDocuments, isEmpty);
+
+      cubit.close();
+    });
+
+    test('accepts new document types supplied by the requirement', () {
+      final cubit = NewOrderCubit();
+      final document = PlatformFile(name: 'company-record.docx', size: 100);
+
+      final rejectedDocuments = cubit.addDocumentForRequirement(
+        [document],
+        requirementId: 'companyRecord',
+        acceptedTypes: const ['docx'],
+        maxSize: 1024,
+      );
+
+      expect(rejectedDocuments, 0);
+      expect(
+        cubit.state.orderEntity.requirementDocuments['companyRecord'],
+        document,
+      );
 
       cubit.close();
     });
