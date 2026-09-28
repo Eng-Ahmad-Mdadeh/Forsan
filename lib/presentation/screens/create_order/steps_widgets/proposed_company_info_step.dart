@@ -100,11 +100,16 @@ class ProposedCompanyInfoStep extends StatelessWidget {
         return OrderInfoCard(text: label, maxLines: 2);
       default:
         return OrderFormInputField(
+          key: ValueKey(field.id),
           label: label,
           hint: hint,
+          value: selectedValues[field.id],
           keyboardType: field.id == 'englishName'
               ? TextInputType.name
               : TextInputType.text,
+          onChanged: (value) {
+            if (field.id != null) onFieldChanged(field.id!, value);
+          },
         );
     }
   }
