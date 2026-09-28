@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
@@ -20,6 +21,7 @@ import 'package:forsan/presentation/screens/create_order/steps_widgets/proposed_
 import 'package:forsan/presentation/screens/create_order/steps_widgets/review_step.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
+import 'package:forsan/presentation/widgets/custom_snack_bar.dart';
 import 'package:forsan/presentation/widgets/failure_screen.dart';
 import 'package:forsan/presentation/widgets/loading_widget.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
@@ -124,109 +126,158 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
             .map((step) => step.title?.trim() ?? '')
             .toList(growable: false);
 
-        return BlocBuilder<NewOrderCubit, NewOrderState>(
-          builder: (context, state) => Scaffold(
-            backgroundColor: AppColors.white,
-            appBar: _buildAppBar(context, state: state),
-            body: SafeArea(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      AppPaddingWidth.p20,
-                      AppPaddingHeight.p18,
-                      AppPaddingWidth.p20,
-                      AppPaddingHeight.p14,
-                    ),
-                    child: OrderStepIndicator(
-                      currentStep: state.orderEntity.currentStep,
-                      stepTitles: stepTitles,
-                    ),
-                  ),
-                  Expanded(
-                    child: PageView(
-                      key: const Key('new_order_page_view'),
-                      controller: _pageController,
-                      physics: const NeverScrollableScrollPhysics(),
-                      onPageChanged: context.read<NewOrderCubit>().changeStep,
-                      children: [
-                        EstablishmentTypeStep(
-                          step: steps[0],
-                          selectedValues: state.orderEntity.formValues,
-                          onFieldChanged: context.read<NewOrderCubit>().updateFormValue,
-                        ),
-                        ApplicantStep(
-                          step: steps[1],
-                          selectedValues: state.orderEntity.formValues,
-                          onFieldChanged:
-                              context.read<NewOrderCubit>().updateFormValue,
-                        ),
-                        ProposedCompanyInfoStep(
-                          step: steps[2],
-                          selectedValues: state.orderEntity.formValues,
-                          onFieldChanged: context.read<NewOrderCubit>().updateFormValue,
-                        ),
-                        OwnershipStructureStep(
-                          step: steps[3],
-                          selectedValues: state.orderEntity.formValues,
-                          onFieldChanged: context.read<NewOrderCubit>().updateFormValue,
-                        ),
-                        ActivityStep(
-                          step: steps[4],
-                          selectedValues: state.orderEntity.formValues,
-                          onFieldChanged: context.read<NewOrderCubit>().updateFormValue,
-                        ),
-                        DocumentsStep(step: steps[5]),
-                        ReviewStep(
-                          step: steps[6],
-                          establishmentStep: steps[0],
-                          agreement: orderStepsState.orderStepsModel?.data?.agreements??[],
-                          onEditStep: (step) => _goToStep(context, step),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      AppPaddingWidth.p16,
-                      AppPaddingHeight.p8,
-                      AppPaddingWidth.p16,
-                      AppPaddingHeight.p16,
-                    ),
-                    child: CustomElevatedButton(
-                      key: const Key('new_order_next_button'),
-                      width: double.infinity,
-                      height: AppHeight.h50,
-                      color: AppColors.primary,
-                      onPressed: () {
-                        final currentStep = state.orderEntity.currentStep;
+        return BlocListener<CreateOrderBloc, ICreateOrderState>(
+          listener: (context, createOrderState) {
+            if (createOrderState is CreateOrderLoading) {
+              showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) =>
+                    const PopScope(canPop: false, child: LoadingWidget(0)),
+              );
+            } else if (createOrderState is CreateOrderFailed) {
+              Navigator.of(context, rootNavigator: true).pop();
+              showCustomSnackBar(
+                context: context,
+                title: context.loc.error,
+                message: createOrderState.message,
+                contentType: ContentType.failure,
+              );
+            } else if (createOrderState is CreateOrderLoaded) {
+              Navigator.of(context, rootNavigator: true).pop();
 
-                        if (currentStep == 0) {
-                          context.read<CreateOrderBloc>().add(
-                            CreateOrderEvent(
-                              CreateOrderEntity(
-                                serviceSlug: widget.serviceSlug,
-                                formValues: state.orderEntity.formValues,
-                              ),
-                            ),
-                          );
-                        }
-
-                        if (currentStep < NewOrderCubit.lastStep) {
-                          _goToStep(context, currentStep + 1);
-                        }
-                      },
-                      child: BodyTitle(
-                        text: state.orderEntity.currentStep ==
-                                NewOrderCubit.lastStep
-                            ? context.loc.new_order_submit
-                            : context.loc.new_order_next,
-                        color: AppColors.white,
-                        fontWeight: AppFontWeight.semiBold,
+              final currentStep = context
+                  .read<NewOrderCubit>()
+                  .state
+                  .orderEntity
+                  .currentStep;
+              if (currentStep == 0) {
+                _goToStep(context, currentStep + 1);
+              }
+            }
+          },
+          child: BlocBuilder<NewOrderCubit, NewOrderState>(
+            builder: (context, state) => Scaffold(
+              backgroundColor: AppColors.white,
+              appBar: _buildAppBar(context, state: state),
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        AppPaddingWidth.p20,
+                        AppPaddingHeight.p18,
+                        AppPaddingWidth.p20,
+                        AppPaddingHeight.p14,
+                      ),
+                      child: OrderStepIndicator(
+                        currentStep: state.orderEntity.currentStep,
+                        stepTitles: stepTitles,
                       ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: PageView(
+                        key: const Key('new_order_page_view'),
+                        controller: _pageController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        onPageChanged: context
+                            .read<NewOrderCubit>()
+                            .changeStep,
+                        children: [
+                          EstablishmentTypeStep(
+                            step: steps[0],
+                            selectedValues: state.orderEntity.formValues,
+                            onFieldChanged: context
+                                .read<NewOrderCubit>()
+                                .updateFormValue,
+                          ),
+                          ApplicantStep(
+                            step: steps[1],
+                            selectedValues: state.orderEntity.formValues,
+                            onFieldChanged: context
+                                .read<NewOrderCubit>()
+                                .updateFormValue,
+                          ),
+                          ProposedCompanyInfoStep(
+                            step: steps[2],
+                            selectedValues: state.orderEntity.formValues,
+                            onFieldChanged: context
+                                .read<NewOrderCubit>()
+                                .updateFormValue,
+                          ),
+                          OwnershipStructureStep(
+                            step: steps[3],
+                            selectedValues: state.orderEntity.formValues,
+                            onFieldChanged: context
+                                .read<NewOrderCubit>()
+                                .updateFormValue,
+                          ),
+                          ActivityStep(
+                            step: steps[4],
+                            selectedValues: state.orderEntity.formValues,
+                            onFieldChanged: context
+                                .read<NewOrderCubit>()
+                                .updateFormValue,
+                          ),
+                          DocumentsStep(step: steps[5]),
+                          ReviewStep(
+                            step: steps[6],
+                            establishmentStep: steps[0],
+                            agreement:
+                                orderStepsState
+                                    .orderStepsModel
+                                    ?.data
+                                    ?.agreements ??
+                                [],
+                            onEditStep: (step) => _goToStep(context, step),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        AppPaddingWidth.p16,
+                        AppPaddingHeight.p8,
+                        AppPaddingWidth.p16,
+                        AppPaddingHeight.p16,
+                      ),
+                      child: CustomElevatedButton(
+                        key: const Key('new_order_next_button'),
+                        width: double.infinity,
+                        height: AppHeight.h50,
+                        color: AppColors.primary,
+                        onPressed: () {
+                          final currentStep = state.orderEntity.currentStep;
+
+                          if (currentStep == 0) {
+                            context.read<CreateOrderBloc>().add(
+                              CreateOrderEvent(
+                                CreateOrderEntity(
+                                  serviceSlug: widget.serviceSlug,
+                                  formValues: state.orderEntity.formValues,
+                                ),
+                              ),
+                            );
+                            return;
+                          }
+
+                          if (currentStep < NewOrderCubit.lastStep) {
+                            _goToStep(context, currentStep + 1);
+                          }
+                        },
+                        child: BodyTitle(
+                          text:
+                              state.orderEntity.currentStep ==
+                                  NewOrderCubit.lastStep
+                              ? context.loc.new_order_submit
+                              : context.loc.new_order_next,
+                          color: AppColors.white,
+                          fontWeight: AppFontWeight.semiBold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
