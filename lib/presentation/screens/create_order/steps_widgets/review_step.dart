@@ -50,11 +50,17 @@ class ReviewStep extends StatelessWidget {
         fields: [
           (
             label: context.loc.new_order_establishment_title,
-            value: _establishmentTypeLabel(context, state.establishmentType),
+            value: _establishmentTypeLabel(
+              context,
+              state.orderEntity.establishmentType,
+            ),
           ),
           (
             label: context.loc.new_order_applicant_role_title,
-            value: _applicantTypeLabel(context, state.applicantType),
+            value: _applicantTypeLabel(
+              context,
+              state.orderEntity.applicantType,
+            ),
           ),
         ],
       ),

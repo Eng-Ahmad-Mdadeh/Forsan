@@ -14,27 +14,50 @@ class NewOrderCubit extends Cubit<NewOrderState> {
   static const int lastStep = 6;
 
   void changeStep(int step) {
-    if (step < 0 || step > lastStep || step == state.currentStep) return;
+    if (step < 0 ||
+        step > lastStep ||
+        step == state.orderEntity.currentStep) {
+      return;
+    }
 
-    emit(state.copyWith(currentStep: step));
+    emit(
+      state.copyWith(
+        orderEntity: state.orderEntity.copyWith(currentStep: step),
+      ),
+    );
   }
 
   void selectEstablishmentType(String type) {
-    if (type == state.establishmentType) return;
+    if (type == state.orderEntity.establishmentType) return;
 
-    emit(state.copyWith(establishmentType: type));
+    emit(
+      state.copyWith(
+        orderEntity: state.orderEntity.copyWith(establishmentType: type),
+      ),
+    );
   }
 
   void selectApplicantType(String type) {
-    if (type == state.applicantType) return;
+    if (type == state.orderEntity.applicantType) return;
 
-    emit(state.copyWith(applicantType: type));
+    emit(
+      state.copyWith(
+        orderEntity: state.orderEntity.copyWith(applicantType: type),
+      ),
+    );
   }
 
   void updateFormValue(String fieldId, dynamic value) {
-    if (state.formValues[fieldId] == value) return;
+    final formValues = state.orderEntity.formValues;
+    if (formValues[fieldId] == value) return;
 
-    emit(state.copyWith(formValues: {...state.formValues, fieldId: value}));
+    emit(
+      state.copyWith(
+        orderEntity: state.orderEntity.copyWith(
+          formValues: {...formValues, fieldId: value},
+        ),
+      ),
+    );
   }
 
   Future<int> pickDocuments() async {
@@ -49,14 +72,28 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     final rejectedDocuments = documents.length - validDocuments.length;
 
     if (validDocuments.isNotEmpty) {
-      emit(state.copyWith(documents: [...state.documents, ...validDocuments]));
+      emit(
+        state.copyWith(
+          orderEntity: state.orderEntity.copyWith(
+            documents: [
+              ...state.orderEntity.documents,
+              ...validDocuments,
+            ],
+          ),
+        ),
+      );
     }
 
     return rejectedDocuments;
   }
 
   void removeDocument(PlatformFile document) {
-    final documents = List<PlatformFile>.of(state.documents)..remove(document);
-    emit(state.copyWith(documents: documents));
+    final documents = List<PlatformFile>.of(state.orderEntity.documents)
+      ..remove(document);
+    emit(
+      state.copyWith(
+        orderEntity: state.orderEntity.copyWith(documents: documents),
+      ),
+    );
   }
 }

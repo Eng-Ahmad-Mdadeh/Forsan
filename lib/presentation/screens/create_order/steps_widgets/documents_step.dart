@@ -42,7 +42,8 @@ class DocumentsStep extends StatelessWidget {
     final sections = step.sections ?? const <Section>[];
 
     return BlocBuilder<NewOrderCubit, NewOrderState>(
-      buildWhen: (previous, current) => previous.documents != current.documents,
+      buildWhen: (previous, current) =>
+          previous.orderEntity.documents != current.orderEntity.documents,
       builder: (context, state) => ListView.separated(
         padding: EdgeInsets.fromLTRB(
           AppPaddingWidth.p16,
@@ -105,9 +106,9 @@ class DocumentsStep extends StatelessWidget {
             uploadLabel: context.loc.new_order_upload_tap,
             uploadHint: _uploadHint(context, fileFields),
           ),
-          if (state.documents.isNotEmpty) ...[
+          if (state.orderEntity.documents.isNotEmpty) ...[
             SizedBox(height: AppHeight.h20),
-            for (final document in state.documents)
+            for (final document in state.orderEntity.documents)
               Padding(
                 padding: EdgeInsets.only(bottom: AppPaddingHeight.p16),
                 child: UploadedDocumentCard(

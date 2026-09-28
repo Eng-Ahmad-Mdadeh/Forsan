@@ -137,7 +137,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                       AppPaddingHeight.p14,
                     ),
                     child: OrderStepIndicator(
-                      currentStep: state.currentStep,
+                      currentStep: state.orderEntity.currentStep,
                       stepTitles: stepTitles,
                     ),
                   ),
@@ -149,11 +149,12 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                       children: [
                         EstablishmentTypeStep(
                           step: steps[0],
-                          selectedValue: state.establishmentType,
+                          selectedValue: state.orderEntity.establishmentType,
                           onChanged: context
                               .read<NewOrderCubit>()
                               .selectEstablishmentType,
-                          selectedApplicantValue: state.applicantType,
+                          selectedApplicantValue:
+                              state.orderEntity.applicantType,
                           onApplicantChanged: context
                               .read<NewOrderCubit>()
                               .selectApplicantType,
@@ -161,21 +162,21 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                         ApplicantStep(step: steps[1]),
                         ProposedCompanyInfoStep(
                           step: steps[2],
-                          selectedValues: state.formValues,
+                          selectedValues: state.orderEntity.formValues,
                           onFieldChanged: context
                               .read<NewOrderCubit>()
                               .updateFormValue,
                         ),
                         OwnershipStructureStep(
                           step: steps[3],
-                          selectedValues: state.formValues,
+                          selectedValues: state.orderEntity.formValues,
                           onFieldChanged: context
                               .read<NewOrderCubit>()
                               .updateFormValue,
                         ),
                         ActivityStep(
                           step: steps[4],
-                          selectedValues: state.formValues,
+                          selectedValues: state.orderEntity.formValues,
                           onFieldChanged: context
                               .read<NewOrderCubit>()
                               .updateFormValue,
@@ -202,12 +203,17 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                       height: AppHeight.h50,
                       color: AppColors.primary,
                       onPressed: () {
-                        if (state.currentStep < NewOrderCubit.lastStep) {
-                          _goToStep(context, state.currentStep + 1);
+                        if (state.orderEntity.currentStep <
+                            NewOrderCubit.lastStep) {
+                          _goToStep(
+                            context,
+                            state.orderEntity.currentStep + 1,
+                          );
                         }
                       },
                       child: BodyTitle(
-                        text: state.currentStep == NewOrderCubit.lastStep
+                        text: state.orderEntity.currentStep ==
+                                NewOrderCubit.lastStep
                             ? context.loc.new_order_submit
                             : context.loc.new_order_next,
                         color: AppColors.white,
@@ -233,9 +239,9 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
       backgroundColor: AppColors.white,
       showBackButton: true,
       showScrolledUnderElevation: false,
-      onTapBackButton: state == null || state.currentStep == 0
+      onTapBackButton: state == null || state.orderEntity.currentStep == 0
           ? () => Navigator.of(context).pop()
-          : () => _goToStep(context, state.currentStep - 1),
+          : () => _goToStep(context, state.orderEntity.currentStep - 1),
       customActions: [
         HeaderIconButton(
           icon: Icons.close_rounded,
