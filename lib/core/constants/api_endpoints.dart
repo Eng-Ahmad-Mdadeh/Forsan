@@ -31,8 +31,8 @@ class ApiEndpoints {
 
   //#region order
   static const String serviceType = '/services/categories';
-  static const String orderList = '/requests';
-  static String orderDetails(String id) => '$orderList/${Uri.encodeComponent(id)}';
+  static const String order = '/requests';
+  static String orderDetails(String id) => '$order/${Uri.encodeComponent(id)}';
   static String orderSteps(String slug) => '/services/${Uri.encodeComponent(slug)}/form';
 
   //#endregion
