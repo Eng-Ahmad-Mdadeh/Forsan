@@ -182,6 +182,8 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                         ),
                         DocumentsStep(step: steps[5]),
                         ReviewStep(
+                          step: steps[6],
+                          agreement: orderStepsState.orderStepsModel?.data?.agreements??[],
                           onEditStep: (step) => _goToStep(context, step),
                         ),
                       ],

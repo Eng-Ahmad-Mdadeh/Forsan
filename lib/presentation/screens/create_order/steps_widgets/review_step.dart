@@ -4,6 +4,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/widgets/custom_check_box.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
@@ -11,20 +12,17 @@ import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-/// Builds the complete new-order summary while keeping the individual card
-/// definitions out of the screen that hosts the order flow.
-///
-/// The form steps currently expose only the establishment selections as shared
-/// state. The remaining values below mirror the pre-filled form shown in the
-/// design and can be replaced with state values here once those steps are wired
-/// to the shared order state.
 class ReviewStep extends StatelessWidget {
   const ReviewStep({
     super.key,
     required this.onEditStep,
+    required this.step,
+    required this.agreement,
   });
 
   final ValueChanged<int> onEditStep;
+  final StepModel step;
+  final List<AgreementModel> agreement;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +77,8 @@ class ReviewStep extends StatelessWidget {
         ],
       ),
       ReviewSectionCard(
-        title: '${context.loc.new_order_step_partners} / '
+        title:
+            '${context.loc.new_order_step_partners} / '
             '${context.loc.new_order_primary_partner}',
         icon: Icons.people_outline_rounded,
         onEdit: () => onEditStep(3),
@@ -161,10 +160,7 @@ class ReviewStep extends StatelessWidget {
 }
 
 class _ReviewConfirmationCard extends StatelessWidget {
-  const _ReviewConfirmationCard({
-    super.key,
-    required this.text,
-  });
+  const _ReviewConfirmationCard({super.key, required this.text});
 
   final String text;
 
@@ -235,11 +231,7 @@ class ReviewSectionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _ReviewCardHeader(
-            title: title,
-            icon: icon,
-            onEdit: onEdit,
-          ),
+          _ReviewCardHeader(title: title, icon: icon, onEdit: onEdit),
           SizedBox(height: AppHeight.h16),
           for (var index = 0; index < fields.length; index++) ...[
             _ReviewFieldRow(field: fields[index]),
@@ -277,11 +269,7 @@ class _ReviewCardHeader extends StatelessWidget {
             color: AppColors.secondaryLight,
             borderRadius: BorderRadius.circular(AppRadius.r8),
           ),
-          child: Icon(
-            icon,
-            color: AppColors.secondary,
-            size: AppSize.s22,
-          ),
+          child: Icon(icon, color: AppColors.secondary, size: AppSize.s22),
         ),
         SizedBox(width: AppWidth.w4),
         Expanded(
@@ -296,7 +284,7 @@ class _ReviewCardHeader extends StatelessWidget {
         if (onEdit != null)
           Semantics(
             button: true,
-           // label: MaterialLocalizations.of(context).editButtonLabel,
+            // label: MaterialLocalizations.of(context).editButtonLabel,
             child: InkResponse(
               key: ValueKey('review_section_edit_$title'),
               onTap: onEdit,
