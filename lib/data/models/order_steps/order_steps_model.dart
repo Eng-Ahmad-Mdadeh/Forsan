@@ -25,7 +25,7 @@ class OrderStepsModel extends Equatable {
   final String? serviceSlug;
   final List<StepModel>? steps;
   final int? version;
-  final List<Agreement>? agreements;
+  final List<AgreementModel>? agreements;
 
   factory OrderStepsModel.fromJson(Map<String, dynamic> json) =>
       _$OrderStepsModelFromJson(json);

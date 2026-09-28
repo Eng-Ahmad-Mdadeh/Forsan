@@ -14,12 +14,12 @@ OrderStepsModel _$OrderStepsModelFromJson(Map<String, dynamic> json) =>
           .toList(),
       version: (json['version'] as num?)?.toInt(),
       agreements: (json['agreements'] as List<dynamic>?)
-          ?.map((e) => Agreement.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => AgreementModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Agreement _$AgreementFromJson(Map<String, dynamic> json) =>
-    Agreement(id: json['id'] as String?, label: json['label'] as String?);
+AgreementModel _$AgreementModelFromJson(Map<String, dynamic> json) =>
+    AgreementModel(id: json['id'] as String?, label: json['label'] as String?);
 
 StepModel _$StepModelFromJson(Map<String, dynamic> json) => StepModel(
   title: json['title'] as String?,

@@ -114,14 +114,13 @@ class ReviewStep extends StatelessWidget {
           ),
         ],
       ),
-      _ReviewConfirmationCard(
-        key: const Key('review_information_confirmation'),
-        text: context.loc.new_order_information_confirmation,
-      ),
-      _ReviewConfirmationCard(
-        key: const Key('review_terms_confirmation'),
-        text: context.loc.new_order_terms_confirmation,
-      ),
+      for (var index = 0; index < agreement.length; index++)
+        _ReviewConfirmationCard(
+          key: ValueKey(
+            'review_agreement_${agreement[index].id ?? index.toString()}',
+          ),
+          text: agreement[index].label ?? '',
+        ),
     ];
 
     return ListView.separated(
