@@ -124,7 +124,7 @@ class ApplicantStep extends StatelessWidget {
   }
 
   Widget _buildDelegationSection(BuildContext context, Section section) {
-    final field = section.fields?.firstOrNull;
+    final fields = section.fields ?? const <SectionField>[];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,70 +157,79 @@ class ApplicantStep extends StatelessWidget {
           maxLines: 2,
         ),
         SizedBox(height: AppHeight.h8),
-        Container(
-          height: AppHeight.h60,
-          padding: EdgeInsets.all(AppPaddingWidth.p6),
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(AppRadius.r10),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.homeSoftShadow.withOpacity(0.05),
-                blurRadius: 12,
-                offset: Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: AppWidth.w45,
-                height: AppHeight.h45,
-                decoration: BoxDecoration(
-                  color: AppColors.secondaryLight,
-                  borderRadius: BorderRadius.circular(AppRadius.r12),
-                ),
-                child: Icon(
-                  Icons.add_moderator_outlined,
-                  color: AppColors.secondary,
-                  size: AppSize.s24,
-                ),
-              ),
-              SizedBox(width: AppWidth.w12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: AppHeight.h6),
-                    BodyTitle(
-                      text: field?.label?.trim() ??
-                          context.loc.new_order_has_representative_in_syria,
-                      color: AppColors.mainText,
-                      fontSize: AppFontSize.s12,
-                      fontWeight: AppFontWeight.bold,
-                      maxLines: 2,
-                    ),
-                    SizedBox(height: AppHeight.h6),
-                    BodyTitle(
-                      text: field?.hint?.trim() ??
-                          context.loc
-                              .new_order_representative_details_description,
-                      color: AppColors.secondaryText,
-                      fontSize: AppFontSize.s10,
-                      fontWeight: AppFontWeight.regular,
-                      maxLines: 2,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: AppWidth.w8),
-              CustomCheckBox(),
-            ],
-          ),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: fields.length,
+          itemBuilder: (_, index) =>
+              _buildDelegationField(context, fields[index]),
+          separatorBuilder: (_, _) => SizedBox(height: AppHeight.h8),
         ),
         SizedBox(height: AppHeight.h100),
       ],
     );
   }
 
+  Widget _buildDelegationField(BuildContext context, SectionField field) {
+    return Container(
+      height: AppHeight.h60,
+      padding: EdgeInsets.all(AppPaddingWidth.p6),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppRadius.r10),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.homeSoftShadow.withOpacity(0.05),
+            blurRadius: 12,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: AppWidth.w45,
+            height: AppHeight.h45,
+            decoration: BoxDecoration(
+              color: AppColors.secondaryLight,
+              borderRadius: BorderRadius.circular(AppRadius.r12),
+            ),
+            child: Icon(
+              Icons.add_moderator_outlined,
+              color: AppColors.secondary,
+              size: AppSize.s24,
+            ),
+          ),
+          SizedBox(width: AppWidth.w12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: AppHeight.h6),
+                BodyTitle(
+                  text: field.label?.trim() ??
+                      context.loc.new_order_has_representative_in_syria,
+                  color: AppColors.mainText,
+                  fontSize: AppFontSize.s12,
+                  fontWeight: AppFontWeight.bold,
+                  maxLines: 2,
+                ),
+                SizedBox(height: AppHeight.h6),
+                BodyTitle(
+                  text: field.hint?.trim() ??
+                      context.loc.new_order_representative_details_description,
+                  color: AppColors.secondaryText,
+                  fontSize: AppFontSize.s10,
+                  fontWeight: AppFontWeight.regular,
+                  maxLines: 2,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: AppWidth.w8),
+          CustomCheckBox(),
+        ],
+      ),
+    );
+  }
 }
