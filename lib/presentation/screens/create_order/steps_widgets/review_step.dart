@@ -29,8 +29,17 @@ class ReviewStep extends StatelessWidget {
     final state = context.watch<NewOrderCubit>().state;
     final sections = step.sections ?? const <Section>[];
     final reviewSection = sections.isEmpty ? null : sections.first;
-    final title = reviewSection?.title?.trim() ?? step.title?.trim() ?? '';
-    final description = reviewSection?.description?.trim() ?? '';
+    final sectionTitle = reviewSection?.title?.trim() ?? '';
+    final title = sectionTitle.isNotEmpty
+        ? sectionTitle
+        : step.title?.trim() ?? '';
+    final informationLabel = reviewSection?.fields
+        ?.where((field) => field.type == 'info')
+        .map((field) => field.label?.trim() ?? '')
+        .firstWhere((label) => label.isNotEmpty, orElse: () => '') ?? '';
+    final description = informationLabel.isNotEmpty
+        ? informationLabel
+        : reviewSection?.description?.trim() ?? '';
     final cards = <Widget>[
       if (title.isNotEmpty || description.isNotEmpty)
         _ReviewIntroduction(title: title, description: description),
