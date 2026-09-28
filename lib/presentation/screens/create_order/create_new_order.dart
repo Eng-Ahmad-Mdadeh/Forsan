@@ -77,7 +77,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
 
   void _loadOrderSteps() {
     context.read<OrderStepsBloc>().add(
-      OrderStepsEvent(CreateOrderEntity(serviceSlug: widget.serviceSlug)),
+      OrderStepsEvent(CreateOrderEntity(slug: widget.serviceSlug)),
     );
   }
 

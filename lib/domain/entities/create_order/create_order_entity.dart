@@ -4,31 +4,36 @@ import 'package:file_picker/file_picker.dart';
 class CreateOrderEntity extends Equatable {
   const CreateOrderEntity({
     this.serviceSlug,
+    this.slug,
     this.formValues = const {},
     this.currentStep = 0,
     this.requirementDocuments = const {},
   });
 
   final String? serviceSlug;
+  final String? slug;
   final Map<String, dynamic> formValues;
   final int currentStep;
   final Map<String, PlatformFile> requirementDocuments;
 
   Map<String, dynamic> toJson() {
     return {
-      if (serviceSlug != null && serviceSlug!.isNotEmpty) 'slug': serviceSlug,
+      if (slug != null && slug!.isNotEmpty) 'slug': slug,
+      if (serviceSlug != null && serviceSlug!.isNotEmpty) 'serviceSlug': serviceSlug,
       if (formValues.isNotEmpty) 'formData': formValues,
     };
   }
 
   CreateOrderEntity copyWith({
     String? serviceSlug,
+    String? slug,
     Map<String, dynamic>? formValues,
     int? currentStep,
     Map<String, PlatformFile>? requirementDocuments,
   }) {
     return CreateOrderEntity(
       serviceSlug: serviceSlug ?? this.serviceSlug,
+      slug: slug ?? this.slug,
       formValues: formValues ?? this.formValues,
       currentStep: currentStep ?? this.currentStep,
       requirementDocuments: requirementDocuments ?? this.requirementDocuments,
@@ -40,6 +45,7 @@ class CreateOrderEntity extends Equatable {
     serviceSlug,
     formValues,
     currentStep,
+    slug,
     requirementDocuments,
   ];
 }
