@@ -9,20 +9,21 @@ class NewOrderCubit extends Cubit<NewOrderState> {
   NewOrderCubit({
     FilePickerHelper? filePickerHelper,
     MediaPickerHelper? mediaPickerHelper,
-  })
-      : _filePickerHelper = filePickerHelper ?? FilePickerHelper(),
-        _mediaPickerHelper = mediaPickerHelper ?? MediaPickerHelper(),
-        super(const NewOrderState());
+  }) : _filePickerHelper = filePickerHelper ?? FilePickerHelper(),
+       _mediaPickerHelper = mediaPickerHelper ?? MediaPickerHelper(),
+       super(const NewOrderState());
 
   final FilePickerHelper _filePickerHelper;
   final MediaPickerHelper _mediaPickerHelper;
 
   static const int lastStep = 6;
 
+  void setOrderId(String? orderID) => emit(
+    state.copyWith(orderEntity: state.orderEntity.copyWith(orderId: orderID)),
+  );
+
   void changeStep(int step) {
-    if (step < 0 ||
-        step > lastStep ||
-        step == state.orderEntity.currentStep) {
+    if (step < 0 || step > lastStep || step == state.orderEntity.currentStep) {
       return;
     }
 

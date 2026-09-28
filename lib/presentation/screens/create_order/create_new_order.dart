@@ -148,6 +148,11 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                 contentType: ContentType.failure,
               );
             } else if (createOrderState is CreateOrderLoaded) {
+
+              context.read<NewOrderCubit>().setOrderId(
+                createOrderState.createOrderModel!.data!.id,
+              );
+
               Navigator.of(context, rootNavigator: true).pop();
 
               final currentStep = context
@@ -184,9 +189,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                         key: const Key('new_order_page_view'),
                         controller: _pageController,
                         physics: const NeverScrollableScrollPhysics(),
-                        onPageChanged: context
-                            .read<NewOrderCubit>()
-                            .changeStep,
+                        onPageChanged: context.read<NewOrderCubit>().changeStep,
                         children: [
                           EstablishmentTypeStep(
                             formKey: _stepFormKeys[0],
@@ -262,8 +265,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                           final currentStep = state.orderEntity.currentStep;
 
                           if (currentStep < _stepFormKeys.length &&
-                              !(_stepFormKeys[currentStep]
-                                      .currentState
+                              !(_stepFormKeys[currentStep].currentState
                                       ?.validate() ??
                                   false)) {
                             showCustomSnackBar(
