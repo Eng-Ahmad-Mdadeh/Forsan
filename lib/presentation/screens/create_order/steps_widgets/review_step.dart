@@ -182,7 +182,7 @@ class _ReviewConfirmationCard extends StatelessWidget {
         ],
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const CustomCheckBox(),
           SizedBox(width: AppWidth.w4),
