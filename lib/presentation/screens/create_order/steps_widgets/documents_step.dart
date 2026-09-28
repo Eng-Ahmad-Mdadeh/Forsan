@@ -4,25 +4,25 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
-import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/document_requirement_card.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/uploaded_document_card.dart';
+import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class DocumentsStep extends StatelessWidget {
-  const DocumentsStep({super.key});
+  const DocumentsStep({super.key, required this.step});
+
+  final StepModel step;
 
   Future<void> _pickDocuments(BuildContext context) async {
     final rejectedDocuments = await context.read<NewOrderCubit>().pickDocuments();
 
-    if (!context.mounted || rejectedDocuments == 0) {
-      return;
-    }
+    if (!context.mounted || rejectedDocuments == 0) return;
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -38,126 +38,182 @@ class DocumentsStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sections = step.sections ?? const <Section>[];
+
     return BlocBuilder<NewOrderCubit, NewOrderState>(
       buildWhen: (previous, current) => previous.documents != current.documents,
-      builder: (context, state) {
-        return SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppPaddingWidth.p16,
-            vertical: AppPaddingHeight.p8,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Iconsax.activity_outline,
-                    size: AppSize.s16,
-                    color: AppColors.secondary,
-                  ),
-                  SizedBox(width: AppWidth.w4),
-                  Expanded(
-                    child: SectionTitle(
-                      text: context.loc.new_order_documents_available_title,
-                      color: AppColors.primaryDark,
-                      fontSize: AppFontSize.s14,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: AppHeight.h8),
-              BodyTitle(
-                text:
-                    context.loc.new_order_documents_available_description,
-                color: AppColors.secondaryText,
-                fontSize: AppFontSize.s12,
-                fontWeight: AppFontWeight.regular,
-                maxLines: 2,
-              ),
-              SizedBox(height: AppHeight.h16),
-              DocumentRequirementCard(
-                title: context.loc.new_order_document_authorization,
-                availability: context.loc.new_order_document_if_available,
-                icon: Icons.add_moderator_outlined,
-              ),
-              SizedBox(height: AppHeight.h10),
-              DocumentRequirementCard(
-                title: context.loc.new_order_document_identity,
-                availability: context.loc.new_order_document_required_when_available,
-                icon: Icons.badge_outlined,
-              ),
-              SizedBox(height: AppHeight.h10),
-              DocumentRequirementCard(
-                title: context.loc.new_order_document_headquarters,
-                availability: context.loc.new_order_document_if_available,
-                icon: Icons.description_outlined,
-              ),
-              SizedBox(height: AppHeight.h24),
-              SectionTitle(
-                text: context.loc.new_order_attachments,
-                color: AppColors.mainText,
-                fontSize: AppFontSize.s14,
-                textAlign: TextAlign.right,
-              ),
-              DocumentSection(
-                image: null,
-                onTap: () => _pickDocuments(context),
-                paddingTop: AppPaddingHeight.p1,
-                uploadLabel: context.loc.new_order_upload_tap,
-                uploadHint: context.loc.new_order_upload_hint,
-              ),
-              if (state.documents.isNotEmpty) ...[
-                SizedBox(height: AppHeight.h20),
-                ...state.documents.map(
-                  (document) => Padding(
-                    padding: EdgeInsets.only(bottom: AppPaddingHeight.p16),
-                    child: UploadedDocumentCard(
-                      document: document,
-                      onRemove: () => context
-                          .read<NewOrderCubit>()
-                          .removeDocument(document),
-                    ),
-                  ),
-                ),
-              ],
-              SizedBox(height: AppHeight.h26),
-              SectionCard(
-                margin: EdgeInsets.zero,
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppPaddingWidth.p12,
-                  vertical: AppPaddingHeight.p10,
-                ),
-                borderRadius: BorderRadius.circular(AppRadius.r7),
-                backgroundColor: AppColors.goldBackGround,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.info_outline_rounded,
-                      color: AppColors.mainText,
-                      size: AppSize.s20,
-                    ),
-                    SizedBox(width: AppWidth.w8),
-                    Expanded(
-                      child: BodyTitle(
-                        text: 'تحفظ الملفات ضمن ملف الطلب وتستخدم فقط لأغراض دراسة وتنفيذ الخدمة.',
-                        color: AppColors.mainText,
-                        fontSize: AppFontSize.s12,
-                        fontWeight: AppFontWeight.regular,
-                        textAlign: TextAlign.start,
-                        maxLines: 2,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: AppHeight.h50),
-
-            ],
-          ),
-        );
-      },
+      builder: (context, state) => ListView.separated(
+        padding: EdgeInsets.fromLTRB(
+          AppPaddingWidth.p16,
+          AppPaddingHeight.p8,
+          AppPaddingWidth.p16,
+          AppPaddingHeight.p50,
+        ),
+        itemCount: sections.length,
+        separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
+        itemBuilder: (_, index) => _buildSection(
+          context,
+          sections[index],
+          state,
+        ),
+      ),
     );
   }
+
+  Widget _buildSection(
+    BuildContext context,
+    Section section,
+    NewOrderState state,
+  ) {
+    final title = section.title?.trim() ?? '';
+    final description = section.description?.trim() ?? '';
+    final fields = section.fields ?? const <SectionField>[];
+    final fileFields = fields.where((field) => field.type == 'file').toList();
+    final infoFields = fields.where((field) => field.type == 'info').toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (title.isNotEmpty) ...[
+          Row(
+            children: [
+              Icon(
+                Icons.file_upload_outlined,
+                size: AppSize.s16,
+                color: AppColors.secondary,
+              ),
+              SizedBox(width: AppWidth.w4),
+              Expanded(
+                child: SectionTitle(
+                  text: title,
+                  color: AppColors.primaryDark,
+                  fontSize: AppFontSize.s14,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: AppHeight.h8),
+        ],
+        if (description.isNotEmpty) ...[
+          BodyTitle(
+            text: description,
+            color: AppColors.secondaryText,
+            fontSize: AppFontSize.s12,
+            fontWeight: AppFontWeight.regular,
+            maxLines: 3,
+          ),
+          SizedBox(height: AppHeight.h16),
+        ],
+        for (var index = 0; index < fileFields.length; index++) ...[
+          DocumentRequirementCard(
+            title: fileFields[index].label?.trim() ?? '',
+            availability: fileFields[index].required == true
+                ? context.loc.new_order_document_required_when_available
+                : context.loc.new_order_document_if_available,
+            icon: _fileIcon(fileFields[index].id, index),
+          ),
+          if (index < fileFields.length - 1) SizedBox(height: AppHeight.h10),
+        ],
+        if (fileFields.isNotEmpty) ...[
+          SizedBox(height: AppHeight.h24),
+          SectionTitle(
+            text: context.loc.new_order_attachments,
+            color: AppColors.mainText,
+            fontSize: AppFontSize.s14,
+            textAlign: TextAlign.start,
+          ),
+          DocumentSection(
+            image: null,
+            onTap: () => _pickDocuments(context),
+            paddingTop: AppPaddingHeight.p1,
+            uploadLabel: context.loc.new_order_upload_tap,
+            uploadHint: _uploadHint(context, fileFields),
+          ),
+          if (state.documents.isNotEmpty) ...[
+            SizedBox(height: AppHeight.h20),
+            for (final document in state.documents)
+              Padding(
+                padding: EdgeInsets.only(bottom: AppPaddingHeight.p16),
+                child: UploadedDocumentCard(
+                  document: document,
+                  onRemove: () => context
+                      .read<NewOrderCubit>()
+                      .removeDocument(document),
+                ),
+              ),
+          ],
+        ],
+        for (final field in infoFields) ...[
+          SizedBox(height: AppHeight.h26),
+          _buildInfo(field.label?.trim() ?? ''),
+        ],
+      ],
+    );
+  }
+
+  IconData _fileIcon(String? fieldId, int index) {
+    switch (fieldId) {
+      case 'authorizationLetter':
+        return Icons.add_moderator_outlined;
+      case 'idCopy':
+        return Icons.badge_outlined;
+      case 'companyCertificate':
+        return Icons.description_outlined;
+      default:
+        const icons = <IconData>[
+          Icons.description_outlined,
+          Icons.badge_outlined,
+          Icons.insert_drive_file_outlined,
+        ];
+        return icons[index % icons.length];
+    }
+  }
+
+  String _uploadHint(BuildContext context, List<SectionField> fields) {
+    final validation = fields.first.validation;
+    final maxSize = validation?.maxSize;
+    final acceptedTypes = validation?.acceptedTypes ?? const <String>[];
+    if (maxSize == null || acceptedTypes.isEmpty) {
+      return context.loc.new_order_upload_hint;
+    }
+
+    final sizeInMegabytes = maxSize / (1024 * 1024);
+    final formattedSize = sizeInMegabytes == sizeInMegabytes.roundToDouble()
+        ? sizeInMegabytes.toInt().toString()
+        : sizeInMegabytes.toStringAsFixed(1);
+    final extensions = acceptedTypes.map((type) => type.toUpperCase()).join(', ');
+
+    return '$formattedSize MB - $extensions';
+  }
+
+  Widget _buildInfo(String text) => SectionCard(
+        margin: EdgeInsets.zero,
+        padding: EdgeInsets.symmetric(
+          horizontal: AppPaddingWidth.p12,
+          vertical: AppPaddingHeight.p10,
+        ),
+        borderRadius: BorderRadius.circular(AppRadius.r7),
+        backgroundColor: AppColors.goldBackGround,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.info_outline_rounded,
+              color: AppColors.mainText,
+              size: AppSize.s20,
+            ),
+            SizedBox(width: AppWidth.w8),
+            Expanded(
+              child: BodyTitle(
+                text: text,
+                color: AppColors.mainText,
+                fontSize: AppFontSize.s12,
+                fontWeight: AppFontWeight.regular,
+                textAlign: TextAlign.start,
+                maxLines: 3,
+              ),
+            ),
+          ],
+        ),
+      );
 }

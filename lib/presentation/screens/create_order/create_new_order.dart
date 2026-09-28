@@ -180,7 +180,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                               .read<NewOrderCubit>()
                               .updateFormValue,
                         ),
-                        DocumentsStep(),
+                        DocumentsStep(step: steps[5]),
                         ReviewStep(
                           onEditStep: (step) => _goToStep(context, step),
                         ),
