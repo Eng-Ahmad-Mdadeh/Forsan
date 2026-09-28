@@ -5,12 +5,13 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_info_card.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_section_header.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/document_requirement_card.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/uploaded_document_card.dart';
 import 'package:forsan/presentation/widgets/document/document_section.dart';
-import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
@@ -74,36 +75,11 @@ class DocumentsStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (title.isNotEmpty) ...[
-          Row(
-            children: [
-              Icon(
-                Icons.file_upload_outlined,
-                size: AppSize.s16,
-                color: AppColors.secondary,
-              ),
-              SizedBox(width: AppWidth.w4),
-              Expanded(
-                child: SectionTitle(
-                  text: title,
-                  color: AppColors.primaryDark,
-                  fontSize: AppFontSize.s14,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: AppHeight.h8),
-        ],
-        if (description.isNotEmpty) ...[
-          BodyTitle(
-            text: description,
-            color: AppColors.secondaryText,
-            fontSize: AppFontSize.s12,
-            fontWeight: AppFontWeight.regular,
-            maxLines: 3,
-          ),
-          SizedBox(height: AppHeight.h16),
-        ],
+        OrderSectionHeader(
+          icon: Icons.file_upload_outlined,
+          title: title,
+          description: description,
+        ),
         for (var index = 0; index < fileFields.length; index++) ...[
           DocumentRequirementCard(
             title: fileFields[index].label?.trim() ?? '',
@@ -145,7 +121,12 @@ class DocumentsStep extends StatelessWidget {
         ],
         for (final field in infoFields) ...[
           SizedBox(height: AppHeight.h26),
-          _buildInfo(field.label?.trim() ?? ''),
+          OrderInfoCard(
+            text: field.label?.trim() ?? '',
+            backgroundColor: AppColors.goldBackGround,
+            textColor: AppColors.mainText,
+            iconColor: AppColors.mainText,
+          ),
         ],
       ],
     );
@@ -186,34 +167,4 @@ class DocumentsStep extends StatelessWidget {
     return '$formattedSize MB - $extensions';
   }
 
-  Widget _buildInfo(String text) => SectionCard(
-        margin: EdgeInsets.zero,
-        padding: EdgeInsets.symmetric(
-          horizontal: AppPaddingWidth.p12,
-          vertical: AppPaddingHeight.p10,
-        ),
-        borderRadius: BorderRadius.circular(AppRadius.r7),
-        backgroundColor: AppColors.goldBackGround,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.info_outline_rounded,
-              color: AppColors.mainText,
-              size: AppSize.s20,
-            ),
-            SizedBox(width: AppWidth.w8),
-            Expanded(
-              child: BodyTitle(
-                text: text,
-                color: AppColors.mainText,
-                fontSize: AppFontSize.s12,
-                fontWeight: AppFontWeight.regular,
-                textAlign: TextAlign.start,
-                maxLines: 3,
-              ),
-            ),
-          ],
-        ),
-      );
 }

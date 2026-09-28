@@ -3,9 +3,10 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
-import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_form_dropdown.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_form_input_field.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_section_header.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
-import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -47,36 +48,11 @@ class ActivityStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (title.isNotEmpty) ...[
-          Row(
-            children: [
-              Icon(
-                Iconsax.activity_outline,
-                size: AppSize.s16,
-                color: AppColors.secondary,
-              ),
-              SizedBox(width: AppWidth.w4),
-              Expanded(
-                child: SectionTitle(
-                  text: title,
-                  color: AppColors.primaryDark,
-                  fontSize: AppFontSize.s14,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: AppHeight.h8),
-        ],
-        if (description.isNotEmpty) ...[
-          BodyTitle(
-            text: description,
-            color: AppColors.secondaryText,
-            fontSize: AppFontSize.s12,
-            fontWeight: AppFontWeight.regular,
-            maxLines: 3,
-          ),
-          SizedBox(height: AppHeight.h8),
-        ],
+        OrderSectionHeader(
+          icon: Iconsax.activity_outline,
+          title: title,
+          description: description,
+        ),
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -91,10 +67,15 @@ class ActivityStep extends StatelessWidget {
   Widget _buildField(SectionField field) {
     switch (field.type) {
       case 'select':
-        return _dropdown(
+        return OrderFormDropdown<dynamic>(
           label: field.label,
-          placeholder: field.placeholder,
-          options: field.options ?? const <FluffyOption>[],
+          hint: field.placeholder,
+          options: (field.options ?? const <FluffyOption>[])
+              .map((option) => OrderDropdownOption(
+                    label: option.label?.trim() ?? '',
+                    value: option.value,
+                  ))
+              .toList(),
           value: selectedValues[field.id],
           onChanged: (value) {
             if (field.id != null) onFieldChanged(field.id!, value);
@@ -103,12 +84,12 @@ class ActivityStep extends StatelessWidget {
       case 'repeater':
         return _buildRepeater(field);
       default:
-        return _inputField(
+        return OrderFormInputField(
           key: ValueKey(field.id),
           type: field.type,
           label: field.label,
-          placeholder: field.placeholder,
-          isRequired: field.required,
+          hint: field.placeholder,
+          isRequired: field.required ?? false,
           value: selectedValues[field.id],
           maxLength: field.validation?.max,
           onChanged: (value) {
@@ -243,23 +224,26 @@ class ActivityStep extends StatelessWidget {
     }
 
     if (field.type == 'select') {
-      return _dropdown(
+      return OrderFormDropdown<dynamic>(
         label: showLabel ? field.label : null,
-        placeholder: field.placeholder,
+        hint: field.placeholder,
         options: (field.options ?? const <PurpleOption>[])
-            .map((option) => _Option(option.label, option.value))
+            .map((option) => OrderDropdownOption(
+                  label: option.label?.trim() ?? '',
+                  value: option.value,
+                ))
             .toList(),
         value: entry[field.id],
         onChanged: update,
       );
     }
 
-    return _inputField(
+    return OrderFormInputField(
       key: ValueKey('$repeaterId-$index-${field.id}'),
       type: field.type,
       label: showLabel ? field.label : null,
-      placeholder: field.placeholder,
-      isRequired: field.required,
+      hint: field.placeholder,
+      isRequired: field.required ?? false,
       value: entry[field.id],
       maxLength:
           field.validation?.max ?? (field.type == 'textarea' ? 100 : null),
@@ -267,86 +251,4 @@ class ActivityStep extends StatelessWidget {
     );
   }
 
-  Widget _inputField({
-    required Key key,
-    required String? type,
-    required String? label,
-    required String? placeholder,
-    required bool? isRequired,
-    required dynamic value,
-    required int? maxLength,
-    required ValueChanged<String> onChanged,
-  }) {
-    final isTextArea = type == 'textarea';
-
-    return CustomInputField(
-      key: key,
-      title: label?.trim(),
-      hintText: placeholder?.trim() ?? '',
-      initialValue: value?.toString(),
-      req: isRequired ?? false,
-      fontSize: AppFontSize.s16,
-      textInputType: type == 'number' ? TextInputType.number : TextInputType.text,
-      backgroundColor: AppColors.white,
-      maxLines: isTextArea ? 4 : 1,
-      maxLength: maxLength,
-      isExpanded: isTextArea,
-      onChanged: onChanged,
-    );
-  }
-
-  Widget _dropdown({
-    required String? label,
-    required String? placeholder,
-    required List<dynamic> options,
-    required dynamic value,
-    required ValueChanged<dynamic> onChanged,
-  }) {
-    String optionLabel(dynamic option) => option is FluffyOption
-        ? option.label?.trim() ?? ''
-        : (option as _Option).label?.trim() ?? '';
-    dynamic optionValue(dynamic option) =>
-        option is FluffyOption ? option.value : (option as _Option).value;
-    final items = options.map(optionLabel).where((item) => item.isNotEmpty).toList();
-    final selected = options.where((option) => optionValue(option) == value);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        BodyTitle(
-          text: label?.trim() ?? '',
-          textAlign: TextAlign.start,
-          color: AppColors.mainText,
-          fontSize: AppFontSize.s14,
-          fontWeight: AppFontWeight.medium,
-        ),
-        SizedBox(height: AppHeight.h4),
-        CustomDropDownWidget(
-          items: items,
-          isStringList: true,
-          initialItem: selected.isEmpty ? null : optionLabel(selected.first),
-          hintText: placeholder?.trim() ?? '',
-          color: AppColors.white,
-          height: AppHeight.h50,
-          borderRadius: AppRadius.r7,
-          closedBorder: const Border.fromBorderSide(
-            BorderSide(color: AppColors.greyDivider, width: .7),
-          ),
-          onChanged: (selectedLabel) {
-            final match = options.where(
-              (option) => optionLabel(option) == selectedLabel,
-            );
-            if (match.isNotEmpty) onChanged(optionValue(match.first));
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class _Option {
-  const _Option(this.label, this.value);
-
-  final String? label;
-  final String? value;
 }

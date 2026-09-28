@@ -4,11 +4,12 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
-import 'package:forsan/presentation/widgets/custom_drop_down_widget.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_form_dropdown.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_form_input_field.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_info_card.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_section_header.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
-import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
-import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 import 'package:icons_plus/icons_plus.dart';
 
@@ -50,38 +51,13 @@ class OwnershipStructureStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (title.isNotEmpty) ...[
-          Row(
-            children: [
-              Icon(
-                section.id == 'partners-list'
-                    ? Iconsax.user_bold
-                    : Icons.key_outlined,
-                size: AppSize.s16,
-                color: AppColors.secondary,
-              ),
-              SizedBox(width: AppWidth.w4),
-              Expanded(
-                child: SectionTitle(
-                  text: title,
-                  color: AppColors.primaryDark,
-                  fontSize: AppFontSize.s14,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: AppHeight.h8),
-        ],
-        if (description.isNotEmpty) ...[
-          BodyTitle(
-            text: description,
-            color: AppColors.secondaryText,
-            fontSize: AppFontSize.s12,
-            fontWeight: AppFontWeight.regular,
-            maxLines: 3,
-          ),
-          SizedBox(height: AppHeight.h8),
-        ],
+        OrderSectionHeader(
+          icon: section.id == 'partners-list'
+              ? Iconsax.user_bold
+              : Icons.key_outlined,
+          title: title,
+          description: description,
+        ),
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -110,11 +86,15 @@ class OwnershipStructureStep extends StatelessWidget {
   Widget _buildField(BuildContext context, SectionField field) {
     switch (field.type) {
       case 'select':
-        return _dropdown(
-          context,
+        return OrderFormDropdown<dynamic>(
           label: field.label,
-          placeholder: field.placeholder,
-          options: field.options ?? const <FluffyOption>[],
+          hint: field.placeholder,
+          options: (field.options ?? const <FluffyOption>[])
+              .map((option) => OrderDropdownOption(
+                    label: option.label?.trim() ?? '',
+                    value: option.value,
+                  ))
+              .toList(),
           value: selectedValues[field.id],
           onChanged: (value) {
             if (field.id != null) onFieldChanged(field.id!, value);
@@ -123,19 +103,20 @@ class OwnershipStructureStep extends StatelessWidget {
       case 'repeater':
         return _buildRepeater(context, field);
       case 'info':
-        return _buildInfo(field.label?.trim() ?? '');
+        return OrderInfoCard(
+          text: field.label?.trim() ?? '',
+          backgroundColor: AppColors.goldBackGround,
+          textColor: AppColors.mainText,
+          iconColor: AppColors.mainText,
+        );
       default:
-        return CustomInputField(
+        return OrderFormInputField(
           key: ValueKey(field.id),
-          title: field.label?.trim(),
-          hintText: field.placeholder?.trim() ?? '',
-          initialValue: selectedValues[field.id]?.toString(),
-          req: field.required ?? false,
-          fontSize: AppFontSize.s16,
-          textInputType: field.type == 'number'
-              ? TextInputType.number
-              : TextInputType.text,
-          backgroundColor: AppColors.white,
+          type: field.type,
+          label: field.label,
+          hint: field.placeholder,
+          value: selectedValues[field.id],
+          isRequired: field.required ?? false,
           onChanged: (value) {
             if (field.id != null) onFieldChanged(field.id!, value);
           },
@@ -239,108 +220,28 @@ class OwnershipStructureStep extends StatelessWidget {
     }
 
     if (field.type == 'select') {
-      return _dropdown(
-        context,
+      return OrderFormDropdown<dynamic>(
         label: field.label,
-        placeholder: field.placeholder,
+        hint: field.placeholder,
         options: (field.options ?? const <PurpleOption>[])
-            .map((option) => _Option(option.label, option.value))
+            .map((option) => OrderDropdownOption(
+                  label: option.label?.trim() ?? '',
+                  value: option.value,
+                ))
             .toList(),
         value: entry[field.id],
         onChanged: update,
       );
     }
-    return CustomInputField(
+    return OrderFormInputField(
       key: ValueKey('$repeaterId-$index-${field.id}'),
-      title: field.label?.trim(),
-      hintText: field.placeholder?.trim() ?? '',
-      initialValue: entry[field.id]?.toString(),
-      req: field.required ?? false,
-      fontSize: AppFontSize.s16,
-      textInputType: field.type == 'number' ? TextInputType.number : TextInputType.text,
-      backgroundColor: AppColors.white,
+      type: field.type,
+      label: field.label,
+      hint: field.placeholder,
+      value: entry[field.id],
+      isRequired: field.required ?? false,
       onChanged: update,
     );
   }
 
-  Widget _dropdown(
-    BuildContext context, {
-    required String? label,
-    required String? placeholder,
-    required List<dynamic> options,
-    required dynamic value,
-    required ValueChanged<dynamic> onChanged,
-  }) {
-    String optionLabel(dynamic option) => option is FluffyOption
-        ? option.label?.trim() ?? ''
-        : (option as _Option).label?.trim() ?? '';
-    dynamic optionValue(dynamic option) =>
-        option is FluffyOption ? option.value : (option as _Option).value;
-    final items = options.map(optionLabel).where((item) => item.isNotEmpty).toList();
-    final selected = options.where((option) => optionValue(option) == value);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        BodyTitle(
-          text: label?.trim() ?? '',
-          textAlign: TextAlign.start,
-          color: AppColors.mainText,
-          fontSize: AppFontSize.s14,
-          fontWeight: AppFontWeight.medium,
-        ),
-        SizedBox(height: AppHeight.h4),
-        CustomDropDownWidget(
-          items: items,
-          isStringList: true,
-          initialItem: selected.isEmpty ? null : optionLabel(selected.first),
-          hintText: placeholder?.trim().isNotEmpty == true
-              ? placeholder!.trim()
-              : context.loc.new_order_select_hint,
-          color: AppColors.white,
-          height: AppHeight.h50,
-          borderRadius: AppRadius.r7,
-          closedBorder: const Border.fromBorderSide(
-            BorderSide(color: AppColors.greyDivider, width: .7),
-          ),
-          onChanged: (selectedLabel) {
-            final match = options.where((option) => optionLabel(option) == selectedLabel);
-            if (match.isNotEmpty) onChanged(optionValue(match.first));
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildInfo(String text) => SectionCard(
-        margin: EdgeInsets.zero,
-        padding: EdgeInsets.symmetric(
-          horizontal: AppPaddingWidth.p12,
-          vertical: AppPaddingHeight.p10,
-        ),
-        borderRadius: BorderRadius.circular(AppRadius.r7),
-        backgroundColor: AppColors.light,
-        child: Row(
-          children: [
-            Icon(Icons.info_outline_rounded, color: AppColors.primaryDark, size: AppSize.s20),
-            SizedBox(width: AppWidth.w8),
-            Expanded(
-              child: BodyTitle(
-                text: text,
-                color: AppColors.secondaryText,
-                fontSize: AppFontSize.s12,
-                fontWeight: AppFontWeight.regular,
-                textAlign: TextAlign.start,
-                maxLines: 3,
-              ),
-            ),
-          ],
-        ),
-      );
-}
-
-class _Option {
-  const _Option(this.label, this.value);
-  final String? label;
-  final String? value;
 }
