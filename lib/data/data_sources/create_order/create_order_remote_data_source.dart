@@ -24,7 +24,8 @@ class CreateOrderRemoteDataSource extends BaseRemoteDataSource<CreateOrderModel>
     return postData(
       endpoint: ApiEndpoints.uploadFile(id),
       dataMayBeAtRoot: true,
-      data: data,
+      data: data.toJson(),
+      files: data.requirementDocuments,
       fromJsonT: (json) => CreateOrderModel.fromJson(json as Map<String, dynamic>),
     );
   }
