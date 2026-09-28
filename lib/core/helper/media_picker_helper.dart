@@ -78,6 +78,11 @@ class MediaPickerHelper {
     }
   }
   Future<String?> pickImage(BuildContext context) async {
+    final image = await pickImageFile(context);
+    return image?.path;
+  }
+
+  Future<XFile?> pickImageFile(BuildContext context) async {
     final result = await showModalBottomSheet<String>(
       backgroundColor: AppColors.white,
       context: context,
@@ -110,9 +115,11 @@ class MediaPickerHelper {
     );
 
     if (result == 'camera') {
-      return await pickImageFromCamera();
+      final path = await pickImageFromCamera();
+      return path == null ? null : XFile(path);
     } else if (result == 'gallery') {
-      return await pickImageFromGallery();
+      final path = await pickImageFromGallery();
+      return path == null ? null : XFile(path);
     }
     return null;
   }

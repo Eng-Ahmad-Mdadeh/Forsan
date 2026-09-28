@@ -29,10 +29,31 @@ class _DocumentsStepState extends State<DocumentsStep> {
   Future<void> _pickDocument(
     BuildContext context,
     String requirementId,
+    List<String> acceptedTypes,
   ) async {
-    final rejectedDocuments = await context
-        .read<NewOrderCubit>()
-        .pickDocumentForRequirement(requirementId);
+    final normalizedTypes = acceptedTypes
+        .map((type) => type.toLowerCase())
+        .toSet();
+    final acceptsPdf = normalizedTypes.contains('pdf');
+    final acceptsImages = normalizedTypes.any(
+      (type) => const {'jpg', 'jpeg', 'png'}.contains(type),
+    );
+    final source = acceptsPdf && acceptsImages
+        ? await _selectDocumentSource(context)
+        : acceptsImages
+        ? _DocumentSource.image
+        : _DocumentSource.file;
+    if (!context.mounted || source == null) return;
+
+    final cubit = context.read<NewOrderCubit>();
+    final rejectedDocuments = source == _DocumentSource.image
+        ? await cubit.pickImageForRequirement(context, requirementId)
+        : await cubit.pickDocumentForRequirement(
+            requirementId,
+            allowedExtensions: acceptsPdf
+                ? const ['pdf']
+                : acceptedTypes,
+          );
 
     if (!context.mounted || rejectedDocuments == 0) return;
 
@@ -47,6 +68,35 @@ class _DocumentsStepState extends State<DocumentsStep> {
       ),
     );
   }
+
+  Future<_DocumentSource?> _selectDocumentSource(
+    BuildContext context,
+  ) => showModalBottomSheet<_DocumentSource>(
+    context: context,
+    backgroundColor: AppColors.white,
+    builder: (context) => SafeArea(
+      child: Wrap(
+        children: [
+          ListTile(
+            leading: const Icon(
+              Icons.insert_drive_file_outlined,
+              color: AppColors.primary,
+            ),
+            title: BodyTitle(text: context.loc.documents),
+            onTap: () => Navigator.pop(context, _DocumentSource.file),
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.image_outlined,
+              color: AppColors.primary,
+            ),
+            title: BodyTitle(text: context.loc.image),
+            onTap: () => Navigator.pop(context, _DocumentSource.image),
+          ),
+        ],
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +175,8 @@ class _DocumentsStepState extends State<DocumentsStep> {
         ? field.id!.trim()
         : '${field.label ?? 'document'}-$index';
     final document = state.orderEntity.requirementDocuments[requirementId];
+    final acceptedTypes = field.validation?.acceptedTypes ??
+        const <String>['pdf', 'jpg', 'png'];
     final isExpanded = _expandedRequirementId == requirementId;
 
     return Column(
@@ -152,7 +204,11 @@ class _DocumentsStepState extends State<DocumentsStep> {
           SizedBox(height: AppHeight.h10),
           DocumentSection(
             image: null,
-            onTap: () => _pickDocument(context, requirementId),
+            onTap: () => _pickDocument(
+              context,
+              requirementId,
+              acceptedTypes,
+            ),
             paddingTop: AppPaddingHeight.p1,
             uploadLabel: context.loc.new_order_upload_tap,
             uploadHint: _uploadHint(context, [field]),
@@ -199,3 +255,5 @@ class _DocumentsStepState extends State<DocumentsStep> {
     return '$formattedSize MB - $extensions';
   }
 }
+
+enum _DocumentSource { file, image }
