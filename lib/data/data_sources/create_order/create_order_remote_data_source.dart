@@ -28,15 +28,15 @@ class CreateOrderRemoteDataSource
     CreateOrderEntity data,
   ) {
 
-    // final List<Map<String, dynamic>> files = data.requirementDocuments.entries
-    //     .where((entry) => entry.value.path != null)
-    //     .map((entry) => {'field_name': entry.key, 'path': entry.value.path!})
-    //     .toList();
+    final List<Map<String, dynamic>> files = data.requirementDocuments.entries
+        .where((entry) => entry.value.path != null)
+        .map((entry) => {'field_name': entry.key, 'path': entry.value.path!})
+        .toList();
 
     return postData(
       endpoint: ApiEndpoints.uploadFile(data.orderId!),
       dataMayBeAtRoot: true,
-      files: data.requirementDocuments,
+      files: files,
     );
   }
 }
