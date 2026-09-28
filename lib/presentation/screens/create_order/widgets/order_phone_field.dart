@@ -14,11 +14,15 @@ class OrderPhoneField extends StatefulWidget {
     required this.label,
     required this.hint,
     this.initialCountryCode = 'SY',
+    this.value,
+    this.onChanged,
   });
 
   final String label;
   final String hint;
   final String initialCountryCode;
+  final String? value;
+  final ValueChanged<String>? onChanged;
 
   @override
   State<OrderPhoneField> createState() => _OrderPhoneFieldState();
@@ -57,6 +61,8 @@ class _OrderPhoneFieldState extends State<OrderPhoneField> {
             cursorHeight: AppHeight.h20,
             fontSize: AppFontSize.s16,
             hintText: widget.hint,
+            initialValue: widget.value,
+            onChanged: widget.onChanged,
             hintColor: AppColors.grey,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             contentPaddingTop: 0,
