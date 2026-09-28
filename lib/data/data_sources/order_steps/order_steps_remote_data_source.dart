@@ -13,7 +13,7 @@ class OrderStepsRemoteDataSource extends BaseRemoteDataSource<OrderStepsModel> {
 
   Future<Either<AppException, BaseModel<OrderStepsModel>?>> getOrderSteps(CreateOrderEntity entity) {
     return fetchData(
-      endpoint: ApiEndpoints.orderSteps(entity.serviceSlug!),
+      endpoint: ApiEndpoints.orderSteps(entity.slug!),
       dataMayBeAtRoot: true,
       fromJsonT: (json) => OrderStepsModel.fromJson(json as Map<String, dynamic>),
     );
