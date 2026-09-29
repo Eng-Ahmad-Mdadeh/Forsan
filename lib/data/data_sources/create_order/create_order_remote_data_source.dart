@@ -29,6 +29,7 @@ class CreateOrderRemoteDataSource extends BaseRemoteDataSource<CreateOrderModel>
     return patchData(
       endpoint: ApiEndpoints.orderDetails(data.orderId!),
       dataMayBeAtRoot: true,
+      isFormData: false,
       data: data.toUpdateJson(),
       fromJsonT: (json) =>
           CreateOrderModel.fromJson(json as Map<String, dynamic>),
