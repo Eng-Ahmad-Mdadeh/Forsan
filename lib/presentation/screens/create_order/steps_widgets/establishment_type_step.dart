@@ -26,9 +26,7 @@ class EstablishmentTypeStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      // The draft is loaded after this step is first rendered. Recreate only
-      // the option fields when that map instance changes so FormField does not
-      // retain the empty value from its initial state.
+
       child: KeyedSubtree(
         key: ObjectKey(selectedValues),
         child: ListView.separated(
