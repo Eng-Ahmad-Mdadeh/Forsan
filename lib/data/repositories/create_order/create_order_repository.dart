@@ -34,4 +34,15 @@ class CreateOrderRepository implements ICreateOrderRepository {
     );
   }
 
+  @override
+  Future<Either<AppException, BaseModel<CreateOrderModel>?>> submitOrder(CreateOrderEntity data) async {
+    final response = await _remoteDataSource.submitOrder(data);
+    return response.fold(
+          (l) async => Left(l),
+          (r) async {
+        return Right(r);
+      },
+    );
+  }
+
 }

@@ -3,6 +3,8 @@ import 'package:file_picker/file_picker.dart';
 
 class CreateOrderEntity extends Equatable {
   const CreateOrderEntity({
+    this.acknowledgesAccuracy,
+    this.acceptsTerms,
     this.serviceSlug,
     this.slug,
     this.orderId,
@@ -13,6 +15,8 @@ class CreateOrderEntity extends Equatable {
   });
 
   final String? serviceSlug;
+  final bool? acknowledgesAccuracy;
+  final bool? acceptsTerms;
   final String? slug;
   final String? orderId;
   final String? fileId;
@@ -24,8 +28,14 @@ class CreateOrderEntity extends Equatable {
 
   Map<String, dynamic> toUpdateJson() => {
     'formData': formValues,
-    // Form pages are zero-based locally, while the API numbers them from one.
     'currentStep': currentStep + 1,
+  };
+
+  Map<String, dynamic> toSubmitJson() => {
+    'agreements': {
+      'acknowledgesAccuracy': acknowledgesAccuracy,
+      'acceptsTerms': acceptsTerms,
+    },
   };
 
   CreateOrderEntity copyWith({
@@ -34,6 +44,8 @@ class CreateOrderEntity extends Equatable {
     Map<String, dynamic>? formValues,
     int? currentStep,
     String? orderId,
+    bool? acknowledgesAccuracy,
+    bool? acceptsTerms,
     String? fileId,
     Map<String, PlatformFile>? requirementDocuments,
   }) {
@@ -44,6 +56,8 @@ class CreateOrderEntity extends Equatable {
       fileId: fileId ?? this.fileId,
       formValues: formValues ?? this.formValues,
       currentStep: currentStep ?? this.currentStep,
+      acknowledgesAccuracy: acknowledgesAccuracy ?? this.acknowledgesAccuracy,
+      acceptsTerms: acceptsTerms ?? this.acceptsTerms,
       requirementDocuments: requirementDocuments ?? this.requirementDocuments,
     );
   }
@@ -57,5 +71,7 @@ class CreateOrderEntity extends Equatable {
     orderId,
     slug,
     requirementDocuments,
+    acknowledgesAccuracy,
+    acceptsTerms,
   ];
 }
