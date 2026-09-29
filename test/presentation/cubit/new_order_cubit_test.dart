@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:forsan/data/models/create_order/create_order_model.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 
 void main() {
@@ -48,6 +49,36 @@ void main() {
       expect(nextStepEntity.toUpdateJson(), {
         'formData': {'establishmentType': 'single_shareholder'},
         'currentStep': 2,
+      });
+
+      cubit.close();
+    });
+
+    test('restores the saved step and all values from an existing draft', () {
+      final cubit = NewOrderCubit();
+      final draft = CreateOrderModel.fromJson({
+        'id': 'draft-id',
+        'serviceSlug': 'business-formation',
+        'currentStep': 2,
+        'formData': {
+          'establishmentType': 'single_shareholder',
+          'englishName': 'Forsan',
+          'partners': [
+            {'fullName': 'Ahmad'},
+          ],
+        },
+      });
+
+      cubit.initializeDraft(draft);
+
+      expect(cubit.state.orderEntity.orderId, 'draft-id');
+      expect(cubit.state.orderEntity.currentStep, 1);
+      expect(cubit.state.orderEntity.formValues, {
+        'establishmentType': 'single_shareholder',
+        'englishName': 'Forsan',
+        'partners': [
+          {'fullName': 'Ahmad'},
+        ],
       });
 
       cubit.close();

@@ -59,7 +59,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
   final PageController _pageController = PageController();
   final List<GlobalKey<FormState>> _stepFormKeys = List.generate(
     6,
-    (_) => GlobalKey<FormState>(),
+        (_) => GlobalKey<FormState>(),
   );
   bool _draftRequested = false;
 
@@ -122,7 +122,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
             appBar: _buildAppBar(context),
             body: FailureScreen(
               errorMessage:
-                  orderStepsState.orderStepsModel?.message ??
+              orderStepsState.orderStepsModel?.message ??
                   context.loc.no_data_available,
               onPressed: _loadOrderSteps,
             ),
@@ -175,12 +175,20 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                   _handleRequestFailure(context, completeOrderState.message);
                 } else if (completeOrderState is CompleteOrderLoaded) {
                   Navigator.of(context, rootNavigator: true).pop();
+                  final savedStep = completeOrderState
+                      .completeOrderModel
+                      ?.data
+                      ?.currentStep;
                   final currentPage = context
                       .read<NewOrderCubit>()
                       .state
                       .orderEntity
                       .currentStep;
-                  _goToStep(context, currentPage + 1);
+                  final nextPage = (savedStep ?? currentPage + 2) - 1;
+                  _goToStep(
+                    context,
+                    nextPage.clamp(0, NewOrderCubit.lastStep),
+                  );
                 }
               },
             ),
@@ -260,10 +268,10 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                             step: steps[6],
                             establishmentStep: steps[0],
                             agreement:
-                                orderStepsState
-                                    .orderStepsModel
-                                    ?.data
-                                    ?.agreements ??
+                            orderStepsState
+                                .orderStepsModel
+                                ?.data
+                                ?.agreements ??
                                 [],
                             onEditStep: (step) => _goToStep(context, step),
                           ),
@@ -283,21 +291,17 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                         height: AppHeight.h50,
                         color: AppColors.primary,
                         onPressed: () {
-                          final orderEntity = context
-                              .read<NewOrderCubit>()
-                              .state
-                              .orderEntity;
-                          final currentStep = orderEntity.currentStep;
+                          final currentStep = state.orderEntity.currentStep;
 
                           if (currentStep < _stepFormKeys.length &&
                               !(_stepFormKeys[currentStep].currentState
-                                      ?.validate() ??
+                                  ?.validate() ??
                                   false)) {
                             showCustomSnackBar(
                               context: context,
                               title: context.loc.error,
                               message:
-                                  context.loc.complete_profile_required_field,
+                              context.loc.complete_profile_required_field,
                               contentType: ContentType.failure,
                             );
                             return;
@@ -306,7 +310,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                           if (currentStep < NewOrderCubit.lastStep) {
                             context.read<CompleteOrderBloc>().add(
                               CompleteOrderEvent(
-                                orderEntity.copyWith(
+                                state.orderEntity.copyWith(
                                   currentStep: currentStep + 1,
                                 ),
                               ),
@@ -315,8 +319,8 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                         },
                         child: BodyTitle(
                           text:
-                              state.orderEntity.currentStep ==
-                                  NewOrderCubit.lastStep
+                          state.orderEntity.currentStep ==
+                              NewOrderCubit.lastStep
                               ? context.loc.new_order_submit
                               : context.loc.new_order_next,
                           color: AppColors.white,
@@ -356,9 +360,9 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
   }
 
   PreferredSizeWidget _buildAppBar(
-    BuildContext context, {
-    NewOrderState? state,
-  }) {
+      BuildContext context, {
+        NewOrderState? state,
+      }) {
     return CustomAppBar(
       title: context.loc.new_order_title,
       backgroundColor: AppColors.white,
