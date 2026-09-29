@@ -24,10 +24,10 @@ class CreateOrderRemoteDataSource extends BaseRemoteDataSource<CreateOrderModel>
   }
 
   Future<Either<AppException, BaseModel<CreateOrderModel>?>> completeOrder(
-      CreateOrderEntity data,
-      ) async {
+    CreateOrderEntity data,
+  ) async {
     return patchData(
-      endpoint: ApiEndpoints.orderDetails,
+      endpoint: ApiEndpoints.orderDetails(data.orderId!),
       dataMayBeAtRoot: true,
       data: data.toJson(),
       fromJsonT: (json) =>

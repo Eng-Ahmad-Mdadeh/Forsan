@@ -132,41 +132,52 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
             .map((step) => step.title?.trim() ?? '')
             .toList(growable: false);
 
-        return BlocListener<CreateOrderBloc, ICreateOrderState>(
-          listener: (context, createOrderState) {
-            if (createOrderState is CreateOrderLoading) {
-              showDialog<void>(
-                context: context,
-                barrierDismissible: false,
-                builder: (_) =>
-                    const PopScope(canPop: false, child: LoadingWidget(0)),
-              );
-            } else if (createOrderState is CreateOrderFailed) {
-              Navigator.of(context, rootNavigator: true).pop();
-              showCustomSnackBar(
-                context: context,
-                title: context.loc.error,
-                message: createOrderState.message,
-                contentType: ContentType.failure,
-              );
-            } else if (createOrderState is CreateOrderLoaded) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<CreateOrderBloc, ICreateOrderState>(
+              listener: (context, createOrderState) {
+                if (createOrderState is CreateOrderLoading) {
+                  _showLoadingDialog(context);
+                } else if (createOrderState is CreateOrderFailed) {
+                  _handleRequestFailure(context, createOrderState.message);
+                } else if (createOrderState is CreateOrderLoaded) {
+                  context.read<NewOrderCubit>().setOrderId(
+                    createOrderState.createOrderModel!.data!.id,
+                  );
+                  Navigator.of(context, rootNavigator: true).pop();
 
-              context.read<NewOrderCubit>().setOrderId(
-                createOrderState.createOrderModel!.data!.id,
-              );
+                  final currentStep = context
+                      .read<NewOrderCubit>()
+                      .state
+                      .orderEntity
+                      .currentStep;
+                  if (currentStep == 0) {
+                    _goToStep(context, currentStep + 1);
+                  }
+                }
+              },
+            ),
+            BlocListener<CompleteOrderBloc, ICompleteOrderState>(
+              listener: (context, completeOrderState) {
+                if (completeOrderState is CompleteOrderLoading) {
+                  _showLoadingDialog(context);
+                } else if (completeOrderState is CompleteOrderFailed) {
+                  _handleRequestFailure(context, completeOrderState.message);
+                } else if (completeOrderState is CompleteOrderLoaded) {
+                  Navigator.of(context, rootNavigator: true).pop();
 
-              Navigator.of(context, rootNavigator: true).pop();
-
-              final currentStep = context
-                  .read<NewOrderCubit>()
-                  .state
-                  .orderEntity
-                  .currentStep;
-              if (currentStep == 0) {
-                _goToStep(context, currentStep + 1);
-              }
-            }
-          },
+                  final currentStep = context
+                      .read<NewOrderCubit>()
+                      .state
+                      .orderEntity
+                      .currentStep;
+                  if (currentStep == _stepFormKeys.length - 1) {
+                    _goToStep(context, currentStep + 1);
+                  }
+                }
+              },
+            ),
+          ],
           child: BlocBuilder<NewOrderCubit, NewOrderState>(
             builder: (context, state) => Scaffold(
               backgroundColor: AppColors.white,
@@ -293,6 +304,13 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                             return;
                           }
 
+                          if (currentStep == _stepFormKeys.length - 1) {
+                            context.read<CompleteOrderBloc>().add(
+                              CompleteOrderEvent(state.orderEntity),
+                            );
+                            return;
+                          }
+
                           if (currentStep < NewOrderCubit.lastStep) {
                             _goToStep(context, currentStep + 1);
                           }
@@ -315,6 +333,27 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
           ),
         );
       },
+    );
+  }
+
+  void _showLoadingDialog(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const PopScope(
+        canPop: false,
+        child: LoadingWidget(0),
+      ),
+    );
+  }
+
+  void _handleRequestFailure(BuildContext context, String message) {
+    Navigator.of(context, rootNavigator: true).pop();
+    showCustomSnackBar(
+      context: context,
+      title: context.loc.error,
+      message: message,
+      contentType: ContentType.failure,
     );
   }
 
