@@ -57,7 +57,7 @@ class BodyCreateNewOrderScreen extends StatefulWidget {
 
 class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
   final PageController _pageController = PageController();
-  final List<GlobalKey<FormState>> _stepFormKeys = List.generate(
+  List<GlobalKey<FormState>> _stepFormKeys = List.generate(
     6,
         (_) => GlobalKey<FormState>(),
   );
@@ -158,6 +158,16 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                   Navigator.of(context, rootNavigator: true).pop();
                   if (draft != null) {
                     context.read<NewOrderCubit>().initializeDraft(draft);
+                    // PageView keeps every step alive, so its FormFields still
+                    // hold the empty initial state created before the draft
+                    // response. Replacing the form keys recreates the fields
+                    // once, after the draft values have entered the cubit.
+                    setState(() {
+                      _stepFormKeys = List.generate(
+                        6,
+                        (_) => GlobalKey<FormState>(),
+                      );
+                    });
                     final page = ((draft.currentStep ?? 1) - 1).clamp(
                       0,
                       NewOrderCubit.lastStep,

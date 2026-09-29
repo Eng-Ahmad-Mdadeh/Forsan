@@ -26,37 +26,31 @@ class EstablishmentTypeStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      // The draft is loaded after this step is first rendered. Recreate only
-      // the option fields when that map instance changes so FormField does not
-      // retain the empty value from its initial state.
-      child: KeyedSubtree(
-        key: ObjectKey(selectedValues),
-        child: ListView.separated(
-          padding: EdgeInsets.fromLTRB(
-            AppPaddingWidth.p10,
-            AppPaddingHeight.p8,
-            AppPaddingWidth.p10,
-            AppPaddingHeight.p16,
-          ),
-          itemCount: step.sections?.length ?? 0,
-          itemBuilder: (_, index) {
-            final section = step.sections![index];
-            final isEstablishmentSection = section.id == 'establishment-type';
-
-            return _OrderSection(
-              section: section,
-              icon: isEstablishmentSection
-                  ? Icons.grid_view_rounded
-                  : Icons.person_outline_rounded,
-              fallbackDescription: isEstablishmentSection
-                  ? context.loc.new_order_establishment_description
-                  : context.loc.new_order_applicant_role_description,
-              selectedValues: selectedValues,
-              onFieldChanged: onFieldChanged,
-            );
-          },
-          separatorBuilder: (_, _) => SizedBox(height: AppHeight.h10),
+      child: ListView.separated(
+        padding: EdgeInsets.fromLTRB(
+          AppPaddingWidth.p10,
+          AppPaddingHeight.p8,
+          AppPaddingWidth.p10,
+          AppPaddingHeight.p16,
         ),
+        itemCount: step.sections?.length ?? 0,
+        itemBuilder: (_, index) {
+          final section = step.sections![index];
+          final isEstablishmentSection = section.id == 'establishment-type';
+
+          return _OrderSection(
+            section: section,
+            icon: isEstablishmentSection
+                ? Icons.grid_view_rounded
+                : Icons.person_outline_rounded,
+            fallbackDescription: isEstablishmentSection
+                ? context.loc.new_order_establishment_description
+                : context.loc.new_order_applicant_role_description,
+            selectedValues: selectedValues,
+            onFieldChanged: onFieldChanged,
+          );
+        },
+        separatorBuilder: (_, _) => SizedBox(height: AppHeight.h10),
       ),
     );
   }
@@ -149,6 +143,7 @@ class _OrderField extends StatelessWidget {
         .toList(growable: false);
 
     return FormField<String>(
+      key: ValueKey('${field.id}:$selectedValue'),
       initialValue: selectedValue is String ? selectedValue : null,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) =>
