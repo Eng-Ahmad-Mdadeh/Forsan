@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
@@ -17,13 +16,13 @@ class ReviewStep extends StatelessWidget {
     super.key,
     required this.onEditStep,
     required this.step,
-    required this.establishmentStep,
+    required this.formSteps,
     required this.agreement,
   });
 
   final ValueChanged<int> onEditStep;
   final StepModel step;
-  final StepModel establishmentStep;
+  final List<StepModel> formSteps;
   final List<AgreementModel> agreement;
 
   @override
@@ -36,132 +35,25 @@ class ReviewStep extends StatelessWidget {
     final title = sectionTitle.isNotEmpty
         ? sectionTitle
         : step.title?.trim() ?? '';
-    final informationLabel = reviewSection?.fields
-        ?.where((field) => field.type == 'info')
-        .map((field) => field.label?.trim() ?? '')
-        .firstWhere((label) => label.isNotEmpty, orElse: () => '') ?? '';
+      final informationLabel = reviewSection?.fields
+          ?.where((field) => field.type == 'info')
+          .map((field) => field.label?.trim() ?? '')
+          .firstWhere((label) => label.isNotEmpty, orElse: () => '') ?? '';
     final description = informationLabel.isNotEmpty
         ? informationLabel
         : reviewSection?.description?.trim() ?? '';
     final cards = <Widget>[
       if (title.isNotEmpty || description.isNotEmpty)
         _ReviewIntroduction(title: title, description: description),
-      ReviewSectionCard(
-        title: context.loc.new_order_step_establishment,
-        icon: Icons.grid_view_rounded,
-        onEdit: () => onEditStep(0),
-        fields: [
-          (
-            label: context.loc.new_order_establishment_title,
-            value: _establishmentTypeLabel(
-              context,
-              _sectionValue(
-                isEstablishmentSection: true,
-                formValues: formValues,
-              ),
+      for (var stepIndex = 0; stepIndex < formSteps.length; stepIndex++)
+        for (final section in formSteps[stepIndex].sections ?? const <Section>[])
+          if (_reviewFields(section, formValues).isNotEmpty)
+            ReviewSectionCard(
+              title: _sectionTitle(formSteps[stepIndex], section),
+              icon: _sectionIcon(stepIndex, section),
+              onEdit: () => onEditStep(stepIndex),
+              fields: _reviewFields(section, formValues),
             ),
-          ),
-          (
-            label: context.loc.new_order_applicant_role_title,
-            value: _applicantTypeLabel(
-              context,
-              _sectionValue(
-                isEstablishmentSection: false,
-                formValues: formValues,
-              ),
-            ),
-          ),
-        ],
-      ),
-      ReviewSectionCard(
-        title: context.loc.new_order_contact_identity_title,
-        icon: Iconsax.personalcard_outline,
-        onEdit: () => onEditStep(1),
-        fields: [
-          (
-          label: context.loc.new_order_full_name,
-          value: formValues['fullName']?.toString() ?? '',
-          ),
-          (
-          label: context.loc.new_order_father_name,
-          value: formValues['fatherName']?.toString() ?? '',
-          ),
-          (
-          label: context.loc.new_order_nationality,
-          value: formValues['nationality']?.toString() ?? '',
-          ),
-          (
-          label: context.loc.new_order_national_id,
-          value: formValues['nationalId']?.toString() ?? '',
-          ),
-          (
-          label: context.loc.new_order_passport_number_optional,
-          value: formValues['passportNumber']?.toString() ?? '',
-          ),
-          (
-          label: context.loc.new_order_mobile_number,
-          value: formValues['phoneNumber']?.toString() ?? '',
-          ),
-          (
-          label: context.loc.new_order_whatsapp_number,
-          value: formValues['whatsappNumber']?.toString() ?? '',
-          ),
-          (
-          label: context.loc.new_order_email,
-          value: formValues['email']?.toString() ?? '',
-          ),
-        ],
-      ),
-      ReviewSectionCard(
-        title: context.loc.new_order_ownership_structure_title,
-        icon: Icons.key_outlined,
-        onEdit: () => onEditStep(3),
-        fields: [
-          (label: context.loc.new_order_partner_count, value: '02'),
-          (
-            label: context.loc.new_order_expected_capital,
-            value: '140,000,000 ل.س',
-          ),
-        ],
-      ),
-      ReviewSectionCard(
-        title:
-            '${context.loc.new_order_step_partners} / '
-            '${context.loc.new_order_primary_partner}',
-        icon: Icons.people_outline_rounded,
-        onEdit: () => onEditStep(3),
-        fields: [
-          (label: context.loc.new_order_full_name, value: 'محمد الخطيب'),
-          (label: context.loc.new_order_nationality, value: 'سوري'),
-          (label: context.loc.new_order_ownership_percentage, value: '10%'),
-          (
-            label: context.loc.new_order_contribution_type,
-            value: context.loc.new_order_cash_contribution,
-          ),
-          (label: context.loc.new_order_full_name, value: 'يوسف الخطيب'),
-          (label: context.loc.new_order_nationality, value: 'سوري'),
-          (label: context.loc.new_order_ownership_percentage, value: '90%'),
-          (
-            label: context.loc.new_order_contribution_type,
-            value: context.loc.new_order_cash_contribution,
-          ),
-        ],
-      ),
-      ReviewSectionCard(
-        title: context.loc.new_order_activity_title,
-        icon: Iconsax.activity_outline,
-        onEdit: () => onEditStep(4),
-        fields: [
-          (
-            label: context.loc.new_order_main_activity,
-            value: 'تجارة الإلكترونيات',
-          ),
-          (
-            label: context.loc.new_order_requires_special_license,
-            value: context.loc.new_order_yes,
-          ),
-        ],
-      ),
       for (var index = 0; index < agreement.length; index++)
         _ReviewConfirmationCard(
           key: ValueKey(
@@ -184,44 +76,75 @@ class ReviewStep extends StatelessWidget {
     );
   }
 
-  String _sectionValue({
-    required bool isEstablishmentSection,
-    required Map<String, dynamic> formValues,
-  }) {
-    final sections = establishmentStep.sections ?? const <Section>[];
-    final matchingSections = sections.where(
-      (section) =>
-          (section.id == 'establishment-type') == isEstablishmentSection,
-    );
-    if (matchingSections.isEmpty) return '';
+  List<({String label, String value})> _reviewFields(
+    Section section,
+    Map<String, dynamic> formValues,
+  ) {
+    final result = <({String label, String value})>[];
 
-    final fields = matchingSections.first.fields ?? const <SectionField>[];
-    for (final field in fields) {
-      final value = formValues[field.id];
-      if (value != null) return value.toString();
+    for (final field in section.fields ?? const <SectionField>[]) {
+      final fieldId = field.id;
+      if (fieldId == null || field.type == 'info') continue;
+      final value = formValues[fieldId];
+      if (value == null || value is String && value.trim().isEmpty) continue;
+
+      if (field.type == 'repeater' && value is List) {
+        for (final entry in value.whereType<Map>()) {
+          for (final repeatedField in field.fields ?? const <FieldField>[]) {
+            final repeatedValue = entry[repeatedField.id];
+            if (repeatedValue == null ||
+                repeatedValue is String && repeatedValue.trim().isEmpty) {
+              continue;
+            }
+            result.add((
+              label: repeatedField.label?.trim() ?? '',
+              value: _optionLabel(
+                repeatedValue,
+                repeatedField.options
+                        ?.map((option) => (option.value, option.label)) ??
+                    const [],
+              ),
+            ));
+          }
+        }
+        continue;
+      }
+
+      result.add((
+        label: field.label?.trim() ?? '',
+        value: _optionLabel(
+          value,
+          field.options?.map((option) => (option.value, option.label)) ??
+              const [],
+        ),
+      ));
     }
-
-    return '';
+    return result;
   }
 
-  String _establishmentTypeLabel(BuildContext context, String value) {
-    return switch (value) {
-      'one_person' => context.loc.new_order_one_person_company,
-      'limited_liability' => context.loc.new_order_limited_liability_company,
-      'foreign_partner' => context.loc.new_order_foreign_partner_company,
-      'individual' => context.loc.new_order_individual_establishment,
-      'joint_stock' => context.loc.new_order_joint_stock_company,
-      _ => context.loc.new_order_select_hint,
-    };
+  String _optionLabel(
+    dynamic value,
+    Iterable<(String?, String?)> options,
+  ) {
+    for (final option in options) {
+      if (option.$1 == value) return option.$2?.trim() ?? value.toString();
+    }
+    return value.toString();
   }
 
-  String _applicantTypeLabel(BuildContext context, String value) {
-    return switch (value) {
-      'syrian_citizen' => context.loc.new_order_syrian_citizen,
-      'expatriate' => context.loc.new_order_expatriate,
-      'foreign_investor' => context.loc.new_order_foreign_investor,
-      'company_representative' => context.loc.new_order_company_representative,
-      _ => context.loc.new_order_select_hint,
+  String _sectionTitle(StepModel formStep, Section section) {
+    final sectionTitle = section.title?.trim() ?? '';
+    return sectionTitle.isNotEmpty ? sectionTitle : formStep.title?.trim() ?? '';
+  }
+
+  IconData _sectionIcon(int stepIndex, Section section) {
+    if (section.id == 'partners-list') return Icons.people_outline_rounded;
+    return switch (stepIndex) {
+      0 => Icons.grid_view_rounded,
+      1 => Iconsax.personalcard_outline,
+      3 => Icons.key_outlined,
+      4 => Iconsax.activity_outline,
+      _ => Icons.fact_check_outlined,
     };
   }
 }
