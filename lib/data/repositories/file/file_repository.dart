@@ -24,4 +24,15 @@ class FileRepository implements IFileRepository {
       },
     );
   }
+
+  @override
+  Future<Either<AppException, BaseModel<void>?>> deleteFile(CreateOrderEntity data) async {
+    final response = await _remoteDataSource.deleteFile(data);
+    return response.fold(
+          (l) async => Left(l),
+          (r) async {
+        return Right(r);
+      },
+    );
+  }
 }

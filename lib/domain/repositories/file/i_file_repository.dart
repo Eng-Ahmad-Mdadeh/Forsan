@@ -7,4 +7,5 @@ import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
 
 abstract interface class IFileRepository {
   Future<Either<AppException, BaseModel<FileModel>?>> uploadFile(CreateOrderEntity data);
+  Future<Either<AppException, BaseModel<void>?>> deleteFile(CreateOrderEntity data);
 }
