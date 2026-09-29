@@ -61,12 +61,20 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     6,
     (_) => GlobalKey<FormState>(),
   );
-  bool _draftRequested = false;
+  bool _draftPageApplied = false;
 
   @override
   void initState() {
     super.initState();
-    _loadOrderSteps();
+    _createOrLoadDraft();
+  }
+
+  void _createOrLoadDraft() {
+    context.read<CreateOrderBloc>().add(
+      CreateOrderEvent(
+        CreateOrderEntity(serviceSlug: widget.serviceSlug),
+      ),
+    );
   }
 
   @override
@@ -92,8 +100,10 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OrderStepsBloc, IOrderStepsState>(
-      builder: (context, orderStepsState) {
+    return BlocListener<CreateOrderBloc, ICreateOrderState>(
+      listener: _onCreateOrderStateChanged,
+      child: BlocBuilder<OrderStepsBloc, IOrderStepsState>(
+        builder: (context, orderStepsState) {
         if (orderStepsState is OrderStepsFailed) {
           return Scaffold(
             backgroundColor: AppColors.white,
@@ -133,71 +143,52 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
             .map((step) => step.title?.trim() ?? '')
             .toList(growable: false);
 
-        if (!_draftRequested) {
-          _draftRequested = true;
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (!mounted) return;
-            context.read<CreateOrderBloc>().add(
-              CreateOrderEvent(
-                CreateOrderEntity(serviceSlug: widget.serviceSlug),
-              ),
-            );
-          });
-        }
-
-        return MultiBlocListener(
-          listeners: [
-            BlocListener<CreateOrderBloc, ICreateOrderState>(
-              listener: (context, createOrderState) {
-                if (createOrderState is CreateOrderLoading) {
-                  _showLoadingDialog(context);
-                } else if (createOrderState is CreateOrderFailed) {
-                  _handleRequestFailure(context, createOrderState.message);
-                } else if (createOrderState is CreateOrderLoaded) {
-                  final draft = createOrderState.createOrderModel?.data;
-                  Navigator.of(context, rootNavigator: true).pop();
-                  if (draft != null) {
-                    context.read<NewOrderCubit>().initializeDraft(draft);
-                    final page = ((draft.currentStep ?? 1) - 1).clamp(
-                      0,
-                      NewOrderCubit.lastStep,
-                    );
-                    _pageController.jumpToPage(page);
-                  }
-                }
-              },
-            ),
-            BlocListener<CompleteOrderBloc, ICompleteOrderState>(
-              listener: (context, completeOrderState) {
-                if (completeOrderState is CompleteOrderLoading) {
-                  _showLoadingDialog(context);
-                } else if (completeOrderState is CompleteOrderFailed) {
-                  _handleRequestFailure(context, completeOrderState.message);
-                } else if (completeOrderState is CompleteOrderLoaded) {
-                  Navigator.of(context, rootNavigator: true).pop();
-                  final savedStep = completeOrderState
-                      .completeOrderModel
-                      ?.data
-                      ?.currentStep;
-                  final currentPage = context
-                      .read<NewOrderCubit>()
-                      .state
-                      .orderEntity
-                      .currentStep;
-                  final nextPage = (savedStep ?? currentPage + 2) - 1;
-                  _goToStep(
-                    context,
-                    nextPage.clamp(0, NewOrderCubit.lastStep),
-                  );
-                }
-              },
-            ),
-          ],
+        return BlocListener<CompleteOrderBloc, ICompleteOrderState>(
+          listener: (context, completeOrderState) {
+            if (completeOrderState is CompleteOrderLoading) {
+              _showLoadingDialog(context);
+            } else if (completeOrderState is CompleteOrderFailed) {
+              _handleRequestFailure(context, completeOrderState.message);
+            } else if (completeOrderState is CompleteOrderLoaded) {
+              Navigator.of(context, rootNavigator: true).pop();
+              final savedStep = completeOrderState
+                  .completeOrderModel
+                  ?.data
+                  ?.currentStep;
+              final currentPage = context
+                  .read<NewOrderCubit>()
+                  .state
+                  .orderEntity
+                  .currentStep;
+              final nextPage = (savedStep ?? currentPage + 2) - 1;
+              _goToStep(
+                context,
+                nextPage.clamp(0, NewOrderCubit.lastStep),
+              );
+            }
+          },
           child: BlocBuilder<NewOrderCubit, NewOrderState>(
-            builder: (context, state) => Scaffold(
-              backgroundColor: AppColors.white,
-              appBar: _buildAppBar(context, state: state),
-              body: SafeArea(
+            builder: (context, state) {
+              if (state.orderEntity.orderId == null) {
+                return Scaffold(
+                  backgroundColor: AppColors.white,
+                  appBar: _buildAppBar(context),
+                  body: const SafeArea(child: LoadingWidget(0)),
+                );
+              }
+
+              if (!_draftPageApplied) {
+                _draftPageApplied = true;
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (!mounted || !_pageController.hasClients) return;
+                  _pageController.jumpToPage(state.orderEntity.currentStep);
+                });
+              }
+
+              return Scaffold(
+                backgroundColor: AppColors.white,
+                appBar: _buildAppBar(context, state: state),
+                body: SafeArea(
                 child: Column(
                   children: [
                     Padding(
@@ -331,12 +322,32 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                     ),
                   ],
                 ),
-              ),
-            ),
+                ),
+              );
+            },
           ),
         );
-      },
+        },
+      ),
     );
+  }
+
+  void _onCreateOrderStateChanged(
+    BuildContext context,
+    ICreateOrderState createOrderState,
+  ) {
+    if (createOrderState is CreateOrderLoading) {
+      _showLoadingDialog(context);
+    } else if (createOrderState is CreateOrderFailed) {
+      _handleRequestFailure(context, createOrderState.message);
+    } else if (createOrderState is CreateOrderLoaded) {
+      final draft = createOrderState.createOrderModel?.data;
+      Navigator.of(context, rootNavigator: true).pop();
+      if (draft != null) {
+        context.read<NewOrderCubit>().initializeDraft(draft);
+        _loadOrderSteps();
+      }
+    }
   }
 
   void _showLoadingDialog(BuildContext context) {
