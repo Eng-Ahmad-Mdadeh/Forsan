@@ -36,6 +36,16 @@ void main() {
       cubit.close();
     });
 
+    test('stores the uploaded file id in CreateOrderEntity', () {
+      final cubit = NewOrderCubit();
+
+      cubit.setFileId('uploaded-file-id');
+
+      expect(cubit.state.orderEntity.fileId, 'uploaded-file-id');
+
+      cubit.close();
+    });
+
     test('associates one document with its requirement', () {
       final cubit = NewOrderCubit();
       final firstDocument = PlatformFile(name: 'identity.pdf', size: 100);

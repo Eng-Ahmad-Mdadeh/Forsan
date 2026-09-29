@@ -156,6 +156,12 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
       key: widget.formKey,
       child: BlocConsumer<UploadFileBloc, IUploadFileState>(
         listener: (context, uploadState) {
+          if (uploadState is UploadFileLoaded) {
+            context.read<NewOrderCubit>().setFileId(
+              uploadState.response?.data?.id,
+            );
+          }
+
           if (uploadState is UploadFileFailed) {
             context.read<NewOrderCubit>().removeDocumentForRequirement(
               uploadState.requirementId,

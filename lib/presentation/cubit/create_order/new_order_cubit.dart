@@ -22,6 +22,10 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     state.copyWith(orderEntity: state.orderEntity.copyWith(orderId: orderID)),
   );
 
+  void setFileId(String? fileId) => emit(
+    state.copyWith(orderEntity: state.orderEntity.copyWith(fileId: fileId)),
+  );
+
   void changeStep(int step) {
     if (step < 0 || step > lastStep || step == state.orderEntity.currentStep) {
       return;
