@@ -36,6 +36,23 @@ void main() {
       cubit.close();
     });
 
+    test('builds the next-step payload from the latest selected values', () {
+      final cubit = NewOrderCubit();
+
+      cubit.updateFormValue(
+        'establishmentType',
+        'single_shareholder',
+      );
+      final nextStepEntity = cubit.state.orderEntity.copyWith(currentStep: 1);
+
+      expect(nextStepEntity.toUpdateJson(), {
+        'formData': {'establishmentType': 'single_shareholder'},
+        'currentStep': 2,
+      });
+
+      cubit.close();
+    });
+
     test('stores the uploaded file id in CreateOrderEntity', () {
       final cubit = NewOrderCubit();
 
