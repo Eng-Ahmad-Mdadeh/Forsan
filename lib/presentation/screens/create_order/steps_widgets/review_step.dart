@@ -78,20 +78,38 @@ class ReviewStep extends StatelessWidget {
         icon: Iconsax.personalcard_outline,
         onEdit: () => onEditStep(1),
         fields: [
-          (label: context.loc.new_order_full_name, value: 'أحمد عمر الخطيب'),
-          (label: context.loc.new_order_father_name, value: 'محمد'),
-          (label: context.loc.new_order_nationality, value: 'سوري'),
-          (label: context.loc.new_order_national_id, value: '0516419515'),
           (
-            label: context.loc.new_order_passport_number_optional,
-            value: '651591',
+          label: context.loc.new_order_full_name,
+          value: formValues['fullName']?.toString() ?? '',
           ),
-          (label: context.loc.new_order_mobile_number, value: '+963953302487'),
           (
-            label: context.loc.new_order_whatsapp_number,
-            value: '+963953302487',
+          label: context.loc.new_order_father_name,
+          value: formValues['fatherName']?.toString() ?? '',
           ),
-          (label: context.loc.new_order_email, value: 'ahmad@forsan.co'),
+          (
+          label: context.loc.new_order_nationality,
+          value: formValues['nationality']?.toString() ?? '',
+          ),
+          (
+          label: context.loc.new_order_national_id,
+          value: formValues['nationalId']?.toString() ?? '',
+          ),
+          (
+          label: context.loc.new_order_passport_number_optional,
+          value: formValues['passportNumber']?.toString() ?? '',
+          ),
+          (
+          label: context.loc.new_order_mobile_number,
+          value: formValues['phoneNumber']?.toString() ?? '',
+          ),
+          (
+          label: context.loc.new_order_whatsapp_number,
+          value: formValues['whatsappNumber']?.toString() ?? '',
+          ),
+          (
+          label: context.loc.new_order_email,
+          value: formValues['email']?.toString() ?? '',
+          ),
         ],
       ),
       ReviewSectionCard(
