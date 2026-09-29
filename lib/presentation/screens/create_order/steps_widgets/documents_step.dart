@@ -150,28 +150,36 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
         ),
       );
 
+  void _deleteDocument(BuildContext context, String requirementId) {
+    if (context.read<DeleteFileBloc>().state is DeleteFileLoading) return;
+
+    context.read<DeleteFileBloc>().add(
+      DeleteFileEvent(
+        context.read<NewOrderCubit>().state.orderEntity,
+        requirementId: requirementId,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final sections = widget.step.sections ?? const <Section>[];
 
     return Form(
       key: widget.formKey,
-      child: BlocConsumer<UploadFileBloc, IUploadFileState>(
-        listener: (context, uploadState) {
-          if (uploadState is UploadFileLoaded) {
-            context.read<NewOrderCubit>().setFileId(
-              uploadState.response?.data?.id,
+      child: BlocConsumer<DeleteFileBloc, IDeleteFileState>(
+        listener: (context, deleteState) {
+          if (deleteState is DeleteFileLoaded) {
+            context.read<NewOrderCubit>().removeDocumentForRequirement(
+              deleteState.requirementId,
             );
           }
 
-          if (uploadState is UploadFileFailed) {
-            context.read<NewOrderCubit>().removeDocumentForRequirement(
-              uploadState.requirementId,
-            );
+          if (deleteState is DeleteFileFailed) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: BodyTitle(
-                  text: uploadState.message,
+                  text: deleteState.message,
                   color: AppColors.white,
                   fontWeight: AppFontWeight.regular,
                 ),
@@ -180,22 +188,53 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
             );
           }
         },
-        builder: (context, uploadState) =>
-            BlocBuilder<NewOrderCubit, NewOrderState>(
-          buildWhen: (previous, current) =>
-              previous.orderEntity.requirementDocuments !=
-              current.orderEntity.requirementDocuments,
-          builder: (context, state) => ListView.separated(
-            padding: EdgeInsets.fromLTRB(
-              AppPaddingWidth.p16,
-              AppPaddingHeight.p8,
-              AppPaddingWidth.p16,
-              AppPaddingHeight.p50,
+        builder: (context, deleteState) =>
+            BlocConsumer<UploadFileBloc, IUploadFileState>(
+          listener: (context, uploadState) {
+            if (uploadState is UploadFileLoaded) {
+              context.read<NewOrderCubit>().setFileId(
+                uploadState.response?.data?.id,
+              );
+            }
+
+            if (uploadState is UploadFileFailed) {
+              context.read<NewOrderCubit>().removeDocumentForRequirement(
+                uploadState.requirementId,
+              );
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: BodyTitle(
+                    text: uploadState.message,
+                    color: AppColors.white,
+                    fontWeight: AppFontWeight.regular,
+                  ),
+                  backgroundColor: AppColors.red,
+                ),
+              );
+            }
+          },
+          builder: (context, uploadState) =>
+              BlocBuilder<NewOrderCubit, NewOrderState>(
+            buildWhen: (previous, current) =>
+                previous.orderEntity.requirementDocuments !=
+                current.orderEntity.requirementDocuments,
+            builder: (context, state) => ListView.separated(
+              padding: EdgeInsets.fromLTRB(
+                AppPaddingWidth.p16,
+                AppPaddingHeight.p8,
+                AppPaddingWidth.p16,
+                AppPaddingHeight.p50,
+              ),
+              itemCount: sections.length,
+              separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
+              itemBuilder: (_, index) => _buildSection(
+                context,
+                sections[index],
+                state,
+                uploadState,
+                deleteState,
+              ),
             ),
-            itemCount: sections.length,
-            separatorBuilder: (_, _) => SizedBox(height: AppHeight.h24),
-            itemBuilder: (_, index) =>
-                _buildSection(context, sections[index], state, uploadState),
           ),
         ),
       ),
@@ -207,6 +246,7 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
     Section section,
     NewOrderState state,
     IUploadFileState uploadState,
+    IDeleteFileState deleteState,
   ) {
     final title = section.title?.trim() ?? '';
     final description = section.description?.trim() ?? '';
@@ -229,6 +269,7 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
             index,
             state,
             uploadState,
+            deleteState,
           ),
           if (index < fileFields.length - 1) SizedBox(height: AppHeight.h10),
         ],
@@ -251,6 +292,7 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
     int index,
     NewOrderState state,
     IUploadFileState uploadState,
+    IDeleteFileState deleteState,
   ) {
     final requirementId = field.id?.trim().isNotEmpty == true
         ? field.id!.trim()
@@ -264,6 +306,8 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
     final isExpanded = _expandedRequirementId == requirementId;
     final isLoading = uploadState is UploadFileLoading &&
         uploadState.requirementId == requirementId;
+    final isDeleting = deleteState is DeleteFileLoading &&
+        deleteState.requirementId == requirementId;
 
     return FormField<bool>(
       key: ValueKey('$requirementId-${document?.path}'),
@@ -290,11 +334,9 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
             SizedBox(height: AppHeight.h10),
             UploadedDocumentCard(
               document: document,
-              onRemove: isLoading
+              onRemove: isLoading || isDeleting
                   ? null
-                  : () => context
-                      .read<NewOrderCubit>()
-                      .removeDocumentForRequirement(requirementId),
+                  : () => _deleteDocument(context, requirementId),
             ),
           ] else if (isExpanded) ...[
             SizedBox(height: AppHeight.h10),

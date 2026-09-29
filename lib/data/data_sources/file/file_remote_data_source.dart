@@ -38,22 +38,10 @@ class FileRemoteDataSource extends BaseRemoteDataSource<FileModel> {
   }
 
   Future<Either<AppException, BaseModel<void>?>> deleteFile(
-      CreateOrderEntity data,
-      ) async {
-
-    for (final entry in data.requirementDocuments.entries) {
-      final path = entry.value.path;
-      if (path == null) continue;
-
-      final result = await postData(
-        endpoint: ApiEndpoints.deleteFile(data.orderId!, entry.key),
-        isFormData: true,
-        dataMayBeAtRoot: true,
-      );
-
-      if (result.isLeft()) return result;
-    }
-
-    return result;
+    CreateOrderEntity data,
+  ) {
+    return deleteData(
+      endpoint: ApiEndpoints.deleteFile(data.orderId!, data.fileId!),
+    );
   }
 }

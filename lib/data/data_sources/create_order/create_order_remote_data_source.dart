@@ -22,4 +22,16 @@ class CreateOrderRemoteDataSource extends BaseRemoteDataSource<CreateOrderModel>
           CreateOrderModel.fromJson(json as Map<String, dynamic>),
     );
   }
+
+  Future<Either<AppException, BaseModel<CreateOrderModel>?>> completeOrder(
+      CreateOrderEntity data,
+      ) async {
+    return patchData(
+      endpoint: ApiEndpoints.orderDetails,
+      dataMayBeAtRoot: true,
+      data: data.toJson(),
+      fromJsonT: (json) =>
+          CreateOrderModel.fromJson(json as Map<String, dynamic>),
+    );
+  }
 }

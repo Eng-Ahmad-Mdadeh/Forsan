@@ -78,10 +78,13 @@ import '../../../domain/usecases/auth/check_code_usecase.dart' as _i298;
 import '../../../domain/usecases/auth/login_usecase.dart' as _i895;
 import '../../../domain/usecases/auth/logout_usecase.dart' as _i596;
 import '../../../domain/usecases/auth/resend_code_usecase.dart' as _i968;
+import '../../../domain/usecases/create_order/complete_order/complete_order_use_case.dart'
+    as _i690;
 import '../../../domain/usecases/create_order/create_order_use_case.dart'
     as _i232;
 import '../../../domain/usecases/create_order/service_type/service_type_use_case.dart'
     as _i80;
+import '../../../domain/usecases/file/delete_file_use_case.dart' as _i164;
 import '../../../domain/usecases/file/upload_file_use_case.dart' as _i894;
 import '../../../domain/usecases/home/home_use_case.dart' as _i208;
 import '../../../domain/usecases/i_use_case.dart' as _i795;
@@ -143,6 +146,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<
       _i795.IUseCase<
+        _i480.BaseModel<_i210.CreateOrderModel>?,
+        _i232.CreateOrderEntity
+      >
+    >(
+      () => _i690.CompleteOrderUseCase(gh<_i352.ICreateOrderRepository>()),
+      instanceName: 'CompleteOrder',
+    );
+    gh.factory<
+      _i795.IUseCase<
         _i480.BaseModel<_i1016.OrderListModel>?,
         _i729.OrderListEntity
       >
@@ -191,6 +203,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i664.OrderDetailsRepository(
         gh<_i588.OrderDetailsRemoteDataSource>(),
       ),
+    );
+    gh.factory<_i795.IUseCase<_i480.BaseModel<void>?, _i232.CreateOrderEntity>>(
+      () => _i164.DeleteFileUseCase(gh<_i944.IFileRepository>()),
+      instanceName: 'deleteFile',
     );
     gh.factory<_i795.IUseCase<_i480.BaseModel<_i703.HomeModel>?, Null>>(
       () => _i208.HomeUseCase(gh<_i751.IHomeRepository>()),

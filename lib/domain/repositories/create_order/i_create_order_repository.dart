@@ -7,4 +7,5 @@ import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
 
 abstract interface class ICreateOrderRepository {
   Future<Either<AppException, BaseModel<CreateOrderModel>?>> createOrder(CreateOrderEntity data);
+  Future<Either<AppException, BaseModel<CreateOrderModel>?>> completeOrder(CreateOrderEntity data);
 }
