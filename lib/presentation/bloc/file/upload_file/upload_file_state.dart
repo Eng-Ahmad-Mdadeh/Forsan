@@ -26,7 +26,7 @@ final class UploadFileLoaded extends IUploadFileState {
     required this.requirementId,
   });
 
-  final BaseModel<void>? response;
+  final BaseModel<FileModel>? response;
   final String requirementId;
 
   @override
