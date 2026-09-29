@@ -57,7 +57,7 @@ class BodyCreateNewOrderScreen extends StatefulWidget {
 
 class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
   final PageController _pageController = PageController();
-  final List<GlobalKey<FormState>> _stepFormKeys = List.generate(
+  List<GlobalKey<FormState>> _stepFormKeys = List.generate(
     6,
     (_) => GlobalKey<FormState>(),
   );
@@ -158,6 +158,14 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                   Navigator.of(context, rootNavigator: true).pop();
                   if (draft != null) {
                     context.read<NewOrderCubit>().initializeDraft(draft);
+                    // Recreate the forms so their initial values come from the
+                    // draft instead of the empty values used on first render.
+                    setState(() {
+                      _stepFormKeys = List.generate(
+                        6,
+                        (_) => GlobalKey<FormState>(),
+                      );
+                    });
                     final page = ((draft.currentStep ?? 1) - 1).clamp(
                       0,
                       NewOrderCubit.lastStep,
