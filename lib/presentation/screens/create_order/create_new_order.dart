@@ -252,7 +252,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                               ),
                               ReviewStep(
                                 step: steps[6],
-                                establishmentStep: steps[0],
+                                formSteps: steps.take(5).toList(growable: false),
                                 agreement:
                                     orderStepsState
                                         .orderStepsModel
