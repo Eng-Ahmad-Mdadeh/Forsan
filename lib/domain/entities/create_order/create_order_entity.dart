@@ -6,6 +6,7 @@ class CreateOrderEntity extends Equatable {
     this.serviceSlug,
     this.slug,
     this.orderId,
+    this.fileId,
     this.formValues = const {},
     this.currentStep = 0,
     this.requirementDocuments = const {},
@@ -14,6 +15,7 @@ class CreateOrderEntity extends Equatable {
   final String? serviceSlug;
   final String? slug;
   final String? orderId;
+  final String? fileId;
   final Map<String, dynamic> formValues;
   final int currentStep;
   final Map<String, PlatformFile> requirementDocuments;
@@ -33,12 +35,14 @@ class CreateOrderEntity extends Equatable {
     Map<String, dynamic>? formValues,
     int? currentStep,
     String? orderId,
+    String? fileId,
     Map<String, PlatformFile>? requirementDocuments,
   }) {
     return CreateOrderEntity(
       serviceSlug: serviceSlug ?? this.serviceSlug,
       slug: slug ?? this.slug,
       orderId: orderId ?? this.orderId,
+      fileId: fileId ?? this.fileId,
       formValues: formValues ?? this.formValues,
       currentStep: currentStep ?? this.currentStep,
       requirementDocuments: requirementDocuments ?? this.requirementDocuments,
@@ -48,6 +52,7 @@ class CreateOrderEntity extends Equatable {
   @override
   List<Object?> get props => [
     serviceSlug,
+    fileId,
     formValues,
     currentStep,
     orderId,
