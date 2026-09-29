@@ -19,6 +19,7 @@ import '../../../data/data_sources/create_order/create_order_remote_data_source.
     as _i832;
 import '../../../data/data_sources/create_order/service_type/service_type_remote_data_source.dart'
     as _i619;
+import '../../../data/data_sources/file/file_remote_data_source.dart' as _i158;
 import '../../../data/data_sources/home/home_remote_data_source.dart' as _i949;
 import '../../../data/data_sources/order_details/order_details_remote_data_source.dart'
     as _i588;
@@ -31,6 +32,7 @@ import '../../../data/data_sources/profile/profile_remote_data_source.dart'
 import '../../../data/models/auth/auth_model.dart' as _i323;
 import '../../../data/models/base/base_model.dart' as _i480;
 import '../../../data/models/create_order/create_order_model.dart' as _i210;
+import '../../../data/models/file/file_model.dart' as _i86;
 import '../../../data/models/home/home_model.dart' as _i703;
 import '../../../data/models/order_details/order_details_model.dart' as _i80;
 import '../../../data/models/order_list/order_list_model.dart' as _i1016;
@@ -42,6 +44,7 @@ import '../../../data/repositories/create_order/create_order_repository.dart'
     as _i264;
 import '../../../data/repositories/create_order/service_type/service_type_repository.dart'
     as _i254;
+import '../../../data/repositories/file/file_repository.dart' as _i841;
 import '../../../data/repositories/home/home_repository.dart' as _i13;
 import '../../../data/repositories/order_details/order_details_repository.dart'
     as _i664;
@@ -61,6 +64,7 @@ import '../../../domain/repositories/create_order/i_create_order_repository.dart
     as _i352;
 import '../../../domain/repositories/create_order/service_type/i_service_type_repository.dart'
     as _i637;
+import '../../../domain/repositories/file/i_file_repository.dart' as _i944;
 import '../../../domain/repositories/home/i_home_repository.dart' as _i751;
 import '../../../domain/repositories/order_details/i_order_details_repository.dart'
     as _i122;
@@ -78,8 +82,7 @@ import '../../../domain/usecases/create_order/create_order_use_case.dart'
     as _i232;
 import '../../../domain/usecases/create_order/service_type/service_type_use_case.dart'
     as _i80;
-import '../../../domain/usecases/create_order/upload_file_use_case.dart'
-    as _i391;
+import '../../../domain/usecases/file/upload_file_use_case.dart' as _i894;
 import '../../../domain/usecases/home/home_use_case.dart' as _i208;
 import '../../../domain/usecases/i_use_case.dart' as _i795;
 import '../../../domain/usecases/order_details/order_details_use_case.dart'
@@ -110,6 +113,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i619.ServiceTypeRemoteDataSource>(
       () => _i619.ServiceTypeRemoteDataSource(),
     );
+    gh.factory<_i158.FileRemoteDataSource>(() => _i158.FileRemoteDataSource());
     gh.factory<_i949.HomeRemoteDataSource>(() => _i949.HomeRemoteDataSource());
     gh.factory<_i588.OrderDetailsRemoteDataSource>(
       () => _i588.OrderDetailsRemoteDataSource(),
@@ -133,6 +137,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i352.ICreateOrderRepository>(
       () =>
           _i264.CreateOrderRepository(gh<_i832.CreateOrderRemoteDataSource>()),
+    );
+    gh.factory<_i944.IFileRepository>(
+      () => _i841.FileRepository(gh<_i158.FileRemoteDataSource>()),
     );
     gh.factory<
       _i795.IUseCase<
@@ -180,10 +187,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i1032.OrderStepsUseCase(gh<_i372.IOrderStepsRepository>()),
       instanceName: 'OrderSteps',
     );
-    gh.factory<_i795.IUseCase<_i480.BaseModel<void>?, _i232.CreateOrderEntity>>(
-      () => _i391.UploadFileUseCase(gh<_i352.ICreateOrderRepository>()),
-      instanceName: 'uploadFile',
-    );
     gh.factory<_i122.IOrderDetailsRepository>(
       () => _i664.OrderDetailsRepository(
         gh<_i588.OrderDetailsRemoteDataSource>(),
@@ -201,6 +204,12 @@ extension GetItInjectableX on _i174.GetIt {
     >(
       () => _i675.OrderDetailsUseCase(gh<_i122.IOrderDetailsRepository>()),
       instanceName: 'OrderDetails',
+    );
+    gh.factory<
+      _i795.IUseCase<_i480.BaseModel<_i86.FileModel>?, _i232.CreateOrderEntity>
+    >(
+      () => _i894.UploadFileUseCase(gh<_i944.IFileRepository>()),
+      instanceName: 'uploadFile',
     );
     gh.factory<_i1064.IAuthRepository>(
       () => _i202.AuthRepository(

@@ -5,7 +5,7 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
-import 'package:forsan/presentation/bloc/create_order/upload_file/upload_file_bloc.dart';
+import 'package:forsan/presentation/bloc/file/upload_file/upload_file_bloc.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_info_card.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_section_header.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
