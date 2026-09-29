@@ -34,14 +34,13 @@ class ApiEndpoints {
   static const String order = '/requests';
   static String orderDetails(String id) => '$order/${Uri.encodeComponent(id)}';
   static String orderSteps(String slug) => '/services/${Uri.encodeComponent(slug)}/form';
-  static String uploadFile(String id) => '$order/${Uri.encodeComponent(id)}/files';
-
   //#endregion
 
 
-  //#region Media
-  static const String media = '/media';
-  static const String upload = '/upload';
-  static const String remove = '/remove';
+
+  //#region files
+  static String uploadFile(String orderId) => '$order/${Uri.encodeComponent(orderId)}/files';
+  static String deleteFile(String orderId,String fileId) => '$order/${Uri.encodeComponent(orderId)}/files/${Uri.encodeComponent(fileId)}';
   //#endregion
+
 }
