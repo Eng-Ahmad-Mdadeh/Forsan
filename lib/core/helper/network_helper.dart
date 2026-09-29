@@ -212,6 +212,45 @@ class NetworkHelper {
     });
   }
 
+  Future<Either<ApiException, BaseModel<T>?>> patchData<T>({
+    required String url,
+    Map<String, dynamic>? data,
+    bool isFormData = true,
+    bool dataMayBeAtRoot = false,
+    List<Map<String, dynamic>>? files,
+    T Function(Object? json)? fromJsonT,
+  }) async {
+    try {
+      final response = await patch(
+        url,
+        data: data,
+        isFormData: isFormData,
+        files: files,
+      );
+      return response.fold(
+        (error) => Left(error),
+        (response) {
+          if (fromJsonT == null) return const Right(null);
+
+          return Right(
+            dataMayBeAtRoot
+                ? BaseModel<T>.fromJsonWithRootData(response.data, fromJsonT)
+                : BaseModel<T>.fromJson(
+                    response.data as Map<String, dynamic>,
+                    fromJsonT,
+                  ),
+          );
+        },
+      );
+    } on ApiException catch (error) {
+      return Left(error);
+    } catch (error) {
+      return Left(
+        ApiException(error.toString(), dio.options.headers['lang'] ?? 'ar'),
+      );
+    }
+  }
+
   Future<Either<ApiException, BaseModel<PaginationModel<T>>?>> patchPagination<T>({
     required String url,
     Map<String, dynamic>? queryParams,

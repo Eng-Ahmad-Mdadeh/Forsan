@@ -169,22 +169,22 @@ class BaseRemoteDataSource<T> {
     String endpoint = '',
     Map<String, dynamic>? data,
     bool isFormData = true,
+    bool dataMayBeAtRoot = false,
     List<Map<String, dynamic>>? files,
     T Function(Object? json)? fromJsonT,
   }) async {
     try {
-      final response = await _networkHelper.patch(
-        baseEndpoint + endpoint,
+      final response = await _networkHelper.patchData<T>(
+        url: baseEndpoint + endpoint,
         data: data,
         isFormData: isFormData,
+        dataMayBeAtRoot: dataMayBeAtRoot,
         files: files,
+        fromJsonT: fromJsonT,
       );
       return response.fold(
         (e) => Left(e),
-        (r) {
-          if (fromJsonT == null) return const Right(null);
-          return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
-        },
+        (r) => Right(r),
       );
     } on AppException catch (e, s) {
       log("############################# PATCH APP EXCEPTION ################################");
