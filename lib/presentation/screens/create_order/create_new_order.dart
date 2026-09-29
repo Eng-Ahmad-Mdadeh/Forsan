@@ -307,16 +307,16 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                             return;
                           }
 
-                          if (currentStep < NewOrderCubit.lastStep) {
-                            context.read<CompleteOrderBloc>().add(
-                              CompleteOrderEvent(
-                                state.orderEntity.copyWith(
-                                  currentStep: currentStep + 1,
+                          context.read<CompleteOrderBloc>().add(
+                            CompleteOrderEvent(
+                              state.orderEntity.copyWith(
+                                currentStep: (currentStep + 1).clamp(
+                                  0,
+                                  NewOrderCubit.lastStep,
                                 ),
                               ),
-                            );
-                            return;
-                          }
+                            ),
+                          );
                         },
                         child: BodyTitle(
                           text:
