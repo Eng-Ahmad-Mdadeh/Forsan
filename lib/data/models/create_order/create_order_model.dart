@@ -25,7 +25,7 @@ class CreateOrderModel extends Equatable {
   final String? serviceSlug;
   final int? currentStep;
   final int? totalSteps;
-  final FormData? formData;
+  final Map<String, dynamic>? formData;
   final List<FileElement>? files;
   final DateTime? updatedAt;
 

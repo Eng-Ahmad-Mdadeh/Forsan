@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/helper/file_picker_helper.dart';
 import 'package:forsan/core/helper/media_picker_helper.dart';
+import 'package:forsan/data/models/create_order/create_order_model.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
 
 class NewOrderCubit extends Cubit<NewOrderState> {
@@ -17,6 +18,20 @@ class NewOrderCubit extends Cubit<NewOrderState> {
   final MediaPickerHelper _mediaPickerHelper;
 
   static const int lastStep = 6;
+
+  void initializeDraft(CreateOrderModel draft) {
+    final apiStep = draft.currentStep ?? 1;
+    emit(
+      state.copyWith(
+        orderEntity: state.orderEntity.copyWith(
+          serviceSlug: draft.serviceSlug,
+          orderId: draft.id,
+          currentStep: (apiStep - 1).clamp(0, lastStep),
+          formValues: draft.formData ?? const {},
+        ),
+      ),
+    );
+  }
 
   void setOrderId(String? orderID) => emit(
     state.copyWith(orderEntity: state.orderEntity.copyWith(orderId: orderID)),

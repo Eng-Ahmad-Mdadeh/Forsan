@@ -17,7 +17,7 @@ class CreateOrderRemoteDataSource extends BaseRemoteDataSource<CreateOrderModel>
     return postData(
       endpoint: ApiEndpoints.order,
       dataMayBeAtRoot: true,
-      data: data.toJson(),
+      data: data.toCreateJson(),
       fromJsonT: (json) =>
           CreateOrderModel.fromJson(json as Map<String, dynamic>),
     );
@@ -29,7 +29,7 @@ class CreateOrderRemoteDataSource extends BaseRemoteDataSource<CreateOrderModel>
     return patchData(
       endpoint: ApiEndpoints.orderDetails(data.orderId!),
       dataMayBeAtRoot: true,
-      data: data.toJson(),
+      data: data.toUpdateJson(),
       fromJsonT: (json) =>
           CreateOrderModel.fromJson(json as Map<String, dynamic>),
     );

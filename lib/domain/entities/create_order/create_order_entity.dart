@@ -20,14 +20,13 @@ class CreateOrderEntity extends Equatable {
   final int currentStep;
   final Map<String, PlatformFile> requirementDocuments;
 
-  Map<String, dynamic> toJson() {
-    return {
-      if (slug != null && slug!.isNotEmpty) 'slug': slug,
-      if (serviceSlug != null && serviceSlug!.isNotEmpty)
-        'serviceSlug': serviceSlug,
-      if (formValues.isNotEmpty) 'formData': formValues,
-    };
-  }
+  Map<String, dynamic> toCreateJson() => {'serviceSlug': serviceSlug};
+
+  Map<String, dynamic> toUpdateJson() => {
+    'formData': formValues,
+    // Form pages are zero-based locally, while the API numbers them from one.
+    'currentStep': currentStep + 1,
+  };
 
   CreateOrderEntity copyWith({
     String? serviceSlug,
