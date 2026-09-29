@@ -17,9 +17,7 @@ CreateOrderModel _$CreateOrderModelFromJson(Map<String, dynamic> json) =>
       serviceSlug: json['serviceSlug'] as String?,
       currentStep: (json['currentStep'] as num?)?.toInt(),
       totalSteps: (json['totalSteps'] as num?)?.toInt(),
-      formData: json['formData'] == null
-          ? null
-          : FormData.fromJson(json['formData'] as Map<String, dynamic>),
+      formData: json['formData'] as Map<String, dynamic>?,
       files: (json['files'] as List<dynamic>?)
           ?.map((e) => FileElement.fromJson(e as Map<String, dynamic>))
           .toList(),

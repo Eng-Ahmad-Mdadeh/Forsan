@@ -61,6 +61,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     6,
     (_) => GlobalKey<FormState>(),
   );
+  bool _draftRequested = false;
 
   @override
   void initState() {
@@ -132,6 +133,18 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
             .map((step) => step.title?.trim() ?? '')
             .toList(growable: false);
 
+        if (!_draftRequested) {
+          _draftRequested = true;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted) return;
+            context.read<CreateOrderBloc>().add(
+              CreateOrderEvent(
+                CreateOrderEntity(serviceSlug: widget.serviceSlug),
+              ),
+            );
+          });
+        }
+
         return MultiBlocListener(
           listeners: [
             BlocListener<CreateOrderBloc, ICreateOrderState>(
@@ -141,18 +154,15 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                 } else if (createOrderState is CreateOrderFailed) {
                   _handleRequestFailure(context, createOrderState.message);
                 } else if (createOrderState is CreateOrderLoaded) {
-                  context.read<NewOrderCubit>().setOrderId(
-                    createOrderState.createOrderModel!.data!.id,
-                  );
+                  final draft = createOrderState.createOrderModel?.data;
                   Navigator.of(context, rootNavigator: true).pop();
-
-                  final currentStep = context
-                      .read<NewOrderCubit>()
-                      .state
-                      .orderEntity
-                      .currentStep;
-                  if (currentStep == 0) {
-                    _goToStep(context, currentStep + 1);
+                  if (draft != null) {
+                    context.read<NewOrderCubit>().initializeDraft(draft);
+                    final page = ((draft.currentStep ?? 1) - 1).clamp(
+                      0,
+                      NewOrderCubit.lastStep,
+                    );
+                    _pageController.jumpToPage(page);
                   }
                 }
               },
@@ -165,15 +175,20 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                   _handleRequestFailure(context, completeOrderState.message);
                 } else if (completeOrderState is CompleteOrderLoaded) {
                   Navigator.of(context, rootNavigator: true).pop();
-
-                  final currentStep = context
+                  final savedStep = completeOrderState
+                      .completeOrderModel
+                      ?.data
+                      ?.currentStep;
+                  final currentPage = context
                       .read<NewOrderCubit>()
                       .state
                       .orderEntity
                       .currentStep;
-                  if (currentStep == _stepFormKeys.length - 1) {
-                    _goToStep(context, currentStep + 1);
-                  }
+                  final nextPage = (savedStep ?? currentPage + 2) - 1;
+                  _goToStep(
+                    context,
+                    nextPage.clamp(0, NewOrderCubit.lastStep),
+                  );
                 }
               },
             ),
@@ -292,27 +307,15 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                             return;
                           }
 
-                          if (currentStep == 0) {
-                            context.read<CreateOrderBloc>().add(
-                              CreateOrderEvent(
-                                CreateOrderEntity(
-                                  serviceSlug: widget.serviceSlug,
-                                  formValues: state.orderEntity.formValues,
+                          if (currentStep < NewOrderCubit.lastStep) {
+                            context.read<CompleteOrderBloc>().add(
+                              CompleteOrderEvent(
+                                state.orderEntity.copyWith(
+                                  currentStep: currentStep + 1,
                                 ),
                               ),
                             );
                             return;
-                          }
-
-                          if (currentStep == _stepFormKeys.length - 1) {
-                            context.read<CompleteOrderBloc>().add(
-                              CompleteOrderEvent(state.orderEntity),
-                            );
-                            return;
-                          }
-
-                          if (currentStep < NewOrderCubit.lastStep) {
-                            _goToStep(context, currentStep + 1);
                           }
                         },
                         child: BodyTitle(
