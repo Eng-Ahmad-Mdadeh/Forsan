@@ -13,27 +13,21 @@ part 'upload_file_event.dart';
 part 'upload_file_state.dart';
 
 class UploadFileBloc extends Bloc<IUploadFileEvent, IUploadFileState> {
-  UploadFileBloc({
-    IUseCase<BaseModel<FileModel>?, CreateOrderEntity>? uploadFile,
-  }) : _uploadFile =
-           uploadFile ??
-           locator<IUseCase<BaseModel<FileModel>?, CreateOrderEntity>>(
-             instanceName: 'uploadFile',
-           ),
-       super(const UploadFileInitial()) {
+  UploadFileBloc() : super(UploadFileInitial()) {
     on<UploadFileEvent>(_uploadFiles);
   }
 
-  final IUseCase<BaseModel<FileModel>?, CreateOrderEntity> _uploadFile;
-
-  FutureOr<FileModel> _uploadFiles(
+  FutureOr<void> _uploadFiles(
     UploadFileEvent event,
     Emitter<IUploadFileState> emit,
   ) async {
     emit(UploadFileLoading(requirementId: event.requirementId));
 
     try {
-      final result = await _uploadFile(event.entity);
+      final result =
+          await locator<IUseCase<BaseModel<FileModel>?, CreateOrderEntity>>(
+            instanceName: 'uploadFile',
+          )(event.entity);
       result.fold(
         (failure) => emit(
           UploadFileFailed(
@@ -49,7 +43,8 @@ class UploadFileBloc extends Bloc<IUploadFileEvent, IUploadFileState> {
         ),
       );
     } catch (error, stackTrace) {
-      log(error.toString(), stackTrace: stackTrace);
+      log(error.toString());
+      log(stackTrace.toString());
       emit(
         UploadFileFailed(
           error.toString(),
