@@ -141,10 +141,11 @@ class _OrderField extends StatelessWidget {
     final options = (field.options ?? const <FluffyOption>[])
         .where((option) => option.value != null)
         .toList(growable: false);
+    final restoredValue = selectedValue?.toString();
 
     return FormField<String>(
-      key: ValueKey('${field.id}:$selectedValue'),
-      initialValue: selectedValue is String ? selectedValue : null,
+      key: ValueKey('${field.id}:$restoredValue'),
+      initialValue: restoredValue,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) =>
           field.required == true && (value == null || value.trim().isEmpty)
@@ -190,7 +191,10 @@ class _OrderField extends StatelessWidget {
                   title: option.label?.trim() ?? '',
                   description: option.description?.trim() ?? '',
                   icon: icon,
-                  selected: formField.value == option.value,
+                  // The cubit's form values are the source of truth. A
+                  // FormField retains its own initial state, which can lag
+                  // behind when an existing draft is hydrated asynchronously.
+                  selected: restoredValue == option.value,
                   onTap: () {
                     formField.didChange(option.value);
                     onChanged(option.value!);
