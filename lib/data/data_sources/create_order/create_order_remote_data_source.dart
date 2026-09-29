@@ -37,29 +37,11 @@ class CreateOrderRemoteDataSource
         data: {'fieldId': entry.key},
         isFormData: true,
         dataMayBeAtRoot: true,
+        fromJsonT: (json) => FileModel.fromJson(json as Map<String, dynamic>),
         files: [
           {'field_name': 'file', 'path': path},
         ],
       );
-
-      if (response.isLeft()) return response;
     }
-
-    return const Right(null);
-  }
-
-  Future<Either<AppException, BaseModel<void>?>> deleteFile(
-    CreateOrderEntity data,
-  ) async {
-    for (final entry in data.requirementDocuments.entries) {
-
-      final response = await deleteData(
-        endpoint: ApiEndpoints.deleteFile(data.orderId!, entry.key),
-      );
-
-      if (response.isLeft()) return response;
-    }
-
-    return const Right(null);
   }
 }
