@@ -26,6 +26,7 @@ class ReviewStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<NewOrderCubit>().state;
+    final cubit = context.read<NewOrderCubit>();
     final formValues = state.orderEntity.formValues;
     final sections = step.sections ?? const <Section>[];
     final reviewSection = sections.isEmpty ? null : sections.first;
@@ -33,10 +34,12 @@ class ReviewStep extends StatelessWidget {
     final title = sectionTitle.isNotEmpty
         ? sectionTitle
         : step.title?.trim() ?? '';
-      final informationLabel = reviewSection?.fields
-          ?.where((field) => field.type == 'info')
-          .map((field) => field.label?.trim() ?? '')
-          .firstWhere((label) => label.isNotEmpty, orElse: () => '') ?? '';
+    final informationLabel =
+        reviewSection?.fields
+            ?.where((field) => field.type == 'info')
+            .map((field) => field.label?.trim() ?? '')
+            .firstWhere((label) => label.isNotEmpty, orElse: () => '') ??
+        '';
     final description = informationLabel.isNotEmpty
         ? informationLabel
         : reviewSection?.description?.trim() ?? '';
@@ -58,6 +61,12 @@ class ReviewStep extends StatelessWidget {
             'review_agreement_${agreement[index].id ?? index.toString()}',
           ),
           text: agreement[index].label ?? '',
+          value: index == 0
+              ? state.orderEntity.acknowledgesAccuracy ?? false
+              : state.orderEntity.acceptsTerms ?? false,
+          onChanged: index == 0
+              ? cubit.setAcknowledgesAccuracy
+              : cubit.setAcceptsTerms,
         ),
     ];
 

@@ -6,9 +6,16 @@ import 'package:forsan/presentation/widgets/custom_check_box.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 
 class ReviewConfirmationCard extends StatelessWidget {
-  const ReviewConfirmationCard({super.key, required this.text});
+  const ReviewConfirmationCard({
+    super.key,
+    required this.text,
+    required this.value,
+    required this.onChanged,
+  });
 
   final String text;
+  final bool value;
+  final ValueChanged<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,12 @@ class ReviewConfirmationCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const CustomCheckBox(),
+          CustomCheckBox(
+            value: value,
+            onChanged: (value) {
+              if (value != null) onChanged(value);
+            },
+          ),
           SizedBox(width: AppWidth.w4),
           Expanded(
             child: BodyTitle(

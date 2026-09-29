@@ -10,6 +10,7 @@ import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
 import 'package:forsan/presentation/bloc/complete_order/complete_order_bloc.dart';
 import 'package:forsan/presentation/bloc/create_order/create_order_bloc.dart';
 import 'package:forsan/presentation/bloc/order_steps/order_steps_bloc.dart';
+import 'package:forsan/presentation/bloc/submit_order/submit_order_bloc.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/activity_step.dart';
@@ -39,6 +40,7 @@ class CreateNewOrderScreen extends StatelessWidget {
         BlocProvider<OrderStepsBloc>(create: (_) => OrderStepsBloc()),
         BlocProvider<CreateOrderBloc>(create: (_) => CreateOrderBloc()),
         BlocProvider<CompleteOrderBloc>(create: (_) => CompleteOrderBloc()),
+        BlocProvider<SubmitOrderBloc>(create: (_) => SubmitOrderBloc()),
         BlocProvider<NewOrderCubit>(create: (_) => NewOrderCubit()),
       ],
       child: BodyCreateNewOrderScreen(serviceSlug: serviceSlug),
@@ -142,25 +144,44 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
               .map((step) => step.title?.trim() ?? '')
               .toList(growable: false);
 
-          return BlocListener<CompleteOrderBloc, ICompleteOrderState>(
-            listener: (context, completeOrderState) {
-              if (completeOrderState is CompleteOrderLoading) {
-                _showLoadingDialog(context);
-              } else if (completeOrderState is CompleteOrderFailed) {
-                _handleRequestFailure(context, completeOrderState.message);
-              } else if (completeOrderState is CompleteOrderLoaded) {
-                Navigator.of(context, rootNavigator: true).pop();
-                final savedStep =
-                    completeOrderState.completeOrderModel?.data?.currentStep;
-                final currentPage = context
-                    .read<NewOrderCubit>()
-                    .state
-                    .orderEntity
-                    .currentStep;
-                final nextPage = savedStep ?? currentPage + 1;
-                _goToStep(context, nextPage.clamp(0, NewOrderCubit.lastStep));
-              }
-            },
+          return MultiBlocListener(
+            listeners: [
+              BlocListener<CompleteOrderBloc, ICompleteOrderState>(
+                listener: (context, completeOrderState) {
+                  if (completeOrderState is CompleteOrderLoading) {
+                    _showLoadingDialog(context);
+                  } else if (completeOrderState is CompleteOrderFailed) {
+                    _handleRequestFailure(context, completeOrderState.message);
+                  } else if (completeOrderState is CompleteOrderLoaded) {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    final savedStep =
+                        completeOrderState.completeOrderModel?.data?.currentStep;
+                    final currentPage = context
+                        .read<NewOrderCubit>()
+                        .state
+                        .orderEntity
+                        .currentStep;
+                    final nextPage = savedStep ?? currentPage + 1;
+                    _goToStep(
+                      context,
+                      nextPage.clamp(0, NewOrderCubit.lastStep),
+                    );
+                  }
+                },
+              ),
+              BlocListener<SubmitOrderBloc, ISubmitOrderState>(
+                listener: (context, submitOrderState) {
+                  if (submitOrderState is SubmitOrderLoading) {
+                    _showLoadingDialog(context);
+                  } else if (submitOrderState is SubmitOrderFailed) {
+                    _handleRequestFailure(context, submitOrderState.message);
+                  } else if (submitOrderState is SubmitOrderLoaded) {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
             child: BlocBuilder<NewOrderCubit, NewOrderState>(
               builder: (context, state) {
                 if (state.orderEntity.orderId == null) {
@@ -277,14 +298,6 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                             height: AppHeight.h50,
                             color: AppColors.primary,
                             onPressed: () {
-                              print('eeeeeeeeeee');
-                              print(
-                                'currentStep: ${state.orderEntity.currentStep}',
-                              );
-                              print(
-                                context.read<NewOrderCubit>().state.orderEntity,
-                              );
-                              // final currentStep = state.orderEntity.currentStep;
                               final orderEntity = context
                                   .read<NewOrderCubit>()
                                   .state
@@ -307,15 +320,14 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
 
                               if (currentStep < NewOrderCubit.lastStep) {
                                 context.read<CompleteOrderBloc>().add(
-                                  // CompleteOrderEvent(
-                                  //   state.orderEntity.copyWith(
-                                  //     currentStep: currentStep + 1,
-                                  //   ),
-                                  // ),
                                   CompleteOrderEvent(orderEntity),
                                 );
                                 return;
                               }
+
+                              context.read<SubmitOrderBloc>().add(
+                                SubmitOrderEvent(orderEntity),
+                              );
                             },
                             child: BodyTitle(
                               text:

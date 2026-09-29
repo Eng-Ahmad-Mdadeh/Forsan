@@ -24,5 +24,19 @@ void main() {
         'currentStep': 2,
       });
     });
+
+    test('submission contains the agreement values', () {
+      const entity = CreateOrderEntity(
+        acknowledgesAccuracy: true,
+        acceptsTerms: true,
+      );
+
+      expect(entity.toSubmitJson(), {
+        'agreements': {
+          'acknowledgesAccuracy': true,
+          'acceptsTerms': true,
+        },
+      });
+    });
   });
 }
