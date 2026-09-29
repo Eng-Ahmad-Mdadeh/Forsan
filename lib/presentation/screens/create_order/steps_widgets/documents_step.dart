@@ -5,6 +5,7 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
+import 'package:forsan/presentation/bloc/file/delete_file/delete_file_bloc.dart';
 import 'package:forsan/presentation/bloc/file/upload_file/upload_file_bloc.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_info_card.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_section_header.dart';
@@ -27,6 +28,7 @@ class DocumentsStep extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<UploadFileBloc>(create: (_) => UploadFileBloc()),
+        BlocProvider<DeleteFileBloc>(create: (_) => DeleteFileBloc()),
       ],
       child: BodyDocumentsStep(formKey: formKey, step: step),
     );
