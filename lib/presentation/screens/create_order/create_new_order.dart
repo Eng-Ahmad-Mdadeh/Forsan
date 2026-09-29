@@ -175,20 +175,12 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                   _handleRequestFailure(context, completeOrderState.message);
                 } else if (completeOrderState is CompleteOrderLoaded) {
                   Navigator.of(context, rootNavigator: true).pop();
-                  final savedStep = completeOrderState
-                      .completeOrderModel
-                      ?.data
-                      ?.currentStep;
                   final currentPage = context
                       .read<NewOrderCubit>()
                       .state
                       .orderEntity
                       .currentStep;
-                  final nextPage = (savedStep ?? currentPage + 2) - 1;
-                  _goToStep(
-                    context,
-                    nextPage.clamp(0, NewOrderCubit.lastStep),
-                  );
+                  _goToStep(context, currentPage + 1);
                 }
               },
             ),
@@ -291,7 +283,11 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                         height: AppHeight.h50,
                         color: AppColors.primary,
                         onPressed: () {
-                          final currentStep = state.orderEntity.currentStep;
+                          final orderEntity = context
+                              .read<NewOrderCubit>()
+                              .state
+                              .orderEntity;
+                          final currentStep = orderEntity.currentStep;
 
                           if (currentStep < _stepFormKeys.length &&
                               !(_stepFormKeys[currentStep].currentState
@@ -310,7 +306,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                           if (currentStep < NewOrderCubit.lastStep) {
                             context.read<CompleteOrderBloc>().add(
                               CompleteOrderEvent(
-                                state.orderEntity.copyWith(
+                                orderEntity.copyWith(
                                   currentStep: currentStep + 1,
                                 ),
                               ),
