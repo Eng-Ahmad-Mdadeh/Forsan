@@ -167,7 +167,9 @@ class _OrderProgressAndAction extends StatelessWidget {
                 child: Transform.rotate(
                   angle: math.pi,
                   child: CircularProgressIndicator(
-                    value: .5,
+                    value:
+                        (homeModel.currentRequest?.progress ?? 0).clamp(0, 100) /
+                        100,
                     strokeWidth: AppWidth.w7,
                     strokeCap: StrokeCap.round,
                     backgroundColor: AppColors.lightActive,
