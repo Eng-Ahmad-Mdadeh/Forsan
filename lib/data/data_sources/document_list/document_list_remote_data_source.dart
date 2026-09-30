@@ -4,7 +4,7 @@ import 'package:forsan/core/exceptions/app_exception.dart';
 import 'package:forsan/data/data_sources/base/base_remote_data_source.dart';
 import 'package:forsan/data/models/base/base_model.dart';
 import 'package:forsan/data/models/document_list/document_list_model.dart';
-import 'package:forsan/domain/entities/order_list/order_list_entity.dart';
+import 'package:forsan/domain/entities/document/document_entity.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable()
@@ -13,7 +13,7 @@ class DocumentListRemoteDataSource
   DocumentListRemoteDataSource() : super(ApiEndpoints.user);
 
   Future<Either<AppException, BaseModel<DocumentListModel>?>> getDocumentList(
-    OrderListEntity entity,
+    DocumentEntity entity,
   ) {
     return fetchData(
       endpoint: ApiEndpoints.document,

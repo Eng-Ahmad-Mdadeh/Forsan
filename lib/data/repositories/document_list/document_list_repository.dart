@@ -3,7 +3,7 @@ import 'package:forsan/core/exceptions/app_exception.dart';
 import 'package:forsan/data/data_sources/document_list/document_list_remote_data_source.dart';
 import 'package:forsan/data/models/base/base_model.dart';
 import 'package:forsan/data/models/document_list/document_list_model.dart';
-import 'package:forsan/domain/entities/order_list/order_list_entity.dart';
+import 'package:forsan/domain/entities/document/document_entity.dart';
 import 'package:forsan/domain/repositories/document_list/i_document_list_repository.dart';
 import 'package:injectable/injectable.dart';
 
@@ -15,7 +15,7 @@ class DocumentListRepository implements IDocumentListRepository {
 
   @override
   Future<Either<AppException, BaseModel<DocumentListModel>?>> getDocumentList(
-    OrderListEntity entity,
+    DocumentEntity entity,
   ) async {
     final response = await _remoteDataSource.getDocumentList(entity);
     return response.fold(

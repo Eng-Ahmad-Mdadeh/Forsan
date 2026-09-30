@@ -7,7 +7,7 @@ sealed class IDocumentListEvent extends Equatable {
 final class GetDocumentListEvent extends IDocumentListEvent {
   const GetDocumentListEvent(this.entity);
 
-  final OrderListEntity entity;
+  final DocumentEntity entity;
 
   @override
   List<Object?> get props => [entity];
@@ -16,7 +16,7 @@ final class GetDocumentListEvent extends IDocumentListEvent {
 final class LoadMoreDocumentListEvent extends IDocumentListEvent {
   const LoadMoreDocumentListEvent(this.entity);
 
-  final OrderListEntity entity;
+  final DocumentEntity entity;
 
   @override
   List<Object?> get props => [entity];

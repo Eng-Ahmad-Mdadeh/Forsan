@@ -7,7 +7,7 @@ import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/core/utils/pagination/page_pagination_controller.dart';
 import 'package:forsan/data/models/base/base_model.dart';
 import 'package:forsan/data/models/document_list/document_list_model.dart';
-import 'package:forsan/domain/entities/order_list/order_list_entity.dart';
+import 'package:forsan/domain/entities/document/document_entity.dart';
 import 'package:forsan/domain/usecases/i_use_case.dart';
 
 part 'document_list_event.dart';
@@ -15,10 +15,10 @@ part 'document_list_state.dart';
 
 class DocumentListBloc extends Bloc<IDocumentListEvent, IDocumentListState> {
   DocumentListBloc({
-    IUseCase<BaseModel<DocumentListModel>?, OrderListEntity>? getDocumentList,
+    IUseCase<BaseModel<DocumentListModel>?, DocumentEntity>? getDocumentList,
   }) : _getDocumentList =
            getDocumentList ??
-           locator<IUseCase<BaseModel<DocumentListModel>?, OrderListEntity>>(
+           locator<IUseCase<BaseModel<DocumentListModel>?, DocumentEntity>>(
              instanceName: 'DocumentList',
            ),
        super(const DocumentListInitial()) {
@@ -26,7 +26,7 @@ class DocumentListBloc extends Bloc<IDocumentListEvent, IDocumentListState> {
     on<LoadMoreDocumentListEvent>(_loadMore);
   }
 
-  final IUseCase<BaseModel<DocumentListModel>?, OrderListEntity>
+  final IUseCase<BaseModel<DocumentListModel>?, DocumentEntity>
       _getDocumentList;
 
   final PagePaginationController<Item, String> paginationController =

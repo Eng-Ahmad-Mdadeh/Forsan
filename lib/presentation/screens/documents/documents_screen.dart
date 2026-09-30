@@ -6,7 +6,7 @@ import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/core/utils/pagination/pagination_scroll_mixin.dart';
 import 'package:forsan/data/models/document_list/document_list_model.dart';
-import 'package:forsan/domain/entities/order_list/order_list_entity.dart';
+import 'package:forsan/domain/entities/document/document_entity.dart';
 import 'package:forsan/presentation/bloc/document_list/document_list_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -36,7 +36,7 @@ class _BodyDocumentsScreen extends StatefulWidget {
 
 class _BodyDocumentsScreenState extends State<_BodyDocumentsScreen>
     with PaginationScrollMixin<_BodyDocumentsScreen> {
-  static const _entity = OrderListEntity();
+  static const _entity = DocumentEntity();
 
   static final Item _skeletonDocument = Item(
     id: '',
