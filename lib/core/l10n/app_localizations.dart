@@ -7875,6 +7875,8 @@ abstract class AppLocalizations {
 
   String get order_complete_requirements;
 
+  String get order_delete_draft;
+
   /// No description provided for @complete_requirements_notice.
   ///
   /// In en, this message translates to:
