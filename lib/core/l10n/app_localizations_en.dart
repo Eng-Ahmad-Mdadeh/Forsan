@@ -4381,6 +4381,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get order_complete_requirements => 'Complete requirements';
 
   @override
+  String get order_delete_draft => 'Delete draft';
+
+  @override
   String get complete_requirements_notice =>
       'The following documents are required to complete your order review.\nAfter all documents are uploaded, they will be reviewed by the Forsan team.';
 
