@@ -12,6 +12,7 @@ import '../../../widgets/text/section_title.dart';
 
 class LatestOrderCard extends StatelessWidget {
   final HomeModel homeModel;
+
   const LatestOrderCard({super.key, required this.homeModel});
 
   @override
@@ -26,7 +27,6 @@ class LatestOrderCard extends StatelessWidget {
           start: AppPaddingWidth.p13,
           end: AppPaddingWidth.p16,
           top: AppPaddingHeight.p15,
-
         ),
         decoration: BoxDecoration(
           color: AppColors.white,
@@ -54,6 +54,7 @@ class LatestOrderCard extends StatelessWidget {
 
 class _OrderDetails extends StatelessWidget {
   final HomeModel homeModel;
+
   const _OrderDetails(this.homeModel);
 
   @override
@@ -82,7 +83,7 @@ class _OrderDetails extends StatelessWidget {
           ),
           SizedBox(width: AppWidth.w6),
           BodyTitle(
-            text: homeModel.currentRequest?.statusLabel??'',
+            text: homeModel.currentRequest?.statusLabel ?? '',
             color: AppColors.secondary,
             fontSize: AppFontSize.s12,
             fontWeight: AppFontWeight.medium,
@@ -91,7 +92,7 @@ class _OrderDetails extends StatelessWidget {
       ),
       SizedBox(height: AppHeight.h7),
       SectionTitle(
-        text: homeModel.currentRequest?.serviceName??'',
+        text: homeModel.currentRequest?.serviceName ?? '',
         color: AppColors.primaryDark,
         fontSize: AppFontSize.s14,
         fontWeight: AppFontWeight.bold,
@@ -99,7 +100,7 @@ class _OrderDetails extends StatelessWidget {
       ),
       SizedBox(height: AppHeight.h4),
       BodyTitle(
-        text:homeModel.currentRequest?.reference??'',
+        text: homeModel.currentRequest?.reference ?? '',
         color: AppColors.secondaryText,
         fontSize: AppFontSize.s12,
         fontWeight: AppFontWeight.medium,
@@ -116,8 +117,9 @@ class _OrderDetails extends StatelessWidget {
           SizedBox(width: AppWidth.w2),
           BodyTitle(
             text:
-            homeModel.currentRequest?.createdAt
-                ?.formatWithPattern('dd/MM/yyyy') ??
+                homeModel.currentRequest?.createdAt?.formatWithPattern(
+                  'dd/MM/yyyy',
+                ) ??
                 '',
             color: AppColors.primaryDark,
             fontSize: AppFontSize.s11,
@@ -167,7 +169,12 @@ class _OrderProgressAndAction extends StatelessWidget {
                 child: Transform.rotate(
                   angle: math.pi,
                   child: CircularProgressIndicator(
-                    value: .5,
+                    value:
+                        (homeModel.currentRequest?.progress ?? 0).clamp(
+                          0,
+                          100,
+                        ) /
+                        100,
                     strokeWidth: AppWidth.w7,
                     strokeCap: StrokeCap.round,
                     backgroundColor: AppColors.lightActive,

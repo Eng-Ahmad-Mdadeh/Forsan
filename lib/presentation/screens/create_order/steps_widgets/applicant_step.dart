@@ -92,7 +92,7 @@ class ApplicantStep extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: fields.length,
           itemBuilder: (_, index) => _buildField(context, fields[index]),
-          separatorBuilder: (_, _) => SizedBox(height: AppHeight.h8),
+          separatorBuilder: (_, _) => SizedBox(height: AppHeight.h4),
         ),
       ],
     );
@@ -178,7 +178,7 @@ class ApplicantStep extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: AppHeight.h8),
+        SizedBox(height: AppHeight.h4),
         BodyTitle(
           text: section.description?.trim() ??
               context.loc.new_order_delegation_in_syria_description,
