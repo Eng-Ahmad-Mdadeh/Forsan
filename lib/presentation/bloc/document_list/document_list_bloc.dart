@@ -33,6 +33,10 @@ class DocumentListBloc extends Bloc<IDocumentListEvent, IDocumentListState> {
       PagePaginationController<Item, String>(identifier: (item) => item.id);
   int _requestVersion = 0;
 
+  bool get canLoadMore => paginationController.hasMore;
+
+  bool get isLoadingMore => paginationController.isLoadingMore;
+
   FutureOr<void> _getDocuments(
     GetDocumentListEvent event,
     Emitter<IDocumentListState> emit,
