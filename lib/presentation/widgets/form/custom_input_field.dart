@@ -125,10 +125,11 @@ class CustomInputField extends StatelessWidget {
             ConstrainedBox(
               constraints: minimumFieldHeight != null
                   ? BoxConstraints(
+                      // Keep validated and non-validated inputs the same
+                      // visible height. The optional validation space is
+                      // already included in minimumFieldHeight when enabled.
                       minHeight: minimumFieldHeight,
-                      maxHeight: validator != null && !reserveValidationSpace
-                          ? double.infinity
-                          : minimumFieldHeight,
+                      maxHeight: minimumFieldHeight,
                     )
                   : const BoxConstraints(),
               child: showFlag
