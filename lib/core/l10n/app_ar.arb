@@ -570,6 +570,7 @@
   "order_required_action": "إجراء مطلوب",
   "order_required_documents_message": "يرجى إرفاق المستندات المطلوبة لاستكمال الطلب",
   "order_complete_requirements": "استكمال المتطلبات",
+  "order_delete_draft": "حذف المسودة",
   "complete_requirements_notice": "المستندات التالية مطلوبة لاستكمال مراجعة طلبك\nبعد رفع جميع المستندات سيتم مراجعتها من قبل فريق فرسان",
   "complete_requirements_documents_title": "المستندات المطلوبة",
   "complete_requirements_conviction_certificate": "شهادة غير محكوم",
