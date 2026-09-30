@@ -570,6 +570,7 @@
   "order_required_action": "Action required",
   "order_required_documents_message": "Please attach the required documents to complete the order",
   "order_complete_requirements": "Complete requirements",
+  "order_delete_draft": "Delete draft",
   "complete_requirements_notice": "The following documents are required to complete your order review.\nAfter all documents are uploaded, they will be reviewed by the Forsan team.",
   "complete_requirements_documents_title": "Required documents",
   "complete_requirements_conviction_certificate": "Certificate of no conviction",
