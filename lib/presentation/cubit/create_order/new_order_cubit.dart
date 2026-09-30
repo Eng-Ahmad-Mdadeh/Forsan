@@ -66,6 +66,26 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     );
   }
 
+  void setAcknowledgesAccuracy(bool value) {
+    if (state.orderEntity.acknowledgesAccuracy == value) return;
+
+    emit(
+      state.copyWith(
+        orderEntity: state.orderEntity.copyWith(acknowledgesAccuracy: value),
+      ),
+    );
+  }
+
+  void setAcceptsTerms(bool value) {
+    if (state.orderEntity.acceptsTerms == value) return;
+
+    emit(
+      state.copyWith(
+        orderEntity: state.orderEntity.copyWith(acceptsTerms: value),
+      ),
+    );
+  }
+
   Future<int> pickDocumentForRequirement(
     String requirementId, {
     required List<String> allowedExtensions,
