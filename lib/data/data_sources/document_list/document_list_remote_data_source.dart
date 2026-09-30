@@ -16,7 +16,7 @@ class DocumentListRemoteDataSource
     OrderListEntity entity,
   ) {
     return fetchData(
-      endpoint: ApiEndpoints.order,
+      endpoint: ApiEndpoints.document,
       queryParams: entity.toJson(),
       dataMayBeAtRoot: true,
       fromJsonT: (json) =>
