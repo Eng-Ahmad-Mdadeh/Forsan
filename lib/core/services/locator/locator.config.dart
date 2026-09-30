@@ -21,6 +21,8 @@ import '../../../data/data_sources/create_order/service_type/service_type_remote
     as _i619;
 import '../../../data/data_sources/delete_order/delete_order_remote_data_source.dart'
     as _i999;
+import '../../../data/data_sources/document_list/document_list_remote_data_source.dart'
+    as _i995;
 import '../../../data/data_sources/file/file_remote_data_source.dart' as _i158;
 import '../../../data/data_sources/home/home_remote_data_source.dart' as _i949;
 import '../../../data/data_sources/order_details/order_details_remote_data_source.dart'
@@ -128,6 +130,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i999.DeleteOrderRemoteDataSource>(
       () => _i999.DeleteOrderRemoteDataSource(),
+    );
+    gh.factory<_i995.DocumentListRemoteDataSource>(
+      () => _i995.DocumentListRemoteDataSource(),
     );
     gh.factory<_i158.FileRemoteDataSource>(() => _i158.FileRemoteDataSource());
     gh.factory<_i949.HomeRemoteDataSource>(() => _i949.HomeRemoteDataSource());
