@@ -268,7 +268,14 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
       routes: [TypedGoRoute<OrdersRoute>(path: '/orders')],
     ),
     TypedStatefulShellBranch<DocumentsBranch>(
-      routes: [TypedGoRoute<DocumentsRoute>(path: '/documents')],
+      routes: [
+        TypedGoRoute<DocumentsRoute>(
+          path: '/documents',
+          routes: [
+            TypedGoRoute<DocumentDetailsRoute>(path: 'document_details'),
+          ],
+        ),
+      ],
     ),
     TypedStatefulShellBranch<MoreBranch>(
       routes: [
@@ -362,20 +369,24 @@ class DocumentsRoute extends GoRouteData with $DocumentsRoute {
     return const DocumentsScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
-//
-// class DocumentDetailsRoute extends GoRouteData with $DocumentDetailsRoute {
-//   final DocumentDetailsState documentDetailsState;
-//
-//   const DocumentDetailsRoute(this.documentDetailsState)
-//
-//
-//   @override
-//   CustomTransitionPage<void> buildPage(BuildContext context,
-//       GoRouterState state,) {
-//     return DocumentDetailsScreen(state: documentDetailsState).buildPage(
-//         pageAnimation: PageAnimation.fade);
-//   }
-// }
+
+class DocumentDetailsRoute extends GoRouteData with $DocumentDetailsRoute {
+  const DocumentDetailsRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  CustomTransitionPage<void> buildPage(
+      BuildContext context,
+      GoRouterState state,
+      ) {
+    return const DocumentDetailsScreen(
+      state: DocumentDetailsState.waitingDocuments,
+    ).buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
+  }
+}
 
 class MoreRoute extends GoRouteData with $MoreRoute {
   const MoreRoute();

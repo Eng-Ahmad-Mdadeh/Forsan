@@ -372,6 +372,14 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
           path: '/documents',
           hasOverriddenOnExit: false,
           factory: $DocumentsRoute._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'document_details',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: DocumentDetailsRoute.$parentNavigatorKey,
+              factory: $DocumentDetailsRoute._fromState,
+            ),
+          ],
         ),
       ],
     ),
@@ -497,6 +505,27 @@ mixin $DocumentsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/documents');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $DocumentDetailsRoute on GoRouteData {
+  static DocumentDetailsRoute _fromState(GoRouterState state) =>
+      const DocumentDetailsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/documents/document_details');
 
   @override
   void go(BuildContext context) => context.go(location);

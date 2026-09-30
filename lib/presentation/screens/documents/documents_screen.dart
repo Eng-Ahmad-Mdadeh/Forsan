@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/core/utils/pagination/pagination_scroll_mixin.dart';
 import 'package:forsan/data/models/document_list/document_list_model.dart';
 import 'package:forsan/domain/entities/order_list/order_list_entity.dart';
@@ -136,14 +137,7 @@ class _BodyDocumentsScreenState extends State<_BodyDocumentsScreen>
                         itemBuilder: (context, index) => DocumentOrderCard(
                           item: documents[index],
                           onDetailsPressed: () =>
-                              Navigator.of(context).push(
-                                MaterialPageRoute<void>(
-                                  builder: (_) => const DocumentDetailsScreen(
-                                    state:
-                                        DocumentDetailsState.waitingDocuments,
-                                  ),
-                                ),
-                              ),
+                              const DocumentDetailsRoute().push(context),
                         ),
                       )
                     : const _EmptyDocumentsState(),

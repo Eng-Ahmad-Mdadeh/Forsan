@@ -46,6 +46,7 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
     builder: (context, state) {
       if (state is HomeFailed) {
         return Scaffold(
+          backgroundColor: AppColors.white,
           appBar: const HomeHeader(),
           body: FailureScreen(
             errorMessage: state.message,
@@ -67,6 +68,7 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
         ),
         enabled: state is HomeLoading,
         child: Scaffold(
+          backgroundColor: AppColors.white,
           appBar: HomeHeader(greetingName: homeData?.greetingName),
           body: SafeArea(
             child: ListView(

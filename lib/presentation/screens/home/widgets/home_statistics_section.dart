@@ -81,9 +81,12 @@ class _StatisticCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(AppRadius.r16),
+        border: Border.all(
+          color: AppColors.lightGrey.withOpacity(0.4),
+        ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.homeSoftShadow.withOpacity(0.02),
+            color: AppColors.homeSoftShadow.withOpacity(0.03),
             blurRadius: AppRadius.r10,
             offset: Offset(0, AppHeight.h4),
           ),
