@@ -12,6 +12,7 @@ import 'package:forsan/presentation/screens/complete_profile/complete_profile_sc
 import 'package:forsan/presentation/screens/contact_us/contact_us_screen.dart';
 import 'package:forsan/presentation/screens/create_order/create_new_order.dart';
 import 'package:forsan/presentation/screens/create_order/select_service_type.dart';
+import 'package:forsan/presentation/screens/document_details/document_details_screen.dart';
 import 'package:forsan/presentation/screens/documents/documents_screen.dart';
 import 'package:forsan/presentation/screens/edit_profile/edit_profile_screen.dart';
 import 'package:forsan/presentation/screens/frequently_asked_questions/f_q_screen.dart';
@@ -195,17 +196,16 @@ class BankTransferRoute extends GoRouteData with $BankTransferRoute {
     );
   }
 }
+
 class ShamCashRoute extends GoRouteData with $ShamCashRoute {
   const ShamCashRoute();
 
   @override
   CustomTransitionPage<void> buildPage(
-      BuildContext context,
-      GoRouterState state,
-      ) {
-    return const ShamCashScreen().buildPage(
-      pageAnimation: PageAnimation.fade,
-    );
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return const ShamCashScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
 
@@ -225,7 +225,9 @@ class WesternUnionRoute extends GoRouteData with $WesternUnionRoute {
 
 @TypedGoRoute<SelectServiceTypeRoute>(
   path: '/select_service_type',
-  routes: [TypedGoRoute<CreateNewOrderRoute>(path: 'create_new_order/:serviceSlug')],
+  routes: [
+    TypedGoRoute<CreateNewOrderRoute>(path: 'create_new_order/:serviceSlug'),
+  ],
 )
 class SelectServiceTypeRoute extends GoRouteData with $SelectServiceTypeRoute {
   const SelectServiceTypeRoute();
@@ -244,16 +246,16 @@ class SelectServiceTypeRoute extends GoRouteData with $SelectServiceTypeRoute {
 class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
   final String serviceSlug;
 
-  const CreateNewOrderRoute( this.serviceSlug);
+  const CreateNewOrderRoute(this.serviceSlug);
 
   @override
   CustomTransitionPage<void> buildPage(
     BuildContext context,
     GoRouterState state,
   ) {
-    return CreateNewOrderScreen(serviceSlug: serviceSlug).buildPage(
-      pageAnimation: PageAnimation.fade,
-    );
+    return CreateNewOrderScreen(
+      serviceSlug: serviceSlug,
+    ).buildPage(pageAnimation: PageAnimation.fade);
   }
 }
 
@@ -360,6 +362,20 @@ class DocumentsRoute extends GoRouteData with $DocumentsRoute {
     return const DocumentsScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
+//
+// class DocumentDetailsRoute extends GoRouteData with $DocumentDetailsRoute {
+//   final DocumentDetailsState documentDetailsState;
+//
+//   const DocumentDetailsRoute(this.documentDetailsState)
+//
+//
+//   @override
+//   CustomTransitionPage<void> buildPage(BuildContext context,
+//       GoRouterState state,) {
+//     return DocumentDetailsScreen(state: documentDetailsState).buildPage(
+//         pageAnimation: PageAnimation.fade);
+//   }
+// }
 
 class MoreRoute extends GoRouteData with $MoreRoute {
   const MoreRoute();
@@ -394,26 +410,32 @@ class PrivacyPolicyRoute extends GoRouteData with $PrivacyPolicyRoute {
 
   @override
   CustomTransitionPage<void> buildPage(
-      BuildContext context,
-      GoRouterState state,
-      ) {
-    return const PrivacyPolicyScreen().buildPage(pageAnimation: PageAnimation.fade);
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return const PrivacyPolicyScreen().buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
   }
 }
 
-class TermsAndConditionsRoute extends GoRouteData with $TermsAndConditionsRoute {
+class TermsAndConditionsRoute extends GoRouteData
+    with $TermsAndConditionsRoute {
   const TermsAndConditionsRoute();
 
   static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
 
   @override
   CustomTransitionPage<void> buildPage(
-      BuildContext context,
-      GoRouterState state,
-      ) {
-    return const TermsAndConditionsScreen().buildPage(pageAnimation: PageAnimation.fade);
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return const TermsAndConditionsScreen().buildPage(
+      pageAnimation: PageAnimation.fade,
+    );
   }
 }
+
 class ContactUsRoute extends GoRouteData with $ContactUsRoute {
   const ContactUsRoute();
 
@@ -421,9 +443,9 @@ class ContactUsRoute extends GoRouteData with $ContactUsRoute {
 
   @override
   CustomTransitionPage<void> buildPage(
-      BuildContext context,
-      GoRouterState state,
-      ) {
+    BuildContext context,
+    GoRouterState state,
+  ) {
     return const ContactUsScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
@@ -435,13 +457,12 @@ class FQRoute extends GoRouteData with $FQRoute {
 
   @override
   CustomTransitionPage<void> buildPage(
-      BuildContext context,
-      GoRouterState state,
-      ) {
+    BuildContext context,
+    GoRouterState state,
+  ) {
     return const FQScreen().buildPage(pageAnimation: PageAnimation.fade);
   }
 }
-
 
 class InvoicesAndPaymentsRoute extends GoRouteData
     with $InvoicesAndPaymentsRoute {

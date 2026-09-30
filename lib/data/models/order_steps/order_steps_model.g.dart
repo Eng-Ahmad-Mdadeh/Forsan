@@ -81,6 +81,7 @@ PurpleOption _$PurpleOptionFromJson(Map<String, dynamic> json) => PurpleOption(
 FluffyOption _$FluffyOptionFromJson(Map<String, dynamic> json) => FluffyOption(
   label: json['label'] as String?,
   value: json['value'] as String?,
+  icon: json['icon'] as String?,
   description: json['description'] as String?,
 );
 

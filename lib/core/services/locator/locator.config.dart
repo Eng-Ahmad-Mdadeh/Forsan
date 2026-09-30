@@ -36,7 +36,7 @@ import '../../../data/data_sources/profile/profile_remote_data_source.dart'
 import '../../../data/models/auth/auth_model.dart' as _i323;
 import '../../../data/models/base/base_model.dart' as _i480;
 import '../../../data/models/create_order/create_order_model.dart' as _i210;
-import '../../../data/models/document_list/document_list_model.dart' as _i1024;
+import '../../../data/models/document_list/document_list_model.dart' as _i739;
 import '../../../data/models/file/file_model.dart' as _i86;
 import '../../../data/models/home/home_model.dart' as _i703;
 import '../../../data/models/order_details/order_details_model.dart' as _i80;
@@ -102,7 +102,7 @@ import '../../../domain/usecases/create_order/submit_order/submit_order_use_case
 import '../../../domain/usecases/delete_order/delete_order_use_case.dart'
     as _i1058;
 import '../../../domain/usecases/document_list/document_list_use_case.dart'
-    as _i1025;
+    as _i585;
 import '../../../domain/usecases/file/delete_file_use_case.dart' as _i164;
 import '../../../domain/usecases/file/upload_file_use_case.dart' as _i894;
 import '../../../domain/usecases/home/home_use_case.dart' as _i208;
@@ -198,15 +198,6 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i61.DocumentListRepository(gh<_i906.DocumentListRemoteDataSource>()),
     );
-    gh.factory<
-      _i795.IUseCase<
-        _i480.BaseModel<_i1024.DocumentListModel>?,
-        _i729.OrderListEntity
-      >
-    >(
-      () => _i1025.DocumentListUseCase(gh<_i278.IDocumentListRepository>()),
-      instanceName: 'DocumentList',
-    );
     gh.factory<_i1042.IProfileRepository>(
       () => _i922.ProfileRepository(gh<_i265.ProfileRemoteDataSource>()),
     );
@@ -274,6 +265,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i795.IUseCase<_i480.BaseModel<void>?, _i232.CreateOrderEntity>>(
       () => _i1058.DeleteOrderUseCase(gh<_i895.IDeleteOrderRepository>()),
       instanceName: 'deleteOrder',
+    );
+    gh.factory<
+      _i795.IUseCase<
+        _i480.BaseModel<_i739.DocumentListModel>?,
+        _i729.OrderListEntity
+      >
+    >(
+      () => _i585.DocumentListUseCase(gh<_i278.IDocumentListRepository>()),
+      instanceName: 'DocumentList',
     );
     gh.factory<
       _i795.IUseCase<_i480.BaseModel<_i86.FileModel>?, _i232.CreateOrderEntity>
