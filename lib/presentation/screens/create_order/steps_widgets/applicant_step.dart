@@ -92,7 +92,7 @@ class ApplicantStep extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: fields.length,
           itemBuilder: (_, index) => _buildField(context, fields[index]),
-          separatorBuilder: (_, _) => SizedBox(height: AppHeight.h4),
+          separatorBuilder: (_, _) => SizedBox(height: AppHeight.h8),
         ),
       ],
     );

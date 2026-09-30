@@ -271,10 +271,10 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
             uploadState,
             deleteState,
           ),
-          if (index < fileFields.length - 1) SizedBox(height: AppHeight.h10),
+          if (index < fileFields.length - 1) SizedBox(height: AppHeight.h8),
         ],
         for (final field in infoFields) ...[
-          SizedBox(height: AppHeight.h26),
+          SizedBox(height: AppHeight.h8),
           OrderInfoCard(
             text: field.label?.trim() ?? '',
             backgroundColor: AppColors.goldBackGround,
