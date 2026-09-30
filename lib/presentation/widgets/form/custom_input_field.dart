@@ -41,6 +41,7 @@ class CustomInputField extends StatelessWidget {
   final Color? backgroundColor;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
+  final bool reserveValidationSpace;
 
   const CustomInputField({
     super.key,
@@ -75,6 +76,7 @@ class CustomInputField extends StatelessWidget {
     this.backgroundColor,
     this.inputFormatters,
     this.isExpanded,
+    this.reserveValidationSpace = true,
   }) : assert(
          (showRiyal ? 1 : 0) + (showPercentage ? 1 : 0) + (showClock ? 1 : 0) <= 1,
          'Only one of showRiyal, showPercentage, or showClock can be true',
@@ -85,7 +87,10 @@ class CustomInputField extends StatelessWidget {
     final inputHeight = height ?? (isExpanded ?? false ? null : AppHeight.h48);
     final minimumFieldHeight = inputHeight == null
         ? null
-        : inputHeight + (validator == null ? 0 : AppHeight.h20);
+        : inputHeight +
+              (validator == null || !reserveValidationSpace
+                  ? 0
+                  : AppHeight.h20);
 
     return Column(
       spacing: AppHeight.h4,
@@ -120,9 +125,11 @@ class CustomInputField extends StatelessWidget {
             ConstrainedBox(
               constraints: minimumFieldHeight != null
                   ? BoxConstraints(
-                minHeight: minimumFieldHeight,
-                maxHeight: minimumFieldHeight,
-              )
+                      minHeight: minimumFieldHeight,
+                      maxHeight: validator != null && !reserveValidationSpace
+                          ? double.infinity
+                          : minimumFieldHeight,
+                    )
                   : const BoxConstraints(),
               child: showFlag
                   ? Directionality(
@@ -178,6 +185,7 @@ class CustomInputField extends StatelessWidget {
       textInputType: showRiyal ? TextInputType.number : (textInputType ?? TextInputType.text),
       hintText: hintText,
       validator: validator,
+      reserveValidationSpace: reserveValidationSpace,
       enableInputBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(borderRadius ?? AppRadius.r7),
         borderSide: const BorderSide(color: AppColors.greyDivider, width: 0.7),

@@ -40,6 +40,7 @@ class OrderFormInputField extends StatelessWidget {
       textInputType: keyboardType ??
           (type == 'number' ? TextInputType.number : TextInputType.text),
       backgroundColor: AppColors.white,
+      reserveValidationSpace: false,
       maxLines: isTextArea ? 4 : 1,
       maxLength: maxLength,
       isExpanded: isTextArea,

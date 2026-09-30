@@ -46,6 +46,7 @@ class CustomTextFromField extends StatelessWidget {
   final FocusNode? focusNode;
   final double? cursorHeight;
   final void Function()? onEditingComplete;
+  final bool reserveValidationSpace;
 
   const CustomTextFromField({
     super.key,
@@ -88,6 +89,7 @@ class CustomTextFromField extends StatelessWidget {
     this.cursorHeight,
     this.expands = false,
     this.onEditingComplete,
+    this.reserveValidationSpace = true,
   });
 
   @override
@@ -133,10 +135,11 @@ class CustomTextFromField extends StatelessWidget {
           .applyDefaults(Theme.of(context).inputDecorationTheme)
           .copyWith(
             errorStyle: validationStyle,
-            // Reserve the validation line before an error is shown. Otherwise
-            // InputDecorator takes that line from the input's constrained
-            // height and makes the editable area appear to shrink.
-            helperText: validator == null ? null : ' ',
+            // Most forms reserve the validation line to prevent layout shifts.
+            // Compact forms can opt out so their explicit item separator is
+            // the only space shown between fields before validation.
+            helperText:
+                validator == null || !reserveValidationSpace ? null : ' ',
             helperStyle: validationStyle.copyWith(color: Colors.transparent),
             border: InputBorder.none,
             enabledBorder:

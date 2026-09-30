@@ -85,6 +85,7 @@ class _OrderPhoneFieldState extends State<OrderPhoneField> {
                       ? context.loc.complete_profile_required_field
                       : null
                 : null,
+            reserveValidationSpace: false,
             onChanged: widget.onChanged,
             hintColor: AppColors.grey,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
