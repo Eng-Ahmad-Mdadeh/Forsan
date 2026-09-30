@@ -21,6 +21,8 @@ import '../../../data/data_sources/create_order/service_type/service_type_remote
     as _i619;
 import '../../../data/data_sources/delete_order/delete_order_remote_data_source.dart'
     as _i180;
+import '../../../data/data_sources/document_list/document_list_remote_data_source.dart'
+    as _i906;
 import '../../../data/data_sources/file/file_remote_data_source.dart' as _i158;
 import '../../../data/data_sources/home/home_remote_data_source.dart' as _i949;
 import '../../../data/data_sources/order_details/order_details_remote_data_source.dart'
@@ -48,6 +50,8 @@ import '../../../data/repositories/create_order/service_type/service_type_reposi
     as _i254;
 import '../../../data/repositories/delete_order/delete_order_repository.dart'
     as _i35;
+import '../../../data/repositories/document_list/document_list_repository.dart'
+    as _i61;
 import '../../../data/repositories/file/file_repository.dart' as _i841;
 import '../../../data/repositories/home/home_repository.dart' as _i13;
 import '../../../data/repositories/order_details/order_details_repository.dart'
@@ -70,6 +74,8 @@ import '../../../domain/repositories/create_order/service_type/i_service_type_re
     as _i637;
 import '../../../domain/repositories/delete_order/i_delete_order_repository.dart'
     as _i895;
+import '../../../domain/repositories/document_list/i_document_list_repository.dart'
+    as _i278;
 import '../../../domain/repositories/file/i_file_repository.dart' as _i944;
 import '../../../domain/repositories/home/i_home_repository.dart' as _i751;
 import '../../../domain/repositories/order_details/i_order_details_repository.dart'
@@ -129,6 +135,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i180.DeleteOrderRemoteDataSource>(
       () => _i180.DeleteOrderRemoteDataSource(),
     );
+    gh.factory<_i906.DocumentListRemoteDataSource>(
+      () => _i906.DocumentListRemoteDataSource(),
+    );
     gh.factory<_i158.FileRemoteDataSource>(() => _i158.FileRemoteDataSource());
     gh.factory<_i949.HomeRemoteDataSource>(() => _i949.HomeRemoteDataSource());
     gh.factory<_i588.OrderDetailsRemoteDataSource>(
@@ -181,6 +190,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i372.IOrderStepsRepository>(
       () => _i1001.OrderStepsRepository(gh<_i984.OrderStepsRemoteDataSource>()),
+    );
+    gh.factory<_i278.IDocumentListRepository>(
+      () =>
+          _i61.DocumentListRepository(gh<_i906.DocumentListRemoteDataSource>()),
     );
     gh.factory<_i1042.IProfileRepository>(
       () => _i922.ProfileRepository(gh<_i265.ProfileRemoteDataSource>()),
