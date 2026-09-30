@@ -137,7 +137,7 @@ class _BodyDocumentsScreenState extends State<_BodyDocumentsScreen>
                         itemBuilder: (context, index) => DocumentOrderCard(
                           item: documents[index],
                           onDetailsPressed: () =>
-                              const DocumentDetailsRoute().push(context),
+                               DocumentDetailsRoute(orderId: documents[index].id).push(context),
                         ),
                       )
                     : const _EmptyDocumentsState(),

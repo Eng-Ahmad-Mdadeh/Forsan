@@ -30,6 +30,9 @@ class LatestOrderCard extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: AppColors.white,
+          border: Border.all(
+            color: AppColors.lightGrey.withOpacity(0.4),
+          ),
           borderRadius: BorderRadius.circular(AppRadius.r16),
           boxShadow: [
             BoxShadow(

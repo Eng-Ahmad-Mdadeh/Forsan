@@ -21,6 +21,8 @@ import '../../../data/data_sources/create_order/service_type/service_type_remote
     as _i619;
 import '../../../data/data_sources/delete_order/delete_order_remote_data_source.dart'
     as _i180;
+import '../../../data/data_sources/document_details/document_details_remote_data_source.dart'
+    as _i759;
 import '../../../data/data_sources/document_list/document_list_remote_data_source.dart'
     as _i906;
 import '../../../data/data_sources/file/file_remote_data_source.dart' as _i158;
@@ -36,6 +38,8 @@ import '../../../data/data_sources/profile/profile_remote_data_source.dart'
 import '../../../data/models/auth/auth_model.dart' as _i323;
 import '../../../data/models/base/base_model.dart' as _i480;
 import '../../../data/models/create_order/create_order_model.dart' as _i210;
+import '../../../data/models/document_details/document_details_model.dart'
+    as _i635;
 import '../../../data/models/document_list/document_list_model.dart' as _i739;
 import '../../../data/models/file/file_model.dart' as _i86;
 import '../../../data/models/home/home_model.dart' as _i703;
@@ -51,6 +55,8 @@ import '../../../data/repositories/create_order/service_type/service_type_reposi
     as _i254;
 import '../../../data/repositories/delete_order/delete_order_repository.dart'
     as _i35;
+import '../../../data/repositories/document_details/document_details_repository.dart'
+    as _i101;
 import '../../../data/repositories/document_list/document_list_repository.dart'
     as _i61;
 import '../../../data/repositories/file/file_repository.dart' as _i841;
@@ -76,6 +82,8 @@ import '../../../domain/repositories/create_order/service_type/i_service_type_re
     as _i637;
 import '../../../domain/repositories/delete_order/i_delete_order_repository.dart'
     as _i895;
+import '../../../domain/repositories/document_details/i_document_details_repository.dart'
+    as _i125;
 import '../../../domain/repositories/document_list/i_document_list_repository.dart'
     as _i278;
 import '../../../domain/repositories/file/i_file_repository.dart' as _i944;
@@ -102,6 +110,8 @@ import '../../../domain/usecases/create_order/submit_order/submit_order_use_case
     as _i330;
 import '../../../domain/usecases/delete_order/delete_order_use_case.dart'
     as _i1058;
+import '../../../domain/usecases/document_details/document_details_use_case.dart'
+    as _i738;
 import '../../../domain/usecases/document_list/document_list_use_case.dart'
     as _i585;
 import '../../../domain/usecases/file/delete_file_use_case.dart' as _i164;
@@ -139,6 +149,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i180.DeleteOrderRemoteDataSource>(
       () => _i180.DeleteOrderRemoteDataSource(),
     );
+    gh.factory<_i759.DocumentDetailsRemoteDataSource>(
+      () => _i759.DocumentDetailsRemoteDataSource(),
+    );
     gh.factory<_i906.DocumentListRemoteDataSource>(
       () => _i906.DocumentListRemoteDataSource(),
     );
@@ -157,6 +170,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i265.ProfileRemoteDataSource(),
     );
     gh.lazySingleton<_i1052.DeviceInfoHelper>(() => _i1052.DeviceInfoHelper());
+    gh.factory<_i125.IDocumentDetailsRepository>(
+      () => _i101.DocumentDetailsRepository(
+        gh<_i759.DocumentDetailsRemoteDataSource>(),
+      ),
+    );
     gh.factory<_i601.IOrderListRepository>(
       () => _i258.OrderListRepository(gh<_i734.OrderListRemoteDataSource>()),
     );
@@ -240,6 +258,16 @@ extension GetItInjectableX on _i174.GetIt {
     >(
       () => _i1032.OrderStepsUseCase(gh<_i372.IOrderStepsRepository>()),
       instanceName: 'OrderSteps',
+    );
+    gh.factory<
+      _i795.IUseCase<
+        _i480.BaseModel<_i635.DocumentDetailsModel>?,
+        _i987.DocumentEntity
+      >
+    >(
+      () =>
+          _i738.DocumentDetailsUseCase(gh<_i125.IDocumentDetailsRepository>()),
+      instanceName: 'DocumentDetails',
     );
     gh.factory<_i122.IOrderDetailsRepository>(
       () => _i664.OrderDetailsRepository(

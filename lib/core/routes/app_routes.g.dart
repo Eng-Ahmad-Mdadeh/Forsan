@@ -374,7 +374,7 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
           factory: $DocumentsRoute._fromState,
           routes: [
             GoRouteData.$route(
-              path: 'document_details',
+              path: 'document_details/:orderId',
               hasOverriddenOnExit: false,
               parentNavigatorKey: DocumentDetailsRoute.$parentNavigatorKey,
               factory: $DocumentDetailsRoute._fromState,
@@ -522,10 +522,14 @@ mixin $DocumentsRoute on GoRouteData {
 
 mixin $DocumentDetailsRoute on GoRouteData {
   static DocumentDetailsRoute _fromState(GoRouterState state) =>
-      const DocumentDetailsRoute();
+      DocumentDetailsRoute(orderId: state.pathParameters['orderId']);
+
+  DocumentDetailsRoute get _self => this as DocumentDetailsRoute;
 
   @override
-  String get location => GoRouteData.$location('/documents/document_details');
+  String get location => GoRouteData.$location(
+    '/documents/document_details/${Uri.encodeComponent(_self.orderId ?? '')}',
+  );
 
   @override
   void go(BuildContext context) => context.go(location);

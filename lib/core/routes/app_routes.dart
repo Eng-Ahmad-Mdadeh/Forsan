@@ -272,7 +272,7 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
         TypedGoRoute<DocumentsRoute>(
           path: '/documents',
           routes: [
-            TypedGoRoute<DocumentDetailsRoute>(path: 'document_details'),
+            TypedGoRoute<DocumentDetailsRoute>(path: 'document_details/:orderId'),
           ],
         ),
       ],
@@ -371,7 +371,8 @@ class DocumentsRoute extends GoRouteData with $DocumentsRoute {
 }
 
 class DocumentDetailsRoute extends GoRouteData with $DocumentDetailsRoute {
-  const DocumentDetailsRoute();
+  final String? orderId;
+  const DocumentDetailsRoute({this.orderId});
 
   static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
 
@@ -380,8 +381,9 @@ class DocumentDetailsRoute extends GoRouteData with $DocumentDetailsRoute {
       BuildContext context,
       GoRouterState state,
       ) {
-    return const DocumentDetailsScreen(
+    return  DocumentDetailsScreen(
       state: DocumentDetailsState.waitingDocuments,
+      orderId: orderId,
     ).buildPage(
       pageAnimation: PageAnimation.fade,
     );

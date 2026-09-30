@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/data/models/document_list/document_list_model.dart';
 import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/app_fonts.dart';
 import '../../../core/resources/app_values.dart';
@@ -16,10 +17,14 @@ import 'widgets/document_request_header_card.dart';
 export 'models/document_details_models.dart' show DocumentDetailsState;
 
 class DocumentDetailsScreen extends StatelessWidget {
+
   const DocumentDetailsScreen({
     super.key,
     this.state = DocumentDetailsState.underReview,
+    this.orderId,
   });
+
+  final String? orderId;
 
   final DocumentDetailsState state;
 
