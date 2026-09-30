@@ -65,7 +65,7 @@ import '../../../data/repositories/profile/profile_repository.dart' as _i922;
 import '../../../domain/entities/auth/auth_entity.dart' as _i450;
 import '../../../domain/entities/create_order/create_order_entity.dart'
     as _i232;
-import '../../../domain/entities/document/document_entity.dart' as _i1070;
+import '../../../domain/entities/document/document_entity.dart' as _i987;
 import '../../../domain/entities/order_details/order_details_entity.dart'
     as _i513;
 import '../../../domain/entities/order_list/order_list_entity.dart' as _i729;
@@ -270,7 +270,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<
       _i795.IUseCase<
         _i480.BaseModel<_i739.DocumentListModel>?,
-        _i1070.DocumentEntity
+        _i987.DocumentEntity
       >
     >(
       () => _i585.DocumentListUseCase(gh<_i278.IDocumentListRepository>()),

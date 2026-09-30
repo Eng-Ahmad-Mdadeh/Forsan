@@ -32,13 +32,16 @@ class ApiEndpoints {
   //#region order
   static const String serviceType = '/services/categories';
   static const String order = '/requests';
-  static const String document = '/documents';
   static String orderDetails(String id) => '$order/${Uri.encodeComponent(id)}';
   static String submitOrder(String orderId) => '$order/${Uri.encodeComponent(orderId)}/submit';
   static String orderSteps(String slug) => '/services/${Uri.encodeComponent(slug)}/form';
   //#endregion
 
 
+  //#region document
+  static const String document = '/documents';
+  static String documentDetails(String orderId) => '$order/${Uri.encodeComponent(orderId)}/$document';
+  //#endregion
 
   //#region files
   static String uploadFile(String orderId) => '$order/${Uri.encodeComponent(orderId)}/files';
