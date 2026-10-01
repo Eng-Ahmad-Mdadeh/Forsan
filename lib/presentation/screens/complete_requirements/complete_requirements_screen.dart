@@ -3,6 +3,7 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/data/models/document_details/document_details_model.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/document/document_section.dart';
@@ -11,7 +12,14 @@ import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
 class CompleteRequirementsScreen extends StatelessWidget {
-  const CompleteRequirementsScreen({super.key});
+  final List<RequiredDocumentModel>? model;
+  final RequiredActionModel? requiredAction;
+
+  const CompleteRequirementsScreen({
+    super.key,
+    this.model,
+    this.requiredAction,
+  });
 
   @override
   Widget build(BuildContext context) {

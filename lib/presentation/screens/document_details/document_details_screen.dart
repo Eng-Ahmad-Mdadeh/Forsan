@@ -95,7 +95,9 @@ class _BodyDocumentDetailsScreenState extends State<BodyDocumentDetailsScreen> {
               return FailureScreen(
                 errorMessage: blocState.message,
                 onPressed: () => context.read<DocumentDetailsBloc>().add(
-                  DocumentDetailsEvent(DocumentEntity(orderId: widget.item?.id)),
+                  DocumentDetailsEvent(
+                    DocumentEntity(orderId: widget.item?.id),
+                  ),
                 ),
               );
             }
@@ -131,28 +133,40 @@ class _BodyDocumentDetailsScreenState extends State<BodyDocumentDetailsScreen> {
                       child: Column(
                         children: [
                           DocumentRequestHeaderCard(item: item),
-                          if (documentDetails?.requiredAction!=null) ...[
+                          if (documentDetails?.requiredAction != null) ...[
                             SizedBox(height: AppHeight.h12),
                             RequiredActionCard(
-                              title: documentDetails?.requiredAction?.title??'',
-                              message:documentDetails?.requiredAction?.message??'',
-                              buttonText: documentDetails?.requiredAction?.actionLabel??'',
-                              semanticsLabel: documentDetails?.requiredAction?.title??'',
-                              onPressed: () => CompleteRequirementsRoute().push(context),
+                              title:
+                                  documentDetails?.requiredAction?.title ?? '',
+                              message:
+                                  documentDetails?.requiredAction?.message ??
+                                  '',
+                              buttonText:
+                                  documentDetails
+                                      ?.requiredAction
+                                      ?.actionLabel ??
+                                  '',
+                              semanticsLabel:
+                                  documentDetails?.requiredAction?.title ?? '',
+                              onPressed: () => CompleteRequirementsRoute(
+                                $extra: documentDetails!.requiredDocuments!,
+                                requiredAction: documentDetails.requiredAction,
+                              ).push(context),
                             ),
                           ],
                           SizedBox(height: AppHeight.h14),
-                          DocumentListCard(
-                            documents:documentDetails,
-                          ),
-                          if (documentDetails?.attachments?.isNotEmpty == true) ...[
+                          DocumentListCard(documents: documentDetails),
+                          if (documentDetails?.attachments?.isNotEmpty ==
+                              true) ...[
                             SizedBox(height: AppHeight.h16),
                             const AttachedDocumentsCard(),
                             SizedBox(height: AppHeight.h16),
-                          ]else
+                          ] else
                             SizedBox(height: AppHeight.h220),
-                          if (documentDetails?.requiredAction!=null)
-                          DocumentCompleteRequirementsButton(onPressed: () {}),
+                          if (documentDetails?.requiredAction != null)
+                            DocumentCompleteRequirementsButton(
+                              onPressed: () {},
+                            ),
                         ],
                       ),
                     ),
@@ -165,5 +179,4 @@ class _BodyDocumentDetailsScreenState extends State<BodyDocumentDetailsScreen> {
       ),
     ),
   );
-
 }

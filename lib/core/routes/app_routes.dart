@@ -6,6 +6,7 @@ import 'package:forsan/core/routes/app_shell.dart';
 import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/core/utils/enums/enum_utils.dart';
 import 'package:forsan/data/data_sources/auth/auth_storage_data_source.dart';
+import 'package:forsan/data/models/document_details/document_details_model.dart';
 import 'package:forsan/data/models/document_list/document_list_model.dart';
 import 'package:forsan/presentation/screens/check_code/check_code_screen.dart';
 import 'package:forsan/presentation/screens/complete_profile/complete_profile_screen.dart';
@@ -149,16 +150,20 @@ class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
 @TypedGoRoute<CompleteRequirementsRoute>(path: '/complete-requirements')
 class CompleteRequirementsRoute extends GoRouteData
     with $CompleteRequirementsRoute {
-  const CompleteRequirementsRoute();
+  final List<RequiredDocumentModel>? $extra;
+  final RequiredActionModel? requiredAction;
+
+  const CompleteRequirementsRoute({this.$extra, this.requiredAction});
 
   @override
   CustomTransitionPage<void> buildPage(
     BuildContext context,
     GoRouterState state,
   ) {
-    return const CompleteRequirementsScreen().buildPage(
-      pageAnimation: PageAnimation.fade,
-    );
+    return CompleteRequirementsScreen(
+      model: $extra,
+      requiredAction: requiredAction,
+    ).buildPage(pageAnimation: PageAnimation.fade);
   }
 }
 
@@ -378,14 +383,12 @@ class DocumentDetailsRoute extends GoRouteData with $DocumentDetailsRoute {
 
   @override
   CustomTransitionPage<void> buildPage(
-      BuildContext context,
-      GoRouterState state,
-      ) {
-    return  DocumentDetailsScreen(
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return DocumentDetailsScreen(
       item: $extra,
-    ).buildPage(
-      pageAnimation: PageAnimation.fade,
-    );
+    ).buildPage(pageAnimation: PageAnimation.fade);
   }
 }
 
