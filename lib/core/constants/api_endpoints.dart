@@ -46,6 +46,7 @@ class ApiEndpoints {
   //#region files
   static String uploadFile(String orderId) => '$order/${Uri.encodeComponent(orderId)}/files';
   static String deleteFile(String orderId,String fileId) => '$order/${Uri.encodeComponent(orderId)}/files/${Uri.encodeComponent(fileId)}';
+  static String downloadFile(String fileId) => '$user/files/${Uri.encodeComponent(fileId)}';
   //#endregion
 
 }

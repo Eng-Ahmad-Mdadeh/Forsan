@@ -1,8 +1,14 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:forsan/data/models/document_details/document_details_model.dart';
+import '../../../../core/constants/api_endpoints.dart';
+import '../../../../core/helper/network_helper.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
+import '../../../../core/services/locator/locator.dart';
 import '../../../widgets/status_badge.dart';
 import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
@@ -143,7 +149,43 @@ class _DocumentRow extends StatelessWidget {
             ),
             SizedBox(height: AppHeight.h4),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                final documentId = document.id;
+                if (documentId == null || documentId.isEmpty) return;
+
+                final result = await locator<NetworkHelper>().downloadFile(
+                  ApiEndpoints.downloadFile(documentId),
+                );
+
+                await result.fold(
+                  (error) async {
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(error.message)),
+                    );
+                  },
+                  (bytes) async {
+                    try {
+                      final outputPath = await FilePicker.platform.saveFile(
+                        dialogTitle: 'حفظ الملف',
+                        fileName: document.name ?? 'document-$documentId',
+                      );
+                      if (outputPath == null) return;
+
+                      await File(outputPath).writeAsBytes(bytes, flush: true);
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('تم تحميل الملف بنجاح')),
+                      );
+                    } catch (error) {
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(error.toString())),
+                      );
+                    }
+                  },
+                );
+              },
               borderRadius: BorderRadius.circular(AppRadius.r7),
               child: Container(
                 width: AppWidth.w25,
