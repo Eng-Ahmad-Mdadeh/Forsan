@@ -5,6 +5,7 @@ import 'package:forsan/core/helper/launch_url_helper.dart';
 import 'package:forsan/core/helper/network_helper.dart';
 import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/data/models/document_details/document_details_model.dart';
+import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
 import 'package:forsan/presentation/bloc/file/download_file/download_file_bloc.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
@@ -153,7 +154,14 @@ class _DocumentRow extends StatelessWidget {
             ),
             SizedBox(height: AppHeight.h4),
             InkWell(
-              onTap: () async {},
+              onTap: () {
+                context.read<DownloadFileBloc>().add(
+                  DownloadFileEvent(
+                    CreateOrderEntity(fileId: document.id ?? ''),
+                    fileId: document.id ?? '',
+                  ),
+                );
+              },
               borderRadius: BorderRadius.circular(AppRadius.r7),
               child: Container(
                 width: AppWidth.w25,

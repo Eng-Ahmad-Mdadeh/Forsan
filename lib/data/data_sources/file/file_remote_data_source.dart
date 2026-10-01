@@ -37,6 +37,13 @@ class FileRemoteDataSource extends BaseRemoteDataSource<FileModel> {
 
     return result;
   }
+  Future<Either<AppException, BaseModel<void>?>> deleteFile(
+      CreateOrderEntity data,
+      ) {
+    return deleteData(
+      endpoint: ApiEndpoints.deleteFile(data.orderId!, data.fileId!),
+    );
+  }
 
   Future<Either<AppException, Uint8List>> downloadFile(
       CreateOrderEntity data,
