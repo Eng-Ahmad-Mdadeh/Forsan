@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/core/constants/api_endpoints.dart';
+import 'package:forsan/core/helper/launch_url_helper.dart';
+import 'package:forsan/core/helper/network_helper.dart';
+import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/data/models/document_details/document_details_model.dart';
+import 'package:forsan/presentation/bloc/file/download_file/download_file_bloc.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
@@ -7,21 +13,28 @@ import '../../../widgets/status_badge.dart';
 import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
 
-
 class DocumentListCard extends StatelessWidget {
-   DocumentListCard({
-    super.key,
-    required this.title,
-     this.documents,
-  });
+  final DocumentDetailsModel? documents;
 
-  final String title;
+  const DocumentListCard({super.key, this.documents});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DownloadFileBloc>(create: (_) => DownloadFileBloc()),
+      ],
+      child: BodyDocumentListCard(documents: documents),
+    );
+  }
+}
+
+class BodyDocumentListCard extends StatelessWidget {
+  BodyDocumentListCard({super.key, this.documents});
 
   final DocumentDetailsModel? documents;
 
-
   late final uploads = documents?.uploads ?? const <AttachmentModel>[];
-
 
   @override
   Widget build(BuildContext context) => Container(
@@ -59,7 +72,7 @@ class DocumentListCard extends StatelessWidget {
             ),
             SizedBox(width: AppWidth.w8),
             SectionTitle(
-              text: title,
+              text: 'مستندات الطلب',
               color: AppColors.mainText,
               fontSize: AppFontSize.s14,
               fontWeight: AppFontWeight.bold,
@@ -70,8 +83,7 @@ class DocumentListCard extends StatelessWidget {
 
         for (var index = 0; index < uploads.length; index++) ...[
           _DocumentRow(document: uploads[index]),
-          if (index != uploads.length - 1)
-            SizedBox(height: AppHeight.h6),
+          if (index != uploads.length - 1) SizedBox(height: AppHeight.h6),
         ],
       ],
     ),
@@ -82,8 +94,6 @@ class _DocumentRow extends StatelessWidget {
   const _DocumentRow({required this.document});
 
   final AttachmentModel document;
-
-
 
   @override
   Widget build(BuildContext context) => Container(
@@ -143,7 +153,7 @@ class _DocumentRow extends StatelessWidget {
             ),
             SizedBox(height: AppHeight.h4),
             InkWell(
-              onTap: () {},
+              onTap: () async {},
               borderRadius: BorderRadius.circular(AppRadius.r7),
               child: Container(
                 width: AppWidth.w25,

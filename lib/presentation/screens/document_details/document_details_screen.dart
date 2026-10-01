@@ -143,7 +143,6 @@ class _BodyDocumentDetailsScreenState extends State<BodyDocumentDetailsScreen> {
                           ],
                           SizedBox(height: AppHeight.h14),
                           DocumentListCard(
-                            title: 'مستندات الطلب',
                             documents:documentDetails,
                           ),
                           if (documentDetails?.attachments?.isNotEmpty == true) ...[

@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'dart:typed_data';
 import 'package:dartz/dartz.dart';
 import 'package:forsan/data/models/pagination/pagination_model.dart';
 import 'package:forsan/data/models/base/base_model.dart';
@@ -13,29 +13,73 @@ class BaseRemoteDataSource<T> {
 
   BaseRemoteDataSource(this.baseEndpoint);
 
-  Future<Either<AppException, PaginationModel<T>?>> fetchAll(T Function(Object? json) fromJsonT, [num? page]) async {
+  Future<Either<AppException, Uint8List>> downloadData({
+    required String endpoint,
+  }) async {
     try {
-      final response = await _networkHelper.get('$baseEndpoint${page != null ? '?per_page=$page' : ''}');
-      return response.fold(
-        (error) => Left(error),
-        (right) {
-          return Right(BaseModel<PaginationModel<T>>.fromJson(
-            right.data!,
-            (json) => PaginationModel<T>.fromJson(json as Map<String, dynamic>, fromJsonT),
-          ).data);
-        },
-      );
+      final response = await _networkHelper.downloadFile(endpoint);
+      return response.fold(Left.new, Right.new);
     } on AppException catch (e, s) {
-      log("############################# FETCH APP EXCEPTION ################################");
+      log(
+        "######################## DOWNLOAD APP EXCEPTION ########################",
+      );
       log(e.message);
       log(s.toString());
-      log("#################################################################################");
+      log(
+        "########################################################################",
+      );
       return Left(e);
     } catch (e, s) {
-      log("############################# FETCH EXCEPTION ####################################");
+      log(
+        "######################## DOWNLOAD EXCEPTION ############################",
+      );
       log(e.toString());
       log(s.toString());
-      log("#################################################################################");
+      log(
+        "########################################################################",
+      );
+      return Left(UnKnownException(e.toString()));
+    }
+  }
+
+  Future<Either<AppException, PaginationModel<T>?>> fetchAll(
+    T Function(Object? json) fromJsonT, [
+    num? page,
+  ]) async {
+    try {
+      final response = await _networkHelper.get(
+        '$baseEndpoint${page != null ? '?per_page=$page' : ''}',
+      );
+      return response.fold((error) => Left(error), (right) {
+        return Right(
+          BaseModel<PaginationModel<T>>.fromJson(
+            right.data!,
+            (json) => PaginationModel<T>.fromJson(
+              json as Map<String, dynamic>,
+              fromJsonT,
+            ),
+          ).data,
+        );
+      });
+    } on AppException catch (e, s) {
+      log(
+        "############################# FETCH APP EXCEPTION ################################",
+      );
+      log(e.message);
+      log(s.toString());
+      log(
+        "#################################################################################",
+      );
+      return Left(e);
+    } catch (e, s) {
+      log(
+        "############################# FETCH EXCEPTION ####################################",
+      );
+      log(e.toString());
+      log(s.toString());
+      log(
+        "#################################################################################",
+      );
       return Left(UnKnownException(e.toString()));
     }
   }
@@ -52,24 +96,36 @@ class BaseRemoteDataSource<T> {
         queryParams: queryParams,
         data: data,
       );
-      return response.fold(
-        (error) => Left(error),
-        (right) {
-          return Right(BaseModel<PaginationModel<T>>.fromJson(
-              right.data!, (json) => PaginationModel<T>.fromJson(json as Map<String, dynamic>, fromJsonT)));
-        },
-      );
+      return response.fold((error) => Left(error), (right) {
+        return Right(
+          BaseModel<PaginationModel<T>>.fromJson(
+            right.data!,
+            (json) => PaginationModel<T>.fromJson(
+              json as Map<String, dynamic>,
+              fromJsonT,
+            ),
+          ),
+        );
+      });
     } on AppException catch (e, s) {
-      log("######################## FETCH PAGINATION APP EXCEPTION #########################");
+      log(
+        "######################## FETCH PAGINATION APP EXCEPTION #########################",
+      );
       log(e.toString());
       log(s.toString());
-      log("#################################################################################");
+      log(
+        "#################################################################################",
+      );
       return Left(e);
     } catch (e, s) {
-      log("####################### FETCH PAGINATION EXCEPTION ##############################");
+      log(
+        "####################### FETCH PAGINATION EXCEPTION ##############################",
+      );
       log(e.toString());
       log(s.toString());
-      log("#################################################################################");
+      log(
+        "#################################################################################",
+      );
       return Left(AppException('Unknown error'));
     }
   }
@@ -89,40 +145,43 @@ class BaseRemoteDataSource<T> {
         data: data,
         authToken: authToken,
       );
-      return response.fold(
-        (e) => Left(e),
-        (r) {
-          final responseData = r.data;
-          if (responseData == null) {
-            return Right<AppException, BaseModel<T>?>(null);
-          }
+      return response.fold((e) => Left(e), (r) {
+        final responseData = r.data;
+        if (responseData == null) {
+          return Right<AppException, BaseModel<T>?>(null);
+        }
 
-          return Right(
-            dataMayBeAtRoot
-                ? BaseModel<T>.fromJsonWithRootData(responseData, fromJsonT)
-                : BaseModel<T>.fromJson(
-                    responseData as Map<String, dynamic>,
-                    fromJsonT,
-                  ),
-          );
-        },
-      );
+        return Right(
+          dataMayBeAtRoot
+              ? BaseModel<T>.fromJsonWithRootData(responseData, fromJsonT)
+              : BaseModel<T>.fromJson(
+                  responseData as Map<String, dynamic>,
+                  fromJsonT,
+                ),
+        );
+      });
     } on AppException catch (e, s) {
-      log("############################# FETCH APP EXCEPTION ################################");
+      log(
+        "############################# FETCH APP EXCEPTION ################################",
+      );
       log(e.message);
       log(s.toString());
-      log("#################################################################################");
+      log(
+        "#################################################################################",
+      );
       return Left(e);
     } catch (e, s) {
-      log("############################# FETCH EXCEPTION ####################################");
+      log(
+        "############################# FETCH EXCEPTION ####################################",
+      );
       log(e.toString());
       log(s.toString());
-      log("#################################################################################");
+      log(
+        "#################################################################################",
+      );
       return Left(UnKnownException(e.toString()));
     }
   }
-  
-
 
   Future<Either<AppException, BaseModel<T>?>> postData({
     String endpoint = '',
@@ -139,28 +198,33 @@ class BaseRemoteDataSource<T> {
         files: files,
         isFormDate: isFormData,
       );
-      return response.fold(
-        (e) => Left(e),
-        (r) {
-          if (fromJsonT == null) return const Right(null);
-          return Right(
-            dataMayBeAtRoot
-                ? BaseModel<T>.fromJsonWithRootData(r.data!, fromJsonT)
-                : BaseModel<T>.fromJson(r.data!, fromJsonT),
-          );
-        },
-      );
+      return response.fold((e) => Left(e), (r) {
+        if (fromJsonT == null) return const Right(null);
+        return Right(
+          dataMayBeAtRoot
+              ? BaseModel<T>.fromJsonWithRootData(r.data!, fromJsonT)
+              : BaseModel<T>.fromJson(r.data!, fromJsonT),
+        );
+      });
     } on AppException catch (e, s) {
-      log("############################# POST APP EXCEPTION ################################");
+      log(
+        "############################# POST APP EXCEPTION ################################",
+      );
       log(e.message);
       log(s.toString());
-      log("#################################################################################");
+      log(
+        "#################################################################################",
+      );
       return Left(e);
     } catch (e, s) {
-      log("############################# POST EXCEPTION ####################################");
+      log(
+        "############################# POST EXCEPTION ####################################",
+      );
       log(e.toString());
       log(s.toString());
-      log("#################################################################################");
+      log(
+        "#################################################################################",
+      );
       return Left(UnKnownException(e.toString()));
     }
   }
@@ -182,21 +246,26 @@ class BaseRemoteDataSource<T> {
         files: files,
         fromJsonT: fromJsonT,
       );
-      return response.fold(
-        (e) => Left(e),
-        (r) => Right(r),
-      );
+      return response.fold((e) => Left(e), (r) => Right(r));
     } on AppException catch (e, s) {
-      log("############################# PATCH APP EXCEPTION ################################");
+      log(
+        "############################# PATCH APP EXCEPTION ################################",
+      );
       log(e.message);
       log(s.toString());
-      log("#################################################################################");
+      log(
+        "#################################################################################",
+      );
       return Left(e);
     } catch (e, s) {
-      log("############################# PATCH EXCEPTION ####################################");
+      log(
+        "############################# PATCH EXCEPTION ####################################",
+      );
       log(e.toString());
       log(s.toString());
-      log("#################################################################################");
+      log(
+        "#################################################################################",
+      );
       return Left(UnKnownException(e.toString()));
     }
   }
@@ -211,61 +280,76 @@ class BaseRemoteDataSource<T> {
   }) async {
     try {
       final response = await _networkHelper.patchPagination(
-      url:   baseEndpoint + endpoint,
+        url: baseEndpoint + endpoint,
         queryParams: queryParams,
         data: data,
         isFormData: isFormData,
         files: files,
         fromJsonT: fromJsonT,
       );
-      return response.fold(
-            (error) => Left(error),
-            (right) => Right(right),
-      );
+      return response.fold((error) => Left(error), (right) => Right(right));
     } on AppException catch (e, s) {
-      log("############################# PATCH PAGINATION APP EXCEPTION #############################");
+      log(
+        "############################# PATCH PAGINATION APP EXCEPTION #############################",
+      );
       log(e.message);
       log(s.toString());
-      log("#########################################################################################");
+      log(
+        "#########################################################################################",
+      );
       return Left(e);
     } catch (e, s) {
-      log("############################# PATCH PAGINATION EXCEPTION #################################");
+      log(
+        "############################# PATCH PAGINATION EXCEPTION #################################",
+      );
       log(e.toString());
       log(s.toString());
-      log("#########################################################################################");
+      log(
+        "#########################################################################################",
+      );
       return Left(UnKnownException(e.toString()));
     }
   }
+
   Future<Either<AppException, BaseModel<T>?>> deleteData({
     String endpoint = '',
     Map<String, dynamic>? data,
     T Function(Object? json)? fromJsonT,
   }) async {
     try {
-      final response = await _networkHelper.delete('$baseEndpoint$endpoint', data: data);
-      return response.fold(
-        (e) => Left(e),
-        (r) {
-          if (fromJsonT == null) return const Right(null);
-          return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
-        },
+      final response = await _networkHelper.delete(
+        '$baseEndpoint$endpoint',
+        data: data,
       );
+      return response.fold((e) => Left(e), (r) {
+        if (fromJsonT == null) return const Right(null);
+        return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
+      });
     } on AppException catch (e, s) {
-      log("############################# DELETE APP EXCEPTION ####################################");
+      log(
+        "############################# DELETE APP EXCEPTION ####################################",
+      );
       log(e.toString());
       log(s.toString());
-      log("####################################################################################");
+      log(
+        "####################################################################################",
+      );
       return Left(e);
     } catch (e, s) {
-      log("############################# DELETE EXCEPTION ####################################");
+      log(
+        "############################# DELETE EXCEPTION ####################################",
+      );
       log(e.toString());
       log(s.toString());
-      log("####################################################################################");
+      log(
+        "####################################################################################",
+      );
       return Left(UnKnownException(e.toString()));
     }
   }
 
-  Future<Either<AppException, BaseModel<PaginationModel<T>>?>> deletePagination({
+  Future<Either<AppException, BaseModel<PaginationModel<T>>?>>
+  deletePagination({
     String endpoint = '',
     Map<String, dynamic>? queryParams,
     Map<String, dynamic>? data,
@@ -274,32 +358,37 @@ class BaseRemoteDataSource<T> {
   }) async {
     try {
       final response = await _networkHelper.deletePagination(
-      url:   baseEndpoint + endpoint,
+        url: baseEndpoint + endpoint,
         queryParams: queryParams,
         data: data,
         isFormData: isFormData,
         fromJsonT: fromJsonT,
       );
-      return response.fold(
-            (error) => Left(error),
-            (right) => Right(right),
-      );
+      return response.fold((error) => Left(error), (right) => Right(right));
     } on AppException catch (e, s) {
-      log("############################# DELETE PAGINATION APP EXCEPTION ###########################");
+      log(
+        "############################# DELETE PAGINATION APP EXCEPTION ###########################",
+      );
       log(e.toString());
       log(s.toString());
-      log("#########################################################################################");
+      log(
+        "#########################################################################################",
+      );
       return Left(e);
     } catch (e, s) {
-      log("############################# DELETE PAGINATION EXCEPTION ################################");
+      log(
+        "############################# DELETE PAGINATION EXCEPTION ################################",
+      );
       log(e.toString());
       log(s.toString());
-      log("#########################################################################################");
+      log(
+        "#########################################################################################",
+      );
       return Left(UnKnownException(e.toString()));
     }
   }
 
-   Future<Either<AppException, BaseModel<T>?>> putData({
+  Future<Either<AppException, BaseModel<T>?>> putData({
     String endpoint = '',
     Map<String, dynamic>? data,
     bool isFormDate = true,
@@ -307,25 +396,35 @@ class BaseRemoteDataSource<T> {
     T Function(Object? json)? fromJsonT,
   }) async {
     try {
-      final response = await _networkHelper.put(baseEndpoint + endpoint, data: data, files: files, isFormDate: isFormDate);
-      return response.fold(
-        (e) => Left(e),
-        (r) {
-          if (fromJsonT == null) return const Right(null);
-          return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
-        },
+      final response = await _networkHelper.put(
+        baseEndpoint + endpoint,
+        data: data,
+        files: files,
+        isFormDate: isFormDate,
       );
+      return response.fold((e) => Left(e), (r) {
+        if (fromJsonT == null) return const Right(null);
+        return Right(BaseModel<T>.fromJson(r.data!, fromJsonT));
+      });
     } on AppException catch (e, s) {
-      log("############################# PUT APP EXCEPTION ################################");
+      log(
+        "############################# PUT APP EXCEPTION ################################",
+      );
       log(e.message);
       log(s.toString());
-      log("#################################################################################");
+      log(
+        "#################################################################################",
+      );
       return Left(e);
     } catch (e, s) {
-      log("############################# PUT EXCEPTION ####################################");
+      log(
+        "############################# PUT EXCEPTION ####################################",
+      );
       log(e.toString());
       log(s.toString());
-      log("#################################################################################");
+      log(
+        "#################################################################################",
+      );
       return Left(UnKnownException(e.toString()));
     }
   }

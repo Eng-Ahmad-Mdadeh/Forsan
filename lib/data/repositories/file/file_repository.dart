@@ -1,4 +1,4 @@
-
+import 'dart:typed_data';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:forsan/core/exceptions/app_exception.dart';
@@ -28,6 +28,16 @@ class FileRepository implements IFileRepository {
   @override
   Future<Either<AppException, BaseModel<void>?>> deleteFile(CreateOrderEntity data) async {
     final response = await _remoteDataSource.deleteFile(data);
+    return response.fold(
+          (l) async => Left(l),
+          (r) async {
+        return Right(r);
+      },
+    );
+  }
+  @override
+  Future<Either<AppException, Uint8List>> downloadFile(CreateOrderEntity data) async {
+    final response = await _remoteDataSource.downloadFile(data);
     return response.fold(
           (l) async => Left(l),
           (r) async {

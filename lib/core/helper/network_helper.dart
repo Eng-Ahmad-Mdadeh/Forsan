@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -9,10 +8,8 @@ import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/data/data_sources/auth/auth_storage_data_source.dart';
 import 'package:forsan/data/models/base/base_model.dart';
 import 'package:forsan/data/models/pagination/pagination_model.dart';
-
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
 import '../constants/api_endpoints.dart';
 import '../constants/app_storage_paths.dart';
 import '../exceptions/api_exception.dart';
@@ -152,7 +149,37 @@ class NetworkHelper {
       );
     });
   }
+  /// Downloads a file as binary data without attempting to decode it as JSON.
+  Future<Either<ApiException, Uint8List>> downloadFile(
+      String url, {
+        Map<String, dynamic>? queryParams,
+        String? authToken,
+      }) async {
+    final token = authToken ?? await getToken();
+    final version = await getVersion();
+    final language = await getLanguage();
 
+    final response = await _performRequest(() {
+      return _dio.get<List<int>>(
+        url,
+        queryParameters: queryParams,
+        options: Options(
+          responseType: ResponseType.bytes,
+          headers: _buildHeaders(token, version, language: language),
+        ),
+      );
+    });
+
+    return response.fold(
+      Left.new,
+          (response) {
+        final data = response.data;
+        if (data is Uint8List) return Right(data);
+        if (data is List<int>) return Right(Uint8List.fromList(data));
+        return Left(ApiException('The downloaded file is empty or invalid', language));
+      },
+    );
+  }
   Future<Either<ApiException, Response>> put(
     String url, {
     dynamic data,

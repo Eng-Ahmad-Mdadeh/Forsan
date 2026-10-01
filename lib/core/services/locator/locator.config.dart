@@ -10,6 +10,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+import 'dart:typed_data' as _i100;
+
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -115,6 +117,7 @@ import '../../../domain/usecases/document_details/document_details_use_case.dart
 import '../../../domain/usecases/document_list/document_list_use_case.dart'
     as _i585;
 import '../../../domain/usecases/file/delete_file_use_case.dart' as _i164;
+import '../../../domain/usecases/file/download_file_use_case.dart' as _i929;
 import '../../../domain/usecases/file/upload_file_use_case.dart' as _i894;
 import '../../../domain/usecases/home/home_use_case.dart' as _i208;
 import '../../../domain/usecases/i_use_case.dart' as _i795;
@@ -277,6 +280,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i795.IUseCase<_i480.BaseModel<void>?, _i232.CreateOrderEntity>>(
       () => _i164.DeleteFileUseCase(gh<_i944.IFileRepository>()),
       instanceName: 'deleteFile',
+    );
+    gh.factory<_i795.IUseCase<_i100.Uint8List, _i232.CreateOrderEntity>>(
+      () => _i929.DownloadFileUseCase(gh<_i944.IFileRepository>()),
+      instanceName: 'downloadFile',
     );
     gh.factory<_i795.IUseCase<_i480.BaseModel<_i703.HomeModel>?, Null>>(
       () => _i208.HomeUseCase(gh<_i751.IHomeRepository>()),

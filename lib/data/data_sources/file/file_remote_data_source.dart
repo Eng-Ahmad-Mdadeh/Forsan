@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'dart:typed_data';
 import 'package:injectable/injectable.dart';
 import 'package:forsan/core/constants/api_endpoints.dart';
 import 'package:forsan/core/exceptions/app_exception.dart';
@@ -37,19 +38,11 @@ class FileRemoteDataSource extends BaseRemoteDataSource<FileModel> {
     return result;
   }
 
-  Future<Either<AppException, BaseModel<void>?>> deleteFile(
-    CreateOrderEntity data,
-  ) {
-    return deleteData(
-      endpoint: ApiEndpoints.deleteFile(data.orderId!, data.fileId!),
-    );
-  }
-
-  Future<Either<AppException, BaseModel<void>?>> downloadFile(
+  Future<Either<AppException, Uint8List>> downloadFile(
       CreateOrderEntity data,
       ) {
-    return deleteData(
-      endpoint: ApiEndpoints.deleteFile(data.orderId!, data.fileId!),
+    return downloadData(
+      endpoint: ApiEndpoints.downloadFile(data.fileId!),
     );
   }
 
