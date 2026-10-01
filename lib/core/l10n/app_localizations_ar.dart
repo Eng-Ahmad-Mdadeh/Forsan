@@ -4371,8 +4371,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get complete_requirements_upload => 'اضغط للرفع';
 
   @override
-  String get complete_requirements_upload_hint =>
-      'الحد الأقصى لحجم الملف 5 ميغا بايت (PNG-JPG-PDF)';
+  String complete_requirements_upload_hint(
+    String maxSize,
+    String acceptedTypes,
+  ) {
+    return 'الحد الأقصى لحجم الملف $maxSize ميغا بايت ($acceptedTypes)';
+  }
 
 
   @override

@@ -89,23 +89,24 @@ class CompleteRequirementsScreen extends StatelessWidget {
               text: context.loc.complete_requirements_documents_title,
               fontSize: AppFontSize.s16,
             ),
-            SizedBox(
-              height: AppHeight.h400,
-              child: ListView.builder(
-                itemCount: model?.length ?? 0,
-                itemBuilder: (context, index) {
-                  return DocumentSection(
-                    title: context
-                        .loc
-                        .complete_requirements_conviction_certificate,
-                    image: null,
-                    onTap: () {},
-                    uploadLabel: context.loc.complete_requirements_upload,
-                    uploadHint: context.loc.complete_requirements_upload_hint,
-                    paddingTop: AppPaddingHeight.p12,
-                  );
-                },
-              ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: model?.length ?? 0,
+              itemBuilder: (context, index) {
+                final document = model?[index];
+
+                return DocumentSection(
+                  title: context
+                      .loc
+                      .complete_requirements_conviction_certificate,
+                  image: null,
+                  onTap: () {},
+                  uploadLabel: context.loc.complete_requirements_upload,
+                  uploadHint: _uploadHint(context, document),
+                  paddingTop: AppPaddingHeight.p12,
+                );
+              },
             ),
           ],
         ),
@@ -141,6 +142,29 @@ class CompleteRequirementsScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  String _uploadHint(
+    BuildContext context,
+    RequiredDocumentModel? document,
+  ) {
+    final maxSize =
+        document?.maxSize ?? AppFileConstraints.maxDocumentSizeInBytes;
+    final acceptedTypes = document?.acceptedTypes?.isNotEmpty == true
+        ? document!.acceptedTypes!
+        : AppFileConstraints.documentExtensions;
+    final sizeInMegabytes = maxSize / (1024 * 1024);
+    final formattedSize = sizeInMegabytes == sizeInMegabytes.roundToDouble()
+        ? sizeInMegabytes.toInt().toString()
+        : sizeInMegabytes.toStringAsFixed(1);
+    final extensions = acceptedTypes
+        .map((type) => type.split('/').last.toUpperCase())
+        .join('-');
+
+    return context.loc.complete_requirements_upload_hint(
+      formattedSize,
+      extensions,
     );
   }
 }

@@ -7890,7 +7890,10 @@ abstract class AppLocalizations {
 
   String get complete_requirements_upload;
 
-  String get complete_requirements_upload_hint;
+  String complete_requirements_upload_hint(
+    String maxSize,
+    String acceptedTypes,
+  );
 
 
   String get complete_requirements_confirm;
