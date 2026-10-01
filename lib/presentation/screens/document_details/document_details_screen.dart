@@ -149,8 +149,11 @@ class _BodyDocumentDetailsScreenState extends State<BodyDocumentDetailsScreen> {
                               semanticsLabel:
                                   documentDetails?.requiredAction?.title ?? '',
                               onPressed: () => CompleteRequirementsRoute(
-                                $extra: documentDetails!.requiredDocuments!,
-                                requiredAction: documentDetails.requiredAction,
+                                $extra: CompleteRequirementsExtra(
+                                  documents:
+                                  documentDetails!.requiredDocuments!,
+                                  requiredAction: documentDetails.requiredAction!,
+                                ),
                               ).push(context),
                             ),
                           ],

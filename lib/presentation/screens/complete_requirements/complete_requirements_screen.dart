@@ -45,8 +45,8 @@ class CompleteRequirementsScreen extends StatelessWidget {
               backgroundColor: AppColors.secondaryLightHover,
               borderRadius: BorderRadius.circular(AppRadius.r20),
               padding: EdgeInsets.symmetric(
-                horizontal: AppPaddingWidth.p20,
-                vertical: AppPaddingHeight.p24,
+                horizontal: AppPaddingWidth.p16,
+                vertical: AppPaddingHeight.p16,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,20 +61,25 @@ class CompleteRequirementsScreen extends StatelessWidget {
                       SizedBox(width: AppWidth.w8),
                       Expanded(
                         child: SectionTitle(
-                          text: context.loc.order_required_action,
+                          text: requiredAction?.title ?? '',
                           color: AppColors.mainText,
-                          fontSize: AppFontSize.s16,
+                          fontSize: AppFontSize.s13,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: AppHeight.h12),
-                  BodyTitle(
-                    text: context.loc.complete_requirements_notice,
-                    color: AppColors.blackCow,
-                    fontSize: AppFontSize.s14,
-                    fontWeight: AppFontWeight.regular,
-                    height: 1.8,
+
+                  Padding(
+                    padding: EdgeInsetsDirectional.only(
+                      start: AppPaddingWidth.p35,
+                    ),
+                    child: BodyTitle(
+                      text: context.loc.complete_requirements_notice,
+                      color: AppColors.blackCow,
+                      fontSize: AppFontSize.s12,
+                      fontWeight: AppFontWeight.regular,
+                      height: 1.8,
+                    ),
                   ),
                 ],
               ),
@@ -82,23 +87,25 @@ class CompleteRequirementsScreen extends StatelessWidget {
             SizedBox(height: AppHeight.h24),
             SectionTitle(
               text: context.loc.complete_requirements_documents_title,
-              fontSize: AppFontSize.s18,
+              fontSize: AppFontSize.s16,
             ),
-            DocumentSection(
-              title: context.loc.order_document_company_address,
-              image: null,
-              onTap: () {},
-              uploadLabel: context.loc.complete_requirements_upload,
-              uploadHint: context.loc.complete_requirements_upload_hint,
-              paddingTop: AppPaddingHeight.p12,
-            ),
-            DocumentSection(
-              title: context.loc.complete_requirements_conviction_certificate,
-              image: null,
-              onTap: () {},
-              uploadLabel: context.loc.complete_requirements_upload,
-              uploadHint: context.loc.complete_requirements_upload_hint,
-              paddingTop: AppPaddingHeight.p12,
+            SizedBox(
+              height: AppHeight.h400,
+              child: ListView.builder(
+                itemCount: model?.length ?? 0,
+                itemBuilder: (context, index) {
+                  return DocumentSection(
+                    title: context
+                        .loc
+                        .complete_requirements_conviction_certificate,
+                    image: null,
+                    onTap: () {},
+                    uploadLabel: context.loc.complete_requirements_upload,
+                    uploadHint: context.loc.complete_requirements_upload_hint,
+                    paddingTop: AppPaddingHeight.p12,
+                  );
+                },
+              ),
             ),
           ],
         ),

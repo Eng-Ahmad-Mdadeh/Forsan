@@ -19,7 +19,7 @@ class HomeHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) => CustomAppBar(
-    backgroundColor: AppColors.backGround,
+    backgroundColor:  AppColors.white,
     showScrolledUnderElevation: false,
     toolbarHeight: preferredSize.height,
     flexibleSpace: DecoratedBox(

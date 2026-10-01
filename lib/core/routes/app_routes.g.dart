@@ -1,0 +1,761 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'app_routes.dart';
+
+// **************************************************************************
+// GoRouterGenerator
+// **************************************************************************
+
+List<RouteBase> get $appRoutes => [
+  $splashRoute,
+  $loginRoute,
+  $completeProfileRoute,
+  $ordersDetailsRoute,
+  $completeRequirementsRoute,
+  $payRoute,
+  $selectServiceTypeRoute,
+  $appShellRoute,
+];
+
+RouteBase get $splashRoute => GoRouteData.$route(
+  path: '/',
+  hasOverriddenOnExit: false,
+  factory: $SplashRoute._fromState,
+);
+
+mixin $SplashRoute on GoRouteData {
+  static SplashRoute _fromState(GoRouterState state) => const SplashRoute();
+
+  @override
+  String get location => GoRouteData.$location('/');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $loginRoute => GoRouteData.$route(
+  path: '/login',
+  hasOverriddenOnExit: false,
+  factory: $LoginRoute._fromState,
+  routes: [
+    GoRouteData.$route(
+      path: 'check-code',
+      hasOverriddenOnExit: false,
+      factory: $CheckCodeRoute._fromState,
+    ),
+  ],
+);
+
+mixin $LoginRoute on GoRouteData {
+  static LoginRoute _fromState(GoRouterState state) => const LoginRoute();
+
+  @override
+  String get location => GoRouteData.$location('/login');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $CheckCodeRoute on GoRouteData {
+  static CheckCodeRoute _fromState(GoRouterState state) =>
+      const CheckCodeRoute();
+
+  @override
+  String get location => GoRouteData.$location('/login/check-code');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $completeProfileRoute => GoRouteData.$route(
+  path: '/complete-profile',
+  hasOverriddenOnExit: false,
+  factory: $CompleteProfileRoute._fromState,
+);
+
+mixin $CompleteProfileRoute on GoRouteData {
+  static CompleteProfileRoute _fromState(GoRouterState state) =>
+      const CompleteProfileRoute();
+
+  @override
+  String get location => GoRouteData.$location('/complete-profile');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $ordersDetailsRoute => GoRouteData.$route(
+  path: '/orders/:orderId',
+  hasOverriddenOnExit: false,
+  factory: $OrdersDetailsRoute._fromState,
+);
+
+mixin $OrdersDetailsRoute on GoRouteData {
+  static OrdersDetailsRoute _fromState(GoRouterState state) =>
+      OrdersDetailsRoute(state.pathParameters['orderId']!);
+
+  OrdersDetailsRoute get _self => this as OrdersDetailsRoute;
+
+  @override
+  String get location =>
+      GoRouteData.$location('/orders/${Uri.encodeComponent(_self.orderId)}');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $completeRequirementsRoute => GoRouteData.$route(
+  path: '/complete-requirements',
+  hasOverriddenOnExit: false,
+  factory: $CompleteRequirementsRoute._fromState,
+);
+
+mixin $CompleteRequirementsRoute on GoRouteData {
+  static CompleteRequirementsRoute _fromState(GoRouterState state) =>
+      CompleteRequirementsRoute(
+        $extra: state.extra as CompleteRequirementsExtra?,
+      );
+
+  CompleteRequirementsRoute get _self => this as CompleteRequirementsRoute;
+
+  @override
+  String get location => GoRouteData.$location('/complete-requirements');
+
+  @override
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+
+  @override
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: _self.$extra);
+
+  @override
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
+}
+
+RouteBase get $payRoute => GoRouteData.$route(
+  path: '/pay',
+  hasOverriddenOnExit: false,
+  factory: $PayRoute._fromState,
+  routes: [
+    GoRouteData.$route(
+      path: 'bank-transfer',
+      hasOverriddenOnExit: false,
+      factory: $BankTransferRoute._fromState,
+    ),
+    GoRouteData.$route(
+      path: 'western-union',
+      hasOverriddenOnExit: false,
+      factory: $WesternUnionRoute._fromState,
+    ),
+    GoRouteData.$route(
+      path: 'sham-cash',
+      hasOverriddenOnExit: false,
+      factory: $ShamCashRoute._fromState,
+    ),
+  ],
+);
+
+mixin $PayRoute on GoRouteData {
+  static PayRoute _fromState(GoRouterState state) => const PayRoute();
+
+  @override
+  String get location => GoRouteData.$location('/pay');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $BankTransferRoute on GoRouteData {
+  static BankTransferRoute _fromState(GoRouterState state) =>
+      const BankTransferRoute();
+
+  @override
+  String get location => GoRouteData.$location('/pay/bank-transfer');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $WesternUnionRoute on GoRouteData {
+  static WesternUnionRoute _fromState(GoRouterState state) =>
+      const WesternUnionRoute();
+
+  @override
+  String get location => GoRouteData.$location('/pay/western-union');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $ShamCashRoute on GoRouteData {
+  static ShamCashRoute _fromState(GoRouterState state) => const ShamCashRoute();
+
+  @override
+  String get location => GoRouteData.$location('/pay/sham-cash');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $selectServiceTypeRoute => GoRouteData.$route(
+  path: '/select_service_type',
+  hasOverriddenOnExit: false,
+  factory: $SelectServiceTypeRoute._fromState,
+  routes: [
+    GoRouteData.$route(
+      path: 'create_new_order/:serviceSlug',
+      hasOverriddenOnExit: false,
+      factory: $CreateNewOrderRoute._fromState,
+    ),
+  ],
+);
+
+mixin $SelectServiceTypeRoute on GoRouteData {
+  static SelectServiceTypeRoute _fromState(GoRouterState state) =>
+      const SelectServiceTypeRoute();
+
+  @override
+  String get location => GoRouteData.$location('/select_service_type');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $CreateNewOrderRoute on GoRouteData {
+  static CreateNewOrderRoute _fromState(GoRouterState state) =>
+      CreateNewOrderRoute(state.pathParameters['serviceSlug']!);
+
+  CreateNewOrderRoute get _self => this as CreateNewOrderRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/select_service_type/create_new_order/${Uri.encodeComponent(_self.serviceSlug)}',
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $appShellRoute => StatefulShellRouteData.$route(
+  factory: $AppShellRouteExtension._fromState,
+  branches: [
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
+          path: '/home',
+          hasOverriddenOnExit: false,
+          factory: $HomeRoute._fromState,
+        ),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
+          path: '/orders',
+          hasOverriddenOnExit: false,
+          factory: $OrdersRoute._fromState,
+        ),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
+          path: '/documents',
+          hasOverriddenOnExit: false,
+          factory: $DocumentsRoute._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'document_details',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: DocumentDetailsRoute.$parentNavigatorKey,
+              factory: $DocumentDetailsRoute._fromState,
+            ),
+          ],
+        ),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
+          path: '/more',
+          hasOverriddenOnExit: false,
+          factory: $MoreRoute._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'setting',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: SettingRoute.$parentNavigatorKey,
+              factory: $SettingRoute._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'privacy_policy',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: PrivacyPolicyRoute.$parentNavigatorKey,
+              factory: $PrivacyPolicyRoute._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'terms_and_conditions',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: TermsAndConditionsRoute.$parentNavigatorKey,
+              factory: $TermsAndConditionsRoute._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'contact_us',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: ContactUsRoute.$parentNavigatorKey,
+              factory: $ContactUsRoute._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'fq',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: FQRoute.$parentNavigatorKey,
+              factory: $FQRoute._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'invoices_and_payments',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: InvoicesAndPaymentsRoute.$parentNavigatorKey,
+              factory: $InvoicesAndPaymentsRoute._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'payments_details',
+                  hasOverriddenOnExit: false,
+                  parentNavigatorKey: PaymentsDetailsRoute.$parentNavigatorKey,
+                  factory: $PaymentsDetailsRoute._fromState,
+                ),
+              ],
+            ),
+            GoRouteData.$route(
+              path: 'show_profile',
+              hasOverriddenOnExit: false,
+              parentNavigatorKey: ShowProfileRoute.$parentNavigatorKey,
+              factory: $ShowProfileRoute._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'edit_profile',
+                  hasOverriddenOnExit: false,
+                  parentNavigatorKey: EditProfileRoute.$parentNavigatorKey,
+                  factory: $EditProfileRoute._fromState,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+  ],
+);
+
+extension $AppShellRouteExtension on AppShellRoute {
+  static AppShellRoute _fromState(GoRouterState state) => const AppShellRoute();
+}
+
+mixin $HomeRoute on GoRouteData {
+  static HomeRoute _fromState(GoRouterState state) => const HomeRoute();
+
+  @override
+  String get location => GoRouteData.$location('/home');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $OrdersRoute on GoRouteData {
+  static OrdersRoute _fromState(GoRouterState state) => const OrdersRoute();
+
+  @override
+  String get location => GoRouteData.$location('/orders');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $DocumentsRoute on GoRouteData {
+  static DocumentsRoute _fromState(GoRouterState state) =>
+      const DocumentsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/documents');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $DocumentDetailsRoute on GoRouteData {
+  static DocumentDetailsRoute _fromState(GoRouterState state) =>
+      DocumentDetailsRoute($extra: state.extra as Item?);
+
+  DocumentDetailsRoute get _self => this as DocumentDetailsRoute;
+
+  @override
+  String get location => GoRouteData.$location('/documents/document_details');
+
+  @override
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
+
+  @override
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: _self.$extra);
+
+  @override
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
+}
+
+mixin $MoreRoute on GoRouteData {
+  static MoreRoute _fromState(GoRouterState state) => const MoreRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $SettingRoute on GoRouteData {
+  static SettingRoute _fromState(GoRouterState state) => const SettingRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more/setting');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $PrivacyPolicyRoute on GoRouteData {
+  static PrivacyPolicyRoute _fromState(GoRouterState state) =>
+      const PrivacyPolicyRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more/privacy_policy');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $TermsAndConditionsRoute on GoRouteData {
+  static TermsAndConditionsRoute _fromState(GoRouterState state) =>
+      const TermsAndConditionsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more/terms_and_conditions');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $ContactUsRoute on GoRouteData {
+  static ContactUsRoute _fromState(GoRouterState state) =>
+      const ContactUsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more/contact_us');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $FQRoute on GoRouteData {
+  static FQRoute _fromState(GoRouterState state) => const FQRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more/fq');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $InvoicesAndPaymentsRoute on GoRouteData {
+  static InvoicesAndPaymentsRoute _fromState(GoRouterState state) =>
+      const InvoicesAndPaymentsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more/invoices_and_payments');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $PaymentsDetailsRoute on GoRouteData {
+  static PaymentsDetailsRoute _fromState(GoRouterState state) =>
+      const PaymentsDetailsRoute();
+
+  @override
+  String get location =>
+      GoRouteData.$location('/more/invoices_and_payments/payments_details');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $ShowProfileRoute on GoRouteData {
+  static ShowProfileRoute _fromState(GoRouterState state) =>
+      const ShowProfileRoute();
+
+  @override
+  String get location => GoRouteData.$location('/more/show_profile');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $EditProfileRoute on GoRouteData {
+  static EditProfileRoute _fromState(GoRouterState state) =>
+      const EditProfileRoute();
+
+  @override
+  String get location =>
+      GoRouteData.$location('/more/show_profile/edit_profile');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}

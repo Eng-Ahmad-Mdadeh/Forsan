@@ -150,10 +150,9 @@ class OrdersDetailsRoute extends GoRouteData with $OrdersDetailsRoute {
 @TypedGoRoute<CompleteRequirementsRoute>(path: '/complete-requirements')
 class CompleteRequirementsRoute extends GoRouteData
     with $CompleteRequirementsRoute {
-  final List<RequiredDocumentModel>? $extra;
-  final RequiredActionModel? requiredAction;
+  final CompleteRequirementsExtra? $extra;
 
-  const CompleteRequirementsRoute({this.$extra, this.requiredAction});
+  const CompleteRequirementsRoute({this.$extra});
 
   @override
   CustomTransitionPage<void> buildPage(
@@ -161,10 +160,20 @@ class CompleteRequirementsRoute extends GoRouteData
     GoRouterState state,
   ) {
     return CompleteRequirementsScreen(
-      model: $extra,
-      requiredAction: requiredAction,
+      model: $extra?.documents,
+      requiredAction: $extra?.requiredAction,
     ).buildPage(pageAnimation: PageAnimation.fade);
   }
+}
+
+class CompleteRequirementsExtra {
+  const CompleteRequirementsExtra({
+    required this.documents,
+    required this.requiredAction,
+  });
+
+  final List<RequiredDocumentModel> documents;
+  final RequiredActionModel requiredAction;
 }
 
 @TypedGoRoute<PayRoute>(
