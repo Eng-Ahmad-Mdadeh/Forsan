@@ -89,23 +89,20 @@ class CompleteRequirementsScreen extends StatelessWidget {
               text: context.loc.complete_requirements_documents_title,
               fontSize: AppFontSize.s16,
             ),
-            SizedBox(
-              height: AppHeight.h400,
-              child: ListView.builder(
-                itemCount: model?.length ?? 0,
-                itemBuilder: (context, index) {
-                  return DocumentSection(
-                    title: context
-                        .loc
-                        .complete_requirements_conviction_certificate,
-                    image: null,
-                    onTap: () {},
-                    uploadLabel: context.loc.complete_requirements_upload,
-                    uploadHint: context.loc.complete_requirements_upload_hint,
-                    paddingTop: AppPaddingHeight.p12,
-                  );
-                },
-              ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: model?.length ?? 0,
+              itemBuilder: (context, index) {
+                return DocumentSection(
+                  title: model?[index].name ?? '',
+                  image: null,
+                  onTap: () {},
+                  uploadLabel: context.loc.complete_requirements_upload,
+                  uploadHint: context.loc.complete_requirements_upload_hint,
+                  paddingTop: AppPaddingHeight.p12,
+                );
+              },
             ),
           ],
         ),
