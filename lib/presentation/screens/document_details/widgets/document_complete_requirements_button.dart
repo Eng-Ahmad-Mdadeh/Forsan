@@ -18,9 +18,9 @@ class DocumentCompleteRequirementsButton extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     color: AppColors.white,
     padding: EdgeInsets.fromLTRB(
-      AppPaddingWidth.p16,
+      0,
       AppPaddingHeight.p8,
-      AppPaddingWidth.p16,
+      0,
       AppPaddingHeight.p16,
     ),
     child: SizedBox(

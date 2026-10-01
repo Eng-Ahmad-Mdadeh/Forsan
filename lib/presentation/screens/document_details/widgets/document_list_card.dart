@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
-
+import 'package:forsan/data/models/document_details/document_details_model.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
 import '../../../widgets/status_badge.dart';
 import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
-import '../models/document_details_models.dart';
+
 
 class DocumentListCard extends StatelessWidget {
-  const DocumentListCard({
+   DocumentListCard({
     super.key,
     required this.title,
-    required this.documents,
-    required this.statuses,
+     this.documents,
   });
 
   final String title;
-  final List<DocumentDetailsData> documents;
-  final List<DocumentDetailsStatus>? statuses;
+
+  final DocumentDetailsModel? documents;
+
+
+  late final uploads = documents?.uploads ?? const <AttachmentModel>[];
+
 
   @override
   Widget build(BuildContext context) => Container(
@@ -64,9 +67,10 @@ class DocumentListCard extends StatelessWidget {
           ],
         ),
         SizedBox(height: AppHeight.h8),
-        for (var index = 0; index < documents.length; index++) ...[
-          _DocumentRow(document: documents[index], status: statuses?[index]),
-          if (index != documents.length - 1)
+
+        for (var index = 0; index < uploads.length; index++) ...[
+          _DocumentRow(document: uploads[index]),
+          if (index != uploads.length - 1)
             SizedBox(height: AppHeight.h6),
         ],
       ],
@@ -75,10 +79,11 @@ class DocumentListCard extends StatelessWidget {
 }
 
 class _DocumentRow extends StatelessWidget {
-  const _DocumentRow({required this.document, this.status});
+  const _DocumentRow({required this.document});
 
-  final DocumentDetailsData document;
-  final DocumentDetailsStatus? status;
+  final AttachmentModel document;
+
+
 
   @override
   Widget build(BuildContext context) => Container(
@@ -112,14 +117,16 @@ class _DocumentRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BodyTitle(
-                text: document.name,
+                text: document.name ?? '',
                 color: AppColors.blackText,
                 fontSize: AppFontSize.s14,
                 fontWeight: AppFontWeight.medium,
               ),
               SizedBox(height: AppHeight.h3),
               BodyTitle(
-                text: document.size,
+                text: document.size == null
+                    ? ''
+                    : '${(document.size! / (1024 * 1024)).toStringAsFixed(1)} ميجا بايت',
                 color: AppColors.secondaryText,
                 fontSize: AppFontSize.s10,
                 fontWeight: AppFontWeight.regular,
@@ -129,14 +136,12 @@ class _DocumentRow extends StatelessWidget {
         ),
         Column(
           children: [
-            if (status != null) ...[
-              StatusBadge.custom(
-                label: status!.label,
-                backgroundColor: status!.backgroundColor,
-                color: status!.foregroundColor,
-              ),
-              SizedBox(height: AppHeight.h4),
-            ],
+            StatusBadge(
+              status: document.status ?? '',
+              fontSize: AppSize.s12,
+              fontWeight: AppFontWeight.medium,
+            ),
+            SizedBox(height: AppHeight.h4),
             InkWell(
               onTap: () {},
               borderRadius: BorderRadius.circular(AppRadius.r7),

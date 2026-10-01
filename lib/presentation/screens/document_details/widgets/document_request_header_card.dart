@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forsan/data/models/document_list/document_list_model.dart';
 import 'package:intl/intl.dart';
-
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
@@ -9,11 +8,9 @@ import '../../../widgets/status_badge.dart';
 import '../../../widgets/status_icon.dart';
 import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
-import '../models/document_details_models.dart';
 
 class DocumentRequestHeaderCard extends StatelessWidget {
-
-  const DocumentRequestHeaderCard({super.key,  this.item});
+  const DocumentRequestHeaderCard({super.key, this.item});
 
   final Item? item;
 
@@ -47,7 +44,7 @@ class DocumentRequestHeaderCard extends StatelessWidget {
               ),
               SizedBox(height: AppHeight.h5),
               BodyTitle(
-                text: item?.reference?? '',
+                text: item?.reference ?? '',
                 color: AppColors.secondaryText,
                 fontSize: AppFontSize.s10,
                 fontWeight: AppFontWeight.regular,
@@ -64,7 +61,9 @@ class DocumentRequestHeaderCard extends StatelessWidget {
                   BodyTitle(
                     text: item?.createdAt == null
                         ? ''
-                        : DateFormat('dd/MM/yyyy').format(item!.createdAt!.toLocal()),
+                        : DateFormat(
+                            'dd/MM/yyyy',
+                          ).format(item!.createdAt!.toLocal()),
                     color: AppColors.mainText,
                     fontSize: AppFontSize.s10,
                     fontWeight: AppFontWeight.regular,
@@ -79,14 +78,16 @@ class DocumentRequestHeaderCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             StatusBadge(
-              status: item?.statusLabel??item?.displayStatus??'',
+              status: item?.documentsStatusLabel ?? item?.statusLabel ?? '',
               fontSize: AppSize.s12,
               fontWeight: AppFontWeight.medium,
             ),
             SizedBox(height: AppHeight.h14),
             Align(
               alignment: AlignmentDirectional.centerEnd,
-              child: StatusIcon(status:  item?.statusLabel??item?.displayStatus??'',),
+              child: StatusIcon(
+                status: item?.documentsStatusLabel ?? item?.statusLabel ?? '',
+              ),
             ),
           ],
         ),

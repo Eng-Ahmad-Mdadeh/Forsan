@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/domain/entities/document/document_entity.dart';
 import 'package:forsan/presentation/bloc/document_details/document_details_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
 import '../../../core/resources/app_colors.dart';
 import '../../../core/resources/app_fonts.dart';
 import '../../../core/resources/app_values.dart';
@@ -13,7 +12,6 @@ import '../../widgets/custom_app_bar.dart';
 import '../../widgets/failure_screen.dart';
 import '../../widgets/required_action_card.dart';
 import '../../widgets/text/section_title.dart';
-import 'models/document_details_models.dart';
 import 'widgets/attached_documents_card.dart';
 import 'widgets/document_complete_requirements_button.dart';
 import 'widgets/document_list_card.dart';
@@ -36,15 +34,9 @@ class DocumentDetailsScreen extends StatelessWidget {
 }
 
 class BodyDocumentDetailsScreen extends StatefulWidget {
-  const BodyDocumentDetailsScreen({
-    super.key,
-    this.state = DocumentDetailsState.underReview,
-    this.item,
-  });
+  const BodyDocumentDetailsScreen({super.key, this.item});
 
   final Item? item;
-
-  final DocumentDetailsState state;
 
   @override
   State<BodyDocumentDetailsScreen> createState() =>
@@ -70,24 +62,11 @@ class _BodyDocumentDetailsScreenState extends State<BodyDocumentDetailsScreen> {
     attachmentCount: null,
   );
 
-  static const _requestDocuments = [
-    DocumentDetailsData(name: 'جواز السفر', size: '1.2 ميجا بايت'),
-    DocumentDetailsData(name: 'جواز السفر', size: '1.2 ميجا بايت'),
-    DocumentDetailsData(name: 'جواز السفر', size: '1.2 ميجا بايت'),
-  ];
-
   @override
   void initState() {
     super.initState();
-    _loadDocumentDetails();
-  }
-
-  void _loadDocumentDetails() {
-    final orderId = widget.item?.id;
-    if (orderId == null || orderId.isEmpty) return;
-
     context.read<DocumentDetailsBloc>().add(
-      DocumentDetailsEvent(DocumentEntity(orderId: orderId)),
+      DocumentDetailsEvent(DocumentEntity(orderId: widget.item?.id)),
     );
   }
 
@@ -115,13 +94,18 @@ class _BodyDocumentDetailsScreenState extends State<BodyDocumentDetailsScreen> {
             if (blocState is DocumentDetailsFailed) {
               return FailureScreen(
                 errorMessage: blocState.message,
-                onPressed: _loadDocumentDetails,
+                onPressed: () => context.read<DocumentDetailsBloc>().add(
+                  DocumentDetailsEvent(DocumentEntity(orderId: widget.item?.id)),
+                ),
               );
             }
 
             final isLoading =
                 blocState is DocumentDetailsInitial ||
                 blocState is DocumentDetailsLoading;
+            final documentDetails = blocState is DocumentDetailsLoaded
+                ? blocState.documentDetailsModel?.data
+                : null;
             final item = isLoading ? _skeletonItem : widget.item;
 
             return Skeletonizer(
@@ -147,39 +131,33 @@ class _BodyDocumentDetailsScreenState extends State<BodyDocumentDetailsScreen> {
                       child: Column(
                         children: [
                           DocumentRequestHeaderCard(item: item),
-                          if (widget.state ==
-                              DocumentDetailsState.waitingDocuments) ...[
+                          if (documentDetails?.requiredAction!=null) ...[
                             SizedBox(height: AppHeight.h12),
                             RequiredActionCard(
-                              title: 'إجراء مطلوب',
-                              message:
-                                  'يرجى إرفاق المستندات المطلوبة لاستكمال الطلب',
-                              buttonText: 'استكمال المتطلبات',
-                              semanticsLabel: 'إجراء مطلوب',
-                              onPressed: () =>
-                                  CompleteRequirementsRoute().push(context),
+                              title: documentDetails?.requiredAction?.title??'',
+                              message:documentDetails?.requiredAction?.message??'',
+                              buttonText: documentDetails?.requiredAction?.actionLabel??'',
+                              semanticsLabel: documentDetails?.requiredAction?.title??'',
+                              onPressed: () => CompleteRequirementsRoute().push(context),
                             ),
                           ],
                           SizedBox(height: AppHeight.h14),
                           DocumentListCard(
                             title: 'مستندات الطلب',
-                            documents: _requestDocuments,
-                            statuses: _requestDocumentStatuses,
+                            documents:documentDetails,
                           ),
-                          // if (state == DocumentDetailsState.completed) ...[
-                          //   SizedBox(height: AppHeight.h16),
-                          //   const AttachedDocumentsCard(),
-                          // ],
-                          SizedBox(height: AppHeight.h16),
-                          const AttachedDocumentsCard(),
-                          SizedBox(height: AppHeight.h16),
+                          if (documentDetails?.attachments?.isNotEmpty == true) ...[
+                            SizedBox(height: AppHeight.h16),
+                            const AttachedDocumentsCard(),
+                            SizedBox(height: AppHeight.h16),
+                          ]else
+                            SizedBox(height: AppHeight.h220),
+                          if (documentDetails?.requiredAction!=null)
                           DocumentCompleteRequirementsButton(onPressed: () {}),
                         ],
                       ),
                     ),
                   ),
-                  // if (state == DocumentDetailsState.waitingDocuments)
-                  //   DocumentCompleteRequirementsButton(onPressed: () {}),
                 ],
               ),
             );
@@ -189,18 +167,4 @@ class _BodyDocumentDetailsScreenState extends State<BodyDocumentDetailsScreen> {
     ),
   );
 
-  List<DocumentDetailsStatus>? get _requestDocumentStatuses =>
-      switch (widget.state) {
-    DocumentDetailsState.underReview => List.filled(
-      _requestDocuments.length,
-      DocumentDetailsStatus.underReview,
-    ),
-    DocumentDetailsState.waitingDocuments => const [
-      DocumentDetailsStatus.approved,
-      DocumentDetailsStatus.rejected,
-      DocumentDetailsStatus.required,
-    ],
-    DocumentDetailsState.inProgress || DocumentDetailsState.completed =>
-      List.filled(_requestDocuments.length, DocumentDetailsStatus.approved),
-  };
 }

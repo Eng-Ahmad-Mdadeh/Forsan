@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:forsan/core/extension/page_builder_extension.dart';
@@ -34,9 +33,7 @@ import 'package:forsan/presentation/screens/show_profile/show_profile_screen.dar
 import 'package:forsan/presentation/screens/splash/splash_screen.dart';
 import 'package:forsan/presentation/screens/terms_and_conditions/terms_and_conditions_screen.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../presentation/screens/complete_requirements/complete_requirements_screen.dart';
-import '../../presentation/screens/document_details/models/document_details_models.dart';
 
 part 'app_routes.g.dart';
 
@@ -385,7 +382,6 @@ class DocumentDetailsRoute extends GoRouteData with $DocumentDetailsRoute {
       GoRouterState state,
       ) {
     return  DocumentDetailsScreen(
-
       item: $extra,
     ).buildPage(
       pageAnimation: PageAnimation.fade,

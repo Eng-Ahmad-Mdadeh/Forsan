@@ -25,15 +25,6 @@ class OrderCard extends StatelessWidget {
   final bool showDateLabel;
   final String detailsButtonText;
 
-  String get _title => item.serviceName ?? '';
-
-  String get _number => item.reference ?? '';
-
-  String get _status => item.statusLabel ?? item.displayStatus ?? '';
-
-  String get _date => item.createdAt == null
-      ? ''
-      : DateFormat('dd/MM/yyyy').format(item.createdAt!.toLocal());
 
   String get _consultant {
     final consultant = item.consultant;
@@ -46,7 +37,7 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Semantics(
     container: true,
-    label: '$_title، $_number، $_status',
+    label: item.serviceName,
     child: Container(
       height: showFooter ? AppHeight.h150 : AppHeight.h120,
       clipBehavior: Clip.antiAlias,
@@ -65,7 +56,7 @@ class OrderCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(width: AppWidth.w6, color: StatusBadge.colorFor(_status)),
+          Container(width: AppWidth.w6, color: StatusBadge.colorFor(item.statusLabel??'')),
           Expanded(
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(
@@ -82,14 +73,18 @@ class OrderCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: _OrderInformation(
-                            title: _title,
-                            number: _number,
-                            date: _date,
-                            showDateLabel: showDateLabel,
+                            title: item.serviceName??'',
+                            number: item.reference??'',
+                            date: item?.createdAt == null
+                                ? ''
+                                : DateFormat(
+                              'dd/MM/yyyy',
+                            ).format(item!.createdAt!.toLocal()),
+                            showDateLabel: showDateLabel?? false,
                           ),
                         ),
                         SizedBox(width: AppWidth.w10),
-                        _OrderState(status: _status),
+                        _OrderState(status: item.statusLabel??''),
                       ],
                     ),
                   ),
@@ -104,7 +99,7 @@ class OrderCard extends StatelessWidget {
                         SizedBox(width: AppWidth.w4),
                         Expanded(
                           child: BodyTitle(
-                            text: 'المستشار : $_consultant',
+                            text: 'المستشار : ${_consultant ?? ''}',
                             color: AppColors.primaryDark,
                             fontSize: AppFontSize.s10,
                             fontWeight: AppFontWeight.medium,
