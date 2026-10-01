@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/constants/api_endpoints.dart';
+import 'package:forsan/core/helper/download_file_helper.dart';
 import 'package:forsan/core/helper/launch_url_helper.dart';
 import 'package:forsan/core/helper/network_helper.dart';
 import 'package:forsan/core/services/locator/locator.dart';
@@ -37,58 +38,103 @@ class BodyDocumentListCard extends StatelessWidget {
 
   late final uploads = documents?.uploads ?? const <AttachmentModel>[];
 
+  Future<void> _saveDownloadedFile(
+    BuildContext context,
+    DownloadFileLoaded state,
+  ) async {
+    final attachment = uploads.cast<AttachmentModel?>().firstWhere(
+      (file) => file?.id == state.fileId,
+      orElse: () => null,
+    );
+    final fileName = DownloadFileHelper.safeFileName(
+      attachment?.name,
+      state.fileId,
+    );
+
+    try {
+      final savedPath = await DownloadFileHelper.saveFile(
+        bytes: state.response,
+        fileId: state.fileId,
+        fileName: attachment?.name,
+        dialogTitle: 'حفظ الملف',
+      );
+
+      if (!context.mounted || savedPath == null) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('تم حفظ الملف بنجاح: $fileName')));
+    } catch (_) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('تعذر حفظ الملف، يرجى المحاولة مرة أخرى')),
+      );
+    }
+  }
+
   @override
-  Widget build(BuildContext context) => Container(
-    width: double.infinity,
-    padding: EdgeInsets.all(AppPaddingWidth.p10),
-    decoration: BoxDecoration(
-      color: AppColors.white,
-      borderRadius: BorderRadius.circular(AppRadius.r12),
+  Widget build(BuildContext context) =>
+      BlocListener<DownloadFileBloc, IDownloadFileState>(
+        listener: (context, state) {
+          if (state is DownloadFileLoaded) {
+            _saveDownloadedFile(context, state);
+          } else if (state is DownloadFileFailed) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
+          }
+        },
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(AppPaddingWidth.p10),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(AppRadius.r12),
 
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.homeSoftShadow.withOpacity(0.05),
-          blurRadius: AppRadius.r7,
-          offset: Offset(0, AppHeight.h2),
-        ),
-      ],
-    ),
-    child: Column(
-      children: [
-        Row(
-          children: [
-            Container(
-              width: AppWidth.w30,
-              height: AppHeight.h30,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.light,
-                borderRadius: BorderRadius.circular(AppRadius.r8),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.homeSoftShadow.withOpacity(0.05),
+                blurRadius: AppRadius.r7,
+                offset: Offset(0, AppHeight.h2),
               ),
-              child: Icon(
-                Icons.description_outlined,
-                size: AppSize.s17,
-                color: AppColors.homeSupportAction,
+            ],
+          ),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: AppWidth.w30,
+                    height: AppHeight.h30,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppColors.light,
+                      borderRadius: BorderRadius.circular(AppRadius.r8),
+                    ),
+                    child: Icon(
+                      Icons.description_outlined,
+                      size: AppSize.s17,
+                      color: AppColors.homeSupportAction,
+                    ),
+                  ),
+                  SizedBox(width: AppWidth.w8),
+                  SectionTitle(
+                    text: 'مستندات الطلب',
+                    color: AppColors.mainText,
+                    fontSize: AppFontSize.s14,
+                    fontWeight: AppFontWeight.bold,
+                  ),
+                ],
               ),
-            ),
-            SizedBox(width: AppWidth.w8),
-            SectionTitle(
-              text: 'مستندات الطلب',
-              color: AppColors.mainText,
-              fontSize: AppFontSize.s14,
-              fontWeight: AppFontWeight.bold,
-            ),
-          ],
-        ),
-        SizedBox(height: AppHeight.h8),
+              SizedBox(height: AppHeight.h8),
 
-        for (var index = 0; index < uploads.length; index++) ...[
-          _DocumentRow(document: uploads[index]),
-          if (index != uploads.length - 1) SizedBox(height: AppHeight.h6),
-        ],
-      ],
-    ),
-  );
+              for (var index = 0; index < uploads.length; index++) ...[
+                _DocumentRow(document: uploads[index]),
+                if (index != uploads.length - 1) SizedBox(height: AppHeight.h6),
+              ],
+            ],
+          ),
+        ),
+      );
 }
 
 class _DocumentRow extends StatelessWidget {
@@ -153,30 +199,47 @@ class _DocumentRow extends StatelessWidget {
               fontWeight: AppFontWeight.medium,
             ),
             SizedBox(height: AppHeight.h4),
-            InkWell(
-              onTap: () {
-                context.read<DownloadFileBloc>().add(
-                  DownloadFileEvent(
-                    CreateOrderEntity(fileId: document.id ?? ''),
-                    fileId: document.id ?? '',
+            BlocBuilder<DownloadFileBloc, IDownloadFileState>(
+              builder: (context, state) {
+                final isDownloading =
+                    state is DownloadFileLoading && state.fileId == document.id;
+                return InkWell(
+                  onTap: isDownloading
+                      ? null
+                      : () {
+                          context.read<DownloadFileBloc>().add(
+                            DownloadFileEvent(
+                              CreateOrderEntity(fileId: document.id ?? ''),
+                              fileId: document.id ?? '',
+                            ),
+                          );
+                        },
+                  borderRadius: BorderRadius.circular(AppRadius.r7),
+                  child: Container(
+                    width: AppWidth.w25,
+                    height: AppHeight.h25,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppColors.light,
+                      borderRadius: BorderRadius.circular(AppRadius.r7),
+                    ),
+                    child: isDownloading
+                        ? SizedBox(
+                            width: AppSize.s16,
+                            height: AppSize.s16,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: AppColors.primaryDark,
+                            ),
+                          )
+                        : Icon(
+                            Icons.file_download_outlined,
+                            color: AppColors.primaryDark,
+                            size: AppSize.s16,
+                          ),
                   ),
                 );
               },
-              borderRadius: BorderRadius.circular(AppRadius.r7),
-              child: Container(
-                width: AppWidth.w25,
-                height: AppHeight.h25,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.light,
-                  borderRadius: BorderRadius.circular(AppRadius.r7),
-                ),
-                child: Icon(
-                  Icons.file_download_outlined,
-                  color: AppColors.primaryDark,
-                  size: AppSize.s16,
-                ),
-              ),
             ),
           ],
         ),
