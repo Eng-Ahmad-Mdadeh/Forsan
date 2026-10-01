@@ -7,6 +7,7 @@ import 'package:forsan/core/routes/app_shell.dart';
 import 'package:forsan/core/services/locator/locator.dart';
 import 'package:forsan/core/utils/enums/enum_utils.dart';
 import 'package:forsan/data/data_sources/auth/auth_storage_data_source.dart';
+import 'package:forsan/data/models/document_list/document_list_model.dart';
 import 'package:forsan/presentation/screens/check_code/check_code_screen.dart';
 import 'package:forsan/presentation/screens/complete_profile/complete_profile_screen.dart';
 import 'package:forsan/presentation/screens/contact_us/contact_us_screen.dart';
@@ -35,6 +36,7 @@ import 'package:forsan/presentation/screens/terms_and_conditions/terms_and_condi
 import 'package:go_router/go_router.dart';
 
 import '../../presentation/screens/complete_requirements/complete_requirements_screen.dart';
+import '../../presentation/screens/document_details/models/document_details_models.dart';
 
 part 'app_routes.g.dart';
 
@@ -272,7 +274,7 @@ class CreateNewOrderRoute extends GoRouteData with $CreateNewOrderRoute {
         TypedGoRoute<DocumentsRoute>(
           path: '/documents',
           routes: [
-            TypedGoRoute<DocumentDetailsRoute>(path: 'document_details/:orderId'),
+            TypedGoRoute<DocumentDetailsRoute>(path: 'document_details'),
           ],
         ),
       ],
@@ -371,8 +373,9 @@ class DocumentsRoute extends GoRouteData with $DocumentsRoute {
 }
 
 class DocumentDetailsRoute extends GoRouteData with $DocumentDetailsRoute {
-  final String? orderId;
-  const DocumentDetailsRoute({this.orderId});
+  final Item? $extra;
+
+  const DocumentDetailsRoute({this.$extra});
 
   static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
 
@@ -382,8 +385,8 @@ class DocumentDetailsRoute extends GoRouteData with $DocumentDetailsRoute {
       GoRouterState state,
       ) {
     return  DocumentDetailsScreen(
-      state: DocumentDetailsState.waitingDocuments,
-      orderId: orderId,
+
+      item: $extra,
     ).buildPage(
       pageAnimation: PageAnimation.fade,
     );

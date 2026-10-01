@@ -374,7 +374,7 @@ RouteBase get $appShellRoute => StatefulShellRouteData.$route(
           factory: $DocumentsRoute._fromState,
           routes: [
             GoRouteData.$route(
-              path: 'document_details/:orderId',
+              path: 'document_details',
               hasOverriddenOnExit: false,
               parentNavigatorKey: DocumentDetailsRoute.$parentNavigatorKey,
               factory: $DocumentDetailsRoute._fromState,
@@ -522,27 +522,27 @@ mixin $DocumentsRoute on GoRouteData {
 
 mixin $DocumentDetailsRoute on GoRouteData {
   static DocumentDetailsRoute _fromState(GoRouterState state) =>
-      DocumentDetailsRoute(orderId: state.pathParameters['orderId']);
+      DocumentDetailsRoute($extra: state.extra as Item?);
 
   DocumentDetailsRoute get _self => this as DocumentDetailsRoute;
 
   @override
-  String get location => GoRouteData.$location(
-    '/documents/document_details/${Uri.encodeComponent(_self.orderId ?? '')}',
-  );
+  String get location => GoRouteData.$location('/documents/document_details');
 
   @override
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
 
   @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
 
   @override
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+      context.pushReplacement(location, extra: _self.$extra);
 
   @override
-  void replace(BuildContext context) => context.replace(location);
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }
 
 mixin $MoreRoute on GoRouteData {

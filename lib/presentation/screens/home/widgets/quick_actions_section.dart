@@ -1,6 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:forsan/core/routes/app_routes.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
@@ -32,7 +33,7 @@ class QuickActionsSection extends StatelessWidget {
                 key: const Key('new-order-action'),
                 label: 'طلب جديد',
                 semanticLabel: 'إنشاء طلب جديد',
-                icon: Icons.add_rounded,
+                icon: Iconsax.add_circle_outline,
                 color: AppColors.primaryDark,
                 onPressed: () {
                   const SelectServiceTypeRoute().push(context);

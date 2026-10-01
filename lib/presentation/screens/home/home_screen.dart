@@ -92,26 +92,7 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
                 SizedBox(height: AppHeight.h16),
                 if(homeData?.requiredAction != null)
                 RequiredActionCard(
-                  titleSpan: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'إجراء مطلوب على الطلب ',
-                        style: TextStyle(
-                          color: AppColors.mainText,
-                          fontSize: AppFontSize.s12,
-                          fontWeight: AppFontWeight.regular,
-                        ),
-                      ),
-                      TextSpan(
-                        text: homeData?.requiredAction?.reference ?? '',
-                        style: TextStyle(
-                          color: AppColors.mainText,
-                          fontSize: AppFontSize.s12,
-                          fontWeight: AppFontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
+                  title: homeData?.requiredAction?.title ?? '',
                   message: homeData?.requiredAction?.message ?? '',
                   buttonText: homeData?.requiredAction?.actionLabel ??'',
                   buttonColor: AppColors.primary,

@@ -145,7 +145,7 @@ class RequiredActionCard extends StatelessWidget {
       textSpan: titleSpan,
       color: AppColors.mainText,
       fontSize:  AppFontSize.s12 ,
-      fontWeight: compact ? AppFontWeight.regular : AppFontWeight.medium,
+      fontWeight:  AppFontWeight.medium,
     );
   }
 }
