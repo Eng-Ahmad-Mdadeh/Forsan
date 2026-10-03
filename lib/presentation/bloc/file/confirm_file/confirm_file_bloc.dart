@@ -20,7 +20,7 @@ class ConfirmFileBloc extends Bloc<IConfirmFileEvent, IConfirmFileState> {
     ConfirmFileEvent event,
     Emitter<IConfirmFileState> emit,
   ) async {
-    emit(ConfirmFileLoading(requirementId: event.requirementId));
+    emit(ConfirmFileLoading());
 
     try {
       final result =
@@ -31,13 +31,13 @@ class ConfirmFileBloc extends Bloc<IConfirmFileEvent, IConfirmFileState> {
         (failure) => emit(
           ConfirmFileFailed(
             failure.message,
-            requirementId: event.requirementId,
+
           ),
         ),
         (response) => emit(
           ConfirmFileLoaded(
             response: response,
-            requirementId: event.requirementId,
+
           ),
         ),
       );
@@ -47,7 +47,7 @@ class ConfirmFileBloc extends Bloc<IConfirmFileEvent, IConfirmFileState> {
       emit(
         ConfirmFileFailed(
           error.toString(),
-          requirementId: event.requirementId,
+
         ),
       );
     }

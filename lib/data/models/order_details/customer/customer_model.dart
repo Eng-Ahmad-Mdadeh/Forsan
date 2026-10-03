@@ -1,6 +1,5 @@
 part of '../order_details_model.dart';
 
-
 @JsonSerializable(createToJson: false)
 class Customer extends Equatable {
   Customer({

@@ -5,11 +5,11 @@ sealed class IConfirmFileEvent extends Equatable {
 }
 
 final class ConfirmFileEvent extends IConfirmFileEvent {
-  const ConfirmFileEvent(this.entity, {required this.requirementId});
+  const ConfirmFileEvent(this.entity);
 
   final CreateOrderEntity entity;
-  final String requirementId;
+
 
   @override
-  List<Object?> get props => [entity, requirementId];
+  List<Object?> get props => [entity, ];
 }

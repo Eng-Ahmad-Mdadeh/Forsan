@@ -12,33 +12,30 @@ final class ConfirmFileInitial extends IConfirmFileState {
 }
 
 final class ConfirmFileLoading extends IConfirmFileState {
-  const ConfirmFileLoading({required this.requirementId});
+  const ConfirmFileLoading();
 
-  final String requirementId;
 
   @override
-  List<Object?> get props => [requirementId];
+  List<Object?> get props => [];
 }
 
 final class ConfirmFileLoaded extends IConfirmFileState {
   const ConfirmFileLoaded({
     required this.response,
-    required this.requirementId,
+
   });
 
   final BaseModel<void>? response;
-  final String requirementId;
 
   @override
-  List<Object?> get props => [response, requirementId];
+  List<Object?> get props => [response];
 }
 
 final class ConfirmFileFailed extends IConfirmFileState {
-  const ConfirmFileFailed(this.message, {required this.requirementId});
+  const ConfirmFileFailed(this.message);
 
   final String message;
-  final String requirementId;
 
   @override
-  List<Object?> get props => [message, requirementId];
+  List<Object?> get props => [message];
 }

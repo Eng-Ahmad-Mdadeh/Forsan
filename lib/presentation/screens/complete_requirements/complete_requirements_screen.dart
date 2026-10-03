@@ -6,6 +6,7 @@ import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/document_details/document_details_model.dart';
 import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
+import 'package:forsan/presentation/bloc/file/confirm_file/confirm_file_bloc.dart';
 import 'package:forsan/presentation/bloc/file/delete_file/delete_file_bloc.dart';
 import 'package:forsan/presentation/bloc/file/upload_file/upload_file_bloc.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
@@ -36,6 +37,7 @@ class CompleteRequirementsScreen extends StatelessWidget {
         BlocProvider<UploadFileBloc>(create: (_) => UploadFileBloc()),
         BlocProvider<DeleteFileBloc>(create: (_) => DeleteFileBloc()),
         BlocProvider<NewOrderCubit>(create: (_) => NewOrderCubit()),
+        BlocProvider<ConfirmFileBloc>(create: (_) => ConfirmFileBloc()),
       ],
       child: BodyCompleteRequirementsScreen(
         model: model,
@@ -377,7 +379,11 @@ class _BodyCompleteRequirementsScreenState
           height: AppHeight.h52,
           color: AppColors.primary,
           borderRadius: AppRadius.r12,
-          onPressed: () {},
+          onPressed: () {
+            context.read<ConfirmFileBloc>().add(
+              ConfirmFileEvent(CreateOrderEntity(orderId:widget.requiredAction?.reference??'')),
+            );
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

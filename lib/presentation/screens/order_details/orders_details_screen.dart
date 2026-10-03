@@ -61,7 +61,6 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
     statusLabel: 'قيد المراجعة',
     progress: null,
     createdAt: DateTime(2026, 9, 23),
-    consultant: 'اسم المستشار',
     customer: null,
     applicantName: 'اسم مقدم الطلب',
     requiredAction: null,
@@ -69,7 +68,7 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
     stages: null,
     requiredDocuments: null,
     attachments: null,
-    actions: null,
+    actions: null, serviceSlug: '', applicantType: null, consultant: null,
   );
 
   @override
@@ -171,10 +170,9 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
                   OrderStagesCard(stages: order.stages ?? []),
                   SizedBox(height: AppHeight.h16),
                   const OrderDocumentsCard(),
-                  if (order.displayStatus != 'AWAITING_DOCUMENTS' &&
-                      order.displayStatus != 'UNDER_REVIEW') ...[
+                  if (order.attachments?.isNotEmpty==true) ...[
                     SizedBox(height: AppHeight.h16),
-                    const OrderAttachedDocumentsCard(),
+                     OrderAttachedDocumentsCard(model:order),
                   ],
                   if (canPay || canChat) ...[
                     SizedBox(height: AppHeight.h20),
