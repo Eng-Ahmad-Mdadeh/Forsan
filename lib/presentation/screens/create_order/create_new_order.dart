@@ -5,6 +5,8 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/routes/app_routes.dart';
+import 'package:forsan/core/routes/app_routes_imports.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
 import 'package:forsan/presentation/bloc/complete_order/complete_order_bloc.dart';
@@ -340,29 +342,27 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                                         .read<NewOrderCubit>()
                                         .state
                                         .orderEntity;
-                                    final currentStep = orderEntity.currentStep;
-                                    if (currentStep < _stepFormKeys.length &&
-                                        !(_stepFormKeys[currentStep]
-                                                .currentState
-                                                ?.validate() ??
-                                            false)) {
-                                      showCustomSnackBar(
-                                        context: context,
-                                        title: context.loc.error,
-                                        message: context
-                                            .loc
-                                            .complete_profile_required_field,
-                                        contentType: ContentType.failure,
-                                      );
-                                      return;
-                                    }
+                                    // final currentStep = orderEntity.currentStep;
+                                    // if (currentStep < _stepFormKeys.length &&
+                                    //     !(_stepFormKeys[currentStep]
+                                    //             .currentState
+                                    //             ?.validate() ??
+                                    //         false)) {
+                                    //   showCustomSnackBar(
+                                    //     context: context,
+                                    //     title: context.loc.error,
+                                    //     message: context
+                                    //         .loc
+                                    //         .complete_profile_required_field,
+                                    //     contentType: ContentType.failure,
+                                    //   );
+                                    //   return;
+                                    // }
 
-                                    if (currentStep < NewOrderCubit.lastStep) {
-                                      context.read<CompleteOrderBloc>().add(
-                                        CompleteOrderEvent(orderEntity),
-                                      );
-                                      return;
-                                    }
+                                    // if (currentStep < NewOrderCubit.lastStep) {
+                                    //   _goToStep(context, currentStep + 1);
+                                    //   return;
+                                    // }
 
                                     context.read<SubmitOrderBloc>().add(
                                       SubmitOrderEvent(orderEntity),
@@ -491,9 +491,18 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
       buttonsDirection: Axis.horizontal,
       showCloseButton: true,
       canDismiss: true,
+      onSecondaryPressed: (){
+        context.pop();
+         SelectServiceTypeRoute().go(context);
+
+      },
       onPrimaryPressed: () {
-        // Navigator.of(context, rootNavigator: true).pop();
-        // context.read<LogoutBloc>().add(const LogoutEvent());
+        final orderEntity = context
+            .read<NewOrderCubit>()
+            .state
+            .orderEntity;
+        context.read<CompleteOrderBloc>().add(CompleteOrderEvent(orderEntity));
+        context.pop();
       },
     );
   }
