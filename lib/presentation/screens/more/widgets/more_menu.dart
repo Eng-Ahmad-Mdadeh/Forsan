@@ -79,11 +79,11 @@ class MoreMenu extends StatelessWidget {
     ),
   );
 
-  Widget _buildMenu(BuildContext context) => Container(
+  Widget _buildMenu(BuildContext context) =>Container(
     decoration: BoxDecoration(
       color: AppColors.white,
-      borderRadius: BorderRadius.circular(AppRadius.r25),
-      border: Border.all(color: const Color(0xFFE8EDF1)),
+      borderRadius: BorderRadius.circular(AppRadius.r16),
+      border: Border.all(color: AppColors.greyDivider),
       boxShadow: const [
         BoxShadow(
           color: Color.fromRGBO(16, 24, 40, .06),
@@ -96,31 +96,39 @@ class MoreMenu extends StatelessWidget {
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        for (var index = 0; index < _items.length; index++)
-          MoreTile(
-            item: _items[index],
-            topPadding: index == 0 ? AppHeight.h16 : AppHeight.h10,
-            bottomPadding: index == _items.length - 1
-                ? AppHeight.h16
-                : AppHeight.h10,
-            onTap: index == 0
-                ? () => const ShowProfileRoute().push(context)
-                : index == 1
-                ? () => const InvoicesAndPaymentsRoute().push(context)
-                : index == 2
-                ? () => const PrivacyPolicyRoute().push(context)
-                : index == 3
-                ? () => const TermsAndConditionsRoute().push(context)
-                : index == 5
-                ? () => const ContactUsRoute().push(context)
-                : index == 6
-                ? () => const FQRoute().push(context)
-                : index == 7
-                ? () => const SettingRoute().push(context)
-                : index == _items.length - 1
-                ? () => _showLogoutDialog(context)
-                : null,
-          ),
+
+          for (var index = 0; index < _items.length; index++) ...[
+            MoreTile(
+              item: _items[index],
+              topPadding: index == 0 ? AppHeight.h16 : AppHeight.h10,
+              bottomPadding: index == _items.length - 1
+                  ? AppHeight.h16
+                  : AppHeight.h10,
+              onTap: index == 0
+                  ? () => const ShowProfileRoute().push(context)
+                  : index == 1
+                  ? () => const InvoicesAndPaymentsRoute().push(context)
+                  : index == 2
+                  ? () => const PrivacyPolicyRoute().push(context)
+                  : index == 3
+                  ? () => const TermsAndConditionsRoute().push(context)
+                  : index == 5
+                  ? () => const ContactUsRoute().push(context)
+                  : index == 6
+                  ? () => const FQRoute().push(context)
+                  : index == 7
+                  ? () => const SettingRoute().push(context)
+                  : index == _items.length - 1
+                  ? () => _showLogoutDialog(context)
+                  : null,
+            ),
+            if (index < _items.length - 1)
+              const Divider(
+                height: 1,
+                thickness: 1,
+                color: AppColors.greyDivider,
+              ),
+          ],
       ],
     ),
   );
@@ -139,7 +147,7 @@ class MoreMenu extends StatelessWidget {
       iconOuterBackgroundColor: const Color(0xFFE4DEF2),
       secondaryButtonColor: AppColors.red,
       messageColor: AppColors.primary,
-      messageFontSize: AppFontSize.s20,
+      messageFontSize: AppFontSize.s16,
       messageFontWeight: AppFontWeight.bold,
       messageMaxLines: 2,
       buttonsDirection: Axis.horizontal,

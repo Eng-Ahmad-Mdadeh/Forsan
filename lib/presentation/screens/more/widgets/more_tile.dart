@@ -58,15 +58,15 @@ class MoreTile extends StatelessWidget {
                 children: [
                   BodyTitle(
                     text: item.title,
-                    fontSize: AppFontSize.s17,
-                    fontWeight: AppFontWeight.semiBold,
+                    fontSize: AppFontSize.s14,
+                    fontWeight: AppFontWeight.bold,
                     color: item.isDestructive ? AppColors.red : null,
                   ),
                   if (item.subtitle != null)
                     BodyTitle(
                       text: item.subtitle,
-                      fontSize: AppFontSize.s13,
-                      fontWeight: AppFontWeight.medium,
+                      fontSize: AppFontSize.s12,
+                      fontWeight: AppFontWeight.regular,
                       color: AppColors.greyText,
                     ),
                 ],

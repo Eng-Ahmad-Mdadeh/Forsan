@@ -296,7 +296,7 @@ class _CloseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSize.s50,
+      dimension: AppSize.s30,
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
@@ -307,7 +307,7 @@ class _CloseButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadius.r8),
           ),
         ),
-        child: Icon(Icons.close_rounded, size: AppSize.s30),
+        child: Icon(Icons.close_rounded, size: AppSize.s25),
       ),
     );
   }
@@ -374,8 +374,8 @@ class _StatusIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: AppWidth.w120,
-      height: AppHeight.h120,
+      width: AppWidth.w100,
+      height: AppHeight.h100,
       padding: EdgeInsets.symmetric(
         horizontal: AppPaddingWidth.p18,
         vertical: AppPaddingHeight.p18,
@@ -390,7 +390,7 @@ class _StatusIcon extends StatelessWidget {
           shape: BoxShape.circle,
           border: Border.all(color: borderColor, width: AppWidth.w7),
         ),
-        child: Icon(icon, color: iconColor, size: AppSize.s50),
+        child: Icon(icon, color: iconColor, size: AppSize.s33),
       ),
     );
   }
