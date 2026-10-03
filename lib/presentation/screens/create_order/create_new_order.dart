@@ -74,13 +74,20 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     super.dispose();
   }
 
-  void _goToStep(BuildContext context, int step) {
-    context.read<NewOrderCubit>().changeStep(step);
-    _pageController.animateToPage(
+  Future<void> _goToStep(BuildContext context, int step) async {
+    if (step < 0 || step > NewOrderCubit.lastStep) return;
+    final newOrderCubit = context.read<NewOrderCubit>();
+
+    if (!_pageController.hasClients) {
+      newOrderCubit.changeStep(step);
+      return;
+    }
+    await _pageController.animateToPage(
       step,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
+    if (mounted) newOrderCubit.changeStep(step);
   }
 
   void _loadOrderSteps() {
