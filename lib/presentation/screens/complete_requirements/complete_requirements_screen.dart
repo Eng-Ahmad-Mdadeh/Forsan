@@ -8,7 +8,6 @@ import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/document_details/document_details_model.dart';
 import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
 import 'package:forsan/presentation/bloc/file/confirm_file/confirm_file_bloc.dart';
-import 'package:forsan/presentation/bloc/file/delete_file/delete_file_bloc.dart';
 import 'package:forsan/presentation/bloc/file/upload_file/upload_file_bloc.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
@@ -35,7 +34,6 @@ class CompleteRequirementsScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<UploadFileBloc>(create: (_) => UploadFileBloc()),
-        BlocProvider<DeleteFileBloc>(create: (_) => DeleteFileBloc()),
         BlocProvider<NewOrderCubit>(create: (_) => NewOrderCubit()),
         BlocProvider<ConfirmFileBloc>(create: (_) => ConfirmFileBloc()),
       ],
@@ -140,21 +138,6 @@ class _BodyCompleteRequirementsScreenState
     );
   }
 
-  void _deleteDocument(BuildContext context, String requirementId) {
-    if (context.read<DeleteFileBloc>().state is DeleteFileLoading) return;
-
-    final requestId = widget.requiredAction?.requestId?.trim() ?? '';
-    final fileId = _uploadedFileIds[requirementId];
-    if (requestId.isEmpty || fileId?.isNotEmpty != true) return;
-
-    context.read<DeleteFileBloc>().add(
-      DeleteFileEvent(
-        CreateOrderEntity(orderId: requestId, fileId: fileId),
-        requirementId: requirementId,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -223,116 +206,92 @@ class _BodyCompleteRequirementsScreenState
               text: context.loc.complete_requirements_documents_title,
               fontSize: AppFontSize.s16,
             ),
-            BlocConsumer<DeleteFileBloc, IDeleteFileState>(
-              listener: (context, deleteState) {
-                if (deleteState is DeleteFileLoaded) {
-                  context.read<NewOrderCubit>().removeDocumentForRequirement(
-                    deleteState.requirementId,
-                  );
+            BlocConsumer<UploadFileBloc, IUploadFileState>(
+              listener: (context, uploadState) {
+                if (uploadState is UploadFileLoaded) {
                   setState(() {
-                    _uploadedFileIds.remove(deleteState.requirementId);
+                    _uploadedFileIds[uploadState.requirementId] =
+                        uploadState.response?.data?.id;
                   });
                 }
 
-                if (deleteState is DeleteFileFailed) {
-                  _showError(context, deleteState.message);
+                if (uploadState is UploadFileFailed) {
+                  context.read<NewOrderCubit>().removeDocumentForRequirement(
+                    uploadState.requirementId,
+                  );
+                  _showError(context, uploadState.message);
                 }
               },
-              builder: (context, deleteState) =>
-                  BlocConsumer<UploadFileBloc, IUploadFileState>(
-                listener: (context, uploadState) {
-                  if (uploadState is UploadFileLoaded) {
-                    setState(() {
-                      _uploadedFileIds[uploadState.requirementId] =
-                          uploadState.response?.data?.id;
-                    });
-                  }
+              builder: (context, uploadState) =>
+                  BlocBuilder<NewOrderCubit, NewOrderState>(
+                    builder: (context, orderState) => ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: widget.model?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        final document = widget.model![index];
+                        final requirementId = document.id?.trim() ?? '';
+                        final selectedDocument = orderState
+                            .orderEntity.requirementDocuments[requirementId];
+                        final isLoading = uploadState is UploadFileLoading &&
+                            uploadState.requirementId == requirementId;
+                        final isUploaded =
+                            _uploadedFileIds.containsKey(requirementId);
 
-                  if (uploadState is UploadFileFailed) {
-                    context.read<NewOrderCubit>().removeDocumentForRequirement(
-                      uploadState.requirementId,
-                    );
-                    _showError(context, uploadState.message);
-                  }
-                },
-                builder: (context, uploadState) =>
-                    BlocBuilder<NewOrderCubit, NewOrderState>(
-                  builder: (context, orderState) => ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: widget.model?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      final document = widget.model![index];
-                      final requirementId = document.id?.trim() ?? '';
-                      final selectedDocument = orderState
-                          .orderEntity.requirementDocuments[requirementId];
-                      final isLoading = uploadState is UploadFileLoading &&
-                          uploadState.requirementId == requirementId;
-                      final isDeleting = deleteState is DeleteFileLoading &&
-                          deleteState.requirementId == requirementId;
-                      final isUploaded =
-                          _uploadedFileIds.containsKey(requirementId);
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          if (isUploaded && selectedDocument != null)
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top: AppPaddingHeight.p12,
-                              ),
-                              child: UploadedDocumentCard(
-                                document: selectedDocument,
-                                onRemove: isDeleting
-                                    ? null
-                                    : () => _deleteDocument(
-                                          context,
-                                          requirementId,
-                                        ),
-                              ),
-                            )
-                          else
-                            Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                IgnorePointer(
-                                  ignoring: isLoading,
-                                  child: DocumentSection(
-                                    title: document.name ?? '',
-                                    image: null,
-                                    onTap: () =>
-                                        _pickDocument(context, document),
-                                    uploadLabel: context
-                                        .loc.complete_requirements_upload,
-                                    uploadHint:
-                                        FilePickerHelper.buildUploadHint(
-                                          maxSize: document?.maxSize,
-                                          acceptedTypes:
-                                              document?.acceptedTypes,
-                                          extensionSeparator: '-',
-                                          formatter:
-                                              (formattedSize, extensions) =>
-                                                  context.loc
-                                                      .complete_requirements_upload_hint(
-                                                        formattedSize,
-                                                        extensions,
-                                                      ),
-                                        ),
-                                    paddingTop: AppPaddingHeight.p12,
-                                  ),
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            if (isUploaded && selectedDocument != null)
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: AppPaddingHeight.p12,
                                 ),
-                                if (isLoading)
-                                  const CircularProgressIndicator(
-                                    color: AppColors.primary,
+                                child: UploadedDocumentCard(
+                                  document: selectedDocument,
+                                  onRemove: null,
+                                ),
+                              )
+                            else
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  IgnorePointer(
+                                    ignoring: isLoading,
+                                    child: DocumentSection(
+                                      title: document.name ?? '',
+                                      image: null,
+                                      onTap: () =>
+                                          _pickDocument(context, document),
+                                      uploadLabel: context
+                                          .loc.complete_requirements_upload,
+                                      uploadHint:
+                                          FilePickerHelper.buildUploadHint(
+                                            maxSize: document?.maxSize,
+                                            acceptedTypes:
+                                                document?.acceptedTypes,
+                                            extensionSeparator: '-',
+                                            formatter:
+                                                (formattedSize, extensions) =>
+                                                    context.loc
+                                                        .complete_requirements_upload_hint(
+                                                          formattedSize,
+                                                          extensions,
+                                                        ),
+                                          ),
+                                      paddingTop: AppPaddingHeight.p12,
+                                    ),
                                   ),
-                              ],
-                            ),
-                        ],
-                      );
-                    },
+                                  if (isLoading)
+                                    const CircularProgressIndicator(
+                                      color: AppColors.primary,
+                                    ),
+                                ],
+                              ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ),
             ),
           ],
         ),
@@ -351,7 +310,11 @@ class _BodyCompleteRequirementsScreenState
           borderRadius: AppRadius.r12,
           onPressed: () {
             context.read<ConfirmFileBloc>().add(
-              ConfirmFileEvent(CreateOrderEntity(orderId:widget.requiredAction?.reference??'')),
+              ConfirmFileEvent(
+                CreateOrderEntity(
+                  orderId: widget.requiredAction?.reference ?? '',
+                ),
+              ),
             );
           },
           child: Row(
