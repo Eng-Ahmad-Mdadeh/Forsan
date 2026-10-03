@@ -304,7 +304,20 @@ class _BodyCompleteRequirementsScreenState
                                         _pickDocument(context, document),
                                     uploadLabel: context
                                         .loc.complete_requirements_upload,
-                                    uploadHint: _uploadHint(context, document),
+                                    uploadHint:
+                                        FilePickerHelper.buildUploadHint(
+                                          maxSize: document?.maxSize,
+                                          acceptedTypes:
+                                              document?.acceptedTypes,
+                                          extensionSeparator: '-',
+                                          formatter:
+                                              (formattedSize, extensions) =>
+                                                  context.loc
+                                                      .complete_requirements_upload_hint(
+                                                        formattedSize,
+                                                        extensions,
+                                                      ),
+                                        ),
                                     paddingTop: AppPaddingHeight.p12,
                                   ),
                                 ),
@@ -362,23 +375,4 @@ class _BodyCompleteRequirementsScreenState
     );
   }
 
-  String _uploadHint(BuildContext context, RequiredDocumentModel? document) {
-    final maxSize =
-        document?.maxSize ?? AppFileConstraints.maxDocumentSizeInBytes;
-    final acceptedTypes = document?.acceptedTypes?.isNotEmpty == true
-        ? document!.acceptedTypes!
-        : AppFileConstraints.documentExtensions;
-    final sizeInMegabytes = maxSize / (1024 * 1024);
-    final formattedSize = sizeInMegabytes == sizeInMegabytes.roundToDouble()
-        ? sizeInMegabytes.toInt().toString()
-        : sizeInMegabytes.toStringAsFixed(1);
-    final extensions = acceptedTypes
-        .map((type) => type.split('/').last.toUpperCase())
-        .join('-');
-
-    return context.loc.complete_requirements_upload_hint(
-      formattedSize,
-      extensions,
-    );
-  }
 }

@@ -308,7 +308,13 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
                   _pickDocument(context, requirementId, acceptedTypes, maxSize),
               paddingTop: AppPaddingHeight.p1,
               uploadLabel: context.loc.new_order_upload_tap,
-              uploadHint: _uploadHint(context, [field]),
+              uploadHint: FilePickerHelper.buildUploadHint(
+                maxSize: field.validation?.maxSize,
+                acceptedTypes: field.validation?.acceptedTypes,
+                fallbackText: context.loc.new_order_upload_hint,
+                formatter: (formattedSize, extensions) =>
+                    '$formattedSize MB - $extensions',
+              ),
             ),
           ],
           if (formField.hasError) ...[
@@ -342,22 +348,4 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
     }
   }
 
-  String _uploadHint(BuildContext context, List<SectionField> fields) {
-    final validation = fields.first.validation;
-    final maxSize = validation?.maxSize;
-    final acceptedTypes = validation?.acceptedTypes ?? const <String>[];
-    if (maxSize == null || acceptedTypes.isEmpty) {
-      return context.loc.new_order_upload_hint;
-    }
-
-    final sizeInMegabytes = maxSize / (1024 * 1024);
-    final formattedSize = sizeInMegabytes == sizeInMegabytes.roundToDouble()
-        ? sizeInMegabytes.toInt().toString()
-        : sizeInMegabytes.toStringAsFixed(1);
-    final extensions = acceptedTypes
-        .map((type) => type.toUpperCase())
-        .join(', ');
-
-    return '$formattedSize MB - $extensions';
-  }
 }

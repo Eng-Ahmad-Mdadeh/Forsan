@@ -59,6 +59,31 @@ class FilePickerHelper {
     return normalizedTypes.contains(extension) && document.size <= maxSize;
   }
 
+  static String buildUploadHint({
+    required int? maxSize,
+    required List<String>? acceptedTypes,
+    required String Function(String formattedSize, String extensions) formatter,
+    String? fallbackText,
+    String extensionSeparator = ', ',
+  }) {
+    if ((maxSize == null || acceptedTypes?.isNotEmpty != true) &&
+        fallbackText != null) {
+      return fallbackText;
+    }
+
+    final resolvedMaxSize =
+        maxSize ?? AppFileConstraints.maxDocumentSizeInBytes;
+    final extensions = normalizeExtensions(acceptedTypes)
+        .map((type) => type.toUpperCase())
+        .join(extensionSeparator);
+    final sizeInMegabytes = resolvedMaxSize / (1024 * 1024);
+    final formattedSize = sizeInMegabytes == sizeInMegabytes.roundToDouble()
+        ? sizeInMegabytes.toInt().toString()
+        : sizeInMegabytes.toStringAsFixed(1);
+
+    return formatter(formattedSize, extensions);
+  }
+
   static Future<DocumentPickerSelection?> selectDocumentSource(
     BuildContext context,
     List<String>? acceptedTypes,
