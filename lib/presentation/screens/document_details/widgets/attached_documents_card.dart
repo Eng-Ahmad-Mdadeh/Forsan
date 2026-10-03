@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/data/models/document_details/document_details_model.dart';
 
 import '../../../../core/resources/app_colors.dart';
 import '../../../../core/resources/app_fonts.dart';
@@ -7,13 +8,11 @@ import '../../../widgets/text/body_title.dart';
 import '../../../widgets/text/section_title.dart';
 
 class AttachedDocumentsCard extends StatelessWidget {
-  const AttachedDocumentsCard({super.key});
+  final List<AttachmentModel>? model;
 
-  static const _documents = [
-    _AttachedDocument(name: 'عرض السعر', details: '1.2 ميجا بايت JPG'),
-    _AttachedDocument(name: 'وثيقة الرخصة', details: '1.2 ميجا بايت JPG'),
-    _AttachedDocument(name: 'السجل التجاري', details: '1.2 ميجا بايت JPG'),
-  ];
+
+  const AttachedDocumentsCard({super.key,  this.model});
+
 
   @override
   Widget build(BuildContext context) => Container(

@@ -25,12 +25,6 @@ class FileRepository implements IFileRepository {
     );
   }
 
-  // @override
-  // Future<Either<AppException, BaseModel<FileModel>?>> uploadRequiredDocuments(
-  //     CreateOrderEntity data,
-  //     ) {
-  //   return _remoteDataSource.uploadRequiredDocuments(data);
-  // }
 
   @override
   Future<Either<AppException, BaseModel<void>?>> deleteFile(CreateOrderEntity data) async {
@@ -45,6 +39,17 @@ class FileRepository implements IFileRepository {
   @override
   Future<Either<AppException, Uint8List>> downloadFile(CreateOrderEntity data) async {
     final response = await _remoteDataSource.downloadFile(data);
+    return response.fold(
+          (l) async => Left(l),
+          (r) async {
+        return Right(r);
+      },
+    );
+  }
+
+  @override
+  Future<Either<AppException, BaseModel<void>?>> confirmFile(CreateOrderEntity data) async {
+    final response = await _remoteDataSource.confirmFile(data);
     return response.fold(
           (l) async => Left(l),
           (r) async {

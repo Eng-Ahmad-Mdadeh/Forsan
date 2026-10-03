@@ -53,8 +53,10 @@ class ApiEndpoints {
 
     return '$order/$encodedRequestId/required-documents/${Uri.encodeComponent(itemId)}';
   }
+
   static String deleteFile(String orderId,String fileId) => '$order/${Uri.encodeComponent(orderId)}/files/${Uri.encodeComponent(fileId)}';
   static String downloadFile(String fileId) => '$user/files/${Uri.encodeComponent(fileId)}';
+  static String confirmFile(String orderId) => '$order/${Uri.encodeComponent(orderId)}/required-documents/submit';
   //#endregion
 
 }

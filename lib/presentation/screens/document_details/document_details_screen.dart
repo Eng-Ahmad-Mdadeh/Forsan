@@ -162,7 +162,7 @@ class _BodyDocumentDetailsScreenState extends State<BodyDocumentDetailsScreen> {
                           if (documentDetails?.attachments?.isNotEmpty ==
                               true) ...[
                             SizedBox(height: AppHeight.h16),
-                            const AttachedDocumentsCard(),
+                             AttachedDocumentsCard(model:documentDetails?.attachments ?? []),
                             SizedBox(height: AppHeight.h16),
                           ] else
                             SizedBox(height: AppHeight.h220),

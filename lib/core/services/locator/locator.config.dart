@@ -116,6 +116,7 @@ import '../../../domain/usecases/document_details/document_details_use_case.dart
     as _i738;
 import '../../../domain/usecases/document_list/document_list_use_case.dart'
     as _i585;
+import '../../../domain/usecases/file/confirm_file.dart' as _i660;
 import '../../../domain/usecases/file/delete_file_use_case.dart' as _i164;
 import '../../../domain/usecases/file/download_file_use_case.dart' as _i929;
 import '../../../domain/usecases/file/upload_file_use_case.dart' as _i894;
@@ -301,6 +302,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i795.IUseCase<_i480.BaseModel<void>?, _i232.CreateOrderEntity>>(
       () => _i1058.DeleteOrderUseCase(gh<_i895.IDeleteOrderRepository>()),
       instanceName: 'deleteOrder',
+    );
+    gh.factory<_i795.IUseCase<_i480.BaseModel<void>?, _i232.CreateOrderEntity>>(
+      () => _i660.ConfirmFileUseCase(gh<_i944.IFileRepository>()),
+      instanceName: 'confirmFile',
     );
     gh.factory<
       _i795.IUseCase<
