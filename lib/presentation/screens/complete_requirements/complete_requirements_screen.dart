@@ -15,6 +15,7 @@ import 'package:forsan/presentation/screens/create_order/widgets/uploaded_docume
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/document/document_section.dart';
+import 'package:forsan/presentation/widgets/loading_widget.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
@@ -140,6 +141,28 @@ class _BodyCompleteRequirementsScreenState
 
   @override
   Widget build(BuildContext context) {
+    return BlocListener<ConfirmFileBloc, IConfirmFileState>(
+      listener: (context, state) {
+        if (state is ConfirmFileLoading) {
+          showDialog<void>(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) =>
+                const PopScope(canPop: false, child: LoadingWidget(0)),
+          );
+        } else if (state is ConfirmFileFailed) {
+          Navigator.of(context, rootNavigator: true).pop();
+          _showError(context, state.message);
+        } else if (state is ConfirmFileLoaded) {
+          Navigator.of(context, rootNavigator: true).pop();
+          Navigator.of(context).pop();
+        }
+      },
+      child: _buildScreen(context),
+    );
+  }
+
+  Widget _buildScreen(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: CustomAppBar(
@@ -333,5 +356,4 @@ class _BodyCompleteRequirementsScreenState
       ),
     );
   }
-
 }
