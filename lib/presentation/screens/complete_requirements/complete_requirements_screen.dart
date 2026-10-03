@@ -5,13 +5,16 @@ import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/document_details/document_details_model.dart';
+import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
 import 'package:forsan/presentation/bloc/file/upload_file/upload_file_bloc.dart';
+import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
+import 'package:mime/mime.dart';
 
 class CompleteRequirementsScreen extends StatelessWidget {
   final List<RequiredDocumentModel>? model;
@@ -28,6 +31,7 @@ class CompleteRequirementsScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<UploadFileBloc>(create: (_) => UploadFileBloc()),
+        BlocProvider<NewOrderCubit>(create: (_) => NewOrderCubit()),
       ],
       child: BodyCompleteRequirementsScreen(
         model: model,
@@ -37,7 +41,7 @@ class CompleteRequirementsScreen extends StatelessWidget {
   }
 }
 
-class BodyCompleteRequirementsScreen extends StatelessWidget {
+class BodyCompleteRequirementsScreen extends StatefulWidget {
   final List<RequiredDocumentModel>? model;
   final RequiredActionModel? requiredAction;
 
@@ -46,6 +50,130 @@ class BodyCompleteRequirementsScreen extends StatelessWidget {
     this.model,
     this.requiredAction,
   });
+
+  @override
+  State<BodyCompleteRequirementsScreen> createState() =>
+      _BodyCompleteRequirementsScreenState();
+}
+
+class _BodyCompleteRequirementsScreenState
+    extends State<BodyCompleteRequirementsScreen> {
+  Future<void> _pickDocument(
+    BuildContext context,
+    RequiredDocumentModel document,
+  ) async {
+    if (context.read<UploadFileBloc>().state is UploadFileLoading) return;
+
+    final requirementId = document.id?.trim() ?? '';
+    final requestId = widget.requiredAction?.requestId?.trim() ?? '';
+    if (requirementId.isEmpty || requestId.isEmpty) return;
+
+    final cubit = context.read<NewOrderCubit>();
+    final previousDocument =
+        cubit.state.orderEntity.requirementDocuments[requirementId];
+    final acceptedTypes = _normalizedExtensions(document.acceptedTypes);
+    final maxSize =
+        document.maxSize ?? AppFileConstraints.maxDocumentSizeInBytes;
+    final imageTypes = acceptedTypes
+        .where(
+          (type) => lookupMimeType('file.$type')?.startsWith('image/') == true,
+        )
+        .toSet();
+    final fileTypes = acceptedTypes.toSet().difference(imageTypes);
+    final source = fileTypes.isNotEmpty && imageTypes.isNotEmpty
+        ? await _selectDocumentSource(context)
+        : imageTypes.isNotEmpty
+        ? _DocumentSource.image
+        : _DocumentSource.file;
+    if (!context.mounted || source == null) return;
+
+    final rejectedDocuments = source == _DocumentSource.image
+        ? await cubit.pickImageForRequirement(
+            context,
+            requirementId,
+            acceptedTypes: imageTypes.toList(),
+            maxSize: maxSize,
+          )
+        : await cubit.pickDocumentForRequirement(
+            requirementId,
+            allowedExtensions: fileTypes.toList(),
+            maxSize: maxSize,
+          );
+    if (!context.mounted) return;
+
+    final selectedDocument =
+        cubit.state.orderEntity.requirementDocuments[requirementId];
+    if (rejectedDocuments == 0 &&
+        selectedDocument != null &&
+        selectedDocument != previousDocument) {
+      context.read<UploadFileBloc>().add(
+        UploadFileEvent(
+          CreateOrderEntity(
+            orderId: requestId,
+            requiredDocumentItemId: requirementId,
+            requirementDocuments: {requirementId: selectedDocument},
+          ),
+          requirementId: requirementId,
+        ),
+      );
+      return;
+    }
+
+    if (rejectedDocuments > 0) {
+      _showError(context, context.loc.new_order_documents_size_error);
+    }
+  }
+
+  List<String> _normalizedExtensions(List<String>? acceptedTypes) {
+    final types = acceptedTypes?.isNotEmpty == true
+        ? acceptedTypes!
+        : AppFileConstraints.documentExtensions;
+    return types
+        .map((type) => type.split('/').last.toLowerCase().replaceFirst('.', ''))
+        .toSet()
+        .toList();
+  }
+
+  Future<_DocumentSource?> _selectDocumentSource(BuildContext context) =>
+      showModalBottomSheet<_DocumentSource>(
+        context: context,
+        backgroundColor: AppColors.white,
+        builder: (context) => SafeArea(
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: const Icon(
+                  Icons.insert_drive_file_outlined,
+                  color: AppColors.primary,
+                ),
+                title: BodyTitle(text: context.loc.documents),
+                onTap: () => Navigator.pop(context, _DocumentSource.file),
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.image_outlined,
+                  color: AppColors.primary,
+                ),
+                title: BodyTitle(text: context.loc.image),
+                onTap: () => Navigator.pop(context, _DocumentSource.image),
+              ),
+            ],
+          ),
+        ),
+      );
+
+  void _showError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: BodyTitle(
+          text: message,
+          color: AppColors.white,
+          fontWeight: AppFontWeight.regular,
+        ),
+        backgroundColor: AppColors.red,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +215,7 @@ class BodyCompleteRequirementsScreen extends StatelessWidget {
                       SizedBox(width: AppWidth.w8),
                       Expanded(
                         child: SectionTitle(
-                          text: requiredAction?.title ?? '',
+                          text: widget.requiredAction?.title ?? '',
                           color: AppColors.mainText,
                           fontSize: AppFontSize.s13,
                         ),
@@ -115,23 +243,47 @@ class BodyCompleteRequirementsScreen extends StatelessWidget {
               text: context.loc.complete_requirements_documents_title,
               fontSize: AppFontSize.s16,
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: model?.length ?? 0,
-              itemBuilder: (context, index) {
-                final document = model?[index];
-
-                return DocumentSection(
-                  title:
-                      context.loc.complete_requirements_conviction_certificate,
-                  image: null,
-                  onTap: () {},
-                  uploadLabel: context.loc.complete_requirements_upload,
-                  uploadHint: _uploadHint(context, document),
-                  paddingTop: AppPaddingHeight.p12,
-                );
+            BlocConsumer<UploadFileBloc, IUploadFileState>(
+              listener: (context, state) {
+                if (state is UploadFileFailed) {
+                  context.read<NewOrderCubit>().removeDocumentForRequirement(
+                    state.requirementId,
+                  );
+                  _showError(context, state.message);
+                }
               },
+              builder: (context, uploadState) => ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: widget.model?.length ?? 0,
+                itemBuilder: (context, index) {
+                  final document = widget.model![index];
+                  final requirementId = document.id?.trim() ?? '';
+                  final isLoading = uploadState is UploadFileLoading &&
+                      uploadState.requirementId == requirementId;
+
+                  return Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      IgnorePointer(
+                        ignoring: isLoading,
+                        child: DocumentSection(
+                          title: document.name ?? '',
+                          image: null,
+                          onTap: () => _pickDocument(context, document),
+                          uploadLabel: context.loc.complete_requirements_upload,
+                          uploadHint: _uploadHint(context, document),
+                          paddingTop: AppPaddingHeight.p12,
+                        ),
+                      ),
+                      if (isLoading)
+                        const CircularProgressIndicator(
+                          color: AppColors.primary,
+                        ),
+                    ],
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -190,3 +342,5 @@ class BodyCompleteRequirementsScreen extends StatelessWidget {
     );
   }
 }
+
+enum _DocumentSource { file, image }
