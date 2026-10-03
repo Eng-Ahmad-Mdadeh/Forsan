@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
+import 'package:forsan/core/helper/file_picker_helper.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
@@ -15,7 +16,6 @@ import 'package:forsan/presentation/screens/create_order/widgets/document_requir
 import 'package:forsan/presentation/screens/create_order/widgets/uploaded_document_card.dart';
 import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
-import 'package:mime/mime.dart';
 
 class DocumentsStep extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -63,32 +63,22 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
     final cubit = context.read<NewOrderCubit>();
     final previousDocument =
         cubit.state.orderEntity.requirementDocuments[requirementId];
-    final normalizedTypes = acceptedTypes
-        .map((type) => type.toLowerCase())
-        .toSet();
-    final imageTypes = normalizedTypes
-        .where(
-          (type) => lookupMimeType('file.$type')?.startsWith('image/') == true,
-        )
-        .toSet();
-    final fileTypes = normalizedTypes.difference(imageTypes);
-    final source = fileTypes.isNotEmpty && imageTypes.isNotEmpty
-        ? await _selectDocumentSource(context)
-        : imageTypes.isNotEmpty
-        ? _DocumentSource.image
-        : _DocumentSource.file;
-    if (!context.mounted || source == null) return;
+    final selection = await FilePickerHelper.selectDocumentSource(
+      context,
+      acceptedTypes,
+    );
+    if (!context.mounted || selection == null) return;
 
-    final rejectedDocuments = source == _DocumentSource.image
+    final rejectedDocuments = selection.source == DocumentSource.image
         ? await cubit.pickImageForRequirement(
             context,
             requirementId,
-            acceptedTypes: imageTypes.toList(),
+            acceptedTypes: selection.allowedExtensions,
             maxSize: maxSize,
           )
         : await cubit.pickDocumentForRequirement(
             requirementId,
-            allowedExtensions: fileTypes.toList(),
+            allowedExtensions: selection.allowedExtensions,
             maxSize: maxSize,
           );
 
@@ -121,34 +111,6 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
       ),
     );
   }
-
-  Future<_DocumentSource?> _selectDocumentSource(BuildContext context) =>
-      showModalBottomSheet<_DocumentSource>(
-        context: context,
-        backgroundColor: AppColors.white,
-        builder: (context) => SafeArea(
-          child: Wrap(
-            children: [
-              ListTile(
-                leading: const Icon(
-                  Icons.insert_drive_file_outlined,
-                  color: AppColors.primary,
-                ),
-                title: BodyTitle(text: context.loc.documents),
-                onTap: () => Navigator.pop(context, _DocumentSource.file),
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.image_outlined,
-                  color: AppColors.primary,
-                ),
-                title: BodyTitle(text: context.loc.image),
-                onTap: () => Navigator.pop(context, _DocumentSource.image),
-              ),
-            ],
-          ),
-        ),
-      );
 
   void _deleteDocument(BuildContext context, String requirementId) {
     if (context.read<DeleteFileBloc>().state is DeleteFileLoading) return;
@@ -399,5 +361,3 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
     return '$formattedSize MB - $extensions';
   }
 }
-
-enum _DocumentSource { file, image }

@@ -131,13 +131,15 @@ class NewOrderCubit extends Cubit<NewOrderState> {
     required List<String> acceptedTypes,
     required int maxSize,
   }) {
-    final normalizedTypes = acceptedTypes
-        .map((type) => type.toLowerCase())
-        .toSet();
-    final validDocuments = documents.where((document) {
-      final extension = document.extension?.toLowerCase() ?? '';
-      return normalizedTypes.contains(extension) && document.size <= maxSize;
-    }).toList();
+    final validDocuments = documents
+        .where(
+          (document) => FilePickerHelper.isDocumentValid(
+            document,
+            acceptedTypes: acceptedTypes,
+            maxSize: maxSize,
+          ),
+        )
+        .toList();
     final rejectedDocuments = documents.length - validDocuments.length;
 
     if (validDocuments.isNotEmpty) {
