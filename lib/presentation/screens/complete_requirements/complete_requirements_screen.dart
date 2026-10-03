@@ -275,36 +275,26 @@ class _BodyCompleteRequirementsScreenState
                                 ),
                               )
                             else
-                              Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  IgnorePointer(
-                                    ignoring: isLoading,
-                                    child: DocumentSection(
-                                      title: document.name ?? '',
-                                      image: null,
-                                      onTap: () =>
-                                          _pickDocument(context, document),
-                                      uploadLabel: context
-                                          .loc.complete_requirements_upload,
-                                      uploadHint:
-                                          FilePickerHelper.buildUploadHint(
-                                            maxSize: document.maxSize,
-                                            acceptedTypes:
-                                                document.acceptedTypes,
-                                            extensionSeparator: '-',
-                                            formatter:
-                                                (formattedSize, extensions) =>
-                                                    context.loc
-                                                        .complete_requirements_upload_hint(
-                                                          formattedSize,
-                                                          extensions,
-                                                        ),
+                              DocumentSection(
+                                title: document.name ?? '',
+                                image: null,
+                                isLoading: isLoading,
+                                isEnabled: !isLoading,
+                                onTap: () => _pickDocument(context, document),
+                                uploadLabel:
+                                    context.loc.complete_requirements_upload,
+                                uploadHint: FilePickerHelper.buildUploadHint(
+                                  maxSize: document.maxSize,
+                                  acceptedTypes: document.acceptedTypes,
+                                  extensionSeparator: '-',
+                                  formatter: (formattedSize, extensions) =>
+                                      context.loc
+                                          .complete_requirements_upload_hint(
+                                            formattedSize,
+                                            extensions,
                                           ),
-                                      paddingTop: AppPaddingHeight.p12,
-                                    ),
-                                  ),
-                                ],
+                                ),
+                                paddingTop: AppPaddingHeight.p12,
                               ),
                           ],
                         );
