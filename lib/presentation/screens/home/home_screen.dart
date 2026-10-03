@@ -42,8 +42,8 @@ class BodyHomeScreen extends StatefulWidget {
 class _BodyHomeScreenState extends State<BodyHomeScreen> {
   @override
   void initState() {
-    context.read<HomeBloc>().add(HomeEvent());
     super.initState();
+    context.read<HomeBloc>().add(HomeEvent());
   }
 
   @override
