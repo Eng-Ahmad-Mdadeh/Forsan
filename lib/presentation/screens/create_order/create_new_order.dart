@@ -15,22 +15,14 @@ import 'package:forsan/presentation/bloc/order_steps/order_steps_bloc.dart';
 import 'package:forsan/presentation/bloc/submit_order/submit_order_bloc.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/activity_step.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/applicant_step.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/document_requirement_step.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/radio_card_step.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/establishment_type_step.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/create_order_navigation_bar.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/create_order_steps_view.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_step_indicator.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/ownership_structure_step.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/proposed_company_info_step.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/review_step.dart';
 import 'package:forsan/presentation/widgets/app_status_dialog.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
-import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/custom_snack_bar.dart';
 import 'package:forsan/presentation/widgets/failure_screen.dart';
 import 'package:forsan/presentation/widgets/loading_widget.dart';
-import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class CreateNewOrderScreen extends StatelessWidget {
@@ -209,7 +201,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
 
                 return Scaffold(
                   backgroundColor: AppColors.white,
-                  appBar: _buildAppBar(context, state: state),
+                  appBar: _buildAppBar(context),
                   body: SafeArea(
                     child: Column(
                       children: [
@@ -226,178 +218,34 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                           ),
                         ),
                         Expanded(
-                          child: PageView(
-                            key: const Key('new_order_page_view'),
+                          child: CreateOrderStepsView(
                             controller: _pageController,
-                            physics: const NeverScrollableScrollPhysics(),
+                            formKeys: _stepFormKeys,
+                            steps: steps,
+                            selectedValues: state.orderEntity.formValues,
+                            agreements:
+                                orderStepsState
+                                    .orderStepsModel
+                                    ?.data
+                                    ?.agreements ??
+                                const <AgreementModel>[],
+                            onFieldChanged: context
+                                .read<NewOrderCubit>()
+                                .updateFormValue,
                             onPageChanged: context
                                 .read<NewOrderCubit>()
                                 .changeStep,
-                            children: [
-                              EstablishmentTypeStep(
-                                formKey: _stepFormKeys[0],
-                                step: steps[0],
-                                selectedValues: state.orderEntity.formValues,
-                                onFieldChanged: context
-                                    .read<NewOrderCubit>()
-                                    .updateFormValue,
-                              ),
-                              ApplicantStep(
-                                formKey: _stepFormKeys[1],
-                                step: steps[1],
-                                selectedValues: state.orderEntity.formValues,
-                                onFieldChanged: context
-                                    .read<NewOrderCubit>()
-                                    .updateFormValue,
-                              ),
-                              ProposedCompanyInfoStep(
-                                formKey: _stepFormKeys[2],
-                                step: steps[2],
-                                selectedValues: state.orderEntity.formValues,
-                                onFieldChanged: context
-                                    .read<NewOrderCubit>()
-                                    .updateFormValue,
-                              ),
-                              OwnershipStructureStep(
-                                formKey: _stepFormKeys[3],
-                                step: steps[3],
-                                selectedValues: state.orderEntity.formValues,
-                                onFieldChanged: context
-                                    .read<NewOrderCubit>()
-                                    .updateFormValue,
-                              ),
-                              ActivityStep(
-                                formKey: _stepFormKeys[4],
-                                step: steps[4],
-                                selectedValues: state.orderEntity.formValues,
-                                onFieldChanged: context
-                                    .read<NewOrderCubit>()
-                                    .updateFormValue,
-                              ),
-                              _buildDocumentsOrRadioCardStep(
-                                context,
-                                steps[5],
-                                state.orderEntity.formValues,
-                              ),
-                              ReviewStep(
-                                step: steps[6],
-                                formSteps: steps.take(6).toList(growable: false),
-                                agreement:
-                                    orderStepsState
-                                        .orderStepsModel
-                                        ?.data
-                                        ?.agreements ??
-                                    [],
-                                onEditStep: (step) => _goToStep(context, step),
-                              ),
-                            ],
+                            onEditStep: (step) => _goToStep(context, step),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(
-                            AppPaddingWidth.p16,
-                            AppPaddingHeight.p8,
-                            AppPaddingWidth.p16,
-                            AppPaddingHeight.p16,
+                        CreateOrderNavigationBar(
+                          currentStep: state.orderEntity.currentStep,
+                          lastStep: NewOrderCubit.lastStep,
+                          onPrevious: () => _goToStep(
+                            context,
+                            state.orderEntity.currentStep - 1,
                           ),
-                          child: Row(
-                            children: [
-                              if (state.orderEntity.currentStep > 0) ...[
-                                Expanded(
-                                  child: CustomElevatedButton(
-                                    key: const Key(
-                                      'new_order_previous_button',
-                                    ),
-                                    height: AppHeight.h50,
-                                    color: AppColors.lightActive,
-
-                                    onPressed: () => _goToStep(
-                                      context,
-                                      state.orderEntity.currentStep - 1,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                         Icon(
-                                          Icons.arrow_back_rounded,
-                                          size: AppSize.s18,
-                                          color: AppColors.white,
-                                        ),
-                                        SizedBox(width: AppWidth.w4),
-                                        BodyTitle(
-                                          text: context.loc.new_order_previous,
-                                          color: AppColors.white,
-                                          fontWeight: AppFontWeight.semiBold,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: AppPaddingWidth.p12),
-                              ],
-                              Expanded(
-                                child: CustomElevatedButton(
-                                  key: const Key('new_order_next_button'),
-                                  height: AppHeight.h50,
-                                  color: AppColors.primary,
-                                  onPressed: () {
-                                    final orderEntity = context
-                                        .read<NewOrderCubit>()
-                                        .state
-                                        .orderEntity;
-                                    final currentStep = orderEntity.currentStep;
-                                    // if (currentStep < _stepFormKeys.length &&
-                                    //     !(_stepFormKeys[currentStep]
-                                    //             .currentState
-                                    //             ?.validate() ??
-                                    //         false)) {
-                                    //   showCustomSnackBar(
-                                    //     context: context,
-                                    //     title: context.loc.error,
-                                    //     message: context
-                                    //         .loc
-                                    //         .complete_profile_required_field,
-                                    //     contentType: ContentType.failure,
-                                    //   );
-                                    //   return;
-                                    // }
-
-                                    if (currentStep < NewOrderCubit.lastStep) {
-                                      _goToStep(context, currentStep + 1);
-                                      return;
-                                    }
-                                    if(currentStep==NewOrderCubit.lastStep){
-                                      context.read<SubmitOrderBloc>().add(
-                                        SubmitOrderEvent(orderEntity),
-                                      );
-                                    }
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      BodyTitle(
-                                        text:
-                                            state.orderEntity.currentStep ==
-                                                NewOrderCubit.lastStep
-                                            ? context.loc.new_order_submit
-                                            : context.loc.new_order_next,
-                                        color: AppColors.white,
-                                        fontWeight: AppFontWeight.semiBold,
-                                      ),
-                                      SizedBox(width: AppWidth.w4),
-                                      Icon(
-                                        Icons.arrow_forward_rounded,
-                                        size: AppSize.s18,
-                                        color: AppColors.white,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          onNext: () => _handleNextStep(context),
                         ),
                       ],
                     ),
@@ -411,35 +259,22 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     );
   }
 
-  Widget _buildDocumentsOrRadioCardStep(
-    BuildContext context,
-    StepModel step,
-    Map<String, dynamic> selectedValues,
-  ) {
-    final fields = (step.sections ?? const <Section>[])
-        .expand((section) => section.fields ?? const <SectionField>[]);
-    final hasRadioCard = fields.any((field) => field.type == 'radio-card');
+  void _handleNextStep(BuildContext context) {
+    final orderEntity = context.read<NewOrderCubit>().state.orderEntity;
+    final currentStep = orderEntity.currentStep;
 
-    if (hasRadioCard) {
-      return RadioCardStep(
-        formKey: _stepFormKeys[5],
-        step: step,
-        selectedValues: selectedValues,
-        onFieldChanged: context.read<NewOrderCubit>().updateFormValue,
-      );
+    if (currentStep < NewOrderCubit.lastStep) {
+      _goToStep(context, currentStep + 1);
+      return;
     }
 
-    return DocumentRequirementStep(
-      formKey: _stepFormKeys[5],
-      step: step,
-    );
+    context.read<SubmitOrderBloc>().add(SubmitOrderEvent(orderEntity));
   }
 
   void _onCreateOrderStateChanged(
     BuildContext context,
     ICreateOrderState createOrderState,
   ) {
-
     if (createOrderState is CreateOrderFailed) {
       showCustomSnackBar(
         context: context,
@@ -475,10 +310,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(
-    BuildContext context, {
-    NewOrderState? state,
-  }) {
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
       title: context.loc.new_order_title,
       backgroundColor: AppColors.white,
