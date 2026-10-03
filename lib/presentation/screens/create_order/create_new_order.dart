@@ -74,13 +74,27 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     super.dispose();
   }
 
-  void _goToStep(BuildContext context, int step) {
-    context.read<NewOrderCubit>().changeStep(step);
-    _pageController.animateToPage(
+  Future<void> _goToStep(BuildContext context, int step) async {
+    if (step < 0 || step > NewOrderCubit.lastStep) return;
+    final newOrderCubit = context.read<NewOrderCubit>();
+
+    // Let the PageView drive the selected step through onPageChanged. Updating
+    // the cubit first rebuilds the PageView while its controller is still on
+    // the old page, which can prevent the pending animation from starting.
+    if (!_pageController.hasClients) {
+      newOrderCubit.changeStep(step);
+      return;
+    }
+
+    await _pageController.animateToPage(
       step,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
+
+    // Keep state in sync even when an interrupted animation does not emit
+    // onPageChanged (for example, when the route is being rebuilt).
+    if (mounted) newOrderCubit.changeStep(step);
   }
 
   void _loadOrderSteps() {

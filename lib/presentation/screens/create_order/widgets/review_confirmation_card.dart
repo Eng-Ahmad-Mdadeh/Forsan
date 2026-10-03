@@ -11,11 +11,15 @@ class ReviewConfirmationCard extends StatelessWidget {
     required this.text,
     required this.value,
     required this.onChanged,
+    this.onPrivacyPressed,
+    this.onTermsPressed,
   });
 
   final String text;
   final bool value;
   final ValueChanged<bool> onChanged;
+  final VoidCallback? onPrivacyPressed;
+  final VoidCallback? onTermsPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -46,16 +50,91 @@ class ReviewConfirmationCard extends StatelessWidget {
           ),
           SizedBox(width: AppWidth.w4),
           Expanded(
-            child: BodyTitle(
-              text: text,
-              textAlign: TextAlign.start,
-              color: AppColors.primaryDark,
-              fontSize: AppFontSize.s14,
-              fontWeight: AppFontWeight.regular,
-              maxLines: 4,
-            ),
+            child: onPrivacyPressed != null && onTermsPressed != null
+                ? _AgreementText(
+                    onPrivacyPressed: onPrivacyPressed!,
+                    onTermsPressed: onTermsPressed!,
+                  )
+                : BodyTitle(
+                    text: text,
+                    textAlign: TextAlign.start,
+                    color: AppColors.primaryDark,
+                    fontSize: AppFontSize.s14,
+                    fontWeight: AppFontWeight.regular,
+                    maxLines: 4,
+                  ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _AgreementText extends StatelessWidget {
+  const _AgreementText({
+    required this.onPrivacyPressed,
+    required this.onTermsPressed,
+  });
+
+  final VoidCallback onPrivacyPressed;
+  final VoidCallback onTermsPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = TextStyle(
+      color: AppColors.primaryDark,
+      fontSize: AppFontSize.s14,
+      fontWeight: AppFontWeight.regular,
+    );
+    final linkStyle = style.copyWith(
+      fontWeight: AppFontWeight.semiBold,
+      decoration: TextDecoration.underline,
+      decorationColor: AppColors.primaryDark,
+    );
+
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: AppWidth.w4,
+      children: [
+        Text('أوافق على', style: style),
+        _AgreementLink(
+          key: const Key('new_order_privacy_policy_link'),
+          text: 'سياسة الخصوصية',
+          style: linkStyle,
+          onPressed: onPrivacyPressed,
+        ),
+        Text('و', style: style),
+        _AgreementLink(
+          key: const Key('new_order_terms_of_use_link'),
+          text: 'شروط استخدام منصة فرسان.',
+          style: linkStyle,
+          onPressed: onTermsPressed,
+        ),
+      ],
+    );
+  }
+}
+
+class _AgreementLink extends StatelessWidget {
+  const _AgreementLink({
+    super.key,
+    required this.text,
+    required this.style,
+    required this.onPressed,
+  });
+
+  final String text;
+  final TextStyle style;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(AppRadius.r4),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p4),
+        child: Text(text, style: style),
       ),
     );
   }
