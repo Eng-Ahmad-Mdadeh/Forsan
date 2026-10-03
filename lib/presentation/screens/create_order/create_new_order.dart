@@ -180,11 +180,10 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                   } else if (submitOrderState is SubmitOrderFailed) {
                     _handleRequestFailure(context, submitOrderState.message);
                   } else if (submitOrderState is SubmitOrderLoaded) {
-                    Navigator.of(context, rootNavigator: true).pop();
+
                     _showSubmitDialog(
                       context,
-                      orderNumber:
-                          submitOrderState.submitOrderModel?.data?.reference,
+                      orderNumber:'555555'
                     );
                   }
                 },
