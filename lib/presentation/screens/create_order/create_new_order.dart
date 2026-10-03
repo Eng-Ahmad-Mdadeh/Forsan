@@ -342,7 +342,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                                         .read<NewOrderCubit>()
                                         .state
                                         .orderEntity;
-                                    // final currentStep = orderEntity.currentStep;
+                                    final currentStep = orderEntity.currentStep;
                                     // if (currentStep < _stepFormKeys.length &&
                                     //     !(_stepFormKeys[currentStep]
                                     //             .currentState
@@ -359,14 +359,15 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                                     //   return;
                                     // }
 
-                                    // if (currentStep < NewOrderCubit.lastStep) {
-                                    //   _goToStep(context, currentStep + 1);
-                                    //   return;
-                                    // }
-
-                                    context.read<SubmitOrderBloc>().add(
-                                      SubmitOrderEvent(orderEntity),
-                                    );
+                                    if (currentStep < NewOrderCubit.lastStep) {
+                                      _goToStep(context, currentStep + 1);
+                                      return;
+                                    }
+                                    if(currentStep==NewOrderCubit.lastStep){
+                                      context.read<SubmitOrderBloc>().add(
+                                        SubmitOrderEvent(orderEntity),
+                                      );
+                                    }
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -501,6 +502,18 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
             .read<NewOrderCubit>()
             .state
             .orderEntity;
+        final currentStep = orderEntity.currentStep;
+        if (currentStep < _stepFormKeys.length &&
+            !(_stepFormKeys[currentStep].currentState?.validate() ?? false)) {
+          showCustomSnackBar(
+            context: context,
+            title: context.loc.error,
+            message: context.loc.complete_profile_required_field,
+            contentType: ContentType.failure,
+          );
+          return;
+        }
+
         context.read<CompleteOrderBloc>().add(CompleteOrderEvent(orderEntity));
         context.pop();
       },

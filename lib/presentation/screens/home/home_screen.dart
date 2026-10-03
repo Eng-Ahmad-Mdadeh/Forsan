@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/domain/entities/document/document_entity.dart';
+import 'package:forsan/presentation/bloc/document_details/document_details_bloc.dart';
 import 'package:forsan/presentation/bloc/home/home_bloc.dart';
 import 'package:forsan/presentation/widgets/image_view.dart';
 import 'package:forsan/presentation/widgets/required_action_card.dart';
@@ -21,7 +23,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<HomeBloc>(create: (context) => HomeBloc())],
+      providers: [
+        BlocProvider<HomeBloc>(create: (context) => HomeBloc()),
+        BlocProvider<DocumentDetailsBloc>(create: (_) => DocumentDetailsBloc()),
+      ],
       child: BodyHomeScreen(),
     );
   }
@@ -90,23 +95,36 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
                   ),
                 ),
                 SizedBox(height: AppHeight.h16),
-                if(homeData?.requiredAction != null)
-                RequiredActionCard(
-                  title: homeData?.requiredAction?.title ?? '',
-                  message: homeData?.requiredAction?.message ?? '',
-                  buttonText: homeData?.requiredAction?.actionLabel ??'',
-                  buttonColor: AppColors.primary,
-                  compact: true,
-                  semanticsLabel: 'إجراء مطلوب على الطلب FR-2026-001259',
-                  illustration: ImageView(
-                    imagePath: AppAssets.addFile,
-                    width: AppWidth.w65,
-                    fit: BoxFit.contain,
-                    excludeFromSemantics: true,
+                if (homeData?.requiredAction != null)
+                  RequiredActionCard(
+                    title: homeData?.requiredAction?.title ?? '',
+                    message: homeData?.requiredAction?.message ?? '',
+                    buttonText: homeData?.requiredAction?.actionLabel ?? '',
+                    buttonColor: AppColors.primary,
+                    compact: true,
+                    semanticsLabel: 'إجراء مطلوب على الطلب FR-2026-001259',
+                    illustration: ImageView(
+                      imagePath: AppAssets.addFile,
+                      width: AppWidth.w65,
+                      fit: BoxFit.contain,
+                      excludeFromSemantics: true,
+                    ),
+                    onPressed: () {
+                      final documentDetails=context.read<DocumentDetailsBloc>().add(
+                        DocumentDetailsEvent(
+                          DocumentEntity(
+                            orderId: homeData?.requiredAction?.requestId ?? '',
+                          ),
+                        ),
+                      );
+                      const CompleteRequirementsRoute(
+                        $extra: CompleteRequirementsExtra(
+                          documents: documentDetails!.requiredDocuments!,
+                          requiredAction: documentDetails.requiredAction!,
+                        ),
+                      ).push(context);
+                    },
                   ),
-                  onPressed: () =>
-                      const CompleteRequirementsRoute().push(context),
-                ),
                 SizedBox(height: AppHeight.h20),
                 if (homeData != null) ...[
                   HomeStatisticsSection(homeModel: homeData),
