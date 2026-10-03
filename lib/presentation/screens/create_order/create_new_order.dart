@@ -275,10 +275,14 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                               DocumentsStep(
                                 formKey: _stepFormKeys[5],
                                 step: steps[5],
+                                selectedValues: state.orderEntity.formValues,
+                                onFieldChanged: context
+                                    .read<NewOrderCubit>()
+                                    .updateFormValue,
                               ),
                               ReviewStep(
                                 step: steps[6],
-                                formSteps: steps.take(5).toList(growable: false),
+                                formSteps: steps.take(6).toList(growable: false),
                                 agreement:
                                     orderStepsState
                                         .orderStepsModel
