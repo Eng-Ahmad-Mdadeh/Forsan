@@ -266,9 +266,9 @@ class _BodyCompleteRequirementsScreenState
                                           .loc.complete_requirements_upload,
                                       uploadHint:
                                           FilePickerHelper.buildUploadHint(
-                                            maxSize: document?.maxSize,
+                                            maxSize: document.maxSize,
                                             acceptedTypes:
-                                                document?.acceptedTypes,
+                                                document.acceptedTypes,
                                             extensionSeparator: '-',
                                             formatter:
                                                 (formattedSize, extensions) =>
