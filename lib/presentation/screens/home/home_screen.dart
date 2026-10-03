@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forsan/data/models/document_details/document_details_model.dart';
 import 'package:forsan/domain/entities/document/document_entity.dart';
 import 'package:forsan/presentation/bloc/document_details/document_details_bloc.dart';
 import 'package:forsan/presentation/bloc/home/home_bloc.dart';
@@ -40,6 +41,8 @@ class BodyHomeScreen extends StatefulWidget {
 }
 
 class _BodyHomeScreenState extends State<BodyHomeScreen> {
+  DocumentDetailsModel? _documentDetails;
+
   @override
   void initState() {
     super.initState();
@@ -47,70 +50,86 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<HomeBloc, IHomeState>(
-    builder: (context, state) {
-      if (state is HomeFailed) {
-        return Scaffold(
-          backgroundColor: AppColors.white,
-          appBar: const HomeHeader(),
-          body: FailureScreen(
-            errorMessage: state.message,
-            onPressed: () => context.read<HomeBloc>().add(HomeEvent()),
-          ),
-        );
-      }
+  Widget build(BuildContext context) => MultiBlocListener(
+    listeners: [
+      BlocListener<HomeBloc, IHomeState>(
+        listener: (context, state) {
+          if (state is! HomeLoaded) return;
 
-      final homeData = state is HomeLoaded ? state.homeModel?.data : null;
+          final requiredAction = state.homeModel?.data?.requiredAction;
+          if (requiredAction == null) {
+            _documentDetails = null;
+            return;
+          }
 
-      return Skeletonizer(
-        enableSwitchAnimation: true,
-        effect: ShimmerEffect(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[100]!,
-          begin: AlignmentDirectional.centerStart,
-          end: AlignmentDirectional.centerEnd,
-          duration: const Duration(milliseconds: 500),
-        ),
-        enabled: state is HomeLoading,
-        child: Scaffold(
-          backgroundColor: AppColors.white,
-          appBar: HomeHeader(greetingName: homeData?.greetingName),
-          body: SafeArea(
-            child: ListView(
-              padding: EdgeInsets.fromLTRB(
-                AppPaddingWidth.p16,
-                AppPaddingHeight.p20,
-                AppPaddingWidth.p16,
-                AppPaddingHeight.p24,
-              ),
-              children: [
-                Semantics(
-                  image: true,
-                  label: 'الصورة الرئيسية',
-                  child: ImageView(
-                    imagePath: AppAssets.appBanner,
-                    key: const Key('home-main-image'),
-                    width: double.infinity,
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-                SizedBox(height: AppHeight.h16),
-                if (homeData?.requiredAction != null)..[
+          _documentDetails = null;
           context.read<DocumentDetailsBloc>().add(
-            DocumentDetailsEvent(DocumentEntity(orderId: homeData?.requiredAction?.requestId)),
+            DocumentDetailsEvent(
+              DocumentEntity(orderId: requiredAction.requestId),
+            ),
           );
-                  BlocListener<DocumentDetailsBloc, IDocumentDetailsState>(
-                    listener: (context, state) {
-                      if (state is DocumentDetailsLoaded) {
-                        final documentDetails = state.documentDetailsModel?.data;
-                        final documents = documentDetails?.requiredDocuments;
-                        final requiredAction = documentDetails?.requiredAction;
+        },
+      ),
+      BlocListener<DocumentDetailsBloc, IDocumentDetailsState>(
+        listener: (context, state) {
+          if (state is DocumentDetailsLoaded) {
+            setState(() {
+              _documentDetails = state.documentDetailsModel?.data;
+            });
+          }
+        },
+      ),
+    ],
+    child: BlocBuilder<HomeBloc, IHomeState>(
+      builder: (context, state) {
+        if (state is HomeFailed) {
+          return Scaffold(
+            backgroundColor: AppColors.white,
+            appBar: const HomeHeader(),
+            body: FailureScreen(
+              errorMessage: state.message,
+              onPressed: () => context.read<HomeBloc>().add(HomeEvent()),
+            ),
+          );
+        }
 
-                        if (documents == null || requiredAction == null) return;
-                      }
+        final homeData = state is HomeLoaded ? state.homeModel?.data : null;
 
-                    },
-                    child: RequiredActionCard(
+        return Skeletonizer(
+          enableSwitchAnimation: true,
+          effect: ShimmerEffect(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            begin: AlignmentDirectional.centerStart,
+            end: AlignmentDirectional.centerEnd,
+            duration: const Duration(milliseconds: 500),
+          ),
+          enabled: state is HomeLoading,
+          child: Scaffold(
+            backgroundColor: AppColors.white,
+            appBar: HomeHeader(greetingName: homeData?.greetingName),
+            body: SafeArea(
+              child: ListView(
+                padding: EdgeInsets.fromLTRB(
+                  AppPaddingWidth.p16,
+                  AppPaddingHeight.p20,
+                  AppPaddingWidth.p16,
+                  AppPaddingHeight.p24,
+                ),
+                children: [
+                  Semantics(
+                    image: true,
+                    label: 'الصورة الرئيسية',
+                    child: ImageView(
+                      imagePath: AppAssets.appBanner,
+                      key: const Key('home-main-image'),
+                      width: double.infinity,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                  SizedBox(height: AppHeight.h16),
+                  if (homeData?.requiredAction != null) ...[
+                    RequiredActionCard(
                       title: homeData?.requiredAction?.title ?? '',
                       message: homeData?.requiredAction?.message ?? '',
                       buttonText: homeData?.requiredAction?.actionLabel ?? '',
@@ -124,33 +143,36 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
                         excludeFromSemantics: true,
                       ),
                       onPressed: () {
-
+                        final documentDetails = _documentDetails;
+                        if (documentDetails?.requiredDocuments == null ||
+                            documentDetails?.requiredAction == null) {
+                          return;
+                        }
                         CompleteRequirementsRoute(
                           $extra: CompleteRequirementsExtra(
                             documents: documentDetails!.requiredDocuments!,
                             requiredAction: documentDetails.requiredAction!,
-
                           ),
                         ).push(context);
                       },
                     ),
-                  ),
-                ],
-                SizedBox(height: AppHeight.h20),
-                if (homeData != null) ...[
-                  HomeStatisticsSection(homeModel: homeData),
+                  ],
                   SizedBox(height: AppHeight.h20),
-                  if (homeData.currentRequest != null)
-                    LatestOrderCard(homeModel: homeData),
+                  if (homeData != null) ...[
+                    HomeStatisticsSection(homeModel: homeData),
+                    SizedBox(height: AppHeight.h20),
+                    if (homeData.currentRequest != null)
+                      LatestOrderCard(homeModel: homeData),
+                  ],
+                  SizedBox(height: AppHeight.h20),
+                  const QuickActionsSection(),
+                  SizedBox(height: AppHeight.h90),
                 ],
-                SizedBox(height: AppHeight.h20),
-                const QuickActionsSection(),
-                SizedBox(height: AppHeight.h90),
-              ],
+              ),
             ),
           ),
-        ),
-      );
-    },
+        );
+      },
+    ),
   );
 }
