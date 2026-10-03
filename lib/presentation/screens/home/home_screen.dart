@@ -95,7 +95,10 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
                   ),
                 ),
                 SizedBox(height: AppHeight.h16),
-                if (homeData?.requiredAction != null)
+                if (homeData?.requiredAction != null)..[
+          context.read<DocumentDetailsBloc>().add(
+            DocumentDetailsEvent(DocumentEntity(orderId: homeData?.requiredAction?.requestId)),
+          );
                   BlocListener<DocumentDetailsBloc, IDocumentDetailsState>(
                     listener: (context, state) {
                       if (state is DocumentDetailsLoaded) {
@@ -132,6 +135,7 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
                       },
                     ),
                   ),
+                ],
                 SizedBox(height: AppHeight.h20),
                 if (homeData != null) ...[
                   HomeStatisticsSection(homeModel: homeData),
