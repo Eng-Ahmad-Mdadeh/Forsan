@@ -9,6 +9,7 @@ import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/presentation/bloc/file/delete_file/delete_file_bloc.dart';
 import 'package:forsan/presentation/bloc/file/upload_file/upload_file_bloc.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_info_card.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/order_option_card.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_section_header.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
@@ -20,8 +21,16 @@ import 'package:forsan/presentation/widgets/text/body_title.dart';
 class DocumentsStep extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final StepModel step;
+  final Map<String, dynamic> selectedValues;
+  final void Function(String fieldId, dynamic value) onFieldChanged;
 
-  const DocumentsStep({super.key, required this.formKey, required this.step});
+  const DocumentsStep({
+    super.key,
+    required this.formKey,
+    required this.step,
+    required this.selectedValues,
+    required this.onFieldChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +39,12 @@ class DocumentsStep extends StatelessWidget {
         BlocProvider<UploadFileBloc>(create: (_) => UploadFileBloc()),
         BlocProvider<DeleteFileBloc>(create: (_) => DeleteFileBloc()),
       ],
-      child: BodyDocumentsStep(formKey: formKey, step: step),
+      child: BodyDocumentsStep(
+        formKey: formKey,
+        step: step,
+        selectedValues: selectedValues,
+        onFieldChanged: onFieldChanged,
+      ),
     );
   }
 }
@@ -40,10 +54,14 @@ class BodyDocumentsStep extends StatefulWidget {
     super.key,
     required this.formKey,
     required this.step,
+    required this.selectedValues,
+    required this.onFieldChanged,
   });
 
   final GlobalKey<FormState> formKey;
   final StepModel step;
+  final Map<String, dynamic> selectedValues;
+  final void Function(String fieldId, dynamic value) onFieldChanged;
 
   @override
   State<BodyDocumentsStep> createState() => _DocumentsStepState();
@@ -215,15 +233,24 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
     final fields = section.fields ?? const <SectionField>[];
     final fileFields = fields.where((field) => field.type == 'file').toList();
     final infoFields = fields.where((field) => field.type == 'info').toList();
+    final radioCardFields = fields
+        .where((field) => field.type == 'radio-card')
+        .toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         OrderSectionHeader(
-          icon: Icons.file_upload_outlined,
+          icon: radioCardFields.isNotEmpty
+              ? Icons.business_center_outlined
+              : Icons.file_upload_outlined,
           title: title,
           description: description,
         ),
+        for (final field in radioCardFields) ...[
+          _buildRadioCardField(context, field),
+          SizedBox(height: AppHeight.h8),
+        ],
         for (var index = 0; index < fileFields.length; index++) ...[
           _buildDocumentRequirement(
             context,
@@ -246,6 +273,88 @@ class _DocumentsStepState extends State<BodyDocumentsStep> {
         ],
       ],
     );
+  }
+
+  Widget _buildRadioCardField(BuildContext context, SectionField field) {
+    final fieldId = field.id?.trim();
+    final options = (field.options ?? const <FluffyOption>[])
+        .where((option) => option.value?.trim().isNotEmpty == true)
+        .toList(growable: false);
+    final selectedValue = fieldId == null
+        ? null
+        : widget.selectedValues[fieldId]?.toString();
+
+    return FormField<String>(
+      key: ValueKey('${field.id}:$selectedValue'),
+      initialValue: selectedValue,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) =>
+          field.required == true && (value == null || value.trim().isEmpty)
+          ? context.loc.complete_profile_required_field
+          : null,
+      builder: (formField) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (field.label?.trim().isNotEmpty == true) ...[
+            BodyTitle(
+              text:
+                  '${field.label!.trim()}${field.required == true ? ' *' : ''}',
+              color: AppColors.mainText,
+              fontSize: AppFontSize.s14,
+              fontWeight: AppFontWeight.medium,
+            ),
+            SizedBox(height: AppHeight.h6),
+          ],
+          for (var index = 0; index < options.length; index++) ...[
+            OrderOptionCard(
+              title: options[index].label?.trim() ?? '',
+              description: options[index].description?.trim() ?? '',
+              icon: _packageIcon(options[index].value, index),
+              selected: selectedValue == options[index].value,
+              height: AppHeight.h140,
+              descriptionMaxLines: 6,
+              onTap: () {
+                final value = options[index].value!;
+                formField.didChange(value);
+                if (fieldId != null && fieldId.isNotEmpty) {
+                  widget.onFieldChanged(fieldId, value);
+                }
+              },
+            ),
+            if (index < options.length - 1) SizedBox(height: AppHeight.h8),
+          ],
+          if (formField.hasError) ...[
+            SizedBox(height: AppHeight.h6),
+            BodyTitle(
+              text: formField.errorText!,
+              color: AppColors.red,
+              fontSize: AppFontSize.s12,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  IconData _packageIcon(String? value, int index) {
+    switch (value) {
+      case 'basic_management':
+        return Icons.business_outlined;
+      case 'integrated_management':
+        return Icons.account_tree_outlined;
+      case 'custom_management':
+        return Icons.tune_outlined;
+      case 'on_demand_service':
+        return Icons.flash_on_outlined;
+      default:
+        const icons = <IconData>[
+          Icons.business_outlined,
+          Icons.account_tree_outlined,
+          Icons.tune_outlined,
+          Icons.flash_on_outlined,
+        ];
+        return icons[index % icons.length];
+    }
   }
 
   Widget _buildDocumentRequirement(

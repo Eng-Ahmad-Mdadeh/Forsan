@@ -14,6 +14,7 @@ class OrderOptionCard extends StatelessWidget {
     required this.selected,
     required this.onTap,
     this.height,
+    this.descriptionMaxLines = 2,
   });
 
   final String title;
@@ -22,6 +23,7 @@ class OrderOptionCard extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
   final double? height;
+  final int descriptionMaxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,7 @@ class OrderOptionCard extends StatelessWidget {
                             color: descriptionColor,
                             fontSize: AppFontSize.s12,
                             fontWeight: AppFontWeight.medium,
-                            maxLines: 2,
+                            maxLines: descriptionMaxLines,
                           ),
                         ],
                       ),
