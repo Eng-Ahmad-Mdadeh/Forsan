@@ -16,6 +16,8 @@ class AppStatusDialog extends StatelessWidget {
     this.onPrimaryPressed,
     this.secondaryButtonText,
     this.onSecondaryPressed,
+    this.secondaryButtonIcon,
+    this.primaryButtonIcon,
     this.icon = Icons.check_rounded,
     this.iconColor = AppColors.secondary,
     this.iconBackgroundColor = AppColors.primary,
@@ -38,6 +40,8 @@ class AppStatusDialog extends StatelessWidget {
   final String primaryButtonText;
   final VoidCallback? onPrimaryPressed;
   final String? secondaryButtonText;
+  final IconData? primaryButtonIcon;
+  final IconData? secondaryButtonIcon;
   final VoidCallback? onSecondaryPressed;
   final IconData icon;
   final Color iconColor;
@@ -60,6 +64,8 @@ class AppStatusDialog extends StatelessWidget {
     required String title,
     required String message,
     required String primaryButtonText,
+    IconData? primaryButtonIcon,
+    IconData? secondaryButtonIcon,
     VoidCallback? onPrimaryPressed,
     String? secondaryButtonText,
     VoidCallback? onSecondaryPressed,
@@ -94,6 +100,8 @@ class AppStatusDialog extends StatelessWidget {
         secondaryButtonText: secondaryButtonText,
         onSecondaryPressed: onSecondaryPressed,
         icon: icon,
+        primaryButtonIcon: primaryButtonIcon,
+        secondaryButtonIcon: secondaryButtonIcon,
         iconColor: iconColor,
         iconBackgroundColor: iconBackgroundColor,
         iconBorderColor: iconBorderColor,
@@ -180,8 +188,8 @@ class AppStatusDialog extends StatelessWidget {
                         BodyTitle(
                           text: message,
                           color: messageColor,
-                          fontSize: messageFontSize ?? AppFontSize.s16,
-                          fontWeight: messageFontWeight,
+                          fontSize: messageFontSize ?? AppFontSize.s14,
+                          fontWeight: messageFontWeight ?? AppFontWeight.light,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.visible,
                           maxLines: messageMaxLines,
@@ -190,7 +198,9 @@ class AppStatusDialog extends StatelessWidget {
                         _DialogActions(
                           primaryButtonText: primaryButtonText,
                           primaryButtonColor: primaryButtonColor,
+                          primaryButtonIcon: primaryButtonIcon,
                           secondaryButtonColor: secondaryButtonColor,
+                          secondaryButtonIcon: secondaryButtonIcon,
                           onPrimaryPressed: () =>
                               _handleAction(context, onPrimaryPressed),
                           secondaryButtonText: secondaryButtonText,
@@ -206,10 +216,8 @@ class AppStatusDialog extends StatelessWidget {
                       top: AppPaddingHeight.p12,
                       start: AppPaddingWidth.p12,
                       child: _CloseButton(
-                        onPressed: () => Navigator.of(
-                          context,
-                          rootNavigator: true,
-                        ).pop(),
+                        onPressed: () =>
+                            Navigator.of(context, rootNavigator: true).pop(),
                       ),
                     ),
                 ],
@@ -238,12 +246,16 @@ class _DialogActions extends StatelessWidget {
     required this.onPrimaryPressed,
     required this.secondaryButtonText,
     required this.onSecondaryPressed,
+    required this.primaryButtonIcon,
+    required this.secondaryButtonIcon,
     required this.direction,
   });
 
   final String primaryButtonText;
   final Color primaryButtonColor;
   final Color secondaryButtonColor;
+  final IconData? primaryButtonIcon;
+  final IconData? secondaryButtonIcon;
   final VoidCallback onPrimaryPressed;
   final String? secondaryButtonText;
   final VoidCallback onSecondaryPressed;
@@ -254,15 +266,17 @@ class _DialogActions extends StatelessWidget {
     final primary = _DialogButton(
       text: primaryButtonText,
       color: primaryButtonColor,
+      icon: primaryButtonIcon,
       onPressed: onPrimaryPressed,
     );
     final secondary = secondaryButtonText == null
         ? null
         : _DialogButton(
             text: secondaryButtonText!,
-            color: AppColors.white,
-            foregroundColor: secondaryButtonColor,
-            borderColor: secondaryButtonColor,
+            icon: secondaryButtonIcon,
+            color: Color(0xFFFA7171),
+            foregroundColor: Color(0xFFFA7171),
+            borderColor: AppColors.none,
             onPressed: onSecondaryPressed,
           );
 
@@ -279,10 +293,7 @@ class _DialogActions extends StatelessWidget {
     return Column(
       children: [
         primary,
-        if (secondary != null) ...[
-          SizedBox(height: AppHeight.h8),
-          secondary,
-        ],
+        if (secondary != null) ...[SizedBox(height: AppHeight.h8), secondary],
       ],
     );
   }
@@ -320,6 +331,7 @@ class _DialogButton extends StatelessWidget {
     required this.onPressed,
     this.foregroundColor = AppColors.white,
     this.borderColor,
+    this.icon,
   });
 
   final String text;
@@ -327,6 +339,7 @@ class _DialogButton extends StatelessWidget {
   final Color foregroundColor;
   final Color? borderColor;
   final VoidCallback onPressed;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -343,14 +356,29 @@ class _DialogButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadius.r8),
           ),
         ),
-        child: Text(
-          text,
-          style: TextStyle(
-            fontFamily: AppFontFamily.tajawal,
-            fontSize: AppFontSize.s16,
-            fontWeight: AppFontWeight.regular,
-          ),
-        ),
+        child: icon == null
+            ? _buttonText()
+            : Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(icon,size:AppSize.s16,color:AppColors.white),
+                  SizedBox(width: AppWidth.w4),
+                  _buttonText(),
+                ],
+              ),
+      ),
+    );
+  }
+
+  Widget _buttonText() {
+    return Text(
+      text,
+      style: TextStyle(
+        color: AppColors.white,
+        fontFamily: AppFontFamily.tajawal,
+        fontSize: AppFontSize.s14,
+        fontWeight: AppFontWeight.regular,
       ),
     );
   }

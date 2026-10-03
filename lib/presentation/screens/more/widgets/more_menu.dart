@@ -136,8 +136,8 @@ class MoreMenu extends StatelessWidget {
   Future<void> _showLogoutDialog(BuildContext context) {
     return AppStatusDialog.show(
       context,
-      title: '',
-      message: context.loc.logout_confirmation,
+      title: context.loc.logout_confirmation,
+      message: '',
       primaryButtonText: context.loc.confirm,
       secondaryButtonText: context.loc.cancel,
       icon: Icons.logout_rounded,

@@ -21,12 +21,14 @@ import 'package:forsan/presentation/screens/create_order/widgets/order_step_indi
 import 'package:forsan/presentation/screens/create_order/steps_widgets/ownership_structure_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/proposed_company_info_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/review_step.dart';
+import 'package:forsan/presentation/widgets/app_status_dialog.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/custom_snack_bar.dart';
 import 'package:forsan/presentation/widgets/failure_screen.dart';
 import 'package:forsan/presentation/widgets/loading_widget.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class CreateNewOrderScreen extends StatelessWidget {
   final String serviceSlug;
@@ -301,18 +303,28 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                                       'new_order_previous_button',
                                     ),
                                     height: AppHeight.h50,
-                                    color: AppColors.white,
-                                    borderSide: const BorderSide(
-                                      color: AppColors.primary,
-                                    ),
+                                    color: AppColors.lightActive,
+
                                     onPressed: () => _goToStep(
                                       context,
                                       state.orderEntity.currentStep - 1,
                                     ),
-                                    child: BodyTitle(
-                                      text: context.loc.new_order_previous,
-                                      color: AppColors.primary,
-                                      fontWeight: AppFontWeight.semiBold,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                         Icon(
+                                          Icons.arrow_back_rounded,
+                                          size: AppSize.s18,
+                                          color: AppColors.white,
+                                        ),
+                                        SizedBox(width: AppWidth.w4),
+                                        BodyTitle(
+                                          text: context.loc.new_order_previous,
+                                          color: AppColors.white,
+                                          fontWeight: AppFontWeight.semiBold,
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -356,14 +368,26 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                                       SubmitOrderEvent(orderEntity),
                                     );
                                   },
-                                  child: BodyTitle(
-                                    text:
-                                        state.orderEntity.currentStep ==
-                                            NewOrderCubit.lastStep
-                                        ? context.loc.new_order_submit
-                                        : context.loc.new_order_next,
-                                    color: AppColors.white,
-                                    fontWeight: AppFontWeight.semiBold,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      BodyTitle(
+                                        text:
+                                            state.orderEntity.currentStep ==
+                                                NewOrderCubit.lastStep
+                                            ? context.loc.new_order_submit
+                                            : context.loc.new_order_next,
+                                        color: AppColors.white,
+                                        fontWeight: AppFontWeight.semiBold,
+                                      ),
+                                      SizedBox(width: AppWidth.w4),
+                                      Icon(
+                                        Icons.arrow_forward_rounded,
+                                        size: AppSize.s18,
+                                        color: AppColors.white,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -386,11 +410,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     BuildContext context,
     ICreateOrderState createOrderState,
   ) {
-    // if (createOrderState is CreateOrderLoading) {
-    //   _showLoadingDialog(context);
-    // } else if (createOrderState is CreateOrderFailed) {
-    //   _handleRequestFailure(context, createOrderState.message);
-    // }
+
     if (createOrderState is CreateOrderFailed) {
       showCustomSnackBar(
         context: context,
@@ -433,17 +453,48 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     return CustomAppBar(
       title: context.loc.new_order_title,
       backgroundColor: AppColors.white,
-      showBackButton: true,
+      //showBackButton: true,
       showScrolledUnderElevation: false,
-      onTapBackButton: state == null || state.orderEntity.currentStep == 0
-          ? () => Navigator.of(context).pop()
-          : () => _goToStep(context, state.orderEntity.currentStep - 1),
+      // onTapBackButton: state == null || state.orderEntity.currentStep == 0
+      //     ? () => Navigator.of(context).pop()
+      //     : () => _goToStep(context, state.orderEntity.currentStep - 1),
       customActions: [
         HeaderIconButton(
           icon: Icons.close_rounded,
-          onTap: () => Navigator.of(context).pop(),
+          onTap: () {
+            _showLogoutDialog(context);
+          },
         ),
       ],
+    );
+  }
+  Future<void> _showLogoutDialog(BuildContext context) {
+    return AppStatusDialog.show(
+      context,
+      title: 'هل تود الخروج ؟',
+      message: 'يمكنك حفظ الطلب كمسودة ومتابعته لاحقا',
+      primaryButtonText: 'حفظ كمسودة',
+      secondaryButtonText: 'إغلاق الطلب ',
+      secondaryButtonIcon: Icons.close,
+      primaryButtonIcon: Icons.edit_document,
+      icon: Icons.logout_rounded,
+      iconColor: AppColors.white,
+      iconBackgroundColor: AppColors.primary,
+      iconBorderColor: AppColors.secondary,
+      iconOuterBackgroundColor: const Color(0xFFE4DEF2),
+      secondaryButtonColor: AppColors.red,
+      titleColor: AppColors.black,
+      messageColor: AppColors.greyText,
+      messageFontSize: AppFontSize.s14,
+      messageFontWeight: AppFontWeight.regular,
+      messageMaxLines: 2,
+      buttonsDirection: Axis.horizontal,
+      showCloseButton: true,
+      canDismiss: true,
+      onPrimaryPressed: () {
+        // Navigator.of(context, rootNavigator: true).pop();
+        // context.read<LogoutBloc>().add(const LogoutEvent());
+      },
     );
   }
 }
