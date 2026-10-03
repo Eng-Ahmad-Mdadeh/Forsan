@@ -16,14 +16,21 @@ class FileRemoteDataSource extends BaseRemoteDataSource<FileModel> {
     CreateOrderEntity data,
   ) async {
     Either<AppException, BaseModel<FileModel>?> result = const Right(null);
+    final itemId = data.requiredDocumentItemId;
+    final isRequiredDocument = itemId?.isNotEmpty == true;
 
     for (final entry in data.requirementDocuments.entries) {
       final path = entry.value.path;
       if (path == null) continue;
 
       result = await postData(
-        endpoint: ApiEndpoints.uploadFile(data.orderId!),
-        data: {'fieldId': entry.key},
+        // endpoint: ApiEndpoints.uploadFile(data.orderId!),
+        // data: {'fieldId': entry.key},
+        endpoint: ApiEndpoints.uploadFile(
+          data.orderId!,
+          itemId: isRequiredDocument ? itemId : null,
+        ),
+        data: isRequiredDocument ? null : {'fieldId': entry.key},
         isFormData: true,
         dataMayBeAtRoot: true,
         fromJsonT: (json) => FileModel.fromJson(json as Map<String, dynamic>),
@@ -37,6 +44,37 @@ class FileRemoteDataSource extends BaseRemoteDataSource<FileModel> {
 
     return result;
   }
+
+  //
+  // Future<Either<AppException, BaseModel<FileModel>?>> uploadRequiredDocuments(
+  //     CreateOrderEntity data,
+  //     ) async {
+  //   Either<AppException, BaseModel<FileModel>?> result = const Right(null);
+  //
+  //   for (final entry in data.requirementDocuments.entries) {
+  //     final path = entry.value.path;
+  //     if (path == null) continue;
+  //
+  //     result = await postData(
+  //       endpoint: ApiEndpoints.uploadRequiredDocument(
+  //         data.orderId!,
+  //         entry.key,
+  //       ),
+  //       isFormData: true,
+  //       dataMayBeAtRoot: true,
+  //       fromJsonT: (json) => FileModel.fromJson(json as Map<String, dynamic>),
+  //       files: [
+  //         {'field_name': 'file', 'path': path},
+  //       ],
+  //     );
+  //
+  //     if (result.isLeft()) return result;
+  //   }
+  //
+  //   return result;
+  // }
+
+
   Future<Either<AppException, BaseModel<void>?>> deleteFile(
       CreateOrderEntity data,
       ) {

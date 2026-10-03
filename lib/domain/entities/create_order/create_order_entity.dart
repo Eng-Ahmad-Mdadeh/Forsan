@@ -8,6 +8,7 @@ class CreateOrderEntity extends Equatable {
     this.serviceSlug,
     this.slug,
     this.orderId,
+    this.requiredDocumentItemId,
     this.fileId,
     this.formValues = const {},
     this.currentStep = 0,
@@ -20,6 +21,7 @@ class CreateOrderEntity extends Equatable {
   final String? slug;
   final String? orderId;
   final String? fileId;
+  final String? requiredDocumentItemId;
   final Map<String, dynamic> formValues;
   final int currentStep;
   final Map<String, PlatformFile> requirementDocuments;
@@ -47,6 +49,7 @@ class CreateOrderEntity extends Equatable {
     bool? acknowledgesAccuracy,
     bool? acceptsTerms,
     String? fileId,
+    String? requiredDocumentItemId,
     Map<String, PlatformFile>? requirementDocuments,
   }) {
     return CreateOrderEntity(
@@ -58,6 +61,7 @@ class CreateOrderEntity extends Equatable {
       currentStep: currentStep ?? this.currentStep,
       acknowledgesAccuracy: acknowledgesAccuracy ?? this.acknowledgesAccuracy,
       acceptsTerms: acceptsTerms ?? this.acceptsTerms,
+      requiredDocumentItemId: requiredDocumentItemId ?? this.requiredDocumentItemId,
       requirementDocuments: requirementDocuments ?? this.requirementDocuments,
     );
   }
@@ -70,6 +74,8 @@ class CreateOrderEntity extends Equatable {
     currentStep,
     orderId,
     slug,
+    requiredDocumentItemId,
+    fileId,
     requirementDocuments,
     acknowledgesAccuracy,
     acceptsTerms,

@@ -4398,8 +4398,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get complete_requirements_upload => 'Tap to upload';
 
   @override
-  String get complete_requirements_upload_hint =>
-      'Maximum file size is 5 MB (PNG-JPG-PDF)';
+  String complete_requirements_upload_hint(
+    String maxSize,
+    String acceptedTypes,
+  ) {
+    return 'Maximum file size is $maxSize MB ($acceptedTypes)';
+  }
 
 
   @override

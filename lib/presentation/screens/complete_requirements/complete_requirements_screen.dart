@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/document_details/document_details_model.dart';
+import 'package:forsan/presentation/bloc/file/upload_file/upload_file_bloc.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
 import 'package:forsan/presentation/widgets/document/document_section.dart';
@@ -16,6 +18,30 @@ class CompleteRequirementsScreen extends StatelessWidget {
   final RequiredActionModel? requiredAction;
 
   const CompleteRequirementsScreen({
+    super.key,
+    this.model,
+    this.requiredAction,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UploadFileBloc>(create: (_) => UploadFileBloc()),
+      ],
+      child: BodyCompleteRequirementsScreen(
+        model: model,
+        requiredAction: requiredAction,
+      ),
+    );
+  }
+}
+
+class BodyCompleteRequirementsScreen extends StatelessWidget {
+  final List<RequiredDocumentModel>? model;
+  final RequiredActionModel? requiredAction;
+
+  const BodyCompleteRequirementsScreen({
     super.key,
     this.model,
     this.requiredAction,
@@ -94,12 +120,15 @@ class CompleteRequirementsScreen extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: model?.length ?? 0,
               itemBuilder: (context, index) {
+                final document = model?[index];
+
                 return DocumentSection(
-                  title: model?[index].name ?? '',
+                  title:
+                      context.loc.complete_requirements_conviction_certificate,
                   image: null,
                   onTap: () {},
                   uploadLabel: context.loc.complete_requirements_upload,
-                  uploadHint: context.loc.complete_requirements_upload_hint,
+                  uploadHint: _uploadHint(context, document),
                   paddingTop: AppPaddingHeight.p12,
                 );
               },
@@ -138,6 +167,26 @@ class CompleteRequirementsScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  String _uploadHint(BuildContext context, RequiredDocumentModel? document) {
+    final maxSize =
+        document?.maxSize ?? AppFileConstraints.maxDocumentSizeInBytes;
+    final acceptedTypes = document?.acceptedTypes?.isNotEmpty == true
+        ? document!.acceptedTypes!
+        : AppFileConstraints.documentExtensions;
+    final sizeInMegabytes = maxSize / (1024 * 1024);
+    final formattedSize = sizeInMegabytes == sizeInMegabytes.roundToDouble()
+        ? sizeInMegabytes.toInt().toString()
+        : sizeInMegabytes.toStringAsFixed(1);
+    final extensions = acceptedTypes
+        .map((type) => type.split('/').last.toUpperCase())
+        .join('-');
+
+    return context.loc.complete_requirements_upload_hint(
+      formattedSize,
+      extensions,
     );
   }
 }

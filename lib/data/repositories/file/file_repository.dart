@@ -25,6 +25,13 @@ class FileRepository implements IFileRepository {
     );
   }
 
+  // @override
+  // Future<Either<AppException, BaseModel<FileModel>?>> uploadRequiredDocuments(
+  //     CreateOrderEntity data,
+  //     ) {
+  //   return _remoteDataSource.uploadRequiredDocuments(data);
+  // }
+
   @override
   Future<Either<AppException, BaseModel<void>?>> deleteFile(CreateOrderEntity data) async {
     final response = await _remoteDataSource.deleteFile(data);
