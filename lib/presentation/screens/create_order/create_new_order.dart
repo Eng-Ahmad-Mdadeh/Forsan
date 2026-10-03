@@ -292,52 +292,82 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                             AppPaddingWidth.p16,
                             AppPaddingHeight.p16,
                           ),
-                          child: CustomElevatedButton(
-                            key: const Key('new_order_next_button'),
-                            width: double.infinity,
-                            height: AppHeight.h50,
-                            color: AppColors.primary,
-                            onPressed: () {
-                              final orderEntity = context
-                                  .read<NewOrderCubit>()
-                                  .state
-                                  .orderEntity;
-                              final currentStep = orderEntity.currentStep;
-                              if (currentStep < _stepFormKeys.length &&
-                                  !(_stepFormKeys[currentStep].currentState
-                                          ?.validate() ??
-                                      false)) {
-                                showCustomSnackBar(
-                                  context: context,
-                                  title: context.loc.error,
-                                  message: context
-                                      .loc
-                                      .complete_profile_required_field,
-                                  contentType: ContentType.failure,
-                                );
-                                return;
-                              }
+                          child: Row(
+                            children: [
+                              if (state.orderEntity.currentStep > 0) ...[
+                                Expanded(
+                                  child: CustomElevatedButton(
+                                    key: const Key(
+                                      'new_order_previous_button',
+                                    ),
+                                    height: AppHeight.h50,
+                                    color: AppColors.white,
+                                    borderSide: const BorderSide(
+                                      color: AppColors.primary,
+                                    ),
+                                    onPressed: () => _goToStep(
+                                      context,
+                                      state.orderEntity.currentStep - 1,
+                                    ),
+                                    child: BodyTitle(
+                                      text: context.loc.new_order_previous,
+                                      color: AppColors.primary,
+                                      fontWeight: AppFontWeight.semiBold,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: AppPaddingWidth.p12),
+                              ],
+                              Expanded(
+                                child: CustomElevatedButton(
+                                  key: const Key('new_order_next_button'),
+                                  height: AppHeight.h50,
+                                  color: AppColors.primary,
+                                  onPressed: () {
+                                    final orderEntity = context
+                                        .read<NewOrderCubit>()
+                                        .state
+                                        .orderEntity;
+                                    final currentStep = orderEntity.currentStep;
+                                    if (currentStep < _stepFormKeys.length &&
+                                        !(_stepFormKeys[currentStep]
+                                                .currentState
+                                                ?.validate() ??
+                                            false)) {
+                                      showCustomSnackBar(
+                                        context: context,
+                                        title: context.loc.error,
+                                        message: context
+                                            .loc
+                                            .complete_profile_required_field,
+                                        contentType: ContentType.failure,
+                                      );
+                                      return;
+                                    }
 
-                              if (currentStep < NewOrderCubit.lastStep) {
-                                context.read<CompleteOrderBloc>().add(
-                                  CompleteOrderEvent(orderEntity),
-                                );
-                                return;
-                              }
+                                    if (currentStep < NewOrderCubit.lastStep) {
+                                      context.read<CompleteOrderBloc>().add(
+                                        CompleteOrderEvent(orderEntity),
+                                      );
+                                      return;
+                                    }
 
-                              context.read<SubmitOrderBloc>().add(
-                                SubmitOrderEvent(orderEntity),
-                              );
-                            },
-                            child: BodyTitle(
-                              text:
-                                  state.orderEntity.currentStep ==
-                                      NewOrderCubit.lastStep
-                                  ? context.loc.new_order_submit
-                                  : context.loc.new_order_next,
-                              color: AppColors.white,
-                              fontWeight: AppFontWeight.semiBold,
-                            ),
+                                    context.read<SubmitOrderBloc>().add(
+                                      SubmitOrderEvent(orderEntity),
+                                    );
+                                  },
+                                  child: BodyTitle(
+                                    text:
+                                        state.orderEntity.currentStep ==
+                                            NewOrderCubit.lastStep
+                                        ? context.loc.new_order_submit
+                                        : context.loc.new_order_next,
+                                    color: AppColors.white,
+                                    fontWeight: AppFontWeight.semiBold,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

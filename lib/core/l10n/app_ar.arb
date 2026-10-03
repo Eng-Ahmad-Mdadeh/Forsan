@@ -651,6 +651,7 @@
   "new_order_delegation_in_syria_description": "حدد ما اذا كان لديك شخص مفوض أو وكيل داخل سوريا",
   "new_order_has_representative_in_syria": "لدي شخص مفوض أو وكيل داخل سوريا",
   "new_order_representative_details_description": "يمكن إضافة بياناته والوكالة ضمن المستندات لاحقاً.",
+  "new_order_previous": "السابق",
   "new_order_next": "التالي",
   "new_order_submit": "إرسال الطلب",
   "new_order_proposed_company_info_title": "معلومات الشركة المقترحة",

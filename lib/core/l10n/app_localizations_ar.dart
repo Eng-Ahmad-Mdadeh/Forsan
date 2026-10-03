@@ -4589,6 +4589,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get new_order_representative_details_description => 'يمكن إضافة بياناته والوكالة ضمن المستندات لاحقاً.';
 
   @override
+  String get new_order_previous => 'السابق';
+
+  @override
   String get new_order_next => 'التالي';
 
   @override

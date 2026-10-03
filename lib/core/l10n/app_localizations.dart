@@ -8027,6 +8027,8 @@ abstract class AppLocalizations {
   String get new_order_has_representative_in_syria;
   String get new_order_representative_details_description;
 
+  String get new_order_previous;
+
   String get new_order_next;
 
   String get new_order_submit;

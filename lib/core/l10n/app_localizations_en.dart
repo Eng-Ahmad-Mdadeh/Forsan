@@ -4616,6 +4616,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get new_order_representative_details_description => 'Their details and power of attorney can be added later with the documents.';
 
   @override
+  String get new_order_previous => 'Previous';
+
+  @override
   String get new_order_next => 'Next';
 
   @override

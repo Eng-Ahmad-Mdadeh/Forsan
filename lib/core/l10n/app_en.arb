@@ -651,6 +651,7 @@
   "new_order_delegation_in_syria_description": "Specify whether you have an authorized person or agent inside Syria",
   "new_order_has_representative_in_syria": "I have an authorized person or agent inside Syria",
   "new_order_representative_details_description": "Their details and power of attorney can be added later with the documents.",
+  "new_order_previous": "Previous",
   "new_order_next": "Next",
   "new_order_submit": "Submit request",
   "new_order_proposed_company_info_title": "Proposed company information",
