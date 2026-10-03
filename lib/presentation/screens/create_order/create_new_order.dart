@@ -180,11 +180,8 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                   } else if (submitOrderState is SubmitOrderFailed) {
                     _handleRequestFailure(context, submitOrderState.message);
                   } else if (submitOrderState is SubmitOrderLoaded) {
-                    Navigator.of(context, rootNavigator: true).pop();
-                    _showSubmitDialog(
-                      context,
-                      orderNumber:
-                          submitOrderState.submitOrderModel?.data?.reference,
+                    _dismissLoadingAndShowSubmitDialog(
+                      submitOrderState.submitOrderModel?.data?.reference,
                     );
                   }
                 },
@@ -550,10 +547,25 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
       showCloseButton: true,
       canDismiss: true,
 
-      onPrimaryPressed: () {
-
-        context.pop();
-      },
+      onPrimaryPressed: () => context.pop(),
     );
+  }
+
+  void _dismissLoadingAndShowSubmitDialog(String? submittedReference) {
+    Navigator.of(context, rootNavigator: true).pop();
+
+    // Open the success dialog on the next frame. Pushing it while the loading
+    // dialog is still being removed can cause the subsequent pop to remove the
+    // success dialog instead.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
+      final reference = submittedReference?.trim();
+      final orderId = context.read<NewOrderCubit>().state.orderEntity.orderId;
+      _showSubmitDialog(
+        context,
+        orderNumber: reference?.isNotEmpty == true ? reference : orderId,
+      );
+    });
   }
 }

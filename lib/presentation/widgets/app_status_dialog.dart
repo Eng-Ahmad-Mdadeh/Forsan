@@ -204,9 +204,11 @@ class AppStatusDialog extends StatelessWidget {
                         ),
                         if (orderNumber?.trim().isNotEmpty ?? false) ...[
                           SizedBox(height: AppHeight.h24),
-                          _OrderNumberContainer(
-                            label: orderNumberLabel,
-                            orderNumber: orderNumber!.trim(),
+                          Center(
+                            child: _OrderNumberContainer(
+                              label: orderNumberLabel,
+                              orderNumber: orderNumber!.trim(),
+                            ),
                           ),
                         ],
                         SizedBox(height: AppHeight.h24),
@@ -265,35 +267,35 @@ class _OrderNumberContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: const ValueKey('app_status_dialog_order_number'),
+      constraints: BoxConstraints(maxWidth: AppWidth.w300),
       padding: EdgeInsets.symmetric(
         horizontal: AppPaddingWidth.p24,
-        vertical: AppPaddingHeight.p16,
+        vertical: AppPaddingHeight.p12,
       ),
       decoration: BoxDecoration(
         color: AppColors.goldBackGround,
         borderRadius: BorderRadius.circular(AppRadius.r30),
       ),
-      child: Directionality(
+      child: Text.rich(
+        TextSpan(
+          children: [
+            TextSpan(
+              text: '${label.trim()} ',
+              style: const TextStyle(fontWeight: AppFontWeight.bold),
+            ),
+            TextSpan(text: orderNumber),
+          ],
+        ),
         textDirection: TextDirection.rtl,
-        child: Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: '${label.trim()} ',
-                style: const TextStyle(fontWeight: AppFontWeight.bold),
-              ),
-              TextSpan(text: orderNumber),
-            ],
-          ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: AppColors.blackText,
-            fontFamily: AppFontFamily.tajawal,
-            fontSize: AppFontSize.s16,
-            fontWeight: AppFontWeight.regular,
-          ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: AppColors.blackText,
+          fontFamily: AppFontFamily.tajawal,
+          fontSize: AppFontSize.s16,
+          fontWeight: AppFontWeight.regular,
         ),
       ),
     );
