@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/widgets/loading_widget.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 
 import 'document_upload_place_holder.dart';
@@ -18,6 +19,7 @@ class DocumentSection extends StatelessWidget {
   final bool isExpanded;
   final bool isVideo;
   final bool isEnabled;
+  final bool isLoading;
   final VoidCallback? onRemove;
   final String? uploadLabel;
   final String? uploadHint;
@@ -35,6 +37,7 @@ class DocumentSection extends StatelessWidget {
     this.isExpanded = false,
     this.isVideo = false,
     this.isEnabled = true,
+    this.isLoading = false,
     this.onRemove,
     this.uploadLabel,
     this.uploadHint,
@@ -75,14 +78,16 @@ class DocumentSection extends StatelessWidget {
                 splashColor: AppColors.none,
                 highlightColor: AppColors.none,
                 onTap: isEnabled ? onTap : null,
-                child: DocumentUploadPlaceholder(
-                  image: image,
-                  isExpanded: isExpanded,
-                  isVideo: isVideo,
-                  onRemove: onRemove,
-                  uploadLabel: uploadLabel,
-                  uploadHint: uploadHint,
-                ),
+                child: isLoading
+                    ? const LoadingWidget(0)
+                    : DocumentUploadPlaceholder(
+                        image: image,
+                        isExpanded: isExpanded,
+                        isVideo: isVideo,
+                        onRemove: onRemove,
+                        uploadLabel: uploadLabel,
+                        uploadHint: uploadHint,
+                      ),
               ),
             ),
           ),

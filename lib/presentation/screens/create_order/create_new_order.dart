@@ -180,6 +180,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                   } else if (submitOrderState is SubmitOrderFailed) {
                     _handleRequestFailure(context, submitOrderState.message);
                   } else if (submitOrderState is SubmitOrderLoaded) {
+                    _showSubmitDialog(context);
                     Navigator.of(context, rootNavigator: true).pop();
                     Navigator.of(context).pop();
                   }
@@ -469,6 +470,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
       ],
     );
   }
+
   Future<void> _showLogoutDialog(BuildContext context) {
     return AppStatusDialog.show(
       context,
@@ -515,6 +517,34 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
         }
 
         context.read<CompleteOrderBloc>().add(CompleteOrderEvent(orderEntity));
+        context.pop();
+      },
+    );
+  }
+
+  Future<void> _showSubmitDialog(BuildContext context) {
+    return AppStatusDialog.show(
+      context,
+      title: 'تم استلام طلبك بنجاح',
+      message: 'سيقوم فريق فرسان بمراجعة المعلومات والمستندات والتواصل معك في حال وجود نواقص أو متطلبات إضافية، ثم سيتم تزويدك بالمسار والتكلفة النهائية.',
+      primaryButtonText: 'متابعة الطلب',
+      icon: Icons.logout_rounded,
+      iconColor: AppColors.white,
+      iconBackgroundColor: AppColors.primary,
+      iconBorderColor: AppColors.secondary,
+      iconOuterBackgroundColor: const Color(0xFFE4DEF2),
+      secondaryButtonColor: AppColors.red,
+      titleColor: AppColors.black,
+      messageColor: AppColors.greyText,
+      messageFontSize: AppFontSize.s14,
+      messageFontWeight: AppFontWeight.regular,
+      messageMaxLines: 2,
+      buttonsDirection: Axis.horizontal,
+      showCloseButton: true,
+      canDismiss: true,
+
+      onPrimaryPressed: () {
+
         context.pop();
       },
     );

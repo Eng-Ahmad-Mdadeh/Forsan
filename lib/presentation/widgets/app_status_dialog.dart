@@ -274,8 +274,8 @@ class _DialogActions extends StatelessWidget {
         : _DialogButton(
             text: secondaryButtonText!,
             icon: secondaryButtonIcon,
-            color: Color(0xFFFA7171),
-            foregroundColor: Color(0xFFFA7171),
+            color: AppColors.lightRed,
+            foregroundColor: AppColors.lightRed,
             borderColor: AppColors.none,
             onPressed: onSecondaryPressed,
           );

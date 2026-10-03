@@ -255,14 +255,11 @@ class _BodyCompleteRequirementsScreenState
                         final document = widget.model![index];
                         final requirementId = document.id?.trim() ?? '';
                         final selectedDocument = orderState
-                            .orderEntity
-                            .requirementDocuments[requirementId];
-                        final isLoading =
-                            uploadState is UploadFileLoading &&
+                            .orderEntity.requirementDocuments[requirementId];
+                        final isLoading = uploadState is UploadFileLoading &&
                             uploadState.requirementId == requirementId;
-                        final isUploaded = _uploadedFileIds.containsKey(
-                          requirementId,
-                        );
+                        final isUploaded =
+                            _uploadedFileIds.containsKey(requirementId);
 
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -278,37 +275,26 @@ class _BodyCompleteRequirementsScreenState
                                 ),
                               )
                             else
-                              Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  IgnorePointer(
-                                    ignoring: isLoading,
-                                    child: DocumentSection(
-                                      title: document.name ?? '',
-                                      image: null,
-                                      onTap: () =>
-                                          _pickDocument(context, document),
-                                      uploadLabel: context
-                                          .loc
-                                          .complete_requirements_upload,
-                                      uploadHint: FilePickerHelper.buildUploadHint(
-                                        maxSize: document.maxSize,
-                                        acceptedTypes: document.acceptedTypes,
-                                        extensionSeparator: '-',
-                                        formatter:
-                                            (
-                                              formattedSize,
-                                              extensions,
-                                            ) => context.loc
-                                                .complete_requirements_upload_hint(
-                                                  formattedSize,
-                                                  extensions,
-                                                ),
-                                      ),
-                                      paddingTop: AppPaddingHeight.p12,
-                                    ),
-                                  ),
-                                ],
+                              DocumentSection(
+                                title: document.name ?? '',
+                                image: null,
+                                isLoading: isLoading,
+                                isEnabled: !isLoading,
+                                onTap: () => _pickDocument(context, document),
+                                uploadLabel:
+                                    context.loc.complete_requirements_upload,
+                                uploadHint: FilePickerHelper.buildUploadHint(
+                                  maxSize: document.maxSize,
+                                  acceptedTypes: document.acceptedTypes,
+                                  extensionSeparator: '-',
+                                  formatter: (formattedSize, extensions) =>
+                                      context.loc
+                                          .complete_requirements_upload_hint(
+                                            formattedSize,
+                                            extensions,
+                                          ),
+                                ),
+                                paddingTop: AppPaddingHeight.p12,
                               ),
                           ],
                         );
