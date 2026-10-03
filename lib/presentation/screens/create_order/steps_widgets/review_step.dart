@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/legal_document_bottom_sheet.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/review_confirmation_card.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/review_field_row.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/review_introduction.dart';
@@ -62,6 +63,10 @@ class ReviewStep extends StatelessWidget {
           onChanged: index == 0
               ? cubit.setAcknowledgesAccuracy
               : cubit.setAcceptsTerms,
+          onPrivacyPressed: index == 1
+              ? () => _showPrivacyPolicy(context)
+              : null,
+          onTermsPressed: index == 1 ? () => _showTermsOfUse(context) : null,
         ),
     ];
 
@@ -77,6 +82,58 @@ class ReviewStep extends StatelessWidget {
       itemBuilder: (_, index) => cards[index],
     );
   }
+
+  void _showPrivacyPolicy(BuildContext context) {
+    LegalDocumentBottomSheet.show(
+      context,
+      title: 'سياسة الخصوصية',
+      sections: _privacySections,
+    );
+  }
+
+  void _showTermsOfUse(BuildContext context) {
+    LegalDocumentBottomSheet.show(
+      context,
+      title: 'شروط الاستخدام',
+      sections: _termsSections,
+    );
+  }
+
+  static const _privacySections = [
+    LegalDocumentSection(
+      title: 'جمع المعلومات',
+      body:
+          'تشمل المعلومات التي قد نجمعها عنك المعلومات الشخصية، على سبيل المثال لا الحصر: اسمك ورقم هاتفك وبريدك الإلكتروني وبيانات الدفع الخاصة بك.',
+    ),
+    LegalDocumentSection(
+      title: 'استخدام المعلومات',
+      body:
+          'نستخدم معلوماتك لتقديم خدمات المنصة وتحسينها، والتواصل معك بشأن طلباتك، والمحافظة على سلامة حسابك ومعاملاتك.',
+    ),
+    LegalDocumentSection(
+      title: 'حماية المعلومات',
+      body:
+          'نتخذ الإجراءات التقنية والتنظيمية المناسبة لحماية بياناتك من الوصول أو الاستخدام أو الإفصاح غير المصرح به.',
+    ),
+  ];
+
+  static const _termsSections = [
+    LegalDocumentSection(
+      title: 'استخدام المنصة',
+      body:
+          'باستخدام منصة فرسان فإنك توافق على الالتزام بهذه الشروط، وتقديم معلومات صحيحة ومحدثة، واستخدام الخدمات للأغراض المخصصة لها.',
+    ),
+    LegalDocumentSection(
+      title: 'مسؤولية المستخدم',
+      body:
+          'أنت مسؤول عن المحافظة على سرية بيانات حسابك وعن جميع الأنشطة والطلبات التي تتم من خلاله.',
+    ),
+    LegalDocumentSection(
+      title: 'تحديث الشروط',
+      body:
+          'يجوز للمنصة تحديث شروط الاستخدام عند الحاجة، ويعد استمرار استخدامك للخدمات موافقة على النسخة المحدثة منها.',
+    ),
+  ];
 
   List<ReviewField> _reviewFields(
     Section section,

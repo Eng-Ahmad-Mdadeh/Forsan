@@ -59,4 +59,9 @@ class ApiEndpoints {
   static String confirmFile(String orderId) => '$order/${Uri.encodeComponent(orderId)}/required-documents/submit';
   //#endregion
 
+  //#region legal Page
+  static String legalPage(String page) => '$user/content/${Uri.encodeComponent(page)}';
+
+//#endregion
+
 }
