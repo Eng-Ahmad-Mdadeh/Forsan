@@ -13,6 +13,8 @@ class AppStatusDialog extends StatelessWidget {
     required this.title,
     required this.message,
     required this.primaryButtonText,
+    this.orderNumber,
+    this.orderNumberLabel = 'رقم الطلب:',
     this.onPrimaryPressed,
     this.secondaryButtonText,
     this.onSecondaryPressed,
@@ -38,6 +40,8 @@ class AppStatusDialog extends StatelessWidget {
   final String title;
   final String message;
   final String primaryButtonText;
+  final String? orderNumber;
+  final String orderNumberLabel;
   final VoidCallback? onPrimaryPressed;
   final String? secondaryButtonText;
   final IconData? primaryButtonIcon;
@@ -64,6 +68,8 @@ class AppStatusDialog extends StatelessWidget {
     required String title,
     required String message,
     required String primaryButtonText,
+    String? orderNumber,
+    String orderNumberLabel = 'رقم الطلب:',
     IconData? primaryButtonIcon,
     IconData? secondaryButtonIcon,
     VoidCallback? onPrimaryPressed,
@@ -96,6 +102,8 @@ class AppStatusDialog extends StatelessWidget {
         title: title,
         message: message,
         primaryButtonText: primaryButtonText,
+        orderNumber: orderNumber,
+        orderNumberLabel: orderNumberLabel,
         onPrimaryPressed: onPrimaryPressed,
         secondaryButtonText: secondaryButtonText,
         onSecondaryPressed: onSecondaryPressed,
@@ -194,6 +202,13 @@ class AppStatusDialog extends StatelessWidget {
                           overflow: TextOverflow.visible,
                           maxLines: messageMaxLines,
                         ),
+                        if (orderNumber?.trim().isNotEmpty ?? false) ...[
+                          SizedBox(height: AppHeight.h24),
+                          _OrderNumberContainer(
+                            label: orderNumberLabel,
+                            orderNumber: orderNumber!.trim(),
+                          ),
+                        ],
                         SizedBox(height: AppHeight.h24),
                         _DialogActions(
                           primaryButtonText: primaryButtonText,
@@ -235,6 +250,53 @@ class AppStatusDialog extends StatelessWidget {
       return;
     }
     Navigator.of(context, rootNavigator: true).pop();
+  }
+}
+
+class _OrderNumberContainer extends StatelessWidget {
+  const _OrderNumberContainer({
+    required this.label,
+    required this.orderNumber,
+  });
+
+  final String label;
+  final String orderNumber;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: AppPaddingWidth.p24,
+        vertical: AppPaddingHeight.p16,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.goldBackGround,
+        borderRadius: BorderRadius.circular(AppRadius.r30),
+      ),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: '${label.trim()} ',
+                style: const TextStyle(fontWeight: AppFontWeight.bold),
+              ),
+              TextSpan(text: orderNumber),
+            ],
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: AppColors.blackText,
+            fontFamily: AppFontFamily.tajawal,
+            fontSize: AppFontSize.s16,
+            fontWeight: AppFontWeight.regular,
+          ),
+        ),
+      ),
+    );
   }
 }
 

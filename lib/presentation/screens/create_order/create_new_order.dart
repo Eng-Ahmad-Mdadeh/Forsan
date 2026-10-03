@@ -180,9 +180,12 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                   } else if (submitOrderState is SubmitOrderFailed) {
                     _handleRequestFailure(context, submitOrderState.message);
                   } else if (submitOrderState is SubmitOrderLoaded) {
-                    _showSubmitDialog(context);
                     Navigator.of(context, rootNavigator: true).pop();
-                    Navigator.of(context).pop();
+                    _showSubmitDialog(
+                      context,
+                      orderNumber:
+                          submitOrderState.submitOrderModel?.data?.reference,
+                    );
                   }
                 },
               ),
@@ -522,12 +525,16 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     );
   }
 
-  Future<void> _showSubmitDialog(BuildContext context) {
+  Future<void> _showSubmitDialog(
+    BuildContext context, {
+    String? orderNumber,
+  }) {
     return AppStatusDialog.show(
       context,
       title: 'تم استلام طلبك بنجاح',
       message: 'سيقوم فريق فرسان بمراجعة المعلومات والمستندات والتواصل معك في حال وجود نواقص أو متطلبات إضافية، ثم سيتم تزويدك بالمسار والتكلفة النهائية.',
       primaryButtonText: 'متابعة الطلب',
+      orderNumber: orderNumber,
       icon: Icons.logout_rounded,
       iconColor: AppColors.white,
       iconBackgroundColor: AppColors.primary,
