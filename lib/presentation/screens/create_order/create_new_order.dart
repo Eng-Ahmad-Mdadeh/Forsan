@@ -17,7 +17,8 @@ import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/activity_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/applicant_step.dart';
-import 'package:forsan/presentation/screens/create_order/steps_widgets/documents_step.dart';
+import 'package:forsan/presentation/screens/create_order/steps_widgets/document_requirement_step.dart';
+import 'package:forsan/presentation/screens/create_order/steps_widgets/radio_card_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/establishment_type_step.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_step_indicator.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/ownership_structure_step.dart';
@@ -273,13 +274,10 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                                     .read<NewOrderCubit>()
                                     .updateFormValue,
                               ),
-                              DocumentsStep(
-                                formKey: _stepFormKeys[5],
-                                step: steps[5],
-                                selectedValues: state.orderEntity.formValues,
-                                onFieldChanged: context
-                                    .read<NewOrderCubit>()
-                                    .updateFormValue,
+                              _buildDocumentsOrRadioCardStep(
+                                context,
+                                steps[5],
+                                state.orderEntity.formValues,
                               ),
                               ReviewStep(
                                 step: steps[6],
@@ -410,6 +408,30 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildDocumentsOrRadioCardStep(
+    BuildContext context,
+    StepModel step,
+    Map<String, dynamic> selectedValues,
+  ) {
+    final fields = (step.sections ?? const <Section>[])
+        .expand((section) => section.fields ?? const <SectionField>[]);
+    final hasRadioCard = fields.any((field) => field.type == 'radio-card');
+
+    if (hasRadioCard) {
+      return RadioCardStep(
+        formKey: _stepFormKeys[5],
+        step: step,
+        selectedValues: selectedValues,
+        onFieldChanged: context.read<NewOrderCubit>().updateFormValue,
+      );
+    }
+
+    return DocumentRequirementStep(
+      formKey: _stepFormKeys[5],
+      step: step,
     );
   }
 
