@@ -63,10 +63,6 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
   @override
   void initState() {
     super.initState();
-    _createOrLoadDraft();
-  }
-
-  void _createOrLoadDraft() {
     context.read<CreateOrderBloc>().add(
       CreateOrderEvent(CreateOrderEntity(serviceSlug: widget.serviceSlug)),
     );
@@ -96,7 +92,23 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CreateOrderBloc, ICreateOrderState>(
-      listener: _onCreateOrderStateChanged,
+      listener: (context, createOrderState) {
+        if (createOrderState is CreateOrderFailed) {
+          showCustomSnackBar(
+            context: context,
+            title: context.loc.error,
+            message: createOrderState.message,
+            contentType: ContentType.failure,
+          );
+        } else if (createOrderState is CreateOrderLoaded) {
+          final draft = createOrderState.createOrderModel?.data;
+          //Navigator.of(context, rootNavigator: true).pop();
+          if (draft != null) {
+            context.read<NewOrderCubit>().initializeDraft(draft);
+            _loadOrderSteps();
+          }
+        }
+      },
       child: BlocBuilder<OrderStepsBloc, IOrderStepsState>(
         builder: (context, orderStepsState) {
           if (orderStepsState is OrderStepsFailed) {
@@ -118,26 +130,8 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
             );
           }
 
-          final steps =
-              orderStepsState.orderStepsModel?.data?.steps ??
-              const <StepModel>[];
-
-          if (steps.isEmpty) {
-            return Scaffold(
-              backgroundColor: AppColors.white,
-              appBar: _buildAppBar(context),
-              body: FailureScreen(
-                errorMessage:
-                    orderStepsState.orderStepsModel?.message ??
-                    context.loc.no_data_available,
-                onPressed: _loadOrderSteps,
-              ),
-            );
-          }
-
-          final stepTitles = steps
-              .map((step) => step.title?.trim() ?? '')
-              .toList(growable: false);
+          final steps = orderStepsState.orderStepsModel?.data?.steps ?? const <StepModel>[];
+          final stepTitles = steps.map((step) => step.title?.trim() ?? '').toList(growable: false);
 
           return MultiBlocListener(
             listeners: [
@@ -149,13 +143,8 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                     _handleRequestFailure(context, completeOrderState.message);
                   } else if (completeOrderState is CompleteOrderLoaded) {
                     Navigator.of(context, rootNavigator: true).pop();
-                    final savedStep =
-                        completeOrderState.completeOrderModel?.data?.currentStep;
-                    final currentPage = context
-                        .read<NewOrderCubit>()
-                        .state
-                        .orderEntity
-                        .currentStep;
+                    final savedStep = completeOrderState.completeOrderModel?.data?.currentStep;
+                    final currentPage = context.read<NewOrderCubit>().state.orderEntity.currentStep;
                     final nextPage = savedStep ?? currentPage + 1;
                     _goToStep(
                       context,
@@ -221,28 +210,16 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
                             formKeys: _stepFormKeys,
                             steps: steps,
                             selectedValues: state.orderEntity.formValues,
-                            agreements:
-                                orderStepsState
-                                    .orderStepsModel
-                                    ?.data
-                                    ?.agreements ??
-                                const <AgreementModel>[],
-                            onFieldChanged: context
-                                .read<NewOrderCubit>()
-                                .updateFormValue,
-                            onPageChanged: context
-                                .read<NewOrderCubit>()
-                                .changeStep,
+                            agreements: orderStepsState.orderStepsModel?.data?.agreements ?? const <AgreementModel>[],
+                            onFieldChanged: context.read<NewOrderCubit>().updateFormValue,
+                            onPageChanged: context.read<NewOrderCubit>().changeStep,
                             onEditStep: (step) => _goToStep(context, step),
                           ),
                         ),
                         CreateOrderNavigationBar(
                           currentStep: state.orderEntity.currentStep,
                           lastStep: NewOrderCubit.lastStep,
-                          onPrevious: () => _goToStep(
-                            context,
-                            state.orderEntity.currentStep - 1,
-                          ),
+                          onPrevious: () => _goToStep(context, state.orderEntity.currentStep - 1),
                           onNext: () => _handleNextStep(context),
                         ),
                       ],
@@ -265,30 +242,9 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
       _goToStep(context, currentStep + 1);
       return;
     }
-
     context.read<SubmitOrderBloc>().add(SubmitOrderEvent(orderEntity));
   }
 
-  void _onCreateOrderStateChanged(
-    BuildContext context,
-    ICreateOrderState createOrderState,
-  ) {
-    if (createOrderState is CreateOrderFailed) {
-      showCustomSnackBar(
-        context: context,
-        title: context.loc.error,
-        message: createOrderState.message,
-        contentType: ContentType.failure,
-      );
-    } else if (createOrderState is CreateOrderLoaded) {
-      final draft = createOrderState.createOrderModel?.data;
-      //Navigator.of(context, rootNavigator: true).pop();
-      if (draft != null) {
-        context.read<NewOrderCubit>().initializeDraft(draft);
-        _loadOrderSteps();
-      }
-    }
-  }
 
   void _showLoadingDialog(BuildContext context) {
     showDialog<void>(
@@ -312,11 +268,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     return CustomAppBar(
       title: context.loc.new_order_title,
       backgroundColor: AppColors.white,
-      //showBackButton: true,
       showScrolledUnderElevation: false,
-      // onTapBackButton: state == null || state.orderEntity.currentStep == 0
-      //     ? () => Navigator.of(context).pop()
-      //     : () => _goToStep(context, state.orderEntity.currentStep - 1),
       customActions: [
         HeaderIconButton(
           icon: Icons.close_rounded,
@@ -356,9 +308,6 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
   void _dismissLoadingAndShowSubmitDialog(String? submittedReference) {
     Navigator.of(context, rootNavigator: true).pop();
 
-    // Open the success dialog on the next frame. Pushing it while the loading
-    // dialog is still being removed can cause the subsequent pop to remove the
-    // success dialog instead.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
 

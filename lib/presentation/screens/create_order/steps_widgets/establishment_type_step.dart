@@ -191,9 +191,6 @@ class _OrderField extends StatelessWidget {
                   title: option.label?.trim() ?? '',
                   description: option.description?.trim() ?? '',
                   icon: icon,
-                  // The cubit's form values are the source of truth. A
-                  // FormField retains its own initial state, which can lag
-                  // behind when an existing draft is hydrated asynchronously.
                   selected: restoredValue == option.value,
                   onTap: () {
                     formField.didChange(option.value);

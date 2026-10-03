@@ -9,10 +9,7 @@ import 'package:forsan/presentation/screens/create_order/steps_widgets/proposed_
 import 'package:forsan/presentation/screens/create_order/steps_widgets/radio_card_step.dart';
 import 'package:forsan/presentation/screens/create_order/steps_widgets/review_step.dart';
 
-/// Builds the pages used by the create-order flow.
-///
-/// Keeping step composition here allows the screen to focus on orchestration,
-/// while each concrete step remains responsible for its own presentation.
+
 class CreateOrderStepsView extends StatelessWidget {
   const CreateOrderStepsView({
     super.key,

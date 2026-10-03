@@ -31,15 +31,10 @@ class ReviewStep extends StatelessWidget {
     final sections = step.sections ?? const <Section>[];
     final reviewSection = sections.isEmpty ? null : sections.first;
     final sectionTitle = reviewSection?.title?.trim() ?? '';
-    final title = sectionTitle.isNotEmpty
-        ? sectionTitle
-        : step.title?.trim() ?? '';
-    final informationLabel =
-        reviewSection?.fields
-            ?.where((field) => field.type == 'info')
+    final title = sectionTitle.isNotEmpty ? sectionTitle : step.title?.trim() ?? '';
+    final informationLabel = reviewSection?.fields?.where((field) => field.type == 'info')
             .map((field) => field.label?.trim() ?? '')
-            .firstWhere((label) => label.isNotEmpty, orElse: () => '') ??
-        '';
+            .firstWhere((label) => label.isNotEmpty, orElse: () => '') ?? '';
     final description = informationLabel.isNotEmpty
         ? informationLabel
         : reviewSection?.description?.trim() ?? '';
