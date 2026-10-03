@@ -17,6 +17,12 @@ class LegalPageRepository implements ILegalPageRepository {
   Future<Either<AppException, BaseModel<LegalPageModel>?>> getLegalPage(
     LegalPageEntity entity,
   ) {
-    return _remoteDataSource.getLegalPage(entity);
+    final response = _remoteDataSource.getLegalPage(entity);
+    return response.fold(
+          (l) async => Left(l),
+          (r) async {
+        return Right(r);
+      },
+    );
   }
 }

@@ -9,7 +9,7 @@ import 'package:injectable/injectable.dart';
 
 @Injectable()
 class LegalPageRemoteDataSource extends BaseRemoteDataSource<LegalPageModel> {
-  LegalPageRemoteDataSource() : super('');
+  LegalPageRemoteDataSource() : super(ApiEndpoints.user);
 
   Future<Either<AppException, BaseModel<LegalPageModel>?>> getLegalPage(
     LegalPageEntity entity,
