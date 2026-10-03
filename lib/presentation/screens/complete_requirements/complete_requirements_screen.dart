@@ -255,11 +255,14 @@ class _BodyCompleteRequirementsScreenState
                         final document = widget.model![index];
                         final requirementId = document.id?.trim() ?? '';
                         final selectedDocument = orderState
-                            .orderEntity.requirementDocuments[requirementId];
-                        final isLoading = uploadState is UploadFileLoading &&
+                            .orderEntity
+                            .requirementDocuments[requirementId];
+                        final isLoading =
+                            uploadState is UploadFileLoading &&
                             uploadState.requirementId == requirementId;
-                        final isUploaded =
-                            _uploadedFileIds.containsKey(requirementId);
+                        final isUploaded = _uploadedFileIds.containsKey(
+                          requirementId,
+                        );
 
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -286,21 +289,22 @@ class _BodyCompleteRequirementsScreenState
                                       onTap: () =>
                                           _pickDocument(context, document),
                                       uploadLabel: context
-                                          .loc.complete_requirements_upload,
-                                      uploadHint:
-                                          FilePickerHelper.buildUploadHint(
-                                            maxSize: document.maxSize,
-                                            acceptedTypes:
-                                                document.acceptedTypes,
-                                            extensionSeparator: '-',
-                                            formatter:
-                                                (formattedSize, extensions) =>
-                                                    context.loc
-                                                        .complete_requirements_upload_hint(
-                                                          formattedSize,
-                                                          extensions,
-                                                        ),
-                                          ),
+                                          .loc
+                                          .complete_requirements_upload,
+                                      uploadHint: FilePickerHelper.buildUploadHint(
+                                        maxSize: document.maxSize,
+                                        acceptedTypes: document.acceptedTypes,
+                                        extensionSeparator: '-',
+                                        formatter:
+                                            (
+                                              formattedSize,
+                                              extensions,
+                                            ) => context.loc
+                                                .complete_requirements_upload_hint(
+                                                  formattedSize,
+                                                  extensions,
+                                                ),
+                                      ),
                                       paddingTop: AppPaddingHeight.p12,
                                     ),
                                   ),
