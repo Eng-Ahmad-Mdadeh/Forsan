@@ -96,34 +96,41 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
                 ),
                 SizedBox(height: AppHeight.h16),
                 if (homeData?.requiredAction != null)
-                  RequiredActionCard(
-                    title: homeData?.requiredAction?.title ?? '',
-                    message: homeData?.requiredAction?.message ?? '',
-                    buttonText: homeData?.requiredAction?.actionLabel ?? '',
-                    buttonColor: AppColors.primary,
-                    compact: true,
-                    semanticsLabel: 'إجراء مطلوب على الطلب FR-2026-001259',
-                    illustration: ImageView(
-                      imagePath: AppAssets.addFile,
-                      width: AppWidth.w65,
-                      fit: BoxFit.contain,
-                      excludeFromSemantics: true,
-                    ),
-                    onPressed: () {
-                      final documentDetails=context.read<DocumentDetailsBloc>().add(
-                        DocumentDetailsEvent(
-                          DocumentEntity(
-                            orderId: homeData?.requiredAction?.requestId ?? '',
-                          ),
-                        ),
-                      );
-                      const CompleteRequirementsRoute(
-                        $extra: CompleteRequirementsExtra(
-                          documents: documentDetails!.requiredDocuments!,
-                          requiredAction: documentDetails.requiredAction!,
-                        ),
-                      ).push(context);
+                  BlocListener<DocumentDetailsBloc, IDocumentDetailsState>(
+                    listener: (context, state) {
+                      if (state is DocumentDetailsLoaded) {
+                        final documentDetails = state.documentDetailsModel?.data;
+                        final documents = documentDetails?.requiredDocuments;
+                        final requiredAction = documentDetails?.requiredAction;
+
+                        if (documents == null || requiredAction == null) return;
+                      }
+
                     },
+                    child: RequiredActionCard(
+                      title: homeData?.requiredAction?.title ?? '',
+                      message: homeData?.requiredAction?.message ?? '',
+                      buttonText: homeData?.requiredAction?.actionLabel ?? '',
+                      buttonColor: AppColors.primary,
+                      compact: true,
+                      semanticsLabel: 'إجراء مطلوب على الطلب FR-2026-001259',
+                      illustration: ImageView(
+                        imagePath: AppAssets.addFile,
+                        width: AppWidth.w65,
+                        fit: BoxFit.contain,
+                        excludeFromSemantics: true,
+                      ),
+                      onPressed: () {
+
+                        CompleteRequirementsRoute(
+                          $extra: CompleteRequirementsExtra(
+                            documents: documentDetails!.requiredDocuments!,
+                            requiredAction: documentDetails.requiredAction!,
+
+                          ),
+                        ).push(context);
+                      },
+                    ),
                   ),
                 SizedBox(height: AppHeight.h20),
                 if (homeData != null) ...[
