@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
-import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/core/routes/app_routes.dart';
 import 'package:forsan/core/routes/app_routes_imports.dart';
@@ -15,15 +14,14 @@ import 'package:forsan/presentation/bloc/order_steps/order_steps_bloc.dart';
 import 'package:forsan/presentation/bloc/submit_order/submit_order_bloc.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
+import 'package:forsan/presentation/screens/create_order/widgets/create_order_dialogs.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/create_order_navigation_bar.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/create_order_steps_view.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/order_step_indicator.dart';
-import 'package:forsan/presentation/widgets/app_status_dialog.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
 import 'package:forsan/presentation/widgets/custom_snack_bar.dart';
 import 'package:forsan/presentation/widgets/failure_screen.dart';
 import 'package:forsan/presentation/widgets/loading_widget.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class CreateNewOrderScreen extends StatelessWidget {
   final String serviceSlug;
@@ -322,92 +320,37 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
       customActions: [
         HeaderIconButton(
           icon: Icons.close_rounded,
-          onTap: () {
-            _showLogoutDialog(context);
-          },
+          onTap: () => CreateOrderDialogs.showExitConfirmation(
+            context,
+            onSaveDraft: () => _saveDraft(context),
+            onCloseOrder: () => _closeOrder(context),
+          ),
         ),
       ],
     );
   }
 
-  Future<void> _showLogoutDialog(BuildContext context) {
-    return AppStatusDialog.show(
-      context,
-      title: 'هل تود الخروج ؟',
-      message: 'يمكنك حفظ الطلب كمسودة ومتابعته لاحقا',
-      primaryButtonText: 'حفظ كمسودة',
-      secondaryButtonText: 'إغلاق الطلب ',
-      secondaryButtonIcon: Icons.close,
-      primaryButtonIcon: Icons.edit_document,
-      icon: Icons.logout_rounded,
-      iconColor: AppColors.white,
-      iconBackgroundColor: AppColors.primary,
-      iconBorderColor: AppColors.secondary,
-      iconOuterBackgroundColor: const Color(0xFFE4DEF2),
-      secondaryButtonColor: AppColors.red,
-      titleColor: AppColors.black,
-      messageColor: AppColors.greyText,
-      messageFontSize: AppFontSize.s14,
-      messageFontWeight: AppFontWeight.regular,
-      messageMaxLines: 2,
-      buttonsDirection: Axis.horizontal,
-      showCloseButton: true,
-      canDismiss: true,
-      onSecondaryPressed: (){
-        context.pop();
-         SelectServiceTypeRoute().go(context);
-
-      },
-      onPrimaryPressed: () {
-        final orderEntity = context
-            .read<NewOrderCubit>()
-            .state
-            .orderEntity;
-        final currentStep = orderEntity.currentStep;
-        if (currentStep < _stepFormKeys.length &&
-            !(_stepFormKeys[currentStep].currentState?.validate() ?? false)) {
-          showCustomSnackBar(
-            context: context,
-            title: context.loc.error,
-            message: context.loc.complete_profile_required_field,
-            contentType: ContentType.failure,
-          );
-          return;
-        }
-
-        context.read<CompleteOrderBloc>().add(CompleteOrderEvent(orderEntity));
-        context.pop();
-      },
-    );
+  void _closeOrder(BuildContext context) {
+    context.pop();
+    SelectServiceTypeRoute().go(context);
   }
 
-  Future<void> _showSubmitDialog(
-    BuildContext context, {
-    String? orderNumber,
-  }) {
-    return AppStatusDialog.show(
-      context,
-      title: 'تم استلام طلبك بنجاح',
-      message: 'سيقوم فريق فرسان بمراجعة المعلومات والمستندات والتواصل معك في حال وجود نواقص أو متطلبات إضافية، ثم سيتم تزويدك بالمسار والتكلفة النهائية.',
-      primaryButtonText: 'متابعة الطلب',
-      orderNumber: orderNumber,
-      icon: Icons.logout_rounded,
-      iconColor: AppColors.white,
-      iconBackgroundColor: AppColors.primary,
-      iconBorderColor: AppColors.secondary,
-      iconOuterBackgroundColor: const Color(0xFFE4DEF2),
-      secondaryButtonColor: AppColors.red,
-      titleColor: AppColors.black,
-      messageColor: AppColors.greyText,
-      messageFontSize: AppFontSize.s14,
-      messageFontWeight: AppFontWeight.regular,
-      messageMaxLines: 2,
-      buttonsDirection: Axis.horizontal,
-      showCloseButton: true,
-      canDismiss: true,
+  void _saveDraft(BuildContext context) {
+    final orderEntity = context.read<NewOrderCubit>().state.orderEntity;
+    final currentStep = orderEntity.currentStep;
+    if (currentStep < _stepFormKeys.length &&
+        !(_stepFormKeys[currentStep].currentState?.validate() ?? false)) {
+      showCustomSnackBar(
+        context: context,
+        title: context.loc.error,
+        message: context.loc.complete_profile_required_field,
+        contentType: ContentType.failure,
+      );
+      return;
+    }
 
-      onPrimaryPressed: () => context.pop(),
-    );
+    context.read<CompleteOrderBloc>().add(CompleteOrderEvent(orderEntity));
+    context.pop();
   }
 
   void _dismissLoadingAndShowSubmitDialog(String? submittedReference) {
@@ -421,7 +364,7 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
 
       final reference = submittedReference?.trim();
       final orderId = context.read<NewOrderCubit>().state.orderEntity.orderId;
-      _showSubmitDialog(
+      CreateOrderDialogs.showSubmissionSuccess(
         context,
         orderNumber: reference?.isNotEmpty == true ? reference : orderId,
       );
