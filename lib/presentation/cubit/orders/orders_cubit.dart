@@ -7,29 +7,11 @@ part 'orders_state.dart';
 class OrdersCubit extends Cubit<OrdersState> {
   OrdersCubit() : super(const OrdersState());
 
-  static const List<String?> _statuses = [
-    null,
-    'DRAFT',
-    'UNDER_REVIEW',
-    'AWAITING_DOCUMENTS',
-    'QUOTE_READY',
-    'AWAITING_PAYMENT',
-    'PAYMENT_UNDER_REVIEW',
-    'IN_PROGRESS',
-    'DELIVERED',
-    'COMPLETED',
-    'CANCELLED',
-  ];
-
-  void selectStatus(int index) {
-    if (index < 0 ||
-        index >= _statuses.length ||
-        index == state.selectedStatus) {
-      return;
-    }
+  void selectStatus(int index, String status) {
+    if (index < 0 || index == state.selectedStatus) return;
 
     final entity = OrderListEntity(
-      status: _statuses[index],
+      status: status.toLowerCase() == 'all' ? null : status,
       query: state.entity.query,
       pageSize: state.entity.pageSize,
     );

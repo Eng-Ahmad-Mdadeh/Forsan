@@ -109,11 +109,11 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
     _reloadOrders();
   }
 
-  void _onStatusSelected(int index) {
+  void _onStatusSelected(int index, String status) {
     final cubit = context.read<OrdersCubit>();
     if (index == cubit.state.selectedStatus) return;
 
-    cubit.selectStatus(index);
+    cubit.selectStatus(index, status);
     _reloadOrders();
   }
 
@@ -186,19 +186,7 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
                       child: OrdersStatusDropdown(
                         selectedIndex: ordersState.selectedStatus,
                         onSelected: _onStatusSelected,
-                        counts: [
-                          counts?.all ?? 0,
-                          counts?.draft ?? 0,
-                          counts?.underReview ?? 0,
-                          counts?.awaitingDocuments ?? 0,
-                          counts?.quoteReady ?? 0,
-                          counts?.awaitingPayment ?? 0,
-                          counts?.paymentUnderReview ?? 0,
-                          counts?.inProgress ?? 0,
-                          counts?.delivered ?? 0,
-                          counts?.completed ?? 0,
-                          counts?.cancelled ?? 0,
-                        ],
+                        counts: counts,
                       ),
                     ),
 
