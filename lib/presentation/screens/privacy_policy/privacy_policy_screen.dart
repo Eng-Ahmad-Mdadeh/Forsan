@@ -18,7 +18,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<LegalPageBloc>(create: (_) => LegalPageBloc())],
+      providers: [
+        BlocProvider<LegalPageBloc>(
+          create: (_) => LegalPageBloc()
+            ..add(const LegalPageEvent(LegalPageEntity(page: 'privacy'))),
+        ),
+      ],
       child: const BodyPrivacyPolicyScreen(),
     );
   }
@@ -60,13 +65,24 @@ class BodyPrivacyPolicyScreen extends StatelessWidget {
           }
           if (state is LegalPageLoaded) {
             return ListView.builder(
-              itemCount:state.legalPageModel?.data?.sections?.length??0,
+              padding: EdgeInsets.symmetric(
+                horizontal: AppPaddingWidth.p16,
+                vertical: AppPaddingHeight.p16,
+              ),
+              itemCount: state.legalPageModel?.data?.sections?.length ?? 0,
               itemBuilder: (context, index) {
-                return PrivacyPolicyCard();
+                final section = state.legalPageModel!.data!.sections![index];
+                return Padding(
+                  padding: EdgeInsets.only(bottom: AppPaddingHeight.p12),
+                  child: PrivacyPolicyCard(
+                    key: ValueKey(section.number ?? index),
+                    section: section,
+                  ),
+                );
               },
             );
           }
-          return SizedBox();
+          return const SizedBox.shrink();
         },
       ),
     );
