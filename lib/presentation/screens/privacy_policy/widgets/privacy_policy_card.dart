@@ -16,12 +16,7 @@ class PrivacyPolicyCard extends StatefulWidget {
 }
 
 class _PrivacyPolicyCardState extends State<PrivacyPolicyCard> {
-  static const String _description =
-      'من خلال دخولك أو وصولك أو استخدامك (من خلالك أو من '
-      'خلال وكلائك أو موظفيك) إلى الموقع الإلكتروني maktab.sa '
-      '(المشار إليه بعبارة "الموقع") التابع للمنصة فإنك توافق على '
-      'سياسة الخصوصية هذه كما هي اعتبارًا من تاريخ نشرها على الموقع. '
-      'فإذا لم توافق على هذه السياسة، فيرجى التوقف عن استخدام الموقع.';
+
 
   bool _isExpanded = false;
   late final TapGestureRecognizer _loadMoreRecognizer;

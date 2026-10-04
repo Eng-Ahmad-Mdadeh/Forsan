@@ -1,26 +1,25 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../domain/entities/auth/auth_entity.dart';
+
 class EditProfileState extends Equatable {
   const EditProfileState({
-    this.country,
-    this.nationality,
+    this.user,
   });
+  final AuthEntity? user;
 
-  final String? country;
-  final String? nationality;
-
-  bool get hasRequiredSelections => country != null && nationality != null;
+  //bool get hasRequiredSelections => user.country != null && user.nationality != null;
 
   EditProfileState copyWith({
-    String? country,
-    String? nationality,
+    AuthEntity? user,
+
   }) {
     return EditProfileState(
-      country: country ?? this.country,
-      nationality: nationality ?? this.nationality,
+      user: user ?? this.user,
+
     );
   }
 
   @override
-  List<Object?> get props => [country, nationality];
+  List<Object?> get props => [user];
 }

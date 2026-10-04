@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/core/routes/app_routes.dart';
+import 'package:forsan/core/utils/enums/enum_utils.dart';
+import 'package:forsan/domain/entities/auth/auth_entity.dart';
 import 'package:forsan/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:forsan/presentation/widgets/custom_submit_button.dart';
 import 'package:forsan/presentation/widgets/form/custom_input_field.dart';
@@ -35,14 +38,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
 
   @override
   Widget build(BuildContext context) {
-    final countries = [
-      context.loc.complete_profile_saudi_arabia,
-      context.loc.complete_profile_kuwait,
-    ];
-    final nationalities = [
-      context.loc.complete_profile_saudi,
-      context.loc.complete_profile_kuwaiti,
-    ];
+    const countries = CountryCode.values;
 
     return BlocListener<CompleteProfileBloc, ICompleteProfileState>(
       listener: (context, state) {
@@ -62,13 +58,13 @@ class _EditProfileFormState extends State<EditProfileForm> {
             contentType: ContentType.failure,
           );
         } else if (state is CompleteProfileLoaded) {
-          Navigator.of(context, rootNavigator: true).pop();
           showCustomSnackBar(
             context: context,
             title: 'نجاح',
             message: 'تم حفظ التغييرات بنجاح',
-            contentType: ContentType.failure,
+            contentType: ContentType.success,
           );
+          ShowProfileRoute().push(context);
         }
       },
       child: Form(
@@ -101,16 +97,14 @@ class _EditProfileFormState extends State<EditProfileForm> {
                       title: context.loc.country,
                       hintText: context.loc.complete_profile_select_hint,
                       items: countries,
-                      onChanged: context.read<EditProfileCubit>().selectCountry,
+                      onChanged: context.read<EditProfileCubit>().countryChanged,
                     ),
                     SizedBox(height: AppHeight.h18),
                     EditProfileDropdown(
                       title: context.loc.complete_profile_nationality,
                       hintText: context.loc.complete_profile_select_hint,
-                      items: nationalities,
-                      onChanged: context
-                          .read<EditProfileCubit>()
-                          .selectNationality,
+                      items: countries,
+                      onChanged: context.read<EditProfileCubit>().nationalityChanged,
                     ),
                     SizedBox(height: AppHeight.h18),
                     CustomInputField(
@@ -141,32 +135,21 @@ class _EditProfileFormState extends State<EditProfileForm> {
               text: context.loc.save,
               icon: Icons.save_outlined,
               useGradient: false,
-              onPressed: _save,
+              onPressed: (){
+                final user = context.read<EditProfileCubit>().state.user;
+                context.read<CompleteProfileBloc>().add(
+                  CompleteProfileEvent(
+                    AuthEntity(
+                      fullName: user?.fullName,
+                      email: user?.email,
+                      country: user?.country,
+                      nationality: user?.nationality,
+                    ),
+                  ),
+                );
+              },
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  void _save() {
-    FocusManager.instance.primaryFocus?.unfocus();
-    final fieldsAreValid = _formKey.currentState?.validate() ?? false;
-    final selectionsAreValid = context
-        .read<EditProfileCubit>()
-        .state
-        .hasRequiredSelections;
-    if (!fieldsAreValid || !selectionsAreValid) {
-      return;
-    }
-    final user = context.read<EditProfileCubit>().state.user;
-    context.read<CompleteProfileBloc>().add(
-      CompleteProfileEvent(
-        AuthEntity(
-          fullName: user.fullName,
-          email: user.email,
-          country: user.country,
-          nationality: user.nationality,
         ),
       ),
     );
