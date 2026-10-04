@@ -179,28 +179,29 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
                     ),
                     SizedBox(height: AppHeight.h10),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppPaddingWidth.p16,
+                      padding: EdgeInsetsDirectional.only(
+                        start: AppPaddingWidth.p16,
+                        end: AppPaddingWidth.p250,
                       ),
                       child: OrdersStatusDropdown(
                         selectedIndex: ordersState.selectedStatus,
                         onSelected: _onStatusSelected,
-                        allCount: counts?.all ?? 0,
-                        draftCount: counts?.draft ?? 0,
-                        underReviewCount: counts?.underReview ?? 0,
-                        awaitingDocumentsCount:
-                            counts?.awaitingDocuments ?? 0,
-                        quoteReadyCount: counts?.quoteReady ?? 0,
-                        awaitingPaymentCount: counts?.awaitingPayment ?? 0,
-                        paymentUnderReviewCount:
-                            counts?.paymentUnderReview ?? 0,
-                        inProgressCount: counts?.inProgress ?? 0,
-                        deliveredCount: counts?.delivered ?? 0,
-                        completedCount: counts?.completed ?? 0,
-                        cancelledCount: counts?.cancelled ?? 0,
+                        counts: [
+                          counts?.all ?? 0,
+                          counts?.draft ?? 0,
+                          counts?.underReview ?? 0,
+                          counts?.awaitingDocuments ?? 0,
+                          counts?.quoteReady ?? 0,
+                          counts?.awaitingPayment ?? 0,
+                          counts?.paymentUnderReview ?? 0,
+                          counts?.inProgress ?? 0,
+                          counts?.delivered ?? 0,
+                          counts?.completed ?? 0,
+                          counts?.cancelled ?? 0,
+                        ],
                       ),
                     ),
-                    SizedBox(height: AppHeight.h10),
+
 
                     Expanded(
                       child: orders.isNotEmpty

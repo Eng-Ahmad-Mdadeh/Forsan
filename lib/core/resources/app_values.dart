@@ -119,6 +119,7 @@ class AppPaddingWidth {
   static double p155 = 155.0.w;
   static double p170 = 170.0.w;
   static double p190 = 190.0.w;
+  static double p250 = 250.0.w;
 }
 
 class AppPaddingHeight {

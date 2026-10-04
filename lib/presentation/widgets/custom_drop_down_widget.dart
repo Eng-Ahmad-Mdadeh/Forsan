@@ -65,14 +65,17 @@ class CustomDropDownWidget extends StatelessWidget {
                   top: topPadding ?? AppPaddingHeight.p11,
                 ),
                 decoration: CustomDropdownDecoration(
-                  hintStyle: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium!.copyWith(color: AppColors.grey, fontWeight: AppFontWeight.regular,fontSize:AppSize.s16),
-                  listItemStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: AppColors.blackCow,
-                    fontSize: AppFontSize.s14,
-                    fontWeight: AppFontWeight.bold,
+                  hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: AppColors.grey,
+                    fontWeight: AppFontWeight.regular,
+                    fontSize: AppSize.s16,
                   ),
+                  listItemStyle: Theme.of(context).textTheme.bodyLarge!
+                      .copyWith(
+                        color: AppColors.blackCow,
+                        fontSize: AppFontSize.s14,
+                        fontWeight: AppFontWeight.bold,
+                      ),
                   headerStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: AppColors.lightBlack,
                     fontSize: AppFontSize.s14,
@@ -83,10 +86,14 @@ class CustomDropDownWidget extends StatelessWidget {
 
                   closedFillColor: color ?? AppColors.white,
                   prefixIcon: prefixIcon,
-                  closedBorderRadius: BorderRadius.circular(borderRadius ?? AppRadius.r7),
+                  closedBorderRadius: BorderRadius.circular(
+                    borderRadius ?? AppRadius.r7,
+                  ),
                   expandedBorderRadius: BorderRadius.circular(AppRadius.r7),
                 ),
-                items: isStringList ? items : items!.map((e) => e.name!).toList(),
+                items: isStringList
+                    ? items
+                    : items!.map((e) => e.name!).toList(),
                 hintText: hintText,
               ),
             )
@@ -104,31 +111,36 @@ class CustomDropDownWidget extends StatelessWidget {
                   top: topPadding ?? AppPaddingHeight.p12,
                 ),
                 decoration: CustomDropdownDecoration(
-                  hintStyle: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium!.copyWith(color: AppColors.grey, fontWeight: AppFontWeight.regular),
-                  listItemStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: AppColors.blackCow,
-                    fontSize: AppFontSize.s14,
-                    fontWeight: AppFontWeight.bold,
+                  hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: AppColors.grey,
+                    fontWeight: AppFontWeight.regular,
                   ),
+                  listItemStyle: Theme.of(context).textTheme.bodyLarge!
+                      .copyWith(
+                        color: AppColors.blackCow,
+                        fontSize: AppFontSize.s14,
+                        fontWeight: AppFontWeight.bold,
+                      ),
                   headerStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-
                     color: textColor ?? AppColors.lightBlack,
                     fontSize: AppFontSize.s14,
                     fontWeight: AppFontWeight.bold,
                   ),
-                  closedBorder: closedBorder ?? Border.all(color: AppColors.lightGrey),
+                  closedBorder:
+                      closedBorder ?? Border.all(color: AppColors.lightGrey),
                   expandedBorder: Border.all(color: AppColors.lightGrey),
 
                   closedFillColor: color ?? AppColors.white,
                   prefixIcon: prefixIcon,
-                  closedBorderRadius: BorderRadius.circular(borderRadius ?? AppRadius.r7),
+                  closedBorderRadius: BorderRadius.circular(
+                    borderRadius ?? AppRadius.r7,
+                  ),
                   expandedBorderRadius: BorderRadius.circular(AppRadius.r7),
                 ),
-                items: isStringList ? items : items!.map((e) => e.name!).toList(),
+                items: isStringList
+                    ? items
+                    : items!.map((e) => e.name!).toList(),
                 hintText: hintText,
-
               ),
             ),
     );
