@@ -35,12 +35,12 @@ class BodyShowProfileScreen extends StatefulWidget {
 }
 
 class _BodyShowProfileScreenState extends State<BodyShowProfileScreen> {
-
   @override
   void initState() {
     super.initState();
     context.read<GetProfileBloc>().add(GetProfileEvent());
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,23 +64,22 @@ class _BodyShowProfileScreenState extends State<BodyShowProfileScreen> {
           child: Column(
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  child: BlocBuilder<GetProfileBloc, IGetProfileState>(
-                    builder: (context, state) {
-                      if(state is GetProfileFailed){
-                        return Scaffold(
-                          backgroundColor: AppColors.white,
-                          body: FailureScreen(
-                            errorMessage: state.message,
-                            onPressed: () => context.read<GetProfileBloc>().add(GetProfileEvent()),
-                          ),
-                        );
-                      }if(state is GetProfileLoading){
-                        return Center(
-                          child: LoadingWidget(0),
-                        );
-                      }if(state is GetProfileLoaded){
-                        return Column(
+                child: BlocBuilder<GetProfileBloc, IGetProfileState>(
+                  builder: (context, state) {
+                    if (state is GetProfileFailed) {
+                      return FailureScreen(
+                        errorMessage: state.message,
+                        onPressed: () => context
+                            .read<GetProfileBloc>()
+                            .add(GetProfileEvent()),
+                      );
+                    }
+                    if (state is GetProfileLoading) {
+                      return const Center(child: LoadingWidget(0));
+                    }
+                    if (state is GetProfileLoaded) {
+                      return SingleChildScrollView(
+                        child: Column(
                           children: [
                             SizedBox(
                               width: AppWidth.w100,
@@ -103,13 +102,13 @@ class _BodyShowProfileScreenState extends State<BodyShowProfileScreen> {
                               fontWeight: AppFontWeight.bold,
                             ),
                             SizedBox(height: AppHeight.h20),
-                            ProfileInfoCard(profile:state.profileModel?.data),
+                            ProfileInfoCard(profile: state.profileModel?.data),
                           ],
-                        );
-                      }
-                      return SizedBox();
-                    },
-                  ),
+                        ),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
                 ),
               ),
               CustomSubmitButton(
