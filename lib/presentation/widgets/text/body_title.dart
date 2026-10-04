@@ -16,6 +16,7 @@ class BodyTitle extends StatelessWidget {
     this.decorationStyle,
     this.decorationColor,
     this.decorationThickness,
+    this.children,
     this.maxLines,
     this.height,
   });
@@ -31,6 +32,7 @@ class BodyTitle extends StatelessWidget {
   final TextDecorationStyle? decorationStyle;
   final Color? decorationColor;
   final double? decorationThickness;
+  final List<InlineSpan>? children;
   final int? maxLines;
   final double? height;
 
@@ -55,6 +57,16 @@ class BodyTitle extends StatelessWidget {
         overflow: overflow ?? TextOverflow.ellipsis,
         maxLines: maxLines,
         style: style,
+      );
+    }
+    if (children != null) {
+      return Text.rich(
+        TextSpan(text: text ?? '', children: children),
+        softWrap: true,
+        textAlign: textAlign,
+        overflow: overflow ?? TextOverflow.ellipsis,
+        maxLines: maxLines,
+
       );
     }
 

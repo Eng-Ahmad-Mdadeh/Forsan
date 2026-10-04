@@ -160,17 +160,17 @@ class _OrderProgressAndAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-    width: AppWidth.w160,
+    width: AppWidth.w123,
     child: Column(
       children: [
         SizedBox(
-          height: AppHeight.h90,
+          height: AppHeight.h50,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: AppWidth.w90,
-                height: AppHeight.h90,
+                width: AppWidth.w50,
+                height: AppHeight.h50,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -182,7 +182,7 @@ class _OrderProgressAndAction extends StatelessWidget {
                               100,
                             ) /
                             100,
-                        strokeWidth: AppWidth.w7,
+                        strokeWidth: AppWidth.w5,
                         strokeCap: StrokeCap.butt,
                         backgroundColor: AppColors.lightActive,
                         valueColor: const AlwaysStoppedAnimation<Color>(
@@ -190,25 +190,38 @@ class _OrderProgressAndAction extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SectionTitle(
-                      text: '${homeModel.currentRequest?.progress ?? 0}%',
-                      color: AppColors.mainText,
-                      fontSize: AppFontSize.s24,
-                      fontWeight: AppFontWeight.bold,
+                    BodyTitle(
+                      children: [
+                        TextSpan(
+                          text: '${homeModel.currentRequest?.progress ?? 0}',
+                          style: TextStyle(
+                            color: AppColors.black,
+                            fontWeight: AppFontWeight.bold,
+                            fontSize: AppFontSize.s17,
+                          ),
+                        ),
+                        TextSpan(text: '%',
+                          style: TextStyle(
+                            color: AppColors.black,
+                            fontWeight: AppFontWeight.bold,
+                            fontSize: AppFontSize.s12,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
               BodyTitle(
                 text: 'نسبة الإنجاز',
-                color: AppColors.blackCow,
-                fontSize: AppFontSize.s14,
-                fontWeight: AppFontWeight.regular,
+                color: AppColors.black,
+                fontSize: AppFontSize.s12,
+                fontWeight: AppFontWeight.medium,
               ),
             ],
           ),
         ),
-        SizedBox(height: AppHeight.h16),
+        SizedBox(height: AppHeight.h65),
         Semantics(
           button: true,
           label: 'عرض تفاصيل الطلب',
@@ -216,7 +229,7 @@ class _OrderProgressAndAction extends StatelessWidget {
             onTap: () {},
             borderRadius: BorderRadius.circular(AppRadius.r8),
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p4),
+              padding: EdgeInsetsDirectional.only(start: AppPaddingHeight.p30),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
