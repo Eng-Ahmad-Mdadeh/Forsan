@@ -41,13 +41,11 @@ class OrdersStatusDropdown extends StatelessWidget {
         : 0;
 
     return CustomDropDownWidget(
-      key: ValueKey(
-        Object.hashAll([...countEntries.entries, safeSelectedIndex]),
-      ),
+
       items: items,
       isStringList: true,
       initialItem: items[safeSelectedIndex],
-      hintText: countEntries.keys.first,
+      hintText: counts,
       height: AppHeight.h42,
       color: AppColors.white,
       borderRadius: AppRadius.r14,
