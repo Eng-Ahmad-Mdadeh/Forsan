@@ -5,8 +5,8 @@ import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
 import '../../../widgets/filter_tabs.dart';
 
-class OrdersStatusTabs extends StatelessWidget {
-  const OrdersStatusTabs({
+class OrdersStatusDropdown extends StatelessWidget {
+  const OrdersStatusDropdown({
     super.key,
     required this.selectedIndex,
     required this.onSelected,
@@ -38,8 +38,8 @@ class OrdersStatusTabs extends StatelessWidget {
   final int cancelledCount;
 
   @override
-  Widget build(BuildContext context) => FilterTabs(
-    items: [
+  Widget build(BuildContext context) {
+    final items = [
       FilterTabItem(label: 'الكل', highlightedText: '($allCount)'),
       FilterTabItem(label: 'مسودة', highlightedText: '($draftCount)'),
       FilterTabItem(
@@ -68,15 +68,68 @@ class OrdersStatusTabs extends StatelessWidget {
       FilterTabItem(label: 'تم التسليم', highlightedText: '($deliveredCount)'),
       FilterTabItem(label: 'مكتمل', highlightedText: '($completedCount)'),
       FilterTabItem(label: 'ملغي', highlightedText: '($cancelledCount)'),
-    ],
-    selectedIndex: selectedIndex,
-    unselectedTextColor: AppColors.mainText,
-    fontWeight: AppFontWeight.medium,
-    backgroundColor: Colors.transparent,
-    minTabWidth: AppWidth.w90,
-    showTabShadow: false,
-    showTapOverlay: false,
-    contentPadding: EdgeInsets.zero,
-    onSelected: onSelected,
+    ];
+
+    return Container(
+      height: AppHeight.h55,
+      padding: EdgeInsetsDirectional.symmetric(
+        horizontal: AppPaddingWidth.p13,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        border: Border.all(color: AppColors.greyDivider),
+        borderRadius: BorderRadius.circular(AppRadius.r14),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<int>(
+          value: selectedIndex,
+          isExpanded: true,
+          borderRadius: BorderRadius.circular(AppRadius.r14),
+          icon: Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: AppColors.mainText,
+          ),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: AppColors.mainText,
+            fontSize: AppFontSize.s14,
+            fontWeight: AppFontWeight.medium,
+          ),
+          items: List.generate(
+            items.length,
+            (index) => DropdownMenuItem<int>(
+              value: index,
+              child: _StatusLabel(item: items[index]),
+            ),
+          ),
+          onChanged: (index) {
+            if (index != null) onSelected(index);
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _StatusLabel extends StatelessWidget {
+  const _StatusLabel({required this.item});
+
+  final FilterTabItem item;
+
+  @override
+  Widget build(BuildContext context) => Text.rich(
+    TextSpan(
+      text: item.label,
+      children: [
+        if (item.highlightedText case final highlightedText?)
+          TextSpan(
+            text: ' $highlightedText',
+            style: TextStyle(
+              color: item.highlightedTextColor ?? AppColors.mainText,
+            ),
+          ),
+      ],
+    ),
+    maxLines: 1,
+    overflow: TextOverflow.ellipsis,
   );
 }
