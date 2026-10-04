@@ -10,15 +10,12 @@ import 'package:forsan/domain/entities/create_order/create_order_entity.dart';
 import 'package:forsan/presentation/bloc/file/confirm_file/confirm_file_bloc.dart';
 import 'package:forsan/presentation/bloc/file/upload_file/upload_file_bloc.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
-import 'package:forsan/presentation/cubit/create_order/new_order_state.dart';
-import 'package:forsan/presentation/screens/create_order/widgets/uploaded_document_card.dart';
+import 'package:forsan/presentation/screens/complete_requirements/widgets/complete_requirements_documents.dart';
+import 'package:forsan/presentation/screens/complete_requirements/widgets/complete_requirements_notice_card.dart';
+import 'package:forsan/presentation/screens/complete_requirements/widgets/confirm_requirements_button.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
-import 'package:forsan/presentation/widgets/custom_elevated_button.dart';
-import 'package:forsan/presentation/widgets/document/document_section.dart';
 import 'package:forsan/presentation/widgets/loading_widget.dart';
-import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
-import 'package:forsan/presentation/widgets/text/section_title.dart';
 
 class CompleteRequirementsScreen extends StatelessWidget {
   final List<RequiredDocumentModel>? model;
@@ -181,126 +178,23 @@ class _BodyCompleteRequirementsScreenState
             AppPaddingHeight.p24,
           ),
           children: [
-            SectionCard(
-              backgroundColor: AppColors.secondaryLightHover,
-              borderRadius: BorderRadius.circular(AppRadius.r20),
-              padding: EdgeInsets.symmetric(
-                horizontal: AppPaddingWidth.p16,
-                vertical: AppPaddingHeight.p16,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.info_outline_rounded,
-                        color: AppColors.secondaryNormal,
-                        size: AppSize.s30,
-                      ),
-                      SizedBox(width: AppWidth.w8),
-                      Expanded(
-                        child: SectionTitle(
-                          text: widget.requiredAction?.title ?? '',
-                          color: AppColors.mainText,
-                          fontSize: AppFontSize.s13,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Padding(
-                    padding: EdgeInsetsDirectional.only(
-                      start: AppPaddingWidth.p35,
-                    ),
-                    child: BodyTitle(
-                      text: context.loc.complete_requirements_notice,
-                      color: AppColors.blackCow,
-                      fontSize: AppFontSize.s12,
-                      fontWeight: AppFontWeight.regular,
-                      height: 1.8,
-                    ),
-                  ),
-                ],
-              ),
+            CompleteRequirementsNoticeCard(
+              title: widget.requiredAction?.title ?? '',
             ),
             SizedBox(height: AppHeight.h24),
-            SectionTitle(
-              text: context.loc.complete_requirements_documents_title,
-              fontSize: AppFontSize.s16,
-            ),
-            BlocConsumer<UploadFileBloc, IUploadFileState>(
-              listener: (context, uploadState) {
-                if (uploadState is UploadFileLoaded) {
-                  setState(() {
-                    _uploadedFileIds[uploadState.requirementId] =
-                        uploadState.response?.data?.id;
-                  });
-                }
-
-                if (uploadState is UploadFileFailed) {
-                  context.read<NewOrderCubit>().removeDocumentForRequirement(
-                    uploadState.requirementId,
-                  );
-                  _showError(context, uploadState.message);
-                }
+            CompleteRequirementsDocuments(
+              documents: widget.model ?? const [],
+              uploadedFileIds: _uploadedFileIds,
+              onPickDocument: (document) => _pickDocument(context, document),
+              onFileUploaded: (requirementId, fileId) {
+                setState(() => _uploadedFileIds[requirementId] = fileId);
               },
-              builder: (context, uploadState) =>
-                  BlocBuilder<NewOrderCubit, NewOrderState>(
-                    builder: (context, orderState) => ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: widget.model?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        final document = widget.model![index];
-                        final requirementId = document.id?.trim() ?? '';
-                        final selectedDocument = orderState
-                            .orderEntity.requirementDocuments[requirementId];
-                        final isLoading = uploadState is UploadFileLoading &&
-                            uploadState.requirementId == requirementId;
-                        final isUploaded =
-                            _uploadedFileIds.containsKey(requirementId);
-
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            if (isUploaded && selectedDocument != null)
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: AppPaddingHeight.p12,
-                                ),
-                                child: UploadedDocumentCard(
-                                  document: selectedDocument,
-                                  onRemove: null,
-                                ),
-                              )
-                            else
-                              DocumentSection(
-                                title: document.name ?? '',
-                                image: null,
-                                isLoading: isLoading,
-                                isEnabled: !isLoading,
-                                onTap: () => _pickDocument(context, document),
-                                uploadLabel:
-                                    context.loc.complete_requirements_upload,
-                                uploadHint: FilePickerHelper.buildUploadHint(
-                                  maxSize: document.maxSize,
-                                  acceptedTypes: document.acceptedTypes,
-                                  extensionSeparator: '-',
-                                  formatter: (formattedSize, extensions) =>
-                                      context.loc
-                                          .complete_requirements_upload_hint(
-                                            formattedSize,
-                                            extensions,
-                                          ),
-                                ),
-                                paddingTop: AppPaddingHeight.p12,
-                              ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
+              onUploadFailed: (requirementId, message) {
+                context
+                    .read<NewOrderCubit>()
+                    .removeDocumentForRequirement(requirementId);
+                _showError(context, message);
+              },
             ),
           ],
         ),
@@ -312,11 +206,7 @@ class _BodyCompleteRequirementsScreenState
           AppPaddingWidth.p16,
           AppPaddingHeight.p16,
         ),
-        child: CustomElevatedButton(
-          width: double.infinity,
-          height: AppHeight.h52,
-          color: AppColors.primary,
-          borderRadius: AppRadius.r12,
+        child: ConfirmRequirementsButton(
           onPressed: () {
             context.read<ConfirmFileBloc>().add(
               ConfirmFileEvent(
@@ -326,22 +216,6 @@ class _BodyCompleteRequirementsScreenState
               ),
             );
           },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.check_circle_outline_rounded,
-                color: AppColors.white,
-                size: AppSize.s22,
-              ),
-              SizedBox(width: AppWidth.w8),
-              BodyTitle(
-                text: context.loc.complete_requirements_confirm,
-                color: AppColors.white,
-                fontSize: AppFontSize.s16,
-              ),
-            ],
-          ),
         ),
       ),
     );
