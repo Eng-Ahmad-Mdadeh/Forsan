@@ -40,70 +40,20 @@ class OrderListModel extends Equatable {
   List<Object?> get props => [pagination, counts];
 }
 
-@JsonSerializable(createToJson: false)
 class Counts extends Equatable {
-  const Counts({
-    required this.all,
-    required this.draft,
-    required this.underReview,
-    required this.awaitingDocuments,
-    required this.quoteReady,
-    required this.awaitingPayment,
-    required this.paymentUnderReview,
-    required this.inProgress,
-    required this.delivered,
-    required this.completed,
-    required this.cancelled,
-  });
+  const Counts({required this.values});
 
-  final int? all;
+  final Map<String, int> values;
 
-  @JsonKey(name: 'DRAFT')
-  final int? draft;
-
-  @JsonKey(name: 'UNDER_REVIEW')
-  final int? underReview;
-
-  @JsonKey(name: 'AWAITING_DOCUMENTS')
-  final int? awaitingDocuments;
-
-  @JsonKey(name: 'QUOTE_READY')
-  final int? quoteReady;
-
-  @JsonKey(name: 'AWAITING_PAYMENT')
-  final int? awaitingPayment;
-
-  @JsonKey(name: 'PAYMENT_UNDER_REVIEW')
-  final int? paymentUnderReview;
-
-  @JsonKey(name: 'IN_PROGRESS')
-  final int? inProgress;
-
-  @JsonKey(name: 'DELIVERED')
-  final int? delivered;
-
-  @JsonKey(name: 'COMPLETED')
-  final int? completed;
-
-  @JsonKey(name: 'CANCELLED')
-  final int? cancelled;
-
-  factory Counts.fromJson(Map<String, dynamic> json) => _$CountsFromJson(json);
+  factory Counts.fromJson(Map<String, dynamic> json) => Counts(
+    values: {
+      for (final entry in json.entries)
+        if (entry.value is num) entry.key: (entry.value as num).toInt(),
+    },
+  );
 
   @override
-  List<Object?> get props => [
-    all,
-    draft,
-    underReview,
-    awaitingDocuments,
-    quoteReady,
-    awaitingPayment,
-    paymentUnderReview,
-    inProgress,
-    delivered,
-    completed,
-    cancelled,
-  ];
+  List<Object?> get props => [values];
 }
 
 @JsonSerializable(createToJson: false)

@@ -135,7 +135,7 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
                       buttonText: homeData?.requiredAction?.actionLabel ?? '',
                       buttonColor: AppColors.primary,
                       compact: true,
-                      semanticsLabel: 'إجراء مطلوب على الطلب FR-2026-001259',
+                      semanticsLabel: homeData?.requiredAction?.title ?? '',
                       illustration: ImageView(
                         imagePath: AppAssets.addFile,
                         width: AppWidth.w65,

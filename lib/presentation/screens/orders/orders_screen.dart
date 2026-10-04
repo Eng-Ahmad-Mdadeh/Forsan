@@ -109,11 +109,11 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
     _reloadOrders();
   }
 
-  void _onStatusSelected(int index) {
+  void _onStatusSelected(int index, String status) {
     final cubit = context.read<OrdersCubit>();
     if (index == cubit.state.selectedStatus) return;
 
-    cubit.selectStatus(index);
+    cubit.selectStatus(index, status);
     _reloadOrders();
   }
 
