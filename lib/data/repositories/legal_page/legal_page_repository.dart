@@ -7,6 +7,7 @@ import 'package:forsan/domain/entities/legal_page/legal_page_entity.dart';
 import 'package:forsan/domain/repositories/legal_page/i_legal_page_repository.dart';
 import 'package:injectable/injectable.dart';
 
+
 @Injectable(as: ILegalPageRepository)
 class LegalPageRepository implements ILegalPageRepository {
   LegalPageRepository(this._remoteDataSource);
@@ -16,8 +17,8 @@ class LegalPageRepository implements ILegalPageRepository {
   @override
   Future<Either<AppException, BaseModel<LegalPageModel>?>> getLegalPage(
     LegalPageEntity entity,
-  ) {
-    final response = _remoteDataSource.getLegalPage(entity);
+  )async {
+    final response = await _remoteDataSource.getLegalPage(entity);
     return response.fold(
           (l) async => Left(l),
           (r) async {

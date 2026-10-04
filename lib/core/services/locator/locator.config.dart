@@ -29,6 +29,8 @@ import '../../../data/data_sources/document_list/document_list_remote_data_sourc
     as _i906;
 import '../../../data/data_sources/file/file_remote_data_source.dart' as _i158;
 import '../../../data/data_sources/home/home_remote_data_source.dart' as _i949;
+import '../../../data/data_sources/legal_page/legal_page_remote_data_source.dart'
+    as _i532;
 import '../../../data/data_sources/order_details/order_details_remote_data_source.dart'
     as _i588;
 import '../../../data/data_sources/order_list/order_list_remote_data_source.dart'
@@ -45,6 +47,7 @@ import '../../../data/models/document_details/document_details_model.dart'
 import '../../../data/models/document_list/document_list_model.dart' as _i739;
 import '../../../data/models/file/file_model.dart' as _i86;
 import '../../../data/models/home/home_model.dart' as _i703;
+import '../../../data/models/legal_page/legal_page_model.dart' as _i656;
 import '../../../data/models/order_details/order_details_model.dart' as _i80;
 import '../../../data/models/order_list/order_list_model.dart' as _i1016;
 import '../../../data/models/order_steps/order_steps_model.dart' as _i196;
@@ -63,6 +66,8 @@ import '../../../data/repositories/document_list/document_list_repository.dart'
     as _i61;
 import '../../../data/repositories/file/file_repository.dart' as _i841;
 import '../../../data/repositories/home/home_repository.dart' as _i13;
+import '../../../data/repositories/legal_page/legal_page_repository.dart'
+    as _i939;
 import '../../../data/repositories/order_details/order_details_repository.dart'
     as _i664;
 import '../../../data/repositories/order_list/order_list_repository.dart'
@@ -74,6 +79,7 @@ import '../../../domain/entities/auth/auth_entity.dart' as _i450;
 import '../../../domain/entities/create_order/create_order_entity.dart'
     as _i232;
 import '../../../domain/entities/document/document_entity.dart' as _i987;
+import '../../../domain/entities/legal_page/legal_page_entity.dart' as _i287;
 import '../../../domain/entities/order_details/order_details_entity.dart'
     as _i513;
 import '../../../domain/entities/order_list/order_list_entity.dart' as _i729;
@@ -90,6 +96,8 @@ import '../../../domain/repositories/document_list/i_document_list_repository.da
     as _i278;
 import '../../../domain/repositories/file/i_file_repository.dart' as _i944;
 import '../../../domain/repositories/home/i_home_repository.dart' as _i751;
+import '../../../domain/repositories/legal_page/i_legal_page_repository.dart'
+    as _i578;
 import '../../../domain/repositories/order_details/i_order_details_repository.dart'
     as _i122;
 import '../../../domain/repositories/order_list/i_order_list_repository.dart'
@@ -122,6 +130,7 @@ import '../../../domain/usecases/file/download_file_use_case.dart' as _i929;
 import '../../../domain/usecases/file/upload_file_use_case.dart' as _i894;
 import '../../../domain/usecases/home/home_use_case.dart' as _i208;
 import '../../../domain/usecases/i_use_case.dart' as _i795;
+import '../../../domain/usecases/legal_page/legal_page_use_case.dart' as _i503;
 import '../../../domain/usecases/order_details/order_details_use_case.dart'
     as _i675;
 import '../../../domain/usecases/order_list/order_list_use_case.dart' as _i72;
@@ -161,6 +170,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i158.FileRemoteDataSource>(() => _i158.FileRemoteDataSource());
     gh.factory<_i949.HomeRemoteDataSource>(() => _i949.HomeRemoteDataSource());
+    gh.factory<_i532.LegalPageRemoteDataSource>(
+      () => _i532.LegalPageRemoteDataSource(),
+    );
     gh.factory<_i588.OrderDetailsRemoteDataSource>(
       () => _i588.OrderDetailsRemoteDataSource(),
     );
@@ -263,6 +275,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i1032.OrderStepsUseCase(gh<_i372.IOrderStepsRepository>()),
       instanceName: 'OrderSteps',
     );
+    gh.factory<_i578.ILegalPageRepository>(
+      () => _i939.LegalPageRepository(gh<_i532.LegalPageRemoteDataSource>()),
+    );
     gh.factory<
       _i795.IUseCase<
         _i480.BaseModel<_i635.DocumentDetailsModel>?,
@@ -289,6 +304,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i795.IUseCase<_i480.BaseModel<_i703.HomeModel>?, Null>>(
       () => _i208.HomeUseCase(gh<_i751.IHomeRepository>()),
       instanceName: 'Home',
+    );
+    gh.factory<
+      _i795.IUseCase<
+        _i480.BaseModel<_i656.LegalPageModel>?,
+        _i287.LegalPageEntity
+      >
+    >(
+      () => _i503.LegalPageUseCase(gh<_i578.ILegalPageRepository>()),
+      instanceName: 'LegalPage',
     );
     gh.factory<
       _i795.IUseCase<

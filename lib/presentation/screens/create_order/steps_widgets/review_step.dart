@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
+import 'package:forsan/presentation/bloc/legal_page/legal_page_bloc.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/legal_document_bottom_sheet.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/review_confirmation_card.dart';
@@ -11,7 +12,38 @@ import 'package:forsan/presentation/screens/create_order/widgets/review_section_
 import 'package:icons_plus/icons_plus.dart';
 
 class ReviewStep extends StatelessWidget {
+  final ValueChanged<int> onEditStep;
+  final StepModel step;
+  final List<StepModel> formSteps;
+  final List<AgreementModel> agreement;
+
   const ReviewStep({
+    super.key,
+    required this.onEditStep,
+    required this.step,
+    required this.formSteps,
+    required this.agreement,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LegalPageBloc>(create: (_) => LegalPageBloc()),
+
+      ],
+      child: BodyReviewStep(
+        onEditStep: onEditStep,
+        step: step,
+        formSteps: formSteps,
+        agreement: agreement,
+      ),
+    );
+  }
+}
+
+class BodyReviewStep extends StatelessWidget {
+  const BodyReviewStep({
     super.key,
     required this.onEditStep,
     required this.step,
@@ -32,10 +64,15 @@ class ReviewStep extends StatelessWidget {
     final sections = step.sections ?? const <Section>[];
     final reviewSection = sections.isEmpty ? null : sections.first;
     final sectionTitle = reviewSection?.title?.trim() ?? '';
-    final title = sectionTitle.isNotEmpty ? sectionTitle : step.title?.trim() ?? '';
-    final informationLabel = reviewSection?.fields?.where((field) => field.type == 'info')
+    final title = sectionTitle.isNotEmpty
+        ? sectionTitle
+        : step.title?.trim() ?? '';
+    final informationLabel =
+        reviewSection?.fields
+            ?.where((field) => field.type == 'info')
             .map((field) => field.label?.trim() ?? '')
-            .firstWhere((label) => label.isNotEmpty, orElse: () => '') ?? '';
+            .firstWhere((label) => label.isNotEmpty, orElse: () => '') ??
+        '';
     final description = informationLabel.isNotEmpty
         ? informationLabel
         : reviewSection?.description?.trim() ?? '';
@@ -43,7 +80,8 @@ class ReviewStep extends StatelessWidget {
       if (title.isNotEmpty || description.isNotEmpty)
         ReviewIntroduction(title: title, description: description),
       for (var stepIndex = 0; stepIndex < formSteps.length; stepIndex++)
-        for (final section in formSteps[stepIndex].sections ?? const <Section>[])
+        for (final section
+            in formSteps[stepIndex].sections ?? const <Section>[])
           if (_reviewFields(section, formValues).isNotEmpty)
             ReviewSectionCard(
               title: _sectionTitle(formSteps[stepIndex], section),
@@ -99,42 +137,6 @@ class ReviewStep extends StatelessWidget {
     );
   }
 
-  static const _privacySections = [
-    LegalDocumentSection(
-      title: 'جمع المعلومات',
-      body:
-          'تشمل المعلومات التي قد نجمعها عنك المعلومات الشخصية، على سبيل المثال لا الحصر: اسمك ورقم هاتفك وبريدك الإلكتروني وبيانات الدفع الخاصة بك.',
-    ),
-    LegalDocumentSection(
-      title: 'استخدام المعلومات',
-      body:
-          'نستخدم معلوماتك لتقديم خدمات المنصة وتحسينها، والتواصل معك بشأن طلباتك، والمحافظة على سلامة حسابك ومعاملاتك.',
-    ),
-    LegalDocumentSection(
-      title: 'حماية المعلومات',
-      body:
-          'نتخذ الإجراءات التقنية والتنظيمية المناسبة لحماية بياناتك من الوصول أو الاستخدام أو الإفصاح غير المصرح به.',
-    ),
-  ];
-
-  static const _termsSections = [
-    LegalDocumentSection(
-      title: 'استخدام المنصة',
-      body:
-          'باستخدام منصة فرسان فإنك توافق على الالتزام بهذه الشروط، وتقديم معلومات صحيحة ومحدثة، واستخدام الخدمات للأغراض المخصصة لها.',
-    ),
-    LegalDocumentSection(
-      title: 'مسؤولية المستخدم',
-      body:
-          'أنت مسؤول عن المحافظة على سرية بيانات حسابك وعن جميع الأنشطة والطلبات التي تتم من خلاله.',
-    ),
-    LegalDocumentSection(
-      title: 'تحديث الشروط',
-      body:
-          'يجوز للمنصة تحديث شروط الاستخدام عند الحاجة، ويعد استمرار استخدامك للخدمات موافقة على النسخة المحدثة منها.',
-    ),
-  ];
-
   List<ReviewField> _reviewFields(
     Section section,
     Map<String, dynamic> formValues,
@@ -159,8 +161,9 @@ class ReviewStep extends StatelessWidget {
               label: repeatedField.label?.trim() ?? '',
               value: _optionLabel(
                 repeatedValue,
-                repeatedField.options
-                        ?.map((option) => (option.value, option.label)) ??
+                repeatedField.options?.map(
+                      (option) => (option.value, option.label),
+                    ) ??
                     const [],
               ),
             ));
@@ -181,10 +184,7 @@ class ReviewStep extends StatelessWidget {
     return result;
   }
 
-  String _optionLabel(
-    dynamic value,
-    Iterable<(String?, String?)> options,
-  ) {
+  String _optionLabel(dynamic value, Iterable<(String?, String?)> options) {
     for (final option in options) {
       if (option.$1 == value) return option.$2?.trim() ?? value.toString();
     }
@@ -193,7 +193,9 @@ class ReviewStep extends StatelessWidget {
 
   String _sectionTitle(StepModel formStep, Section section) {
     final sectionTitle = section.title?.trim() ?? '';
-    return sectionTitle.isNotEmpty ? sectionTitle : formStep.title?.trim() ?? '';
+    return sectionTitle.isNotEmpty
+        ? sectionTitle
+        : formStep.title?.trim() ?? '';
   }
 
   IconData _sectionIcon(int stepIndex, Section section) {
