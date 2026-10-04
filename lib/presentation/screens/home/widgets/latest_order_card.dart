@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:forsan/core/extension/date_time_extension.dart';
 import 'package:forsan/data/models/home/home_model.dart';
@@ -162,50 +160,50 @@ class _OrderProgressAndAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-    width: AppWidth.w90,
+    width: AppWidth.w160,
     child: Column(
       children: [
         SizedBox(
-          width: AppWidth.w90,
           height: AppHeight.h90,
-          child: Stack(
-            alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox.expand(
-                child: Transform.rotate(
-                  angle: math.pi,
-                  child: CircularProgressIndicator(
-                    value:
-                        (homeModel.currentRequest?.progress ?? 0).clamp(
-                          0,
-                          100,
-                        ) /
-                        100,
-                    strokeWidth: AppWidth.w7,
-                    strokeCap: StrokeCap.round,
-                    backgroundColor: AppColors.lightActive,
-                    valueColor: const AlwaysStoppedAnimation<Color>(
-                      AppColors.primary,
+              SizedBox(
+                width: AppWidth.w90,
+                height: AppHeight.h90,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox.expand(
+                      child: CircularProgressIndicator(
+                        value:
+                            (homeModel.currentRequest?.progress ?? 0).clamp(
+                              0,
+                              100,
+                            ) /
+                            100,
+                        strokeWidth: AppWidth.w7,
+                        strokeCap: StrokeCap.butt,
+                        backgroundColor: AppColors.lightActive,
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                          AppColors.primary,
+                        ),
+                      ),
                     ),
-                  ),
+                    SectionTitle(
+                      text: '${homeModel.currentRequest?.progress ?? 0}%',
+                      color: AppColors.mainText,
+                      fontSize: AppFontSize.s24,
+                      fontWeight: AppFontWeight.bold,
+                    ),
+                  ],
                 ),
               ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SectionTitle(
-                    text: '${homeModel.currentRequest?.progress ?? 0}%',
-                    color: AppColors.mainText,
-                    fontSize: AppFontSize.s24,
-                    fontWeight: AppFontWeight.bold,
-                  ),
-                  BodyTitle(
-                    text: 'نسبة الإنجاز',
-                    color: AppColors.blackCow,
-                    fontSize: AppFontSize.s11,
-                    fontWeight: AppFontWeight.regular,
-                  ),
-                ],
+              BodyTitle(
+                text: 'نسبة الإنجاز',
+                color: AppColors.blackCow,
+                fontSize: AppFontSize.s14,
+                fontWeight: AppFontWeight.regular,
               ),
             ],
           ),
