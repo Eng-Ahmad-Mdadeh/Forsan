@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/data/models/order_steps/order_steps_model.dart';
+import 'package:forsan/domain/entities/legal_page/legal_page_entity.dart';
 import 'package:forsan/presentation/bloc/legal_page/legal_page_bloc.dart';
 import 'package:forsan/presentation/cubit/create_order/new_order_cubit.dart';
 import 'package:forsan/presentation/screens/create_order/widgets/legal_document_bottom_sheet.dart';
@@ -11,39 +12,9 @@ import 'package:forsan/presentation/screens/create_order/widgets/review_introduc
 import 'package:forsan/presentation/screens/create_order/widgets/review_section_card.dart';
 import 'package:icons_plus/icons_plus.dart';
 
+
 class ReviewStep extends StatelessWidget {
-  final ValueChanged<int> onEditStep;
-  final StepModel step;
-  final List<StepModel> formSteps;
-  final List<AgreementModel> agreement;
-
   const ReviewStep({
-    super.key,
-    required this.onEditStep,
-    required this.step,
-    required this.formSteps,
-    required this.agreement,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<LegalPageBloc>(create: (_) => LegalPageBloc()),
-
-      ],
-      child: BodyReviewStep(
-        onEditStep: onEditStep,
-        step: step,
-        formSteps: formSteps,
-        agreement: agreement,
-      ),
-    );
-  }
-}
-
-class BodyReviewStep extends StatelessWidget {
-  const BodyReviewStep({
     super.key,
     required this.onEditStep,
     required this.step,
@@ -125,7 +96,7 @@ class BodyReviewStep extends StatelessWidget {
     LegalDocumentBottomSheet.show(
       context,
       title: 'سياسة الخصوصية',
-      sections: _privacySections,
+      pageType: 'privacy',
     );
   }
 
@@ -133,7 +104,7 @@ class BodyReviewStep extends StatelessWidget {
     LegalDocumentBottomSheet.show(
       context,
       title: 'شروط الاستخدام',
-      sections: _termsSections,
+      pageType: 'terms',
     );
   }
 

@@ -136,6 +136,7 @@ import '../../../domain/usecases/order_details/order_details_use_case.dart'
 import '../../../domain/usecases/order_list/order_list_use_case.dart' as _i72;
 import '../../../domain/usecases/order_steps/order_steps_use_case.dart'
     as _i1032;
+import '../../../domain/usecases/profile/get_profile_use_case.dart' as _i65;
 import '../../../domain/usecases/profile/profile_use_case.dart' as _i76;
 import '../../helper/device_info_helper.dart' as _i1052;
 import '../../helper/local_storage_helper.dart' as _i218;
@@ -287,6 +288,10 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i738.DocumentDetailsUseCase(gh<_i125.IDocumentDetailsRepository>()),
       instanceName: 'DocumentDetails',
+    );
+    gh.factory<_i795.IUseCase<_i480.BaseModel<_i705.ProfileModel>?, Null>>(
+      () => _i65.GetProfileUseCase(gh<_i1042.IProfileRepository>()),
+      instanceName: 'GetProfile',
     );
     gh.factory<_i122.IOrderDetailsRepository>(
       () => _i664.OrderDetailsRepository(

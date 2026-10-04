@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
@@ -40,7 +41,7 @@ class ReviewConfirmationCard extends StatelessWidget {
         ],
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomCheckBox(
             value: value,
@@ -83,7 +84,7 @@ class _AgreementText extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = TextStyle(
       color: AppColors.primaryDark,
-      fontSize: AppFontSize.s14,
+      fontSize: AppFontSize.s13, // حجم مناسب للتدفق
       fontWeight: AppFontWeight.regular,
     );
     final linkStyle = style.copyWith(
@@ -92,25 +93,26 @@ class _AgreementText extends StatelessWidget {
       decorationColor: AppColors.primaryDark,
     );
 
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
-      spacing: AppWidth.w4,
-      children: [
-        Text('أوافق على', style: style),
-        _AgreementLink(
-          key: const Key('new_order_privacy_policy_link'),
-          text: 'سياسة الخصوصية',
-          style: linkStyle,
-          onPressed: onPrivacyPressed,
-        ),
-        Text('و', style: style),
-        _AgreementLink(
-          key: const Key('new_order_terms_of_use_link'),
-          text: 'شروط استخدام منصة فرسان.',
-          style: linkStyle,
-          onPressed: onTermsPressed,
-        ),
-      ],
+    return Text.rich(
+      TextSpan(
+        style: style,
+        children: [
+          const TextSpan(text: 'أوافق على '),
+          TextSpan(
+           // key: const Key('new_order_privacy_policy_link'),
+            text: 'سياسة الخصوصية',
+            style: linkStyle,
+            recognizer: TapGestureRecognizer()..onTap = onPrivacyPressed,
+          ),
+          const TextSpan(text: ' و '),
+          TextSpan(
+           // key: const Key('new_order_terms_of_use_link'),
+            text: 'شروط استخدام منصة فرسان.',
+            style: linkStyle,
+            recognizer: TapGestureRecognizer()..onTap = onTermsPressed,
+          ),
+        ],
+      ),
     );
   }
 }

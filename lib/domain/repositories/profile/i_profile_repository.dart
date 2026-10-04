@@ -6,6 +6,5 @@ import 'package:forsan/data/models/base/base_model.dart';
 
 abstract interface class IProfileRepository {
   Future<Either<AppException, BaseModel<ProfileModel>?>> upDateProfile(AuthEntity data);
-
-
+  Future<Either<AppException, BaseModel<ProfileModel>?>> getProfile();
 }

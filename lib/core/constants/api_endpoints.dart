@@ -21,7 +21,7 @@ class ApiEndpoints {
 
 
   //#region Profile
-  static const String upDateProfile = '/me';
+  static const String profile = '/me';
   //#endregion
 
 
@@ -60,7 +60,7 @@ class ApiEndpoints {
   //#endregion
 
   //#region legal Page
-  static String legalPage(String page) => '$user/content/${Uri.encodeComponent(page)}';
+  static String legalPage(String page) => '/content/${Uri.encodeComponent(page)}';
 
 //#endregion
 

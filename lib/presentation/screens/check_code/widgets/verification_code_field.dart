@@ -11,7 +11,7 @@ import 'package:forsan/presentation/bloc/auth/check_code/check_code_bloc.dart';
 import 'package:forsan/presentation/cubit/code_check/code_check_cubit.dart';
 
 class VerificationCodeField extends StatelessWidget {
-  static const int codeLength = 6;
+  static const int codeLength = 4;
 
   final TextEditingController codeController;
   final GlobalKey<FormState> formKey;

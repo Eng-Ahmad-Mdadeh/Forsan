@@ -23,4 +23,15 @@ class ProfileRepository implements IProfileRepository{
       },
     );
   }
+
+  @override
+  Future<Either<AppException, BaseModel<ProfileModel>?>> getProfile() async {
+    final response = await _remoteDataSource.getProfile();
+    return response.fold(
+          (l) async => Left(l),
+          (r) async {
+        return Right(r);
+      },
+    );
+  }
 }

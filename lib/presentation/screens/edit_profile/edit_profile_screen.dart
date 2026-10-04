@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/presentation/bloc/auth/complete_profile/complete_profile_bloc.dart';
 import 'package:forsan/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:forsan/presentation/screens/edit_profile/widgets/edit_profile_form.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
@@ -11,9 +12,12 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => EditProfileCubit(),
-      child: const _EditProfileView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<EditProfileCubit>(create: (_) => EditProfileCubit()),
+        BlocProvider<CompleteProfileBloc>(create: (_) => CompleteProfileBloc()),
+      ],
+      child: _EditProfileView(),
     );
   }
 }

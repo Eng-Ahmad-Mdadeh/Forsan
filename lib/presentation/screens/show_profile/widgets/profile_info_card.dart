@@ -4,9 +4,17 @@ import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/presentation/screens/show_profile/widgets/profile_info_raw.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:forsan/data/models/profile/profile_model.dart';
 
 class ProfileInfoCard extends StatelessWidget {
-  const ProfileInfoCard({super.key});
+  const ProfileInfoCard({super.key,  this.profile});
+
+  final ProfileModel? profile;
+
+  String _displayValue(String? value) {
+    final text = value?.trim();
+    return text == null || text.isEmpty ? 'غير متوفر' : text;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,32 +40,32 @@ class ProfileInfoCard extends StatelessWidget {
       ),
       margin: EdgeInsets.zero,
       borderRadius: BorderRadius.circular(AppRadius.r8),
-      child: const Column(
+      child: Column(
         children: [
           ProfileInfoRow(
             icon: Iconsax.user_bold,
             label: 'الاسم الكامل',
-            value: 'أحمد عيسى',
+            value: _displayValue(profile?.fullName??''),
           ),
           ProfileInfoRow(
             icon: Iconsax.card_outline,
             label: 'الدولة',
-            value: 'سوريا',
+            value: _displayValue(profile?.countryName??''),
           ),
           ProfileInfoRow(
             icon: Iconsax.card_outline,
             label: 'الجنسية',
-            value: 'سوري',
+            value: _displayValue(profile?.nationalityName??''),
           ),
           ProfileInfoRow(
             icon: Iconsax.call_outline,
             label: 'رقم الهاتف',
-            value: '+963938204147',
+            value: _displayValue(profile?.phone??''),
           ),
           ProfileInfoRow(
             icon: Iconsax.sms_outline,
             label: 'البريد الالكتروني',
-            value: 'ahmadeassaa@gmail.com',
+            value: _displayValue(profile?.email??''),
             showDivider: false,
           ),
         ],
