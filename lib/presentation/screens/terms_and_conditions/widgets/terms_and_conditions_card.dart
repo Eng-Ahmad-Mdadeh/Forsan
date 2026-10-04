@@ -4,27 +4,43 @@ import 'package:forsan/core/extension/localization_extension.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_fonts.dart';
 import 'package:forsan/core/resources/app_values.dart';
+import 'package:forsan/data/models/legal_page/legal_page_model.dart';
 import 'package:forsan/presentation/widgets/section_card.dart';
 import 'package:forsan/presentation/widgets/text/body_title.dart';
 import 'package:forsan/presentation/widgets/text/section_title.dart';
 
 class TermsAndConditionsCard extends StatefulWidget {
-  const TermsAndConditionsCard({super.key});
+  const TermsAndConditionsCard({super.key, required this.section});
+  final Section section;
 
   @override
   State<TermsAndConditionsCard> createState() => _TermsAndConditionsCardState();
 }
 
 class _TermsAndConditionsCardState extends State<TermsAndConditionsCard> {
-  static const String _description =
-      'من خلال دخولك أو وصولك أو استخدامك (من خلالك أو من '
-      'خلال وكلائك أو موظفيك) إلى الموقع الإلكتروني maktab.sa '
-      '(المشار إليه بعبارة "الموقع") التابع للمنصة فإنك توافق على '
-      'سياسة الخصوصية هذه كما هي اعتبارًا من تاريخ نشرها على الموقع. '
-      'فإذا لم توافق على هذه السياسة، فيرجى التوقف عن استخدام الموقع.';
+  static const int _previewCharacterLimit = 200;
 
   bool _isExpanded = false;
   late final TapGestureRecognizer _loadMoreRecognizer;
+  String get _body => widget.section.body?.trim() ?? '';
+
+  String get _collapsedBody {
+    final firstParagraphEnd = _body.indexOf('\n\n');
+    if (firstParagraphEnd > 0) {
+      return _body.substring(0, firstParagraphEnd);
+    }
+
+    if (_body.length <= _previewCharacterLimit) {
+      return _body;
+    }
+
+    final lastSpace = _body.lastIndexOf(' ', _previewCharacterLimit);
+    final previewEnd = lastSpace > 0 ? lastSpace : _previewCharacterLimit;
+    return '${_body.substring(0, previewEnd).trimRight()}…';
+  }
+
+  bool get _canExpand => _collapsedBody.length < _body.length;
+
 
   @override
   void initState() {
@@ -37,6 +53,14 @@ class _TermsAndConditionsCardState extends State<TermsAndConditionsCard> {
   void dispose() {
     _loadMoreRecognizer.dispose();
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant TermsAndConditionsCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.section != widget.section) {
+      _isExpanded = false;
+    }
   }
 
   @override
@@ -82,7 +106,12 @@ class _TermsAndConditionsCardState extends State<TermsAndConditionsCard> {
                       top: AppPaddingHeight.p4,
                     ),
                     child: SectionTitle(
-                      text: 'الشروط و الأحكام',
+                      text: [
+                        if (widget.section.number != null)
+                          '${widget.section.number}.',
+                        if (widget.section.title?.trim().isNotEmpty ?? false)
+                          widget.section.title!.trim(),
+                      ].join(' '),
                       textAlign: TextAlign.start,
                       color: AppColors.primary,
                       fontSize: AppFontSize.s14,
@@ -100,19 +129,15 @@ class _TermsAndConditionsCardState extends State<TermsAndConditionsCard> {
                   style: bodyStyle,
                   children: [
                     TextSpan(
-                      text: _isExpanded
-                          ? _description
-                          : _description.substring(
-                        0,
-                        _description.indexOf('توافق على هذه السياسة'),
-                      ),
+                      text: _isExpanded ? _body : _collapsedBody,
                       style: bodyStyle.copyWith(
                         fontSize: AppSize.s14,
                         fontWeight: AppFontWeight.regular,
                       ),
                     ),
-                    if (!_isExpanded) const TextSpan(text: '  '),
-                    if (!_isExpanded)
+                    if (!_isExpanded && _canExpand)
+                      const TextSpan(text: '  '),
+                    if (!_isExpanded && _canExpand)
                       TextSpan(
                         text: context.loc.loadMore,
                         style: bodyStyle.copyWith(

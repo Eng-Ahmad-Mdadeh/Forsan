@@ -177,29 +177,31 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
 
                       ),
                     ),
+                    // SizedBox(height: AppHeight.h10),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(
+                    //     horizontal: AppPaddingWidth.p16,
+                    //   ),
+                    //   child: OrdersStatusTabs(
+                    //     selectedIndex: ordersState.selectedStatus,
+                    //     onSelected: _onStatusSelected,
+                    //     allCount: counts?.all ?? 0,
+                    //     draftCount: counts?.draft ?? 0,
+                    //     underReviewCount: counts?.underReview ?? 0,
+                    //     awaitingDocumentsCount:
+                    //         counts?.awaitingDocuments ?? 0,
+                    //     quoteReadyCount: counts?.quoteReady ?? 0,
+                    //     awaitingPaymentCount: counts?.awaitingPayment ?? 0,
+                    //     paymentUnderReviewCount:
+                    //         counts?.paymentUnderReview ?? 0,
+                    //     inProgressCount: counts?.inProgress ?? 0,
+                    //     deliveredCount: counts?.delivered ?? 0,
+                    //     completedCount: counts?.completed ?? 0,
+                    //     cancelledCount: counts?.cancelled ?? 0,
+                    //   ),
+                    // ),
                     SizedBox(height: AppHeight.h10),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppPaddingWidth.p16,
-                      ),
-                      child: OrdersStatusTabs(
-                        selectedIndex: ordersState.selectedStatus,
-                        onSelected: _onStatusSelected,
-                        allCount: counts?.all ?? 0,
-                        draftCount: counts?.draft ?? 0,
-                        underReviewCount: counts?.underReview ?? 0,
-                        awaitingDocumentsCount:
-                            counts?.awaitingDocuments ?? 0,
-                        quoteReadyCount: counts?.quoteReady ?? 0,
-                        awaitingPaymentCount: counts?.awaitingPayment ?? 0,
-                        paymentUnderReviewCount:
-                            counts?.paymentUnderReview ?? 0,
-                        inProgressCount: counts?.inProgress ?? 0,
-                        deliveredCount: counts?.delivered ?? 0,
-                        completedCount: counts?.completed ?? 0,
-                        cancelledCount: counts?.cancelled ?? 0,
-                      ),
-                    ),
+
                     Expanded(
                       child: orders.isNotEmpty
                           ? OrdersList(
