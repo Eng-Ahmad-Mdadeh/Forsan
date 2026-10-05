@@ -392,7 +392,7 @@ extension GetItInjectableX on _i174.GetIt {
       instanceName: 'LogOut',
     );
     gh.factory<
-      _i795.IUseCase<_i480.BaseModel<_i682.ListPaymentMethodsModel>?, Null>
+      _i795.IUseCase<_i480.BaseModel<List<_i682.ListPaymentMethodsModel>>?, Null>
     >(
       () => _i244.ListPaymentMethodsUseCase(
         gh<_i886.IListPaymentMethodsRepository>(),
