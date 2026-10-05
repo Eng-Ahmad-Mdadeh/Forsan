@@ -85,12 +85,11 @@ class CustomInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final inputHeight = height ?? (isExpanded ?? false ? null : AppHeight.h48);
-    final minimumFieldHeight = inputHeight == null
+    final reservedFieldHeight = inputHeight == null ||
+            validator == null ||
+            !reserveValidationSpace
         ? null
-        : inputHeight +
-              (validator == null || !reserveValidationSpace
-                  ? 0
-                  : AppHeight.h20);
+        : inputHeight + AppHeight.h20;
 
     return Column(
       spacing: AppHeight.h4,
@@ -123,14 +122,12 @@ class CustomInputField extends StatelessWidget {
           //crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             ConstrainedBox(
-              constraints: minimumFieldHeight != null
-                  ? BoxConstraints(
-                      // Keep validated and non-validated inputs the same
-                      // visible height. The optional validation space is
-                      // already included in minimumFieldHeight when enabled.
-                      minHeight: minimumFieldHeight,
-                      maxHeight: minimumFieldHeight,
-                    )
+              // Without reserved helper space, allow the validation line to
+              // grow below the input instead of squeezing the input itself.
+              constraints: reservedFieldHeight != null
+                  ? BoxConstraints.tightFor(height: reservedFieldHeight)
+                  : inputHeight != null
+                  ? BoxConstraints(minHeight: inputHeight)
                   : const BoxConstraints(),
               child: showFlag
                   ? Directionality(
