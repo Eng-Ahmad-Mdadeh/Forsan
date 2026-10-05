@@ -16,7 +16,7 @@ class ListPaymentMethodsRepository implements IListPaymentMethodsRepository{
   ListPaymentMethodsRepository(this._remoteDataSource);
 
   @override
-  Future<Either<AppException, BaseModel<ListPaymentMethodsModel>?>> getListPaymentMethods() async {
+  Future<Either<AppException, BaseModel<List<ListPaymentMethodsModel>>?>> getListPaymentMethods() async {
     final response = await _remoteDataSource.getListPaymentMethods();
     return response.fold(
           (l) async => Left(l),

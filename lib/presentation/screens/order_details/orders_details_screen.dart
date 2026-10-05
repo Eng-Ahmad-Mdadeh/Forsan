@@ -182,7 +182,7 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
                       SizedBox(height: AppHeight.h20),
                       Row(
                         children: [
-                          if (canPay)
+                          //if (canPay)
                             Expanded(
                               child: CustomElevatedButton(
                                 height: AppHeight.h52,

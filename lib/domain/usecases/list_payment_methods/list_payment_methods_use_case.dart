@@ -8,15 +8,15 @@ import 'package:injectable/injectable.dart';
 import 'package:forsan/data/models/base/base_model.dart';
 import '../../../core/exceptions/app_exception.dart';
 
-@Injectable(as: IUseCase<BaseModel<ListPaymentMethodsModel>?, Null>)
+@Injectable(as: IUseCase<BaseModel<List<ListPaymentMethodsModel>>?, Null>)
 @Named('ListPaymentMethods')
-class ListPaymentMethodsUseCase implements IUseCase<BaseModel<ListPaymentMethodsModel>?, Null> {
+class ListPaymentMethodsUseCase implements IUseCase<BaseModel<List<ListPaymentMethodsModel>>?, Null> {
   final IListPaymentMethodsRepository _repository;
 
   ListPaymentMethodsUseCase(this._repository);
 
   @override
-  Future<Either<AppException, BaseModel<ListPaymentMethodsModel>?>> call(Null n) {
+  Future<Either<AppException, BaseModel<List<ListPaymentMethodsModel>>?>> call(Null n) {
     return _repository.getListPaymentMethods();
   }
 }

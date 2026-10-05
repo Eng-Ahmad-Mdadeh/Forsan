@@ -1,7 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'account/account_model.dart';
-import 'field/field_model.dart';
 
 part 'list_payment_methods_model.g.dart';
 part 'account/account_model.dart';

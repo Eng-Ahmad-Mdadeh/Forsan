@@ -1,13 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forsan/core/resources/app_colors.dart';
 import 'package:forsan/core/resources/app_values.dart';
 import 'package:forsan/core/routes/app_routes.dart';
+import 'package:forsan/presentation/bloc/list_payment_methods/list_payment_methods_bloc.dart';
 import 'package:forsan/presentation/screens/pay/widgets/payment_plan_card.dart';
 import 'package:forsan/presentation/screens/pay/widgets/payment_methods_section.dart';
 import 'package:forsan/presentation/widgets/custom_app_bar.dart';
+import 'package:forsan/presentation/widgets/failure_screen.dart';
+import 'package:forsan/presentation/widgets/loading_widget.dart';
 
 class PayScreen extends StatelessWidget {
   const PayScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ListPaymentMethodsBloc>(
+            create: (_) => ListPaymentMethodsBloc()),
+      ],
+      child: const BodyPayScreen(),
+    );
+  }
+}
+
+class BodyPayScreen extends StatefulWidget {
+  const BodyPayScreen({super.key});
+
+  @override
+  State<BodyPayScreen> createState() => _BodyPayScreenState();
+}
+
+class _BodyPayScreenState extends State<BodyPayScreen> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<ListPaymentMethodsBloc>().add(ListPaymentMethodsEvent());
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,29 +53,47 @@ class PayScreen extends StatelessWidget {
         showScrolledUnderElevation: false,
         toolbarHeight: AppHeight.h70,
       ),
-      body: Padding(
-        padding: EdgeInsetsDirectional.only(
-          start: AppPaddingWidth.p16,
-          end: AppPaddingWidth.p16,
-          bottom: AppPaddingHeight.p16,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              PaymentPlanCard(
-                totalAmount: '10000',
-                firstPaymentAmount: '5000',
-                secondPaymentAmount: '5000',
+      body: BlocBuilder<ListPaymentMethodsBloc, IListPaymentMethodsState>(
+        builder: (context, state) {
+          if(state is ListPaymentMethodsFailed){
+            return FailureScreen(
+              errorMessage: state.message,
+              onPressed: () => context
+                  .read<ListPaymentMethodsBloc>()
+                  .add(ListPaymentMethodsEvent()),
+            );
+          }if(state is ListPaymentMethodsLoading){
+            return const Center(child: LoadingWidget(0));
+          }if(state is ListPaymentMethodsLoaded){
+            return Padding(
+              padding: EdgeInsetsDirectional.only(
+                start: AppPaddingWidth.p16,
+                end: AppPaddingWidth.p16,
+                bottom: AppPaddingHeight.p16,
               ),
-              SizedBox(height: AppHeight.h24),
-              PaymentMethodsSection(
-                onBankTransferTap: () => const BankTransferRoute().push(context),
-                onWesternUnionTap: () => const WesternUnionRoute().push(context),
-                onShamCashTap: () => const ShamCashRoute().push(context),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    PaymentPlanCard(
+                      totalAmount: '10000',
+                      firstPaymentAmount: '5000',
+                      secondPaymentAmount: '5000',
+                    ),
+                    SizedBox(height: AppHeight.h24),
+                    PaymentMethodsSection(
+                      onBankTransferTap: () =>
+                          const BankTransferRoute().push(context),
+                      onWesternUnionTap: () =>
+                          const WesternUnionRoute().push(context),
+                      onShamCashTap: () => const ShamCashRoute().push(context),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
+            );
+          }
+          return SizedBox();
+        },
       ),
     );
   }
