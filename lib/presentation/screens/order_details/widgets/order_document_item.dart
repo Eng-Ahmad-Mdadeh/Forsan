@@ -23,6 +23,10 @@ enum OrderDocumentStatus {
   notRequired(
     backgroundColor: AppColors.light,
     foregroundColor: AppColors.lightActive,
+  ),
+  unknown(
+    backgroundColor: AppColors.lightGrey,
+    foregroundColor: AppColors.greyText,
   );
 
   const OrderDocumentStatus({
@@ -32,6 +36,31 @@ enum OrderDocumentStatus {
 
   final Color backgroundColor;
   final Color foregroundColor;
+
+  /// Converts the status key returned by the API into its presentation value.
+  ///
+  /// The API label is intentionally not used here because it is localized text
+  /// and can change independently from the stable status key.
+  factory OrderDocumentStatus.fromApi(String? value) {
+    final normalizedValue = value
+        ?.trim()
+        .replaceAllMapped(
+          RegExp(r'([a-z0-9])([A-Z])'),
+          (match) => '${match.group(1)}_${match.group(2)}',
+        )
+        .replaceAll(RegExp(r'[\s-]+'), '_')
+        .toLowerCase();
+
+    return switch (normalizedValue) {
+      'approved' || 'accepted' => OrderDocumentStatus.approved,
+      'rejected' => OrderDocumentStatus.rejected,
+      'under_review' || 'pending' || 'in_review' =>
+        OrderDocumentStatus.underReview,
+      'required' => OrderDocumentStatus.required,
+      'not_required' => OrderDocumentStatus.notRequired,
+      _ => OrderDocumentStatus.unknown,
+    };
+  }
 
   String label(BuildContext context) => switch (this) {
     OrderDocumentStatus.approved =>
@@ -44,6 +73,7 @@ enum OrderDocumentStatus {
       context.loc.order_document_status_required,
     OrderDocumentStatus.notRequired =>
       context.loc.order_document_status_not_required,
+    OrderDocumentStatus.unknown => '',
   };
 }
 

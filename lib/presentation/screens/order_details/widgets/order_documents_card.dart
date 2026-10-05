@@ -11,14 +11,12 @@ import '../../../widgets/text/section_title.dart';
 import 'order_document_item.dart';
 
 class OrderDocumentsCard extends StatelessWidget {
-
   final List<Upload>? model;
 
   const OrderDocumentsCard({super.key, this.model});
 
   @override
   Widget build(BuildContext context) {
-
     final uploads = model ?? [];
 
     return Directionality(
@@ -91,47 +89,46 @@ class _DocumentsHeader extends StatelessWidget {
 }
 
 class _DocumentRow extends StatelessWidget {
-  const _DocumentRow({ this.document});
+  const _DocumentRow({this.document});
 
   final Upload? document;
 
   @override
-  Widget build(BuildContext context) => Container(
-    height: AppHeight.h40,
-    padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p8),
-    decoration: BoxDecoration(
-      color: AppColors.backGround,
-      borderRadius: BorderRadius.circular(AppRadius.r8),
-    ),
-    child: Row(
-      children: [
-        Icon(
-          Icons.description_outlined,
-          size: AppSize.s16,
-          color: AppColors.secondaryText,
-        ),
-        SizedBox(width: AppWidth.w6),
-        Expanded(
-          child: BodyTitle(
-            text: document?.name??'',
-            color: AppColors.blackCow,
-            fontSize: AppFontSize.s13,
-            fontWeight: AppFontWeight.regular,
+  Widget build(BuildContext context) {
+    final status = OrderDocumentStatus.fromApi(document?.status);
+
+    return Container(
+      height: AppHeight.h40,
+      padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p8),
+      decoration: BoxDecoration(
+        color: AppColors.backGround,
+        borderRadius: BorderRadius.circular(AppRadius.r8),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.description_outlined,
+            size: AppSize.s16,
+            color: AppColors.secondaryText,
           ),
-        ),
-        // StatusBadge(
-        //   status: document?.statusLabel??'',
-        //   fontSize: AppSize.s14,
-        //   fontWeight: AppFontWeight.regular,
-        // ),
-        StatusBadge.custom(
-          label: document?.statusLabel??'',
-          fontSize: AppSize.s14,
-          fontWeight: AppFontWeight.regular,
-          color: document.status.foregroundColor,
-          backgroundColor: document.status.backgroundColor,
-        ),
-      ],
-    ),
-  );
+          SizedBox(width: AppWidth.w6),
+          Expanded(
+            child: BodyTitle(
+              text: document?.name ?? '',
+              color: AppColors.blackCow,
+              fontSize: AppFontSize.s13,
+              fontWeight: AppFontWeight.regular,
+            ),
+          ),
+          StatusBadge.custom(
+            label: document?.statusLabel ?? '',
+            fontSize: AppSize.s14,
+            fontWeight: AppFontWeight.regular,
+            color: status.foregroundColor,
+            backgroundColor: status.backgroundColor,
+          ),
+        ],
+      ),
+    );
+  }
 }
