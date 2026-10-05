@@ -2,9 +2,16 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'order_details_model.g.dart';
+
 part 'stage/stage_model.dart';
+
 part 'customer/customer_model.dart';
+
 part 'actions/actions_model.dart';
+
+part 'attachment/attachment_model.dart';
+
+part 'uploads/uploads_model.dart';
 
 @JsonSerializable(createToJson: false)
 class OrderDetailsModel extends Equatable {
@@ -28,6 +35,7 @@ class OrderDetailsModel extends Equatable {
     required this.stages,
     required this.requiredDocuments,
     required this.attachments,
+    required this.uploads,
     required this.actions,
   });
 
@@ -50,15 +58,37 @@ class OrderDetailsModel extends Equatable {
   final List<Stage>? stages;
   final List<RequiredDocument>? requiredDocuments;
   final List<Attachment>? attachments;
+  final List<Upload>? uploads;
   final Actions? actions;
 
-  factory OrderDetailsModel.fromJson(Map<String, dynamic> json) => _$OrderDetailsModelFromJson(json);
+  factory OrderDetailsModel.fromJson(Map<String, dynamic> json) =>
+      _$OrderDetailsModelFromJson(json);
 
   @override
   List<Object?> get props => [
-    id, reference, serviceSlug, serviceName, categoryName, status, displayStatus, statusLabel, progress, createdAt, consultant, customer, applicantName, applicantType, requiredAction, payment, stages, requiredDocuments, attachments, actions, ];
+    id,
+    reference,
+    serviceSlug,
+    serviceName,
+    categoryName,
+    status,
+    displayStatus,
+    statusLabel,
+    progress,
+    createdAt,
+    consultant,
+    customer,
+    applicantName,
+    applicantType,
+    requiredAction,
+    payment,
+    stages,
+    requiredDocuments,
+    attachments,
+    actions,
+    uploads,
+  ];
 }
-
 
 @JsonSerializable(createToJson: false)
 class ApplicantType extends Equatable {
@@ -72,46 +102,11 @@ class ApplicantType extends Equatable {
   final String? value;
   final String? label;
 
-  factory ApplicantType.fromJson(Map<String, dynamic> json) => _$ApplicantTypeFromJson(json);
+  factory ApplicantType.fromJson(Map<String, dynamic> json) =>
+      _$ApplicantTypeFromJson(json);
 
   @override
-  List<Object?> get props => [
-    fieldId, value, label, ];
-}
-
-@JsonSerializable(createToJson: false)
-class Attachment extends Equatable {
-  Attachment({
-    required this.id,
-    required this.name,
-    required this.mimeType,
-    required this.size,
-    required this.source,
-    required this.kind,
-    required this.status,
-    required this.locked,
-    required this.lockReason,
-    required this.uploadedAt,
-    required this.downloadUrl,
-  });
-
-  final String? id;
-  final String? name;
-  final String? mimeType;
-  final int? size;
-  final String? source;
-  final String? kind;
-  final String? status;
-  final bool? locked;
-  final dynamic lockReason;
-  final DateTime? uploadedAt;
-  final String? downloadUrl;
-
-  factory Attachment.fromJson(Map<String, dynamic> json) => _$AttachmentFromJson(json);
-
-  @override
-  List<Object?> get props => [
-    id, name, mimeType, size, source, kind, status, locked, lockReason, uploadedAt, downloadUrl, ];
+  List<Object?> get props => [fieldId, value, label];
 }
 
 @JsonSerializable(createToJson: false)
@@ -126,14 +121,12 @@ class Consultant extends Equatable {
   final String? fullName;
   final dynamic avatarUrl;
 
-  factory Consultant.fromJson(Map<String, dynamic> json) => _$ConsultantFromJson(json);
+  factory Consultant.fromJson(Map<String, dynamic> json) =>
+      _$ConsultantFromJson(json);
 
   @override
-  List<Object?> get props => [
-    id, fullName, avatarUrl, ];
+  List<Object?> get props => [id, fullName, avatarUrl];
 }
-
-
 
 @JsonSerializable(createToJson: false)
 class Payment extends Equatable {
@@ -149,19 +142,16 @@ class Payment extends Equatable {
   final Paid? remaining;
   final String? status;
 
-  factory Payment.fromJson(Map<String, dynamic> json) => _$PaymentFromJson(json);
+  factory Payment.fromJson(Map<String, dynamic> json) =>
+      _$PaymentFromJson(json);
 
   @override
-  List<Object?> get props => [
-    total, paid, remaining, status, ];
+  List<Object?> get props => [total, paid, remaining, status];
 }
 
 @JsonSerializable(createToJson: false)
 class Paid extends Equatable {
-  Paid({
-    required this.amount,
-    required this.currency,
-  });
+  Paid({required this.amount, required this.currency});
 
   final String? amount;
   final String? currency;
@@ -169,8 +159,7 @@ class Paid extends Equatable {
   factory Paid.fromJson(Map<String, dynamic> json) => _$PaidFromJson(json);
 
   @override
-  List<Object?> get props => [
-    amount, currency, ];
+  List<Object?> get props => [amount, currency];
 }
 
 @JsonSerializable(createToJson: false)
@@ -197,10 +186,19 @@ class RequiredDocument extends Equatable {
   final int? maxSize;
   final Attachment? file;
 
-  factory RequiredDocument.fromJson(Map<String, dynamic> json) => _$RequiredDocumentFromJson(json);
+  factory RequiredDocument.fromJson(Map<String, dynamic> json) =>
+      _$RequiredDocumentFromJson(json);
 
   @override
   List<Object?> get props => [
-    id, name, description, status, statusLabel, rejectionReason, acceptedTypes, maxSize, file, ];
+    id,
+    name,
+    description,
+    status,
+    statusLabel,
+    rejectionReason,
+    acceptedTypes,
+    maxSize,
+    file,
+  ];
 }
-

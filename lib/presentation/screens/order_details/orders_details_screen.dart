@@ -72,6 +72,7 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
     serviceSlug: '',
     applicantType: null,
     consultant: null,
+    uploads: null,
   );
 
   @override
@@ -173,7 +174,7 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
                     SizedBox(height: AppHeight.h16),
                     OrderStagesCard(stages: order.stages ?? []),
                     SizedBox(height: AppHeight.h16),
-                    const OrderDocumentsCard(),
+                    OrderDocumentsCard(model: order.uploads),
                     if (order.attachments?.isNotEmpty == true) ...[
                       SizedBox(height: AppHeight.h16),
                       OrderAttachedDocumentsCard(model: order),
@@ -183,30 +184,30 @@ class _BodyOrdersDetailsScreenState extends State<BodyOrdersDetailsScreen> {
                       Row(
                         children: [
                           //if (canPay)
-                            Expanded(
-                              child: CustomElevatedButton(
-                                height: AppHeight.h52,
-                                color: AppColors.homeSupportAction,
-                                borderRadius: AppRadius.r12,
-                                onPressed: () => const PayRoute().push(context),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.check_rounded,
-                                      color: AppColors.white,
-                                      size: AppSize.s15,
-                                    ),
-                                    SizedBox(width: AppWidth.w5),
-                                    BodyTitle(
-                                      text: context.loc.order_approve_and_pay,
-                                      color: AppColors.white,
-                                      fontSize: AppFontSize.s12,
-                                    ),
-                                  ],
-                                ),
+                          Expanded(
+                            child: CustomElevatedButton(
+                              height: AppHeight.h52,
+                              color: AppColors.homeSupportAction,
+                              borderRadius: AppRadius.r12,
+                              onPressed: () => const PayRoute().push(context),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.check_rounded,
+                                    color: AppColors.white,
+                                    size: AppSize.s15,
+                                  ),
+                                  SizedBox(width: AppWidth.w5),
+                                  BodyTitle(
+                                    text: context.loc.order_approve_and_pay,
+                                    color: AppColors.white,
+                                    fontSize: AppFontSize.s12,
+                                  ),
+                                ],
                               ),
                             ),
+                          ),
                           if (canPay && canChat) SizedBox(width: AppWidth.w7),
                           if (canChat)
                             Expanded(

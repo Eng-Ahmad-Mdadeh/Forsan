@@ -45,6 +45,9 @@ OrderDetailsModel _$OrderDetailsModelFromJson(Map<String, dynamic> json) =>
       attachments: (json['attachments'] as List<dynamic>?)
           ?.map((e) => Attachment.fromJson(e as Map<String, dynamic>))
           .toList(),
+      uploads: (json['uploads'] as List<dynamic>?)
+          ?.map((e) => Upload.fromJson(e as Map<String, dynamic>))
+          .toList(),
       actions: json['actions'] == null
           ? null
           : Actions.fromJson(json['actions'] as Map<String, dynamic>),
@@ -56,22 +59,6 @@ ApplicantType _$ApplicantTypeFromJson(Map<String, dynamic> json) =>
       value: json['value'] as String?,
       label: json['label'] as String?,
     );
-
-Attachment _$AttachmentFromJson(Map<String, dynamic> json) => Attachment(
-  id: json['id'] as String?,
-  name: json['name'] as String?,
-  mimeType: json['mimeType'] as String?,
-  size: (json['size'] as num?)?.toInt(),
-  source: json['source'] as String?,
-  kind: json['kind'] as String?,
-  status: json['status'] as String?,
-  locked: json['locked'] as bool?,
-  lockReason: json['lockReason'],
-  uploadedAt: json['uploadedAt'] == null
-      ? null
-      : DateTime.parse(json['uploadedAt'] as String),
-  downloadUrl: json['downloadUrl'] as String?,
-);
 
 Consultant _$ConsultantFromJson(Map<String, dynamic> json) => Consultant(
   id: json['id'] as String?,
@@ -131,4 +118,40 @@ Actions _$ActionsFromJson(Map<String, dynamic> json) => Actions(
   canPay: json['canPay'] as bool?,
   canUploadDocuments: json['canUploadDocuments'] as bool?,
   canChat: json['canChat'] as bool?,
+);
+
+Attachment _$AttachmentFromJson(Map<String, dynamic> json) => Attachment(
+  id: json['id'] as String?,
+  name: json['name'] as String?,
+  mimeType: json['mimeType'] as String?,
+  size: (json['size'] as num?)?.toInt(),
+  source: json['source'] as String?,
+  kind: json['kind'] as String?,
+  status: json['status'] as String?,
+  locked: json['locked'] as bool?,
+  lockReason: json['lockReason'],
+  uploadedAt: json['uploadedAt'] == null
+      ? null
+      : DateTime.parse(json['uploadedAt'] as String),
+  downloadUrl: json['downloadUrl'] as String?,
+);
+
+Upload _$UploadFromJson(Map<String, dynamic> json) => Upload(
+  id: json['id'] as String?,
+  name: json['name'] as String?,
+  mimeType: json['mimeType'] as String?,
+  size: (json['size'] as num?)?.toInt(),
+  source: json['source'] as String?,
+  kind: json['kind'] as String?,
+  status: json['status'] as String?,
+  locked: json['locked'] as bool?,
+  lockReason: json['lockReason'],
+  uploadedAt: json['uploadedAt'] == null
+      ? null
+      : DateTime.parse(json['uploadedAt'] as String),
+  downloadUrl: json['downloadUrl'] as String?,
+  statusLabel: json['statusLabel'] as String?,
+  rejectionReason: json['rejectionReason'],
+  fieldId: json['fieldId'] as String?,
+  fieldLabel: json['fieldLabel'] as String?,
 );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forsan/data/models/order_details/order_details_model.dart';
 
 import '../../../../core/extension/localization_extension.dart';
 import '../../../../core/resources/app_colors.dart';
@@ -10,28 +11,15 @@ import '../../../widgets/text/section_title.dart';
 import 'order_document_item.dart';
 
 class OrderDocumentsCard extends StatelessWidget {
-  const OrderDocumentsCard({super.key});
+
+  final List<Upload>? model;
+
+  const OrderDocumentsCard({super.key, this.model});
 
   @override
   Widget build(BuildContext context) {
-    final documents = [
-      OrderDocumentItem(
-        title: context.loc.order_document_passport,
-        status: OrderDocumentStatus.underReview,
-      ),
-      OrderDocumentItem(
-        title: context.loc.order_document_commercial_record,
-        status: OrderDocumentStatus.notRequired,
-      ),
-      OrderDocumentItem(
-        title: context.loc.order_document_identity,
-        status: OrderDocumentStatus.approved,
-      ),
-      OrderDocumentItem(
-        title: context.loc.order_document_company_address,
-        status: OrderDocumentStatus.required,
-      ),
-    ];
+
+    final uploads = model ?? [];
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -56,9 +44,9 @@ class OrderDocumentsCard extends StatelessWidget {
             children: [
               _DocumentsHeader(title: context.loc.order_documents),
               SizedBox(height: AppHeight.h8),
-              for (var index = 0; index < documents.length; index++) ...[
-                _DocumentRow(document: documents[index]),
-                if (index != documents.length - 1)
+              for (var index = 0; index < uploads.length; index++) ...[
+                _DocumentRow(document: uploads[index]),
+                if (index != uploads.length - 1)
                   SizedBox(height: AppHeight.h6),
               ],
             ],
@@ -103,9 +91,9 @@ class _DocumentsHeader extends StatelessWidget {
 }
 
 class _DocumentRow extends StatelessWidget {
-  const _DocumentRow({required this.document});
+  const _DocumentRow({ this.document});
 
-  final OrderDocumentItem document;
+  final Upload? document;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -125,14 +113,19 @@ class _DocumentRow extends StatelessWidget {
         SizedBox(width: AppWidth.w6),
         Expanded(
           child: BodyTitle(
-            text: document.title,
+            text: document?.name??'',
             color: AppColors.blackCow,
             fontSize: AppFontSize.s13,
             fontWeight: AppFontWeight.regular,
           ),
         ),
+        // StatusBadge(
+        //   status: document?.statusLabel??'',
+        //   fontSize: AppSize.s14,
+        //   fontWeight: AppFontWeight.regular,
+        // ),
         StatusBadge.custom(
-          label: document.status.label(context),
+          label: document?.statusLabel??'',
           fontSize: AppSize.s14,
           fontWeight: AppFontWeight.regular,
           color: document.status.foregroundColor,
