@@ -33,7 +33,7 @@ class CompleteRequirementsDocuments extends StatelessWidget {
     children: [
       SectionTitle(
         text: context.loc.complete_requirements_documents_title,
-        fontSize: AppFontSize.s16,
+        fontSize: AppSize.s16,
       ),
       BlocConsumer<UploadFileBloc, IUploadFileState>(
         listener: (context, uploadState) {

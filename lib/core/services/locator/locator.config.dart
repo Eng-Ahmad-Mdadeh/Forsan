@@ -31,6 +31,8 @@ import '../../../data/data_sources/file/file_remote_data_source.dart' as _i158;
 import '../../../data/data_sources/home/home_remote_data_source.dart' as _i949;
 import '../../../data/data_sources/legal_page/legal_page_remote_data_source.dart'
     as _i532;
+import '../../../data/data_sources/list_payment_methods/list_payment_methods_remote_data_source.dart'
+    as _i777;
 import '../../../data/data_sources/order_details/order_details_remote_data_source.dart'
     as _i588;
 import '../../../data/data_sources/order_list/order_list_remote_data_source.dart'
@@ -48,6 +50,8 @@ import '../../../data/models/document_list/document_list_model.dart' as _i739;
 import '../../../data/models/file/file_model.dart' as _i86;
 import '../../../data/models/home/home_model.dart' as _i703;
 import '../../../data/models/legal_page/legal_page_model.dart' as _i656;
+import '../../../data/models/list_payment_methods/list_payment_methods_model.dart'
+    as _i682;
 import '../../../data/models/order_details/order_details_model.dart' as _i80;
 import '../../../data/models/order_list/order_list_model.dart' as _i1016;
 import '../../../data/models/order_steps/order_steps_model.dart' as _i196;
@@ -68,6 +72,8 @@ import '../../../data/repositories/file/file_repository.dart' as _i841;
 import '../../../data/repositories/home/home_repository.dart' as _i13;
 import '../../../data/repositories/legal_page/legal_page_repository.dart'
     as _i939;
+import '../../../data/repositories/list_payment_methods/list_payment_methods_repository.dart'
+    as _i426;
 import '../../../data/repositories/order_details/order_details_repository.dart'
     as _i664;
 import '../../../data/repositories/order_list/order_list_repository.dart'
@@ -98,6 +104,8 @@ import '../../../domain/repositories/file/i_file_repository.dart' as _i944;
 import '../../../domain/repositories/home/i_home_repository.dart' as _i751;
 import '../../../domain/repositories/legal_page/i_legal_page_repository.dart'
     as _i578;
+import '../../../domain/repositories/list_payment_methods/i_list_payment_methods_repository.dart'
+    as _i886;
 import '../../../domain/repositories/order_details/i_order_details_repository.dart'
     as _i122;
 import '../../../domain/repositories/order_list/i_order_list_repository.dart'
@@ -131,6 +139,8 @@ import '../../../domain/usecases/file/upload_file_use_case.dart' as _i894;
 import '../../../domain/usecases/home/home_use_case.dart' as _i208;
 import '../../../domain/usecases/i_use_case.dart' as _i795;
 import '../../../domain/usecases/legal_page/legal_page_use_case.dart' as _i503;
+import '../../../domain/usecases/list_payment_methods/list_payment_methods_use_case.dart'
+    as _i244;
 import '../../../domain/usecases/order_details/order_details_use_case.dart'
     as _i675;
 import '../../../domain/usecases/order_list/order_list_use_case.dart' as _i72;
@@ -173,6 +183,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i949.HomeRemoteDataSource>(() => _i949.HomeRemoteDataSource());
     gh.factory<_i532.LegalPageRemoteDataSource>(
       () => _i532.LegalPageRemoteDataSource(),
+    );
+    gh.factory<_i777.ListPaymentMethodsRemoteDataSource>(
+      () => _i777.ListPaymentMethodsRemoteDataSource(),
     );
     gh.factory<_i588.OrderDetailsRemoteDataSource>(
       () => _i588.OrderDetailsRemoteDataSource(),
@@ -293,6 +306,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i65.GetProfileUseCase(gh<_i1042.IProfileRepository>()),
       instanceName: 'GetProfile',
     );
+    gh.factory<_i886.IListPaymentMethodsRepository>(
+      () => _i426.ListPaymentMethodsRepository(
+        gh<_i777.ListPaymentMethodsRemoteDataSource>(),
+      ),
+    );
     gh.factory<_i122.IOrderDetailsRepository>(
       () => _i664.OrderDetailsRepository(
         gh<_i588.OrderDetailsRemoteDataSource>(),
@@ -372,6 +390,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i795.IUseCase<void, Null>>(
       () => _i596.LogoutUsecase(gh<_i1064.IAuthRepository>()),
       instanceName: 'LogOut',
+    );
+    gh.factory<
+      _i795.IUseCase<_i480.BaseModel<_i682.ListPaymentMethodsModel>?, Null>
+    >(
+      () => _i244.ListPaymentMethodsUseCase(
+        gh<_i886.IListPaymentMethodsRepository>(),
+      ),
+      instanceName: 'ListPaymentMethods',
     );
     gh.factory<
       _i795.IUseCase<_i480.BaseModel<_i323.AuthModel>?, _i450.AuthEntity>

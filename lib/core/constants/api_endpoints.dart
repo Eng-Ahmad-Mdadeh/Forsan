@@ -61,7 +61,10 @@ class ApiEndpoints {
 
   //#region legal Page
   static String legalPage(String page) => '/content/${Uri.encodeComponent(page)}';
+ //#endregion
 
-//#endregion
+  //#region payment 
+  static const String listPaymentMethods = '/payment-methods';
+  //#endregion
 
 }
