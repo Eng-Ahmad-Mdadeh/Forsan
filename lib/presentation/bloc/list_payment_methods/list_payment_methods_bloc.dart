@@ -25,7 +25,7 @@ class ListPaymentMethodsBloc
     try {
       final result =
           await locator<
-            IUseCase<BaseModel<ListPaymentMethodsModel>?, Null>
+            IUseCase<BaseModel<List<ListPaymentMethodsModel>>?, Null>
           >(instanceName: 'ListPaymentMethods')(null);
       result.fold(
         (failure) => emit(ListPaymentMethodsFailed(failure.message)),

@@ -17,7 +17,7 @@ final class ListPaymentMethodsLoading extends IListPaymentMethodsState {
 final class ListPaymentMethodsLoaded extends IListPaymentMethodsState {
   const ListPaymentMethodsLoaded({required this.listPaymentMethodsModel});
 
-  final BaseModel<ListPaymentMethodsModel>? listPaymentMethodsModel;
+  final BaseModel<List<ListPaymentMethodsModel>>? listPaymentMethodsModel;
 
   @override
   List<Object?> get props => [listPaymentMethodsModel];
