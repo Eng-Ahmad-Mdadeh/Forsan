@@ -189,8 +189,7 @@ class _BodyOrdersScreenState extends State<BodyOrdersScreen>
                         counts: counts,
                       ),
                     ),
-
-
+                    SizedBox(height: AppHeight.h7),
                     Expanded(
                       child: orders.isNotEmpty
                           ? OrdersList(

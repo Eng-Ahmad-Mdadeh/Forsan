@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/resources/app_colors.dart';
-import '../../../../core/resources/app_fonts.dart';
 import '../../../../core/resources/app_values.dart';
 import '../../../../data/models/order_list/order_list_model.dart';
+import '../../../widgets/custom_drop_down_widget.dart';
 
 class OrdersStatusDropdown extends StatelessWidget {
   const OrdersStatusDropdown({
@@ -31,47 +31,23 @@ class OrdersStatusDropdown extends StatelessWidget {
         ? selectedIndex
         : 0;
 
-    return Container(
+    return CustomDropDownWidget(
+      key: ValueKey(
+        Object.hashAll([...countEntries.entries, safeSelectedIndex]),
+      ),
+      items: items,
+      isStringList: true,
+      initialItem: items[safeSelectedIndex],
+      hintText: countEntries.keys.first,
       height: AppHeight.h42,
-      padding: EdgeInsetsDirectional.symmetric(
-        horizontal: AppPaddingWidth.p10,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        border: Border.all(color: AppColors.greyDivider),
-        borderRadius: BorderRadius.circular(AppRadius.r14),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<int>(
-          value: safeSelectedIndex,
-          isExpanded: true,
-          borderRadius: BorderRadius.circular(AppRadius.r14),
-          icon: Icon(
-            Icons.keyboard_arrow_down_rounded,
-            color: AppColors.mainText,
-          ),
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: AppColors.lightBlack,
-            fontSize: AppFontSize.s14,
-            fontWeight: AppFontWeight.bold,
-          ),
-          items: List.generate(
-            items.length,
-            (index) => DropdownMenuItem<int>(
-              value: index,
-              child: Text(
-                items[index],
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ),
-          onChanged: (index) {
-            if (index == null) return;
-            onSelected(index, countEntries.keys.elementAt(index));
-          },
-        ),
-      ),
+      color: AppColors.white,
+      borderRadius: AppRadius.r14,
+      closedBorder: Border.all(color: AppColors.greyDivider),
+      onChanged: (selectedItem) {
+        if (selectedItem is! String) return;
+        final index = items.indexOf(selectedItem);
+        if (index >= 0) onSelected(index, countEntries.keys.elementAt(index));
+      },
     );
   }
 }

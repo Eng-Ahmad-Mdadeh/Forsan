@@ -245,6 +245,16 @@ class _CreateNewOrderScreenState extends State<BodyCreateNewOrderScreen> {
     final orderEntity = context.read<NewOrderCubit>().state.orderEntity;
     final currentStep = orderEntity.currentStep;
 
+    if (currentStep < _stepFormKeys.length &&
+        !(_stepFormKeys[currentStep].currentState?.validate() ?? false)) {
+      showCustomSnackBar(
+        context: context,
+        title: context.loc.error,
+        message: context.loc.complete_profile_required_field,
+        contentType: ContentType.failure,
+      );
+      return;
+    }
     if (currentStep < NewOrderCubit.lastStep) {
       _goToStep(context, currentStep + 1);
       return;
