@@ -77,7 +77,7 @@ class StatusBadge extends StatelessWidget {
     ),
     child: Row(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         if (showIndicator && showOuterCircle)
           Container(

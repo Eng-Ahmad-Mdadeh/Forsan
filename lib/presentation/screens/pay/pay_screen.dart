@@ -81,6 +81,7 @@ class _BodyPayScreenState extends State<BodyPayScreen> {
                     ),
                     SizedBox(height: AppHeight.h24),
                     PaymentMethodsSection(
+                      model: state.listPaymentMethodsModel?.data,
                       onBankTransferTap: () =>
                           const BankTransferRoute().push(context),
                       onWesternUnionTap: () =>

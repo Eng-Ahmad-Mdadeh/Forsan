@@ -37,10 +37,7 @@ enum OrderDocumentStatus {
   final Color backgroundColor;
   final Color foregroundColor;
 
-  /// Converts the status key returned by the API into its presentation value.
-  ///
-  /// The API label is intentionally not used here because it is localized text
-  /// and can change independently from the stable status key.
+
   factory OrderDocumentStatus.fromApi(String? value) {
     final normalizedValue = value
         ?.trim()
@@ -52,7 +49,7 @@ enum OrderDocumentStatus {
         .toLowerCase();
 
     return switch (normalizedValue) {
-      'approved' || 'accepted' => OrderDocumentStatus.approved,
+      'verified' => OrderDocumentStatus.approved,
       'rejected' => OrderDocumentStatus.rejected,
       'under_review' || 'pending' || 'in_review' =>
         OrderDocumentStatus.underReview,
